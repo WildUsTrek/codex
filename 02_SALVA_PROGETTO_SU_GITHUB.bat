@@ -66,7 +66,7 @@ if not errorlevel 1 (
   for /f "delims=" %%G in ('where git') do if not defined GIT_EXE set "GIT_EXE=%%G"
 )
 if defined GIT_EXE exit /b 0
-for /f "delims=" %%G in ('dir /b /s "%LOCALAPPDATA%\GitHubDesktop\app-*\resources\app\git\cmd\git.exe" 2^>nul') do if not defined GIT_EXE set "GIT_EXE=%%G"
+for /f "delims=" %%G in ('powershell -NoProfile -ExecutionPolicy Bypass -Command "$root=Join-Path $env:LOCALAPPDATA 'GitHubDesktop'; $apps=Get-ChildItem -LiteralPath $root -Directory -Filter 'app-*' -ErrorAction SilentlyContinue; foreach($app in $apps){$candidate=Join-Path $app.FullName 'resources\app\git\cmd\git.exe'; if(Test-Path -LiteralPath $candidate){Write-Output $candidate; break}}" 2^>nul') do if not defined GIT_EXE set "GIT_EXE=%%G"
 exit /b 0
 
 :no_git

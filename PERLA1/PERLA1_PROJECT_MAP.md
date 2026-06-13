@@ -15,7 +15,9 @@ This file is the fast technical map for agents. Use it to orient before touching
 | Assets | `01_GIOCO_PRONTO_LOCAL_TEST/assets/raycast/` | PNG sprite/wall/sky assets loaded through `ASSET_MANIFEST`. |
 | Reports/history | `report/` | Diagnostics, extracted inline scripts, smoke tests, historical reports. Not runtime source. |
 | Current failure report | `PERLA1_REPORT_FALLIMENTI_OTTIMIZZAZIONE_TETTO_V271_2026-06-13.txt` | Root-level failure analysis report from the roof optimization work. |
-| Codex subagents | `.codex/config.toml`, `.codex/agents/*.toml` | Project-scoped Codex subagent configuration. Read-only auditors plus one narrow workspace-write fixer. |
+| Block map | `PERLA1_BLOCK_MAP.md` | Functional block ownership map for the monolithic runtime and cross-block risks. |
+| Codex orchestration | `.codex/ORCHESTRATION.md` | Team Leader workflow, subagent usage policy, extra-agent rules, and anti-paradox constraints. |
+| Codex subagents | `.codex/config.toml`, `.codex/agents/*.toml` | Project-scoped Codex subagent configuration. Mostly read-only auditors, one runtime fixer, and one map-only maintainer. |
 | Repository sync | `../00_APRI_PERLA1.bat`, `../01_AGGIORNA_PROGETTO_PRIMA_DI_LAVORARE.bat`, `../02_SALVA_PROGETTO_SU_GITHUB.bat`, `../00_NUOVO_PC_LEGGIMI.txt` | Parent `codex/` scripts for opening, pulling, pushing, and cloning PERLA1 across PCs. |
 
 
@@ -32,6 +34,8 @@ codex/
   PERLA1/
     AGENTS.md
     PERLA1_PROJECT_MAP.md
+    PERLA1_BLOCK_MAP.md
+    .codex/ORCHESTRATION.md
     AVVIA_GIOCO_WINDOWS_SENZA_PYTHON.bat
     01_GIOCO_PRONTO_LOCAL_TEST/
 ```
@@ -167,9 +171,21 @@ Project-scoped Codex agents:
 | `regression-auditor` | `read-only` | Audits concrete behavioral regressions and anti-regression invariants, especially roof/ceiling/rain/sprite/render-order risks. |
 | `performance-auditor` | `read-only` | Audits draw/fps/cache/hotspot counters and expected measurements without editing code. |
 | `workflow-guard` | `read-only` | Detects rule/method conflicts, repeated failure loops, and unsafe workflow drift; reports `PROCEED` or `STOP`. |
-| `safe-fixer` | `workspace-write` | Performs narrow approved patches after diagnosis is clear. It is the only local custom agent with write permission. |
+| `renderer-block-auditor` | `read-only` | Audits `drawWorld` render order, depth buffers, and cross-block renderer risks. |
+| `visual-qa-auditor` | `read-only` | Defines and inspects screenshot-based validation, deterministic poses, build id, console health, and counters. |
+| `asset-integrity-auditor` | `read-only` | Checks asset manifest entries, file presence, relative paths, and stale cache risks. |
+| `launcher-sync-auditor` | `read-only` | Checks launcher/server/sync scripts for correct route, labels, and path-relative portability. |
+| `safe-fixer` | `workspace-write` | Performs narrow approved runtime patches after diagnosis is clear. Write scope must be explicit. |
+| `map-maintainer` | `workspace-write` | Updates `PERLA1_PROJECT_MAP.md` and `PERLA1_BLOCK_MAP.md` only when maps need factual maintenance. |
 
 Configured subagent limits: `max_threads = 4`, `max_depth = 1`, `job_max_runtime_seconds = 2400`.
+
+Multi-agent orchestration notes:
+
+- Read `.codex/ORCHESTRATION.md` before using multiple agents on PERLA1.
+- Use `PERLA1_BLOCK_MAP.md` to name impacted blocks before touching the monolithic runtime.
+- Extra temporary agents are read-only by default and must have a concrete bounded task.
+- A write agent cannot validate its own patch as complete; validation must be reviewed separately.
 
 Browser validation notes:
 
@@ -198,6 +214,7 @@ Update this file when:
 - validation procedure changes,
 - dependencies/tooling change,
 - repository sync workflow or parent scripts change,
+- block ownership or orchestration rules change,
 - a new recurring failure mode is discovered.
 
 Do not update this file for tiny cosmetic edits that do not change structure, contracts, validation, or known risks.
