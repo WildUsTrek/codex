@@ -1,0 +1,71 @@
+# PERLA1 su un nuovo PC
+
+Obiettivo: far comparire la stessa cartella sincronizzata anche su un altro computer.
+
+## Prima volta sul nuovo PC
+
+1. Installa GitHub Desktop.
+2. Apri GitHub Desktop e fai accesso con lo stesso account GitHub.
+3. Vai su: File > Clone repository.
+4. Scegli il repository:
+
+   WildUsTrek/codex
+
+5. Come cartella locale scegli, se possibile:
+
+   C:\Users\TUO_NOME\Documents\GitHub\codex
+
+   Va bene anche un percorso diverso. Gli script usano percorsi relativi alla loro posizione.
+
+6. Dopo il clone, dentro la cartella troverai:
+
+   - 00_APRI_PERLA1.bat
+   - 01_AGGIORNA_PROGETTO_PRIMA_DI_LAVORARE.bat
+   - 02_SALVA_PROGETTO_SU_GITHUB.bat
+   - PERLA1\
+
+## Uso normale
+
+Prima di lavorare:
+
+doppio click su:
+
+01_AGGIORNA_PROGETTO_PRIMA_DI_LAVORARE.bat
+
+Per aprire il gioco:
+
+doppio click su:
+
+00_APRI_PERLA1.bat
+
+Dopo aver finito:
+
+doppio click su:
+
+02_SALVA_PROGETTO_SU_GITHUB.bat
+
+## Percorsi: cosa e' fragile e cosa no
+
+Non e' fragile se la cartella si trova in un percorso diverso, per esempio:
+
+C:\Users\Mario\Documents\GitHub\codex
+D:\Progetti\codex
+C:\Users\ASUS\Documents\GitHub\codex
+
+Gli script partono sempre dalla cartella in cui si trovano usando `%~dp0`.
+
+La cosa importante e' non spostare i file interni a caso. Deve restare questa forma:
+
+codex\
+  00_APRI_PERLA1.bat
+  01_AGGIORNA_PROGETTO_PRIMA_DI_LAVORARE.bat
+  02_SALVA_PROGETTO_SU_GITHUB.bat
+  PERLA1\
+    AVVIA_GIOCO_WINDOWS_SENZA_PYTHON.bat
+    01_GIOCO_PRONTO_LOCAL_TEST\
+      index.html
+
+## Regola d'oro
+
+Sul nuovo PC non creare la cartella PERLA1 a mano.
+Falla comparire con GitHub Desktop usando Clone repository.
