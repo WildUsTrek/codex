@@ -1,4 +1,4 @@
-# PERLA1 Agent Guide
+﻿# PERLA1 Agent Guide
 
 Scope: this file applies to the whole repository. More specific `AGENTS.md` files in subfolders override or extend these rules.
 
@@ -8,6 +8,16 @@ Scope: this file applies to the whole repository. More specific `AGENTS.md` file
 - The Windows launcher is `AVVIA_GIOCO_WINDOWS_SENZA_PYTHON.bat`, which calls `AVVIA_GIOCO_SERVER_POWERSHELL.ps1` on `http://127.0.0.1:8000/`.
 - Files under `report/` are diagnostics, snapshots, extracted scripts, and historical evidence. They are not the runtime unless a task explicitly says otherwise.
 - `PERLA1_PROJECT_MAP.md` is the compact technical map of structure, engine flow, dependencies, validation, and known critical risks.
+
+
+## GitHub Sync Workflow
+
+- The active synchronized project path is `PERLA1/` inside the Git repository root `codex/`.
+- The parent `codex/` folder contains the user-facing sync scripts: `00_APRI_PERLA1.bat`, `01_AGGIORNA_PROGETTO_PRIMA_DI_LAVORARE.bat`, and `02_SALVA_PROGETTO_SU_GITHUB.bat`.
+- Prefer working in the synchronized GitHub copy, not in older standalone copies under `Documents/`.
+- When providing user-facing file paths, use the synchronized GitHub copy when available.
+- After meaningful work, ensure the user knows to run `02_SALVA_PROGETTO_SU_GITHUB.bat`, or handle commit/push if explicitly asked.
+- Do not hard-code absolute user-specific clone paths into runtime or sync scripts; scripts should stay relative to their own location.
 
 ## Default Workflow
 
@@ -46,3 +56,5 @@ Before saying a rendered game fix is ready:
 - Distinguish diagnosis from proof.
 - When the user is testing locally, give the exact file/path/URL they should use.
 - If Browser automation fails, report the fallback method and keep the target URL identical.
+
+

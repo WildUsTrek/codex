@@ -1,4 +1,4 @@
-# PERLA1 Project Map
+﻿# PERLA1 Project Map
 
 Last updated: 2026-06-13
 Current runtime build observed in `index.html`: `PERLA1_V274_REAL_ROOF_GEOMETRIC_EAVE_EDGE_SAFE_LOCAL`
@@ -16,7 +16,33 @@ This file is the fast technical map for agents. Use it to orient before touching
 | Reports/history | `report/` | Diagnostics, extracted inline scripts, smoke tests, historical reports. Not runtime source. |
 | Current failure report | `PERLA1_REPORT_FALLIMENTI_OTTIMIZZAZIONE_TETTO_V271_2026-06-13.txt` | Root-level failure analysis report from the roof optimization work. |
 | Codex subagents | `.codex/config.toml`, `.codex/agents/*.toml` | Project-scoped Codex subagent configuration. Read-only auditors plus one narrow workspace-write fixer. |
+| Repository sync | `../00_APRI_PERLA1.bat`, `../01_AGGIORNA_PROGETTO_PRIMA_DI_LAVORARE.bat`, `../02_SALVA_PROGETTO_SU_GITHUB.bat`, `../00_NUOVO_PC_LEGGIMI.txt` | Parent `codex/` scripts for opening, pulling, pushing, and cloning PERLA1 across PCs. |
 
+
+## Repository Sync
+
+PERLA1 is now intended to be worked from the synchronized GitHub repository layout:
+
+```text
+codex/
+  00_APRI_PERLA1.bat
+  01_AGGIORNA_PROGETTO_PRIMA_DI_LAVORARE.bat
+  02_SALVA_PROGETTO_SU_GITHUB.bat
+  00_NUOVO_PC_LEGGIMI.txt
+  PERLA1/
+    AGENTS.md
+    PERLA1_PROJECT_MAP.md
+    AVVIA_GIOCO_WINDOWS_SENZA_PYTHON.bat
+    01_GIOCO_PRONTO_LOCAL_TEST/
+```
+
+Operational rules:
+
+- `PERLA1/` inside the GitHub repository is the active source of truth.
+- Older standalone folders under `Documents/` are historical copies unless explicitly requested for comparison.
+- The sync scripts are parent-level and path-relative, so they survive different usernames or clone locations on another PC.
+- Normal user flow: run `01_AGGIORNA_PROGETTO_PRIMA_DI_LAVORARE.bat` before work, `00_APRI_PERLA1.bat` to launch, and `02_SALVA_PROGETTO_SU_GITHUB.bat` after work.
+- If this map, AGENTS rules, runtime, launcher, assets, reports, or Codex agents change meaningfully, the GitHub copy should be committed and pushed.
 ## Runtime Architecture
 
 | Subsystem | Key Symbols | Location Hint | Role |
@@ -171,6 +197,9 @@ Update this file when:
 - a new Vxxx patch supersedes an old contract,
 - validation procedure changes,
 - dependencies/tooling change,
+- repository sync workflow or parent scripts change,
 - a new recurring failure mode is discovered.
 
 Do not update this file for tiny cosmetic edits that do not change structure, contracts, validation, or known risks.
+
+
