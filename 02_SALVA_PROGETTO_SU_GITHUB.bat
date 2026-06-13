@@ -61,11 +61,16 @@ pause
 exit /b 0
 
 :find_git
+rem Metodo reale Windows:
+rem 1) usa git dal PATH, se esiste;
+rem 2) altrimenti usa il git.exe incluso in GitHub Desktop.
+rem Non usare un percorso hard-coded con il nome utente.
 where git >nul 2>nul
 if not errorlevel 1 (
   for /f "delims=" %%G in ('where git') do if not defined GIT_EXE set "GIT_EXE=%%G"
 )
 if defined GIT_EXE exit /b 0
+rem PowerShell gestisce meglio app-* rispetto a dir/cmd con wildcard quotati.
 for /f "delims=" %%G in ('powershell -NoProfile -ExecutionPolicy Bypass -Command "$root=Join-Path $env:LOCALAPPDATA 'GitHubDesktop'; $apps=Get-ChildItem -LiteralPath $root -Directory -Filter 'app-*' -ErrorAction SilentlyContinue; foreach($app in $apps){$candidate=Join-Path $app.FullName 'resources\app\git\cmd\git.exe'; if(Test-Path -LiteralPath $candidate){Write-Output $candidate; break}}" 2^>nul') do if not defined GIT_EXE set "GIT_EXE=%%G"
 exit /b 0
 

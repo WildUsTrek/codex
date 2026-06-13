@@ -13,6 +13,20 @@ Per aprire PERLA1:
 Dopo aver finito:
 - doppio click su `02_SALVA_PROGETTO_SU_GITHUB.bat`
 
+## Nota importante su Git
+
+Gli script non richiedono per forza Git installato nel PATH di Windows.
+
+Metodo reale usato dagli script:
+
+1. provano prima `where git`;
+2. se Windows non trova Git nel PATH, cercano il Git incluso in GitHub Desktop:
+
+   `%LOCALAPPDATA%\GitHubDesktop\app-*\resources\app\git\cmd\git.exe`
+
+Quindi GitHub Desktop puo' essere aperto e funzionante anche se il terminale dice che `git` non esiste.
+In quel caso non bisogna reinstallare tutto: lo script deve usare il Git interno di GitHub Desktop.
+
 ## Progetto attivo
 
 PERLA1 si trova in:

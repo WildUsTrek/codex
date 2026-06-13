@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Camping Sole, Mare & Zanzare - PERLA1 V274 Geometric Eave Edge</title>
+    <title>Camping Sole, Mare & Zanzare - PERLA1 V275 Eave Handoff</title>
     <style>
         :root { --panel: rgba(20,16,12,.88); --gold:#f1c40f; --sand:#f5d99e; --perla-vv-left:0px; --perla-vv-top:0px; --perla-vv-width:100vw; --perla-vv-height:100dvh; }
         body { margin:0; min-height:100vh; background:radial-gradient(circle at 50% 0%,#183b4a 0%,#07090d 55%,#000 100%); color:white; font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; display:flex; flex-direction:column; align-items:center; overflow-x:hidden; }
@@ -99,12 +99,12 @@
     </style>
 </head>
 <body>
-            <h2>Camping Sole, Mare & Zanzare - PERLA1 V274</h2>
+            <h2>Camping Sole, Mare & Zanzare - PERLA1 V275</h2>
     <div id="game-container">
         <canvas id="screen" width="800" height="450"></canvas>
         <canvas id="mini-map" width="128" height="128"></canvas>
         <div id="perlaClockHud" data-weather="clear" aria-label="Orologio e meteo PERLA1"><span class="perla-clock-time">14:00</span><span class="perla-clock-meta">☀️ Giorno</span></div>
-        <div id="loading"><div><strong>Caricamento asset PERLA1 V274 geometric eave edge...</strong><br><span class="muted">Usa un server locale per evitare problemi da file://.</span></div></div>
+        <div id="loading"><div><strong>Caricamento asset PERLA1 V275 eave handoff...</strong><br><span class="muted">Usa un server locale per evitare problemi da file://.</span></div></div>
     </div>
     <div id="mobile-controls" aria-label="Controlli touch PERLA1">
         <div class="touch-cluster touch-cluster-left">
@@ -192,7 +192,7 @@ const loading = document.getElementById('loading');
 const debugLine = document.getElementById('debugLine');
 const perlaClockHud = document.getElementById('perlaClockHud');
 
-const PERLA_BUILD_ID = 'PERLA1_V274_REAL_ROOF_GEOMETRIC_EAVE_EDGE_SAFE_LOCAL';
+const PERLA_BUILD_ID = 'PERLA1_V275_REAL_EAVE_HANDOFF_SAFE_LOCAL';
 const PERLA_V258_PERFORMANCE_BASELINE_DEBUG_OVERHEAD_SAFE = true;
 const PERLA_V258A_PHASE1_REAL_QUICK_WINS_COMPLETE_SAFE = true;
 const PERLA_V258_BASE_BUILD = 'PERLA1_V257_RAIN_SKYBOX_DEPTH_ANCHOR_FIX_SAFE_LOCAL';
@@ -458,6 +458,18 @@ const PERLA_V274_EAVE_EDGE_THICKNESS_PX = 3;
 const PERLA_V274_EAVE_EDGE_MAX_DIST = 42;
 const PERLA_V274_SAME_OWNER_WALL_TOP_ALLOW_PX = 7;
 const PERLA_V274_SAME_OWNER_DEPTH_ALLOW = .42;
+
+// V275 - Real Eave Handoff Safe.
+// V274 resta la fonte primaria del bordo geometrico; V275 impedisce il vuoto quando il clone V273
+// viene soppresso ma il bordo V274 non produce pixel reali in viste near/corner radenti.
+const PERLA_V275_REAL_EAVE_HANDOFF_SAFE = true;
+const PERLA_V275_BASE_BUILD = 'PERLA1_V274_REAL_ROOF_GEOMETRIC_EAVE_EDGE_SAFE_LOCAL';
+const PERLA_V275_PATCH_MODE = 'real_eave_handoff_safe';
+const PERLA_V275_NEAR_SIDE_BAND = .92;
+const PERLA_V275_HANDOFF_STRIP_H_PX = 2;
+const PERLA_V275_HANDOFF_MAX_PIXELS_PER_FRAME = 1600;
+const PERLA_V275_HANDOFF_MAX_DIST = PERLA_V274_EAVE_EDGE_MAX_DIST;
+const PERLA_V275_HANDOFF_Y_BUCKET_PX = 2;
 
 const PERLA_V244_ROLLBACK_BASE_BUILD = 'PERLA1_V241C_FACE_DRAWABILITY_ELIGIBILITY_DIAGNOSTIC_LOCAL';
 const PERLA_V244_HIGH_WALL_DRAW_ROLLBACK_DEBUG_ONLY = true;
@@ -2119,6 +2131,7 @@ function perlaRealCeilingCloneEaveAnchorFinalizeV273(drawStats){
         owner2:drawStats.realCeilingCloneEaveAnchorOwner2V273||0,
         originalRoofFillStillOff:drawStats.realCeilingCloneEaveAnchorOriginalRoofFillStillOffV273,
         noEdgeRailFallbackAsPrimary:!!PERLA_V273_FORBID_EDGE_RAIL_FALLBACK_AS_PRIMARY,
+        v275:typeof perlaRealEaveHandoffSummaryV275==='function'?perlaRealEaveHandoffSummaryV275():null,
         v271:typeof perlaRealCeilingCloneContinuitySummaryV271==='function'?perlaRealCeilingCloneContinuitySummaryV271():null
     };
     drawStats.realCeilingCloneEaveAnchorSummaryV273=perlaRealCeilingCloneEaveAnchorLastSummaryV273;
@@ -2132,6 +2145,102 @@ let perlaRealRoofGeometricEaveEdgeLastSummaryV274 = { buildId:PERLA_BUILD_ID, en
 function perlaRealRoofGeometricEaveEdgeEnabledV274(){
     return !!PERLA_V274_REAL_ROOF_GEOMETRIC_EAVE_EDGE_SAFE;
 }
+let perlaRealEaveHandoffLastSummaryV275 = { buildId:PERLA_BUILD_ID, enabled:!!PERLA_V275_REAL_EAVE_HANDOFF_SAFE, mode:'safe', message:'drawWorld not run yet' };
+function perlaRealEaveHandoffEnabledV275(){ return !!PERLA_V275_REAL_EAVE_HANDOFF_SAFE; }
+function perlaRealEaveOwnerSideKeyV275(owner, side){ return String(owner||0)+':'+String(side||'outer'); }
+function perlaRealEaveSideCounterKeyV275(prefix, side){
+    const s=String(side||'outer');
+    return prefix+s.charAt(0).toUpperCase()+s.slice(1)+'V275';
+}
+function perlaRealEaveHandoffRoofBoundsV275(r){
+    if(!r) return null;
+    const coreX0=Math.min(r.x1,r.x2+1), coreX1=Math.max(r.x1,r.x2+1);
+    const coreY0=Math.min(r.y1,r.y2+1), coreY1=Math.max(r.y1,r.y2+1);
+    const extX0=Number.isFinite(r.x0)?r.x0:coreX0-(r.overhang||.3);
+    const extX1=Number.isFinite(r.x3)?r.x3:coreX1+(r.overhang||.3);
+    const extY0=Number.isFinite(r.y0)?r.y0:coreY0-(r.overhang||.3);
+    const extY1=Number.isFinite(r.y3)?r.y3:coreY1+(r.overhang||.3);
+    return {coreX0,coreX1,coreY0,coreY1,extX0,extX1,extY0,extY1};
+}
+function perlaRealEaveNearSideActiveV275(r, side){
+    if(!perlaRealEaveHandoffEnabledV275() || !r || !r.modernSolid || !isModernCoverOwner(r.ownerId)) return false;
+    const b=perlaRealEaveHandoffRoofBoundsV275(r);
+    if(!b) return false;
+    const band=Math.max(.46, Math.min(1.18, PERLA_V275_NEAR_SIDE_BAND));
+    const outsideX=posX<b.extX0 || posX>b.extX1;
+    const outsideY=posY<b.extY0 || posY>b.extY1;
+    if(side==='north') return posY<=b.coreY0+band && posY>=b.extY0-band && (outsideX || outsideY || dirY<-.05);
+    if(side==='south') return posY>=b.coreY1-band && posY<=b.extY1+band && (outsideX || outsideY || dirY>.05);
+    if(side==='west') return posX<=b.coreX0+band && posX>=b.extX0-band && (outsideX || outsideY || dirX<-.05);
+    if(side==='east') return posX>=b.coreX1-band && posX<=b.extX1+band && (outsideX || outsideY || dirX>.05);
+    return false;
+}
+function perlaRealEaveMarkV274CoverageV275(drawStats, owner, side, pixels){
+    if(!drawStats || !owner || !side || !(pixels>0)) return;
+    const key=perlaRealEaveOwnerSideKeyV275(owner, side);
+    const m=drawStats.realEaveOwnerSideCoverageV275 || (drawStats.realEaveOwnerSideCoverageV275={});
+    m[key]=(m[key]||0)+pixels;
+    drawStats.realEaveOwnerSideCoverageKeysV275=Object.keys(m);
+}
+function perlaRealEaveMarkV274CoverageColumnV275(drawStats, owner, side, px){
+    if(!drawStats || !owner || !side || px<0 || px>=screenW) return;
+    const key=perlaRealEaveOwnerSideKeyV275(owner, side);
+    const m=drawStats.realEaveOwnerSideCoverageColumnsV275 || (drawStats.realEaveOwnerSideCoverageColumnsV275={});
+    const cols=m[key] || (m[key]=new Uint8Array(screenW));
+    if(!cols[px|0]){
+        cols[px|0]=1;
+        drawStats.realEaveOwnerSideCoverageColumnCountV275=(drawStats.realEaveOwnerSideCoverageColumnCountV275||0)+1;
+    }
+}
+function perlaRealEaveV274CoveredSideV275(drawStats, owner, side){
+    if(!drawStats || !owner || !side) return false;
+    const m=drawStats.realEaveOwnerSideCoverageV275;
+    return !!(m && (m[perlaRealEaveOwnerSideKeyV275(owner, side)]||0)>0);
+}
+function perlaRealEaveV274CoveredColumnV275(drawStats, owner, side, px){
+    if(!drawStats || !owner || !side || px<0 || px>=screenW) return false;
+    const m=drawStats.realEaveOwnerSideCoverageColumnsV275;
+    const cols=m && m[perlaRealEaveOwnerSideKeyV275(owner, side)];
+    return !!(cols && cols[px|0]);
+}
+function perlaRealEaveHandoffProjectedByV274V275(meta){
+    if(!perlaRealEaveHandoffEnabledV275() || !meta || !meta.externalClone) return false;
+    const roof=perlaRealCeilingCloneRoofForMetaV273(meta);
+    if(!roof || !roof.modernSolid || !isModernCoverOwner(roof.ownerId)) return false;
+    const side=String(meta.side||'outer');
+    const edges=perlaRealRoofGeometricEaveEdgesForRoofV274(roof);
+    for(let i=0;i<edges.length;i++){
+        const e=edges[i];
+        if(e && e.side===side){
+            const seg=perlaRealRoofGeometricEaveProjectedSegmentV274(e,null);
+            if(seg && seg.dist<=PERLA_V274_EAVE_EDGE_MAX_DIST) return true;
+        }
+    }
+    return false;
+}
+function perlaRealEaveHandoffProjectedClipV275(meta){
+    if(!perlaRealEaveHandoffEnabledV275() || !meta || !meta.externalClone) return null;
+    const roof=perlaRealCeilingCloneRoofForMetaV273(meta);
+    if(!roof || !roof.modernSolid || !isModernCoverOwner(roof.ownerId)) return null;
+    const side=String(meta.side||'outer');
+    const edges=perlaRealRoofGeometricEaveEdgesForRoofV274(roof);
+    for(let i=0;i<edges.length;i++){
+        const e=edges[i];
+        if(!e || e.side!==side) continue;
+        const seg=perlaRealRoofGeometricEaveProjectedSegmentV274(e,null);
+        if(!seg || seg.dist>PERLA_V274_EAVE_EDGE_MAX_DIST) continue;
+        const margin=Math.max(8,PERLA_V274_EAVE_EDGE_THICKNESS_PX*3);
+        return {
+            x0:clamp(Math.floor(Math.min(seg.pa.x,seg.pb.x)-margin),0,screenW),
+            x1:clamp(Math.ceil(Math.max(seg.pa.x,seg.pb.x)+margin),0,screenW),
+            y0:clamp(Math.floor(Math.min(seg.pa.y,seg.pb.y)-margin),0,screenH),
+            y1:clamp(Math.ceil(Math.max(seg.pa.y,seg.pb.y)+margin),0,screenH),
+            dist:seg.dist,
+            side
+        };
+    }
+    return null;
+}
 function perlaRealRoofGeometricEaveEdgeHandlesCloneV274(meta){
     return !!(perlaRealRoofGeometricEaveEdgeEnabledV274() && PERLA_V274_DISABLE_EXTERNAL_CLONE_STRIP_VISUAL && meta && meta.externalClone && typeof perlaRealCeilingCloneEaveAnchorEnabledV273==='function' && perlaRealCeilingCloneEaveAnchorEnabledV273(meta));
 }
@@ -2144,10 +2253,18 @@ function perlaRealRoofGeometricEaveEdgesForRoofV274(r){
     if(!r || !r.modernSolid || !isModernCoverOwner(r.ownerId)) return [];
     const z=Number.isFinite(r.eaveZ)?r.eaveZ:(Number.isFinite(r.wallTopZ)?r.wallTopZ:1.10);
     const edges=[];
-    if(posY<r.y0) edges.push({side:'north', a:[r.x0,r.y0,z], b:[r.x3,r.y0,z]});
-    if(posY>r.y3) edges.push({side:'south', a:[r.x3,r.y3,z], b:[r.x0,r.y3,z]});
-    if(posX<r.x0) edges.push({side:'west', a:[r.x0,r.y3,z], b:[r.x0,r.y0,z]});
-    if(posX>r.x3) edges.push({side:'east', a:[r.x3,r.y0,z], b:[r.x3,r.y3,z]});
+    function add(side,a,b,nearHandoff){
+        if(edges.some(e=>e.side===side)) return;
+        edges.push({side,a,b,nearHandoffV275:!!nearHandoff});
+    }
+    if(posY<r.y0) add('north',[r.x0,r.y0,z],[r.x3,r.y0,z],false);
+    else if(perlaRealEaveNearSideActiveV275(r,'north')) add('north',[r.x0,r.y0,z],[r.x3,r.y0,z],true);
+    if(posY>r.y3) add('south',[r.x3,r.y3,z],[r.x0,r.y3,z],false);
+    else if(perlaRealEaveNearSideActiveV275(r,'south')) add('south',[r.x3,r.y3,z],[r.x0,r.y3,z],true);
+    if(posX<r.x0) add('west',[r.x0,r.y3,z],[r.x0,r.y0,z],false);
+    else if(perlaRealEaveNearSideActiveV275(r,'west')) add('west',[r.x0,r.y3,z],[r.x0,r.y0,z],true);
+    if(posX>r.x3) add('east',[r.x3,r.y0,z],[r.x3,r.y3,z],false);
+    else if(perlaRealEaveNearSideActiveV275(r,'east')) add('east',[r.x3,r.y0,z],[r.x3,r.y3,z],true);
     return edges;
 }
 function perlaV274ClipCameraSegment(a,b){
@@ -2245,6 +2362,7 @@ function perlaRealRoofGeometricEaveDrawRasterLineV274(seg, color, roof, edge, dr
             const drawY=clamp(sy-half,0,screenH-1);
             const drawH=Math.max(1,Math.min(thick,screenH-drawY));
             if(perlaRealRoofGeometricEavePixelVisibleV274(x,sy,dist,roof,z,drawStats)){
+                perlaRealEaveMarkV274CoverageColumnV275(drawStats,roof&&roof.ownerId,edge&&edge.side,x);
                 if(runX>=0 && drawY===runY && drawH===runH) {
                     continue;
                 }
@@ -2273,6 +2391,7 @@ function perlaRealRoofGeometricEaveDrawRasterLineV274(seg, color, roof, edge, dr
             const drawX=clamp(sx-half,0,screenW-1);
             const drawW=Math.max(1,Math.min(thick,screenW-drawX));
             if(perlaRealRoofGeometricEavePixelVisibleV274(sx,y,dist,roof,z,drawStats)){
+                for(let cx=drawX; cx<drawX+drawW; cx++) perlaRealEaveMarkV274CoverageColumnV275(drawStats,roof&&roof.ownerId,edge&&edge.side,cx);
                 if(runY>=0 && drawX===runX && drawW===runW) {
                     continue;
                 }
@@ -2287,6 +2406,204 @@ function perlaRealRoofGeometricEaveDrawRasterLineV274(seg, color, roof, edge, dr
     }
     return {pixels,fillRects,rejected};
 }
+function perlaRealEaveHandoffQueueFallbackV275(queue, x0, fallbackY, w, owner, typeC, rowDist, bandH, meta, drawStats){
+    if(!perlaRealEaveHandoffEnabledV275() || !queue || !meta || !meta.externalClone || w<=0) return false;
+    if(!perlaRealCeilingCloneEaveAnchorEnabledV273(meta)) return false;
+    const roof=perlaRealCeilingCloneRoofForMetaV273(meta);
+    if(!roof || !roof.modernSolid || !isModernCoverOwner(roof.ownerId)) return false;
+    const side=String(meta.side||'outer');
+    const strip=perlaRealCeilingCloneEaveStripYV273(x0,w,fallbackY,rowDist,meta,drawStats);
+    const dist=strip.dist||rowDist||0;
+    if(!(dist>ROOF_NEAR_PLANE) || dist>PERLA_V275_HANDOFF_MAX_DIST) return false;
+    const h=clamp(Math.min(PERLA_V275_HANDOFF_STRIP_H_PX|0, PERLA_V273_EAVE_STRIP_H_PX|0),1,4);
+    const p=roof && roof.palette ? roof.palette : null;
+    const clip=perlaRealEaveHandoffProjectedClipV275(meta);
+    const projected=!!clip || perlaRealEaveHandoffProjectedByV274V275(meta);
+    queue.push({x0:clamp(x0|0,0,screenW), x1:clamp((x0+w)|0,0,screenW), y:strip.y|0, h, owner, typeC, dist, colorBase:roofSoffitVisibleColorV109(roof,p,typeC,rowDist), side, roof, projectedByV274:projected, clipV275:clip});
+    if(drawStats){
+        drawStats.realEaveHandoffQueuedV275=(drawStats.realEaveHandoffQueuedV275||0)+1;
+        drawStats.realEaveHandoffQueuedPixelsV275=(drawStats.realEaveHandoffQueuedPixelsV275||0)+Math.max(0,w)*h;
+        drawStats[perlaRealEaveSideCounterKeyV275('realEaveHandoffQueued',side)]=(drawStats[perlaRealEaveSideCounterKeyV275('realEaveHandoffQueued',side)]||0)+1;
+        if(projected) drawStats.realEaveHandoffProjectedByV274V275=(drawStats.realEaveHandoffProjectedByV274V275||0)+1;
+        else drawStats.realEaveHandoffProjectionMissingV275=(drawStats.realEaveHandoffProjectionMissingV275||0)+1;
+    }
+    return true;
+}
+function perlaRealEaveHandoffPixelVisibleV275(px, sy, dist, roof, drawStats){
+    px=px|0; sy=sy|0;
+    if(px<0 || px>=screenW || sy<0 || sy>=screenH || !(dist>ROOF_NEAR_PLANE)) return false;
+    const wallD=ZBuffer[px] || 1000;
+    const wt=WallTopBuffer[px] == null ? screenH : WallTopBuffer[px];
+    const wb=WallBottomBuffer[px] == null ? -1 : WallBottomBuffer[px];
+    const wallOwner=WallOwnerBuffer[px] || 0;
+    const ownerId=roof&&roof.ownerId ? roof.ownerId : 0;
+    if(wallD>0 && wallD<999 && dist>wallD+.035 && sy>=wt-1 && sy<=wb+1){
+        if(ownerId && wallOwner===ownerId && sy<=wt+PERLA_V274_SAME_OWNER_WALL_TOP_ALLOW_PX && dist<wallD+PERLA_V274_SAME_OWNER_DEPTH_ALLOW){
+            if(drawStats) drawStats.realEaveHandoffSameOwnerWallTopAllowedV275=(drawStats.realEaveHandoffSameOwnerWallTopAllowedV275||0)+1;
+            return true;
+        }
+        if(drawStats) drawStats.realEaveHandoffBlockedByWallV275=(drawStats.realEaveHandoffBlockedByWallV275||0)+1;
+        return false;
+    }
+    if(CeilingColumnHasDepth && CeilingColumnHasDepth[px] && CeilingDepthBuffer){
+        const rows=Math.min(Math.ceil(screenH/2+4), Math.floor(CeilingDepthBuffer.length/screenW));
+        if(sy>=0 && sy<rows){
+            const idx=sy*screenW+px;
+            const cd=CeilingDepthBuffer[idx];
+            const co=CeilingOwnerBuffer[idx] || 0;
+            if(cd>0 && dist>cd+.050 && !(ownerId && co===ownerId)){
+                if(drawStats) drawStats.realEaveHandoffBlockedByCeilingV275=(drawStats.realEaveHandoffBlockedByCeilingV275||0)+1;
+                return false;
+            }
+        }
+    }
+    return true;
+}
+function perlaRealEaveHandoffFinalizeV275(drawStats){
+    if(!drawStats) return perlaRealEaveHandoffLastSummaryV275;
+    drawStats.realEaveHandoffEnabledV275=perlaRealEaveHandoffEnabledV275();
+    drawStats.realEaveHandoffModeV275='safe';
+    drawStats.realEaveHandoffV272StillOffV275=!PERLA_V272_REAL_ROOF_UNDERSIDE_EAVE_NEAR_GEOMETRY_SAFE;
+    drawStats.realEaveHandoffNoV265PrimaryV275=!!PERLA_V274_FORBID_V265_EDGE_RAIL_PRIMARY;
+    perlaRealEaveHandoffLastSummaryV275={
+        buildId:PERLA_BUILD_ID,
+        baseBuild:PERLA_V275_BASE_BUILD,
+        enabled:perlaRealEaveHandoffEnabledV275(),
+        mode:'safe',
+        queued:drawStats.realEaveHandoffQueuedV275||0,
+        suppressedByV274:drawStats.realEaveHandoffSuppressedBecauseV274DrewV275||0,
+        drawn:drawStats.realEaveHandoffDrawnV275||0,
+        pixels:drawStats.realEaveHandoffPixelsV275||0,
+        fillRects:drawStats.realEaveHandoffFillRectsV275||0,
+        projectedButNoCoverage:drawStats.realEaveHandoffProjectedButNoCoverageV275||0,
+        projectionMissing:drawStats.realEaveHandoffProjectionMissingV275||0,
+        blockedByWall:drawStats.realEaveHandoffBlockedByWallV275||0,
+        blockedByCeiling:drawStats.realEaveHandoffBlockedByCeilingV275||0,
+        budgetHit:!!drawStats.realEaveHandoffPixelBudgetHitV275,
+        v274CoverageKeys:drawStats.realEaveOwnerSideCoverageKeysV275||[],
+        v272RuntimeOff:!PERLA_V272_REAL_ROOF_UNDERSIDE_EAVE_NEAR_GEOMETRY_SAFE,
+        noV265Primary:!!PERLA_V274_FORBID_V265_EDGE_RAIL_PRIMARY
+    };
+    drawStats.realEaveHandoffSummaryV275=perlaRealEaveHandoffLastSummaryV275;
+    return perlaRealEaveHandoffLastSummaryV275;
+}
+function perlaRealEaveHandoffFlushV275(queue, drawStats){
+    if(!perlaRealEaveHandoffEnabledV275() || !queue || !queue.length) return perlaRealEaveHandoffFinalizeV275(drawStats);
+    const bestByX=new Array(screenW);
+    let candidatePx=0, suppressedPx=0, suppressedStrips=0, projectedNoCoverage=0, projectionMissing=0;
+    for(let i=0;i<queue.length;i++){
+        const s=queue[i];
+        if(!s || s.x1<=s.x0 || !s.roof) continue;
+        let stripHadUncovered=false, stripSuppressedPx=0;
+        if(s.projectedByV274) projectedNoCoverage++;
+        else projectionMissing++;
+        const x0=clamp(s.x0|0,0,screenW), x1=clamp(s.x1|0,0,screenW);
+        for(let x=x0;x<x1;x++){
+            if(s.clipV275 && (x<s.clipV275.x0 || x>s.clipV275.x1)){
+                if(drawStats) drawStats.realEaveHandoffClipRejectedColumnsV275=(drawStats.realEaveHandoffClipRejectedColumnsV275||0)+1;
+                continue;
+            }
+            if(perlaRealEaveV274CoveredColumnV275(drawStats,s.owner,s.side,x)){
+                stripSuppressedPx+=Math.max(1,s.h|0);
+                continue;
+            }
+            stripHadUncovered=true;
+            candidatePx++;
+            const old=bestByX[x];
+            const prefer=!old || ((s.y|0)<(old.y|0)) || ((s.y|0)===(old.y|0) && (s.dist||999)<(old.dist||999));
+            if(prefer) bestByX[x]=s;
+        }
+        if(stripSuppressedPx>0) suppressedPx+=stripSuppressedPx;
+        if(!stripHadUncovered && stripSuppressedPx>0) suppressedStrips++;
+    }
+    let pixels=0, fillRects=0, visibleColumns=0, budgetRejected=false, budgetRejectedPx=0;
+    const pixelByOwner={}, pixelBySide={};
+    const visibleColumnMarks=new Uint8Array(screenW);
+    const budget=Math.max(1,PERLA_V275_HANDOFF_MAX_PIXELS_PER_FRAME|0);
+    const maxH=Math.max(1,Math.min(4,PERLA_V275_HANDOFF_STRIP_H_PX|0));
+    for(let row=0; row<maxH; row++){
+        let runX=-1, runY=0, runColor='', runOwner=0, runSide='';
+        function flush(x){
+            if(runX>=0){
+                const w=x-runX;
+                if(w>0){
+                    ctx.fillStyle=runColor;
+                    ctx.fillRect(runX,runY,w,1);
+                    captureCeilingFillRectV216('perlaRealEaveHandoffFallbackV275',runX,runY,w,1,ctx.fillStyle,runOwner,0,0,'v275_handoff_fallback');
+                    fillRects++;
+                }
+                runX=-1;
+            }
+        }
+        for(let x=0;x<=screenW;x++){
+            const s=x<screenW ? bestByX[x] : null;
+            let ok=false, sy=0, color='', owner=0, side='';
+            if(s && row<(s.h|0)){
+                sy=clamp((s.y|0)+row,0,screenH-1);
+                if(s.clipV275 && (sy<s.clipV275.y0 || sy>s.clipV275.y1)){
+                    if(drawStats) drawStats.realEaveHandoffClipRejectedRowsV275=(drawStats.realEaveHandoffClipRejectedRowsV275||0)+1;
+                } else if(perlaRealEaveHandoffPixelVisibleV275(x,sy,s.dist||0,s.roof,drawStats)){
+                    if(pixels>=budget){
+                        budgetRejected=true;
+                        budgetRejectedPx++;
+                    } else {
+                        ok=true;
+                        color=roofPremixedFogColorV106(s.colorBase||'#5b5147',s.dist||0);
+                        owner=s.owner||0;
+                        side=s.side||'outer';
+                    }
+                }
+            }
+            if(ok){
+                if(!visibleColumnMarks[x]){
+                    visibleColumnMarks[x]=1;
+                    visibleColumns++;
+                }
+                const key=color+'|'+sy+'|'+owner+'|'+side;
+                const runKey=runColor+'|'+runY+'|'+runOwner+'|'+runSide;
+                if(runX>=0 && key===runKey){
+                    pixels++;
+                    pixelByOwner[owner]=(pixelByOwner[owner]||0)+1;
+                    pixelBySide[side]=(pixelBySide[side]||0)+1;
+                    continue;
+                }
+                flush(x);
+                runX=x; runY=sy; runColor=color; runOwner=owner; runSide=side;
+                pixels++;
+                pixelByOwner[owner]=(pixelByOwner[owner]||0)+1;
+                pixelBySide[side]=(pixelBySide[side]||0)+1;
+            } else {
+                flush(x);
+            }
+        }
+    }
+    if(drawStats){
+        drawStats.realEaveHandoffCandidatePixelsV275=(drawStats.realEaveHandoffCandidatePixelsV275||0)+candidatePx;
+        drawStats.realEaveHandoffSuppressedBecauseV274DrewV275=(drawStats.realEaveHandoffSuppressedBecauseV274DrewV275||0)+suppressedStrips;
+        drawStats.realEaveHandoffSuppressedPixelsBecauseV274DrewV275=(drawStats.realEaveHandoffSuppressedPixelsBecauseV274DrewV275||0)+suppressedPx;
+        drawStats.realEaveHandoffProjectedButNoCoverageV275=(drawStats.realEaveHandoffProjectedButNoCoverageV275||0)+projectedNoCoverage;
+        drawStats.realEaveHandoffProjectionMissingAtFlushV275=(drawStats.realEaveHandoffProjectionMissingAtFlushV275||0)+projectionMissing;
+        if(pixels>0){
+            drawStats.realEaveHandoffDrawnV275=(drawStats.realEaveHandoffDrawnV275||0)+1;
+            drawStats.realEaveHandoffPixelsV275=(drawStats.realEaveHandoffPixelsV275||0)+pixels;
+            drawStats.realEaveHandoffFillRectsV275=(drawStats.realEaveHandoffFillRectsV275||0)+fillRects;
+            drawStats.realEaveHandoffVisibleColumnsV275=(drawStats.realEaveHandoffVisibleColumnsV275||0)+visibleColumns;
+            drawStats.realEaveHandoffOwner1PixelsV275=(drawStats.realEaveHandoffOwner1PixelsV275||0)+(pixelByOwner[1]||0);
+            drawStats.realEaveHandoffOwner2PixelsV275=(drawStats.realEaveHandoffOwner2PixelsV275||0)+(pixelByOwner[2]||0);
+            Object.keys(pixelBySide).forEach(side=>{
+                const key=perlaRealEaveSideCounterKeyV275('realEaveHandoffPixels',side);
+                drawStats[key]=(drawStats[key]||0)+pixelBySide[side];
+            });
+        }
+        if(budgetRejected){
+            drawStats.realEaveHandoffPixelBudgetHitV275=true;
+            drawStats.realEaveHandoffBudgetRejectedPixelsV275=(drawStats.realEaveHandoffBudgetRejectedPixelsV275||0)+budgetRejectedPx;
+        }
+    }
+    return perlaRealEaveHandoffFinalizeV275(drawStats);
+}
+function perlaRealEaveHandoffSummaryV275(){ return perlaRealEaveHandoffLastSummaryV275; }
+function perlaRealEaveHandoffDownloadV275(){ const payload={generatedAt:new Date().toISOString(), summary:perlaRealEaveHandoffSummaryV275(), v274:perlaRealRoofGeometricEaveEdgeSummaryV274(), v273:perlaRealCeilingCloneEaveAnchorSummaryV273(), lastDrawStats:perlaLastDrawStats||null}; const name='PERLA1_V275_REAL_EAVE_HANDOFF_DEBUG_'+new Date().toISOString().replace(/[:.]/g,'-')+'.json'; if(typeof downloadTextFile==='function') downloadTextFile(name, JSON.stringify(payload,null,2)); return payload; }
 function perlaRealRoofGeometricEaveEdgeFinalizeV274(drawStats){
     if(!drawStats) return perlaRealRoofGeometricEaveEdgeLastSummaryV274;
     drawStats.realRoofGeometricEaveEdgeEnabledV274=perlaRealRoofGeometricEaveEdgeEnabledV274();
@@ -2328,7 +2645,14 @@ function perlaRealRoofGeometricEaveEdgePassV274(roofs, drawStats){
         candidates++;
         for(let e=0;e<edges.length;e++){
             const edge=edges[e];
-            if(drawStats) drawStats.realRoofGeometricEaveEdgesConsideredV274=(drawStats.realRoofGeometricEaveEdgesConsideredV274||0)+1;
+            if(drawStats) {
+                drawStats.realRoofGeometricEaveEdgesConsideredV274=(drawStats.realRoofGeometricEaveEdgesConsideredV274||0)+1;
+                if(edge.nearHandoffV275) {
+                    drawStats.realRoofGeometricEaveNearHandoffEdgesConsideredV275=(drawStats.realRoofGeometricEaveNearHandoffEdgesConsideredV275||0)+1;
+                    const nearKey=perlaRealEaveSideCounterKeyV275('realRoofGeometricEaveNearHandoff',edge.side);
+                    drawStats[nearKey]=(drawStats[nearKey]||0)+1;
+                }
+            }
             const seg=perlaRealRoofGeometricEaveProjectedSegmentV274(edge,drawStats);
             if(!seg || seg.dist>PERLA_V274_EAVE_EDGE_MAX_DIST) continue;
             const color=perlaRealRoofGeometricEaveEdgeColorV274(r,edge);
@@ -2342,8 +2666,12 @@ function perlaRealRoofGeometricEaveEdgePassV274(roofs, drawStats){
                 if(r.ownerId===2) drawStats.realRoofGeometricEaveOwner2EdgesV274=(drawStats.realRoofGeometricEaveOwner2EdgesV274||0)+1;
                 const key='realRoofGeometricEave'+edge.side.charAt(0).toUpperCase()+edge.side.slice(1)+'EdgesV274';
                 drawStats[key]=(drawStats[key]||0)+1;
+                perlaRealEaveMarkV274CoverageV275(drawStats,r.ownerId,edge.side,out.pixels);
+                if(edge.nearHandoffV275) drawStats.realRoofGeometricEaveNearHandoffEdgesDrawnV275=(drawStats.realRoofGeometricEaveNearHandoffEdgesDrawnV275||0)+1;
             } else if(drawStats) {
                 drawStats.realRoofGeometricEaveEmptyDrawsV274=(drawStats.realRoofGeometricEaveEmptyDrawsV274||0)+1;
+                drawStats.realRoofGeometricEaveRejectedPixelsV274=(drawStats.realRoofGeometricEaveRejectedPixelsV274||0)+(out&&out.rejected?out.rejected:0);
+                if(edge.nearHandoffV275) drawStats.realRoofGeometricEaveNearHandoffEmptyDrawsV275=(drawStats.realRoofGeometricEaveNearHandoffEmptyDrawsV275||0)+1;
             }
         }
     }
@@ -11795,12 +12123,14 @@ function drawRoofLayer2_5D(time, drawStats){
         drawStats.roofV272=true;
         drawStats.roofV273=true;
         drawStats.roofV274=true;
+        drawStats.roofV275=true;
         drawStats.v266RoofSilhouetteMaskBudgetHierarchySafe=!!PERLA_V266_ROOF_SILHOUETTE_MASK_BUDGET_HIERARCHY_SAFE;
         drawStats.v267RoofSilhouetteMainWallClipSafe=!!PERLA_V267_ROOF_SILHOUETTE_MAIN_WALL_CLIP_SAFE;
         drawStats.v267OriginalRoofFillDefaultEnabled=!!PERLA_V267_ORIGINAL_ROOF_FILL_DEFAULT_ENABLED;
         drawStats.v272RealRoofUndersideEaveNearGeometrySafe=!!PERLA_V272_REAL_ROOF_UNDERSIDE_EAVE_NEAR_GEOMETRY_SAFE;
         drawStats.v273RealCeilingCloneExternalEaveAnchorSafe=!!PERLA_V273_REAL_CEILING_CLONE_EXTERNAL_EAVE_ANCHOR_SAFE;
         drawStats.v274RealRoofGeometricEaveEdgeSafe=!!PERLA_V274_REAL_ROOF_GEOMETRIC_EAVE_EDGE_SAFE;
+        drawStats.v275RealEaveHandoffSafe=!!PERLA_V275_REAL_EAVE_HANDOFF_SAFE;
         drawStats.v265CoverageUltraBudgetEdgeRailSafe=!!PERLA_V265_COVERAGE_ULTRA_BUDGET_EDGE_RAIL_SAFE;
         drawStats.v259RoofHotspotBudgetSafe=true;
         drawStats.v262CoverageStableEdgeRepairSafe=!!PERLA_V262_COVERAGE_STABLE_EDGE_REPAIR_SAFE;
@@ -24905,6 +25235,7 @@ function drawWorld(time){
     const doorRainCeilingCoverSegmentsV214=[];
     const doorRainExactCeilingRectsFrameV216=[];
     const realCeilingCloneEaveStripsV273=[];
+    const realEaveHandoffStripsV275=[];
     doorRainExactCeilingRectsV216=doorRainExactCeilingRectsFrameV216;
     doorRainExactCeilingCaptureActiveV216=!!PERLA_V216_DOOR_RAIN_EXACT_CEILING_RECT_REPLAY;
     doorRainExactCeilingReplayGuardV216=false;
@@ -24953,6 +25284,7 @@ function drawWorld(time){
                     if(isModernCoverOwner(curCeilOwner)) {
                         const externalV274=curCeilCloneMeta && typeof perlaRealRoofGeometricEaveEdgeHandlesCloneV274==='function' && perlaRealRoofGeometricEaveEdgeHandlesCloneV274(curCeilCloneMeta);
                         if(externalV274){
+                            if(typeof perlaRealEaveHandoffQueueFallbackV275==='function') perlaRealEaveHandoffQueueFallbackV275(realEaveHandoffStripsV275,startXCeil,segY,segW,curCeilOwner,curCeil,rowDist,floorBandH,curCeilCloneMeta,drawStats);
                             drawStats.realCeilingCloneExternalVisualHandledV274=(drawStats.realCeilingCloneExternalVisualHandledV274||0)+1;
                             drawStats.realCeilingCloneExternalFullCoverSuppressedV274=(drawStats.realCeilingCloneExternalFullCoverSuppressedV274||0)+1;
                             drawStats.realCeilingCloneExternalFullCoverSuppressedV273=(drawStats.realCeilingCloneExternalFullCoverSuppressedV273||0)+1;
@@ -24977,6 +25309,7 @@ function drawWorld(time){
             if(isModernCoverOwner(curCeilOwner)) {
                 const externalV274=curCeilCloneMeta && typeof perlaRealRoofGeometricEaveEdgeHandlesCloneV274==='function' && perlaRealRoofGeometricEaveEdgeHandlesCloneV274(curCeilCloneMeta);
                 if(externalV274){
+                    if(typeof perlaRealEaveHandoffQueueFallbackV275==='function') perlaRealEaveHandoffQueueFallbackV275(realEaveHandoffStripsV275,startXCeil,segY,segW,curCeilOwner,curCeil,rowDist,floorBandH,curCeilCloneMeta,drawStats);
                     drawStats.realCeilingCloneExternalVisualHandledV274=(drawStats.realCeilingCloneExternalVisualHandledV274||0)+1;
                     drawStats.realCeilingCloneExternalFullCoverSuppressedV274=(drawStats.realCeilingCloneExternalFullCoverSuppressedV274||0)+1;
                     drawStats.realCeilingCloneExternalFullCoverSuppressedV273=(drawStats.realCeilingCloneExternalFullCoverSuppressedV273||0)+1;
@@ -25126,6 +25459,7 @@ function drawWorld(time){
     stabilizeTowerVisibilityV235(time, drawStats);
     drawIntegratedTowerRoofCapV136(time, drawStats);
     drawRoofLayer2_5D(time, drawStats);
+    if(typeof perlaRealEaveHandoffFlushV275==='function') perlaRealEaveHandoffFlushV275(realEaveHandoffStripsV275, drawStats);
     const roofT1V198=(typeof performance!=='undefined'&&performance.now)?performance.now():roofT0V198;
     drawStats.roofMsV198=+(roofT1V198-roofT0V198).toFixed(3);
     if(typeof perlaCoverageAfterRoofV261==='function') perlaCoverageAfterRoofV261(drawStats);
@@ -26039,6 +26373,10 @@ window.perlaRealRoofGeometricEaveEdgeSummaryV274=perlaRealRoofGeometricEaveEdgeS
 window.getPerlaRealRoofGeometricEaveEdgeSummaryV274=perlaRealRoofGeometricEaveEdgeSummaryV274;
 window.perlaRealRoofGeometricEaveEdgeDownloadV274=perlaRealRoofGeometricEaveEdgeDownloadV274;
 window.downloadPerlaRealRoofGeometricEaveEdgeDebugV274=perlaRealRoofGeometricEaveEdgeDownloadV274;
+window.perlaRealEaveHandoffSummaryV275=perlaRealEaveHandoffSummaryV275;
+window.getPerlaRealEaveHandoffSummaryV275=perlaRealEaveHandoffSummaryV275;
+window.perlaRealEaveHandoffDownloadV275=perlaRealEaveHandoffDownloadV275;
+window.downloadPerlaRealEaveHandoffDebugV275=perlaRealEaveHandoffDownloadV275;
 if(window.__PERLA_DEBUG__){ Object.assign(window.__PERLA_DEBUG__, {
     PERLA_V272_REAL_ROOF_UNDERSIDE_EAVE_NEAR_GEOMETRY_SAFE, PERLA_V272_BASE_BUILD, PERLA_V272_PATCH_MODE,
     PERLA_V272_MAX_ROOFS, PERLA_V272_MAX_COLUMNS_PER_ROOF, PERLA_V272_MAX_PIXELS_PER_FRAME, PERLA_V272_LAYER,
@@ -26052,7 +26390,10 @@ if(window.__PERLA_DEBUG__){ Object.assign(window.__PERLA_DEBUG__, {
     PERLA_V274_REAL_ROOF_GEOMETRIC_EAVE_EDGE_SAFE, PERLA_V274_BASE_BUILD, PERLA_V274_PATCH_MODE,
     PERLA_V274_DISABLE_EXTERNAL_CLONE_STRIP_VISUAL, PERLA_V274_FORBID_V265_EDGE_RAIL_PRIMARY,
     PERLA_V274_EAVE_EDGE_THICKNESS_PX, perlaRealRoofGeometricEaveEdgeSummaryV274,
-    perlaRealRoofGeometricEaveEdgeDownloadV274, perlaRealRoofGeometricEaveEdgePassV274
+    perlaRealRoofGeometricEaveEdgeDownloadV274, perlaRealRoofGeometricEaveEdgePassV274,
+    PERLA_V275_REAL_EAVE_HANDOFF_SAFE, PERLA_V275_BASE_BUILD, PERLA_V275_PATCH_MODE,
+    PERLA_V275_NEAR_SIDE_BAND, PERLA_V275_HANDOFF_STRIP_H_PX, PERLA_V275_HANDOFF_MAX_PIXELS_PER_FRAME,
+    perlaRealEaveHandoffSummaryV275, perlaRealEaveHandoffDownloadV275
 }); }
 window.getRainVfxStabilizerSummaryV246=getRainVfxStabilizerSummaryV246;
 window.downloadRainVfxStabilizerReportV246=downloadRainVfxStabilizerReportV246;

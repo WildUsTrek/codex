@@ -21,25 +21,31 @@ Scope: this file applies to `01_GIOCO_PRONTO_LOCAL_TEST/`.
 
 ## Current Roof Patch Contract
 
-For V274 and successors:
+For V275 and successors:
 
-- Visible external eave/border must come from real `roofSegments` projection.
-- V273 external strip visual should stay bypassed where V274 handles the visible edge.
-- Expected V274 debug pattern in affected roof views:
+- Primary visible external eave/border must come from real `roofSegments` projection through the V274 geometric eave path.
+- V275 may add a thin depth-aware fallback only for external clone columns not already covered by V274.
+- V273 external strip visual should stay bypassed where V274/V275 handle the visible edge.
+- Expected V275 debug pattern in affected roof views:
   - `realCeilingCloneEaveStripQueuedV273` is `0`.
   - `realCeilingCloneEaveStripDrawnV273` is `0`.
   - `realCeilingCloneEaveStripPixelsV273` is `0`.
-  - `realRoofGeometricEavePixelsV274` is greater than `0` when a modern eave is visible.
+  - `realRoofGeometricEavePixelsV274` or `realEaveHandoffPixelsV275` is greater than `0` when a modern eave is visible.
+  - `realEaveHandoffPixelBudgetHitV275` is not `true`.
+  - `realRoofUndersideEaveEnabledV272` is `false`.
   - `realCeilingCloneExternalVisualHandledV274` is greater than `0` when external clone cells are present.
 
 ## Visual QA Poses
 
 Use these debug poses for roof/eave work unless the user provides a newer repro:
 
-- Reception side: `setPlayerForDebug(62, 10, .8, -.45)`
-- Reception close grazing: `setPlayerForDebug(70, 9, -1, 0)`
-- Reception close side: `setPlayerForDebug(64, 10, .7, -.55)`
-- Bath side: `setPlayerForDebug(88.8, 65, 1, 0)`
+- Critical reception west/south edge, east view: `setPlayerForDebug(64.99, 8.44, 1, 0)`
+- Critical reception diagonal north-east: `setPlayerForDebug(64.99, 8.44, .7071, -.7071)`
+- Critical reception diagonal south-east: `setPlayerForDebug(64.99, 8.44, .7071, .7071)`
+- Reception outside south overhang: `setPlayerForDebug(64.99, 9.60, 1, 0)`
+- Bath owner 2 south side: `setPlayerForDebug(99, 71, 0, -1)`
+- Bath owner 2 east side: `setPlayerForDebug(106.5, 65, -1, 0)`
+- Bath owner 2 west side: `setPlayerForDebug(88, 65, 1, 0)`
 
 For each pose:
 

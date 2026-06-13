@@ -44,6 +44,23 @@ doppio click su:
 
 02_SALVA_PROGETTO_SU_GITHUB.bat
 
+## Se lo script dice che non trova Git
+
+GitHub Desktop contiene gia' una copia di Git, ma su Windows non sempre la mette nel PATH del terminale.
+
+Il metodo corretto e':
+
+1. aprire GitHub Desktop e fare accesso;
+2. verificare che il repository `WildUsTrek/codex` sia clonato;
+3. rilanciare `01_AGGIORNA_PROGETTO_PRIMA_DI_LAVORARE.bat` o `02_SALVA_PROGETTO_SU_GITHUB.bat`.
+
+Gli script cercano Git in questo ordine:
+
+1. `where git`
+2. `%LOCALAPPDATA%\GitHubDesktop\app-*\resources\app\git\cmd\git.exe`
+
+Non serve hard-codare il nome utente Windows. Su PC diversi `%LOCALAPPDATA%` punta automaticamente alla cartella corretta.
+
 ## Percorsi: cosa e' fragile e cosa no
 
 Non e' fragile se la cartella si trova in un percorso diverso, per esempio:
