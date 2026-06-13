@@ -1,0 +1,35 @@
+{
+  "build": "PERLA1_V201_WEATHER_PORTAL_CONTINUITY_STORM_BUDGET_LOCAL",
+  "base": "PERLA1_V200_OUTDOOR_ROOF_BUDGET_CEILING_AUDIO_BOOST_LOCAL",
+  "scope": "weather visual continuity and storm render budget only",
+  "changes": {
+    "portalContinuity": "camera-ray outdoor visibility factor with temporal smoothing",
+    "rainRendering": "offscreen rain buffer, composited to main canvas; update every 2 frames normal/budget, 3 emergency",
+    "portalRainMask": "clips indoor rain to columns that see outdoor through openings",
+    "stormCloudBudget": "rain/storm cloud span/pass budget when roof/governor/frame is under load",
+    "debug": [
+      "weatherPortalContinuityV201",
+      "weatherOutdoorViewFactorV201",
+      "weatherRainBufferV201",
+      "weatherRainDrawsV201",
+      "weatherCloudBudgetV201"
+    ]
+  },
+  "preserved": [
+    "V200 roof outdoor budget",
+    "V200 indoor ceiling roof-color fix",
+    "V200 audio boost",
+    "V199 closed-building roof recovery",
+    "V185 horizon target stretch 1.08",
+    "map",
+    "collisions",
+    "worldgen",
+    "cMap/objectBlock",
+    "sprite placement",
+    "pergola",
+    "festoons",
+    "lake/boat",
+    "tower/canopy",
+    "PNG assets"
+  ]
+}

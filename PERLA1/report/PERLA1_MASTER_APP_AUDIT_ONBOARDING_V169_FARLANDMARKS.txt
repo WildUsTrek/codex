@@ -1,0 +1,1105 @@
+# PERLA1 — MASTER APP AUDIT & ONBOARDING DOCUMENT
+
+**Ruolo richiesto:** Software Architect Senior / Tech Lead / Code Auditor / Reverse Engineering Lead  
+**Documento:** Master App Audit & Onboarding Document  
+**Formato:** Markdown pulito, salvabile come `.txt`  
+**Base reale auditata:** `PERLA1_V169_SKYBOX_EDGE_DEPROJECTED_LOCK_SAFE_LOCAL.zip`  
+**Data audit:** 2026-06-09  
+**Metodo applicato:** Zero Approssimazione, scansione sequenziale del pacchetto reale + documenti allegati/migrazione/metodo.
+
+---
+
+# PREMESSA DI VALIDITÀ E LIMITI DELL'AUDIT
+
+Questo documento è basato su una scansione reale del pacchetto ZIP V169 e dei documenti tecnici forniti nella sessione, in particolare:
+
+- `PERLA1_V169_SKYBOX_EDGE_DEPROJECTED_LOCK_SAFE_LOCAL.zip`;
+- `PERLA1_MIGRAZIONE_CHAT_V170_FAR_LANDMARKS_WORLD_ANCHORED.txt`;
+- `METODO LAVORATIVO.txt`;
+- `PERLA1_ANALISI_REALE_COMPLETA_V93_PER_RIPRESA_V94.txt`;
+- `ISTRUZIONI_PERLA1_PAVIMENTI_SENTIERI_MORBIDI_OUTLINE.txt`;
+- documenti interni contenuti nello ZIP V169: `STATUS_PROGETTO_E_DIPENDENZE_PERLA1.txt`, `METODO_LAVORO_ANTI_REGRESSIONE_PERLA1.txt`, `ISTRUZIONI OBBLIGATORIE DA SEGUIRE PER LEGGERE LE COORDINATE.txt`, `README_REPACK_*`, `REPORT_*`.
+
+Controlli tecnici eseguiti durante l'audit:
+
+- estrazione reale dello ZIP V169;
+- `unzip -t` sullo ZIP V169: OK, nessun errore nei dati compressi;
+- estrazione dello script JavaScript da `index.html`;
+- `node --check` sullo script estratto: OK;
+- conteggio file, asset PNG, riferimenti manifest, report e README;
+- controllo asset manifest: 96 gruppi manifest, 108 riferimenti PNG unici, 0 missing;
+- controllo asset reali: 116 PNG in `assets/raycast/`, 8 PNG non referenziati dal manifest corrente;
+- controllo dimensioni asset: 114 PNG 64×64, uno skybox 4096×384, un cloud layer 2048×256;
+- hash ZIP V169: `4a78977a0cbc7919527a0bf4ece812b2c725068d65b8db6c1951d5634e4d7dc7`.
+
+Limiti dichiarati:
+
+- non è stato eseguito un test browser/manuale in game durante questo audit;
+- non è stato effettuato un profiling reale FPS su dispositivi mobili;
+- non è stato verificato il comportamento visivo in runtime davanti alla torre;
+- i dati di performance reali devono essere raccolti da `window.__PERLA_DEBUG__` e debug/report in browser se necessario;
+- qualunque dato non esplicitamente presente nel codice/documenti viene marcato come **Da Indagare** e non inventato.
+
+---
+
+# 1. EXECUTIVE SUMMARY & TECH SPECS
+
+## 1.1 Natura esatta dell'app
+
+PERLA1, nome completo operativo **“Camping Sole, Mare & Zanzare”**, è una mini-app/game locale basata su un motore raycasting 2.5D custom in stile cartoon/mediterraneo. L'app rappresenta un campeggio esplorabile in prima persona con:
+
+- mappa tile-based;
+- muri, siepi, stanze, tetti, tettoie e soffitti;
+- pavimenti morbidi precomputati;
+- sprite billboard con occlusione;
+- elementi narrativi/ambientali come pineta, camper, spiaggia, mare, laghetto segreto, labirinto, torre, bar, parcheggio, bagni, pergola, festoni;
+- skybox panoramico atmosferico e landmark lontani attualmente ancora contenuti nello skybox V169;
+- input tastiera/mouse/touch;
+- server locale PowerShell per avvio senza Python.
+
+La core business logic dell'app non è commerciale o database-driven: è un'esperienza ludica/visuale locale. La logica dominante è il rendering realtime, la costruzione deterministica della mappa e la preservazione di un mondo coerente tramite molte patch incrementali.
+
+## 1.2 Stack tecnologico completo
+
+### Linguaggi e tecnologie
+
+- **HTML5**: struttura pagina e canvas;
+- **CSS integrato**: layout desktop/mobile, responsive, safe-area, controlli touch;
+- **Vanilla JavaScript**: motore, worldgen, renderer, input, debug;
+- **Canvas 2D API**: rendering principale;
+- **PNG locali**: texture muri/sprite/skybox/cloud;
+- **PowerShell**: server statico locale robusto;
+- **Batch Windows**: wrapper launcher per avvio server;
+- **ZIP/TAR.GZ**: packaging.
+
+### Librerie esterne
+
+Audit reale su `index.html`: **nessuna libreria esterna dichiarata**. Non risultano `<script src=...>`, CDN, framework, import ES module o fetch verso servizi esterni. Il codice è monolitico e auto-contenuto.
+
+### Database
+
+Nessun database rilevato nel pacchetto V169. Nessun Firebase, LocalStorage strutturato, IndexedDB o backend remoto rilevato come dipendenza centrale.
+
+**Da Indagare:** eventuali salvataggi futuri o telemetria non sono presenti nel pacchetto V169 auditato.
+
+### Motore
+
+Motore custom raycasting 2.5D:
+
+- cast dei raggi su `map[y][x]`;
+- floor/ceiling casting;
+- wallcasting con texture e fog;
+- ZBuffer per occlusione;
+- spritecasting billboard;
+- roof rendering specializzato;
+- debug export massivo in `window.__PERLA_DEBUG__`.
+
+## 1.3 Specifiche tecniche rilevate
+
+### File principale
+
+- `01_GIOCO_PRONTO_LOCAL_TEST/index.html`
+- Dimensione: circa 576 KB
+- Righe: 9.585
+- Script JS inline: 1 blocco `<script>`
+- Script estratto: circa 563 KB
+- Funzioni dichiarate: 605 dichiarazioni, 603 nomi unici
+
+### Build corrente
+
+```text
+PERLA_BUILD_ID = 'PERLA1_V169_SKYBOX_EDGE_DEPROJECTED_LOCK_SAFE_LOCAL'
+```
+
+### Mappa
+
+```text
+LEGACY_SOURCE_W_V74 = 120
+WEST_EXPAND_V74 = 30
+mapW = 150
+mapH = 88
+SEA_Y = 80
+X_INTERNA = X_GAMEPLAY + 30
+Y_INTERNA = Y_GAMEPLAY
+```
+
+### Asset
+
+- PNG totali in `assets/raycast`: 116
+- PNG 64×64: 114
+- skybox: `sky_panorama_360_v169.png`, 4096×384
+- cloud layer: `cloud_layer_soft_v169.png`, 2048×256
+- manifest: 96 gruppi, 108 riferimenti unici
+- missing manifest refs: 0
+- asset non referenziati dal manifest corrente: 8
+
+Asset non referenziati rilevati:
+
+```text
+barbecue_long.png
+fountain.png
+ivy_arch_hanging_high.png
+ivy_arch_overhead_0.png
+ivy_arch_overhead_1.png
+wall_tile_bath_roof_v39.png
+wall_tower_stone_v126.png
+wall_wood_reception_roof_v39.png
+```
+
+Nota: “unused” non implica automaticamente errore. Nel progetto PERLA1 molti asset restano come residui storici, backup artistici o asset disattivati.
+
+### Ambiente di hosting/test
+
+Hosting previsto:
+
+- locale via browser;
+- cartella servita da PowerShell static server su `127.0.0.1:8000`;
+- possibile apertura diretta del browser tramite `Start-Process`.
+
+Launcher:
+
+```text
+AVVIA_GIOCO_WINDOWS_SENZA_PYTHON.bat
+AVVIA_GIOCO_SERVER_POWERSHELL.ps1
+```
+
+Il server PowerShell:
+
+- serve `01_GIOCO_PRONTO_LOCAL_TEST/`;
+- espone `Access-Control-Allow-Origin: *`;
+- disabilita cache via header `no-cache, no-store, must-revalidate`;
+- supporta GET/HEAD;
+- impedisce path traversal usando `GetFullPath` e verifica prefisso root;
+- logga in `AVVIO_GIOCO_POWERSHELL_LOG.txt`.
+
+### Requisiti di sistema
+
+Requisiti espliciti:
+
+- Windows consigliato per launcher `.bat`/PowerShell;
+- browser moderno con Canvas 2D;
+- PowerShell disponibile;
+- porta 8000 libera.
+
+**Da Indagare:** requisiti minimi esatti CPU/RAM/GPU/browser non sono formalizzati. Il motore contiene ottimizzazioni mobile e debug performance, ma non un documento di system requirements finale.
+
+---
+
+# 2. MAPPATURA E SCHEMI GERARCHICI
+
+## 2.1 Struttura file/cartelle — albero fisico reale V169
+
+```text
+PERLA1_V169_SKYBOX_EDGE_DEPROJECTED_LOCK_SAFE_LOCAL/
+├─ 01_GIOCO_PRONTO_LOCAL_TEST/
+│  ├─ index.html
+│  └─ assets/
+│     └─ raycast/
+│        ├─ ad_barbecue_0.png
+│        ├─ ad_barbecue_1.png
+│        ├─ ad_barbecue_2.png
+│        ├─ ad_barbecue_3.png
+│        ├─ ad_gelato.png
+│        ├─ ad_parcheggio_p.png
+│        ├─ ad_patatine.png
+│        ├─ ad_pizza.png
+│        ├─ ad_tris.png
+│        ├─ bar_counter.png
+│        ├─ bar_counter_barman_v138l.png
+│        ├─ barbecue_long*.png
+│        ├─ barman.png
+│        ├─ billiard_table.png
+│        ├─ bush*.png
+│        ├─ cafe_table_chairs.png
+│        ├─ camper.png
+│        ├─ campfire_*.png
+│        ├─ car_*.png
+│        ├─ cloud_layer_soft_v169.png
+│        ├─ deckchair.png
+│        ├─ flower*.png
+│        ├─ fountain*.png
+│        ├─ gazebo_column.png
+│        ├─ giant_cocktail.png
+│        ├─ grass*.png
+│        ├─ ivy_*.png
+│        ├─ lake_rowboat.png
+│        ├─ marble_statue.png
+│        ├─ moss_rock.png
+│        ├─ palm*.png
+│        ├─ parking_line.png
+│        ├─ pine*.png
+│        ├─ pinecone.png
+│        ├─ pingpong_table.png
+│        ├─ pot*.png
+│        ├─ shower_*.png
+│        ├─ sign_*.png
+│        ├─ sky_panorama_360_v169.png
+│        ├─ sofa.png
+│        ├─ stone_small_*.png
+│        ├─ stool.png
+│        ├─ tamarisk_*.png
+│        ├─ tent_*.png
+│        ├─ umbrella.png
+│        ├─ wall_*.png
+│        └─ yoga_mat.png
+├─ AVVIA_GIOCO_WINDOWS_SENZA_PYTHON.bat
+├─ AVVIA_GIOCO_SERVER_POWERSHELL.ps1
+├─ ISTRUZIONI OBBLIGATORIE DA SEGUIRE PER LEGGERE LE COORDINATE.txt
+├─ METODO_LAVORO_ANTI_REGRESSIONE_PERLA1.txt
+├─ STATUS_PROGETTO_E_DIPENDENZE_PERLA1.txt
+├─ README_REPACK_V136.txt ... README_REPACK_V169.txt
+├─ REPORT_V138F_*.json ... REPORT_V169_*.json
+└─ REPORT_V163_SKY_PREVIEWS/
+   ├─ COMPARE_ALPHA_SOUTH_x650_1600.png
+   ├─ COMPARE_Q0_x0_1024.png
+   ├─ COMPARE_Q1_x1024_2048.png
+   ├─ COMPARE_Q2_x2048_3072.png
+   ├─ COMPARE_Q3_x3072_4096.png
+   ├─ COMPARE_SOUTH_x650_1600.png
+   ├─ V160_BASE_full_on_sky.png
+   └─ V163_USER_MASK_ALPHA_full_on_sky.png
+```
+
+## 2.2 Nota struttura `report/`
+
+Nel pacchetto V169 reale **non esiste una sottocartella `report/`**. I report e README storici sono ancora nella root. Secondo il nuovo metodo operativo generale, la prossima patch deve:
+
+1. creare `report/` se assente;
+2. segnalare che nel pacchetto base V169 era assente;
+3. spostare o copiare ordinatamente in `report/` i report root storici;
+4. aggiornare o creare in `report/`:
+   - `STATUS_PROGETTO_E_DIPENDENZE_PERLA1.txt`;
+   - `METODO_LAVORO_ANTI_REGRESSIONE_PERLA1.txt`;
+   - `REPORT_<VERSIONE>_<DESCRIZIONE>.json`;
+   - `README_REPACK_<VERSIONE>.txt`;
+   - eventuale `MIGRAZIONE_CHAT_<VERSIONE>.txt`.
+
+Questa è una richiesta metodologica nuova e va rispettata nelle patch successive.
+
+## 2.3 Albero delle dipendenze
+
+```text
+Browser moderno
+└─ index.html
+   ├─ HTML UI
+   │  ├─ #game-container
+   │  ├─ canvas#screen 800×450
+   │  ├─ canvas#mini-map 128×128
+   │  ├─ #loading
+   │  ├─ #mobile-controls
+   │  └─ #perla-debug-widget
+   ├─ CSS inline
+   │  ├─ desktop layout
+   │  ├─ mobile portrait
+   │  ├─ mobile landscape
+   │  ├─ safe-area / visualViewport
+   │  └─ touch UI
+   ├─ JavaScript inline
+   │  ├─ constants/build config
+   │  ├─ ASSET_MANIFEST
+   │  ├─ texture loader
+   │  ├─ map/world state
+   │  ├─ world generation
+   │  ├─ floor visual maps
+   │  ├─ water/lake visual maps
+   │  ├─ wallcasting
+   │  ├─ floor/ceiling casting
+   │  ├─ roof/tower systems
+   │  ├─ sprite pipeline
+   │  ├─ skybox V169
+   │  ├─ input/touch controls
+   │  ├─ minimap
+   │  ├─ debug exports
+   │  └─ game loop
+   └─ assets/raycast/*.png
+      ├─ wall textures
+      ├─ sprite billboard textures
+      ├─ animated frames
+      ├─ decals
+      ├─ signs
+      ├─ skybox
+      └─ cloud layer
+
+Windows launcher
+├─ AVVIA_GIOCO_WINDOWS_SENZA_PYTHON.bat
+└─ AVVIA_GIOCO_SERVER_POWERSHELL.ps1
+   └─ static HTTP server su 127.0.0.1:8000
+```
+
+## 2.4 Mappatura variabili e stati dominanti
+
+### Stato mappa/worldgen
+
+```text
+map[y][x]
+├─ muri/ostacoli solidi
+├─ usato dal raycaster
+└─ non va usato per effetti solo visivi
+
+fMap[y][x]
+├─ tipo pavimento/materiale
+├─ base del floor rendering
+└─ non decide da sola collisione sprite
+
+cMap[y][x]
+├─ soffitti/tettoie/cover
+├─ usata da ceiling rendering
+└─ dialoga con ceilingSpriteClipY
+
+roadMask[y][x]
+├─ strada logica
+├─ reachability/percorsi
+└─ non deve cambiare per meri soft edge visivi
+
+objectBlock[y][x]
+├─ blocchi da sprite/oggetti
+├─ usata per placement e collisioni
+└─ va ricostruita se si rimuovono sprite bloccanti
+
+zoneMask[y][x]
+├─ semantica ambientale
+├─ biomi e stanze
+└─ guida spawn flora/decorazioni
+
+wallDecalMap[y][x]
+├─ decal face-aware sui muri
+├─ insegne/pubblicità/cocktail/barbecue
+└─ non va confusa con floorDecalMap
+
+wallHeightMap[y][x]
+├─ altezze visuali speciali muri
+├─ torre/stanze/occlusione
+└─ sensibile per tetti e skyline
+```
+
+### Stato rendering
+
+```text
+ZBuffer
+├─ profondità muri per colonna
+└─ usato per occlusione sprite
+
+WallTopBuffer / WallBottomBuffer
+├─ limiti verticali muro per colonna
+└─ usati da roof/tower/occlusioni
+
+WallOwnerBuffer
+├─ owner muro per colonna
+└─ diagnostica/occlusione tetti
+
+CeilingDepthBuffer
+├─ profondità soffitti per righe/colonne
+└─ fondamentale per clipping sprite sotto cover
+
+CeilingOwnerBuffer
+├─ owner soffitti
+└─ evita buchi tetti/coperture dello stesso owner
+
+CeilingColumnHasDepth
+├─ flag colonna con ceiling depth
+└─ richiesto da ceilingSpriteClipY()
+```
+
+### Stato visuale pavimenti
+
+```text
+roadSoftEdgeMap
+trailSoftEdgeMap
+waterSoftEdgeMapV150
+waterInnerEdgeMapV150
+waterCornerLandMapV151
+waterCornerInnerMapV151
+lakeWaterRingMapV152
+lakeSandInnerRingMapV152
+lakeSandOuterRingMapV152
+lakeGrassOuterRingMapV152
+lakeWaterRoundMaskV153
+lakeSandRoundMaskV153
+lakeHouseBlendMapV156
+lakeHouseTerraMapV156
+lakeShoreSeamMapV157
+lakeShoreTerraSeamMapV157
+floorNoiseMap
+floorDecalMap
+floorOutlineMap
+floorVisualColorMap
+floorSubTileColorMap
+floorNearSubTileColorMap
+floorMicroDecalMap
+```
+
+Principio: **logica netta, resa morbida**. Queste mappe migliorano la resa visiva, ma non devono guidare collisioni, accessibilità o road reach.
+
+### Stato sprite
+
+```text
+sprites[]
+├─ sprite billboard
+├─ proprietà tex/kind/scale/groundSink/nature/blocking ecc.
+├─ sort/occlusione tramite ZBuffer
+├─ clipping sotto ceiling via ceilingSpriteClipY
+└─ possibili contact shadows / LOD / broadphase
+```
+
+### Stato asset
+
+```text
+ASSET_MANIFEST
+├─ 96 gruppi manifest
+├─ 108 riferimenti PNG unici
+├─ missing = 0
+└─ caricato in tex[id]
+```
+
+### Stato skybox V169
+
+```text
+PERLA_SKYBOX_V169
+PERLA_SKYBOX_EDGE_DEPROJECTED_LOCK_SAFE_V169
+sky_panorama_360_v169.png
+cloud_layer_soft_v169.png
+```
+
+V169 usa `edge_deprojected_lock_safe`: centro ispirato al mapping V166, bordi de-proiettati verso target `cameraX*k`. È il miglior compromesso temporaneo del vecchio paradigma skybox, ma non la soluzione definitiva.
+
+## 2.5 Data flow generale
+
+```text
+1. Browser apre index.html
+2. CSS prepara layout desktop/mobile
+3. JS definisce costanti, manifest, mappe, helper
+4. loadImage / ASSET_MANIFEST carica texture locali
+5. generateWorld() costruisce mondo deterministico
+6. buildFloorVisualMaps() precomputa pavimenti morbidi
+7. input aggiorna pos/dir/player state
+8. gameLoop() chiama drawWorld(time)
+9. drawWorld:
+   ├─ clear canvas
+   ├─ drawBackdrop / skybox
+   ├─ reset render buffers
+   ├─ floor/ceiling/walls
+   ├─ roof/tower special layers
+   ├─ sprites / shadows / special effects
+   └─ stats/debug
+10. drawMiniMap aggiorna minimappa
+11. __PERLA_DEBUG__ espone stato/funzioni/report
+```
+
+---
+
+# 3. ANALISI DELLO STATO DELL'ARTE — FORZE E FRAGILITÀ
+
+## 3.1 Punti di forza
+
+### Tecnica
+
+1. **Motore self-contained.**  
+   Tutta la logica è in un singolo `index.html`, quindi la build è portabile e facile da avviare localmente.
+
+2. **Asset locali e manifest controllato.**  
+   Nessuna dipendenza CDN. Il manifest ha 0 missing nella V169 auditata.
+
+3. **Debug export ricco.**  
+   `window.__PERLA_DEBUG__` espone mappe, funzioni, parametri e snapshot; questo è prezioso per reverse engineering e test mirati.
+
+4. **Pipeline di worldgen deterministica.**  
+   Il mondo viene generato da funzioni ordinate e patch storiche applicate in sequenza. Non dipende da rete o database.
+
+5. **Separazione logica/resa in molte aree.**  
+   Il sistema pavimenti usa mappe visuali separate da collisioni/accessibilità.
+
+6. **Sistemi avanzati per un raycaster Canvas 2D.**  
+   La codebase include tetti inclinati, gable caps, owner buffers, sprite clipping, contact shadows, broadphase/LOD e floor blending.
+
+7. **Mobile optimization reale.**  
+   CSS, touch controls, visualViewport, modalità portrait/landscape e parametri renderer differenziati sono presenti.
+
+### Pratica
+
+1. **Avvio facile su Windows.**  
+   Il `.bat` avvia un server PowerShell robusto senza Python.
+
+2. **Pacchetto completo.**  
+   V169 include gioco, asset, launcher, report e documenti storici.
+
+3. **Iterazione rapida.**  
+   Modificare `index.html` e asset locali consente patch veloci, purché chirurgiche.
+
+4. **Debug copiabile.**  
+   Il widget debug e funzioni export permettono all'utente di fornire report testuali.
+
+### Teorica
+
+1. **Raycasting classico esteso.**  
+   La base concettuale è il raycaster 2.5D: mondo tile-based + proiezione per colonne + sprite billboard.
+
+2. **Layering progressivo.**  
+   Ogni sistema importante viene sovrapposto senza trasformare il motore in vero 3D.
+
+3. **Approccio anti-regressione evolutivo.**  
+   Le patch storiche sono registrate come layer evolutivi: V74, V90, V105, V126, V150, V157, V163, V169.
+
+## 3.2 Fragilità e colli di bottiglia
+
+### Fragilità tecnica
+
+1. **Monolite enorme.**  
+   `index.html` ha 9.585 righe e oltre 600 funzioni. Questo facilita il packaging ma aumenta rischio di conflitti, duplicazioni, residui e regressioni.
+
+2. **Versioning storico dentro il codice.**  
+   Molti sistemi portano nomi Vxx. È utile per memoria storica ma rende difficile capire cosa sia attivo, legacy, fallback o disattivato.
+
+3. **Report disordinati nella root.**  
+   V169 non ha `report/`; ci sono 45 `REPORT_*` e 44 `README_REPACK_*` nella root. La prossima patch deve riordinare in `report/`.
+
+4. **Skybox/landmark ancora nel vecchio paradigma.**  
+   V169 è miglior compromesso ma non risolve concettualmente il movimento dei landmark. Serve architettura `farLandmarks`.
+
+5. **Assenza di test visuali automatizzati.**  
+   Esistono check tecnici, ma non un golden screenshot test ripetibile per torre/montagne/skybox.
+
+6. **Assenza di modularizzazione.**  
+   Non esistono moduli JS separati, build system, test runner, linting, package manager.
+
+7. **Launcher metadata non aggiornati.**  
+   Il `.bat` e `.ps1` riportano ancora riferimenti V126B/V126 nel testo, pur servendo V169. Funzionalmente il server serve la cartella corretta, ma documentalmente è una fragilità.
+
+### Fragilità pratica
+
+1. **Il risultato visivo richiede test reale.**  
+   Molti problemi emergono solo ruotando in game davanti a oggetti reali.
+
+2. **Possibile confusione versioni.**  
+   La storia V158M/N/O/P/Q e V160+ ha mostrato che versioni con lettere e ripristini possono confondere. Usare numeri progressivi chiari.
+
+3. **Rischio patch multivariabile.**  
+   Quando si toccano asset, alpha, renderer e fog insieme, non si capisce cosa ha fallito.
+
+### Fragilità teorica
+
+1. **Fondale vs mondo.**  
+   La grande scoperta del ramo skybox è che landmark prominenti non vanno trattati come skybox camera-attached. Il cielo può essere uno skybox, ma montagne/isole devono diventare layer world-anchored.
+
+2. **Matematica non sempre coincide con percezione.**  
+   V166 era “più matematica” ma percettivamente sbagliata: trasformava lo sfondo in un muro vicino.
+
+3. **Compromessi raycaster.**  
+   Il motore vive su compromessi tra pseudo-3D, layering e sprite. Soluzioni da motore 3D puro possono essere sbagliate.
+
+## 3.3 Caratteristiche peculiari
+
+- Coordinate gameplay/internal con offset X +30;
+- mappa 150×88 nata da espansione ovest/evoluzioni storiche;
+- vasto sistema di floor visual maps precomputate;
+- skyline/skybox molto sperimentato;
+- tetti moderni con owner, self-depth, gable caps, fascia e gronda;
+- torre/lifeguard tower con rendering speciale non ridotto a sprite;
+- camper festoons con cache/DDA/fast path storico;
+- pergola V90 come layer dedicato, non billboard V78;
+- debug object estremamente ricco;
+- documentazione storica estesa ma disordinata nella root.
+
+---
+
+# 4. ECOSISTEMA E INTEGRAZIONI ESTERNE
+
+## 4.1 Mappatura di rete
+
+L'app V169 è sostanzialmente **offline/local-first**.
+
+Comunicazione di rete rilevata:
+
+```text
+Browser → http://127.0.0.1:8000/ → PowerShell static server → file locali
+```
+
+Non risultano:
+
+- fetch API verso servizi remoti;
+- webhook;
+- Google Apps Script;
+- Firebase;
+- CDN;
+- analytics;
+- login;
+- database cloud;
+- storage remoto.
+
+## 4.2 Server locale PowerShell
+
+`AVVIA_GIOCO_SERVER_POWERSHELL.ps1` implementa un server statico su localhost.
+
+Comportamento:
+
+- root server: `01_GIOCO_PRONTO_LOCAL_TEST`;
+- default path `/` → `/index.html`;
+- `favicon.ico` → 204;
+- metodi supportati: GET, HEAD;
+- path traversal bloccato tramite `GetFullPath` e prefisso cartella gioco;
+- Content-Type gestiti per HTML, JS, CSS, JSON, SVG, PNG, JPG, WebP, GLB, OGG/WAV/MP3, TXT;
+- log in `AVVIO_GIOCO_POWERSHELL_LOG.txt`;
+- ignora errori benigni di connessione abortita browser.
+
+### Impatti pratici
+
+- L'app non dipende da Python.
+- Se la porta 8000 è occupata, il server fallisce e avvisa.
+- Se la cartella non è estratta correttamente, segnala `index.html` mancante.
+
+### Sicurezza
+
+- Il server è limitato a `127.0.0.1`.
+- C'è protezione base path traversal.
+- Header `Access-Control-Allow-Origin: *` è permissivo ma nel contesto localhost/statico non è una criticità primaria.
+
+**Da Indagare:** eventuale comportamento antivirus/firewall su alcuni Windows.
+
+## 4.3 Autenticazione e permessi
+
+Nessun flusso di autenticazione rilevato. Nessun ruolo utente. Nessun token.
+
+Permessi pratici richiesti:
+
+- esecuzione PowerShell con `-ExecutionPolicy Bypass` dal `.bat`;
+- apertura browser locale;
+- accesso lettura file nella cartella estratta.
+
+## 4.4 Dipendenze silenziose
+
+Dipendenze che se assenti bloccano l'app:
+
+- browser con Canvas 2D funzionante;
+- file PNG locali nella posizione attesa;
+- PowerShell per launcher ufficiale senza Python;
+- porta locale 8000 libera;
+- struttura cartelle invariata (`01_GIOCO_PRONTO_LOCAL_TEST/assets/raycast/`).
+
+Dipendenze che non bloccano ma impattano qualità/test:
+
+- performance dispositivo mobile;
+- supporto `visualViewport`;
+- corretta gestione touch/pointer;
+- dimensione schermo e orientamento.
+
+---
+
+# 5. MANUALE OPERATIVO E PRASSI DI SETTORE
+
+## 5.1 Setup da zero
+
+1. Scaricare o ricevere lo ZIP completo della build.
+2. Estrarlo completamente in una cartella locale.
+3. Verificare che esista:
+
+```text
+01_GIOCO_PRONTO_LOCAL_TEST/index.html
+01_GIOCO_PRONTO_LOCAL_TEST/assets/raycast/
+```
+
+4. Avviare:
+
+```text
+AVVIA_GIOCO_WINDOWS_SENZA_PYTHON.bat
+```
+
+5. Il batch lancia PowerShell e apre:
+
+```text
+http://127.0.0.1:8000/
+```
+
+6. Non chiudere la finestra server mentre si gioca.
+7. Se fallisce, controllare:
+   - porta 8000 occupata;
+   - cartella non estratta;
+   - PowerShell bloccato;
+   - log `AVVIO_GIOCO_POWERSHELL_LOG.txt`.
+
+## 5.2 Setup per sviluppo/patch
+
+1. Copiare lo ZIP base reale in area lavoro.
+2. Estrarre in directory pulita.
+3. Leggere sempre:
+
+```text
+STATUS_PROGETTO_E_DIPENDENZE_PERLA1.txt
+METODO_LAVORO_ANTI_REGRESSIONE_PERLA1.txt
+ISTRUZIONI OBBLIGATORIE DA SEGUIRE PER LEGGERE LE COORDINATE.txt
+README_REPACK_<versione>.txt
+REPORT_<versione>.json
+```
+
+4. Se si lavora secondo nuovo metodo, creare `report/` e riordinare i report in quella cartella.
+5. Estrarre JS da `index.html` e fare:
+
+```text
+node --check script_estratto.js
+```
+
+6. Cercare funzioni reali con grep/regex, non patchare a memoria.
+7. Applicare modifiche chirurgiche.
+8. Rieseguire check.
+9. Ricreare ZIP completo e TAR.GZ se richiesto.
+
+## 5.3 Naming convention rilevate
+
+- Build ID: `PERLA1_V<numero>_<DESCRIZIONE>_LOCAL/SAFE_LOCAL`
+- Report: `REPORT_V<numero>_<DESCRIZIONE>.json`
+- README: `README_REPACK_V<numero>.txt`
+- Funzioni patch storiche: `applyVxx...`, `draw...Vxx`, `build...Vxx`
+- Asset skybox: `sky_panorama_360_v<numero>.png`
+- Cloud layer: `cloud_layer_soft_v<numero>.png`
+- Asset patch versionati: suffix `_vXXX` quando necessario.
+
+Regola raccomandata:
+
+- usare versioni numeriche progressive;
+- evitare nuove lettere tipo V158N/O/P/Q;
+- non riutilizzare nomi di build bocciate;
+- non chiamare “safe” una build se cambia sistemi non dichiarati.
+
+## 5.4 Regole d'oro di manutenzione
+
+1. Base reale prima di qualunque patch.
+2. Diagnosi concreta prima del codice.
+3. Una variabile alla volta se il difetto è ambiguo.
+4. Patch chirurgica.
+5. Report in `report/`.
+6. Nessuna cartella patch-only nello ZIP finale salvo richiesta.
+7. Non toccare sistemi sani.
+8. Non ripetere tentativi falliti.
+9. Check tecnico + check logico.
+10. Dichiarare sempre cosa non è stato testato.
+
+## 5.5 Lista nera architetturale
+
+Non fare mai:
+
+- lavorare a memoria;
+- partire da V170 per il nuovo piano far-landmarks;
+- ripetere V166 ray-aligned pieno;
+- ripetere V167 matte-scroll puro;
+- ripetere V168 edge blend neutro;
+- aumentare ancora V170-style deprojection per risolvere landmark;
+- cambiare asset se il problema è architetturale;
+- cambiare fog globale per correggere un dettaglio locale;
+- toccare `map`, `fMap`, `roadMask`, `cMap`, `objectBlock` per patch skybox;
+- introdurre culling/distance cap non richiesto;
+- rompere tetti, tower, pergola, festoni o sprite per patch cielo;
+- selezionare sprite con substring generiche tipo `includes("pine")` o `includes("arch")`;
+- usare `Math.random()` nel render loop per pavimenti/texture/noise;
+- fare outline globale su tutto il canvas;
+- usare sprite verticali per dettagli da pavimento;
+- lasciare report sparsi nella root nelle prossime build;
+- ignorare screenshot dell'utente;
+- dichiarare risolta una patch visiva senza test reale.
+
+---
+
+# 6. MODULI PRINCIPALI — ANALISI 3D
+
+## 6.1 Bootstrap HTML/CSS/UI
+
+### Tecnica
+
+Il documento HTML contiene due canvas principali:
+
+```text
+canvas#screen 800×450
+canvas#mini-map 128×128
+```
+
+CSS inline gestisce desktop, mobile portrait, mobile landscape, safe-area, visualViewport, debug widget, touch pad e touch look.
+
+### Pratica
+
+L'utente può avviare il gioco senza installare dipendenze; il layout si adatta a desktop e mobile. La UI mobile contiene controlli touch e minimappa ridotta.
+
+### Teorica
+
+Il progetto usa un modello “single-file app”: tutto viene caricato in un documento HTML auto-contenuto. È una scelta ottima per portabilità, ma rischiosa per manutenzione su lungo periodo.
+
+## 6.2 Asset loader e manifest
+
+### Tecnica
+
+`ASSET_MANIFEST` mappa ID numerici a file PNG. `loadImage` carica gli asset e popola `tex[id]`.
+
+V169:
+
+- 96 gruppi manifest;
+- 108 PNG unici referenziati;
+- missing = 0.
+
+### Pratica
+
+Gli ID texture permettono di usare numeri nel motore, ma richiedono disciplina: se un asset viene rinominato o rimosso, bisogna aggiornare manifest e check missing.
+
+### Teorica
+
+È un asset registry manuale. Il vantaggio è controllo totale; lo svantaggio è che manca un build tool che segnali automaticamente orphan/unused/missing salvo script custom.
+
+## 6.3 World generation
+
+### Tecnica
+
+`generateWorld()` costruisce il mondo in sequenza. In V169 la funzione applica worldgen base, patch storiche, cleanup sprite, floor maps e sistemi speciali.
+
+Ordine concettuale:
+
+```text
+generateWorld
+├─ inizializza mappe
+├─ crea base mondo/mare/spiaggia/erba/pineta
+├─ carve strade
+├─ costruisce edifici/zone
+├─ costruisce zone segrete V72+
+├─ applica espansione V74
+├─ applica patch sprite V138+
+├─ applica floor visual maps legacySafety
+├─ applica cleanup microflora/sassi
+└─ applica floor visual maps v150Visual
+```
+
+### Pratica
+
+Modificare l'ordine di `generateWorld()` può rompere placement, roadMask, objectBlock e pavimenti visivi. Ogni patch deve capire dove inserirsi.
+
+### Teorica
+
+È una pipeline generativa incrementale. Ogni patch storica è un layer di trasformazione sul mondo.
+
+## 6.4 Floor visual system
+
+### Tecnica
+
+Il sistema pavimenti usa mappe visuali precomputate: soft road, trail, water, lake, decals, micro decals, subtiles, noise.
+
+### Pratica
+
+Consente resa più naturale senza cambiare collisioni. È uno dei sistemi più sani perché separa logica e visuale.
+
+### Teorica
+
+Pattern: **logical grid + visual overlay fields**. La mappa resta discreta, ma la percezione diventa morbida.
+
+## 6.5 Wallcasting / ZBuffer
+
+### Tecnica
+
+Il raycaster usa `map`, texture, distanze e buffer per colonne. `ZBuffer` diventa la base per occlusione sprite.
+
+### Pratica
+
+Ogni modifica a muri, altezze o fog può impattare visibilità, tetti, sprite e landmark.
+
+### Teorica
+
+Pattern raycasting classico: trasformare griglia 2D in vista pseudo-3D a colonne.
+
+## 6.6 Ceiling / roof / tower
+
+### Tecnica
+
+Il motore contiene sistemi avanzati:
+
+- `roofSegments`;
+- sloped roofs;
+- gable caps;
+- roof self-depth;
+- owner buffers;
+- tower roof/cabin/fascia/underside;
+- modern cover ceiling;
+- ceiling clipping sprite.
+
+### Pratica
+
+I tetti sono fragilissimi: non vanno toccati in patch non tetti. Molti problemi passati erano su linee, gronde, sparizioni, fog, owner e clipping.
+
+### Teorica
+
+I tetti sono geometria pseudo-3D sovrapposta al raycaster, non veri mesh 3D. Funzionano grazie a owner, depth, clipping e layering.
+
+## 6.7 Sprite pipeline
+
+### Tecnica
+
+`sprite[]` contiene billboard con proprietà. Rendering e occlusione dipendono da ZBuffer, ceiling clip, sorting, LOD/broadphase, contact shadows.
+
+### Pratica
+
+Rimuovere/spostare sprite richiede attenzione a `objectBlock` e cleanup. Le regole anti-substring sono obbligatorie: non usare ricerche generiche tipo “pine” o “arch”.
+
+### Teorica
+
+Pattern billboard + depth test. Gli sprite non sono oggetti 3D veri; l'ancoraggio e groundSink sono cruciali.
+
+## 6.8 Skybox V169
+
+### Tecnica
+
+V169 usa:
+
+```text
+mode: edge_deprojected_lock_safe
+center: atan(cameraX*k)
+edge target: cameraX*k
+EDGE_START = 0.40
+EDGE_FULL = 0.92
+EDGE_POWER = 1.25
+EDGE_TANGENT_BLEND_MAX = 0.72
+SPAN_PX = 2
+cloud_render = false
+```
+
+Asset sky/cloud sono byte-identici a V163:
+
+```text
+sky hash:   0aa100fa4226e18f67c25d70041b24cc37194df852f96d77b327ad2d449c71bc
+cloud hash: 9c0387f6b0c487c00918fb803fed217f7483957018df394f1e35b7c6fe61bfa2
+```
+
+### Pratica
+
+V169 è stata giudicata dall'utente “molto meglio” rispetto ai tentativi precedenti. V170 invece è stata giudicata peggiore. Quindi V169 è il miglior compromesso temporaneo.
+
+### Teorica
+
+Il problema non è risolto concettualmente perché landmark riconoscibili restano legati allo skybox. La soluzione definitiva è separare cielo e landmark.
+
+## 6.9 Futuro farLandmarks world-anchored
+
+### Tecnica prevista
+
+Nuovo layer dati:
+
+```js
+{
+  id: "north_mountains",
+  bearing: 0,
+  angularWidth: 0.9,
+  horizonY: 0.46,
+  height: 0.34,
+  alpha: 0.55,
+  fog: true
+}
+```
+
+Rendering previsto:
+
+```text
+skybox puro
+→ farLandmarks world-anchored
+→ walls/floor/ceiling
+→ roofs/sprites/overlays
+```
+
+### Pratica
+
+Il test principale è lo stesso punto davanti alla torre: ruotare la camera e verificare che montagne e torre siano coerenti come direzione mondo.
+
+### Teorica
+
+Separare il cielo da landmark elimina il conflitto fondale-camera vs oggetti-world. Il cielo può scorrere; i landmark devono avere bearing nel mondo.
+
+---
+
+# 7. ROADMAP SUCCESSIVA RACCOMANDATA
+
+## V171 — Diagnostica/prototipo farLandmarks
+
+Base consigliata: V169 per continuità visiva, ma scartando il tuning V170.  
+Intervento: solo codice, prototipo minimo.
+
+Obiettivo:
+
+- mantenere cielo semplice/atmosferico;
+- introdurre un solo landmark nord world-anchored;
+- renderizzarlo dietro torre/muri ma sopra cielo;
+- nessuna collisione;
+- nessuna modifica mappa;
+- nessuna modifica asset se possibile;
+- report in `report/`.
+
+Criterio di successo:
+
+```text
+Fermo davanti alla torre, ruotando camera:
+- la torre resta world-correct;
+- le montagne nord restano coerenti con direzione mondo;
+- non sembrano muro vicino;
+- non sembrano fondale che scorre scollegato.
+```
+
+## V172 — Estensione farLandmarks
+
+- aggiungere isola sud;
+- aggiungere masse ovest/est;
+- gestire alpha/fog;
+- introdurre eventuali crop/texture dedicate;
+- mantenere cielo pulito.
+
+## V173+ — Rifinitura artistica e performance
+
+- debug overlay bearing;
+- tuning `angularWidth`, `horizonY`, `height`;
+- cache landmark projection;
+- eventuale cloud layer non mobile;
+- cleanup dei report root in `report/` se non già fatto.
+
+---
+
+# 8. CHECKLIST ONBOARDING PER NUOVA CHAT O NUOVO SVILUPPATORE
+
+1. Allegare lo ZIP base: `PERLA1_V169_SKYBOX_EDGE_DEPROJECTED_LOCK_SAFE_LOCAL.zip`.
+2. Allegare migrazione: `PERLA1_MIGRAZIONE_CHAT_V170_FAR_LANDMARKS_WORLD_ANCHORED.txt`.
+3. Allegare metodo: `METODO LAVORATIVO.txt`.
+4. Leggere lo ZIP, non lavorare a memoria.
+5. Non partire da V170.
+6. Non ripetere V166/V167/V168/V170.
+7. Creare `report/` se assente.
+8. Riordinare report root in `report/`.
+9. Produrre V171 come prototipo minimo farLandmarks.
+10. Fare check `node --check`, asset refs/missing, zip integrity, report aggiornati.
+11. Dichiarare se non è stato fatto test browser reale.
+
+---
+
+# 9. RISK REGISTER
+
+| Rischio | Gravità | Probabilità | Mitigazione |
+|---|---:|---:|---|
+| Patch su base sbagliata | Alta | Media | dichiarare base/esclusioni prima di patchare |
+| Ripetizione tuning skybox fallito | Alta | Alta | vietare V166/V167/V168/V170 come strada risolutiva |
+| FarLandmarks troppo simili a sprite/muri | Alta | Media | nessuna collisione, nessun depth da parete, solo bearing/far horizon |
+| Landmark non occlusi correttamente | Alta | Media | ordine render: sky → farLandmarks → world |
+| Report disordinati | Media | Alta | creare `report/` e riordinare |
+| Regressione tetti/sprite | Alta | Media | non toccare sistemi non coinvolti |
+| Check tecnico OK ma risultato visivo brutto | Alta | Alta | test reale consigliato davanti alla torre |
+| Performance mobile | Media | Da indagare | cache, span, limitare landmark count |
+
+---
+
+# 10. CONCLUSIONI ARCHITETTURALI
+
+PERLA1 V169 è una build ricca, funzionante e molto evoluta per un motore raycasting Canvas 2D monolitico. L'app è tecnicamente self-contained, senza dipendenze remote, con un mondo deterministico e molti sistemi avanzati. La sua forza è la quantità di soluzioni ingegnose integrate; la sua fragilità è la complessità accumulata nel singolo `index.html` e nella lunga storia di patch.
+
+Lo stato attuale è chiaro:
+
+- V169 è il miglior compromesso provvisorio dello skybox;
+- V170 è peggiore e non va usata come base concettuale;
+- il problema dei landmark non si risolve più con tuning del mapping skybox;
+- la soluzione definitiva è architetturale: **cielo semplice + farLandmarks world-anchored**;
+- la prossima patch deve essere V171 prototipo minimo, non una patch artistica estesa;
+- la nuova regola documentale richiede `report/` dentro lo ZIP.
+
+Principio guida finale:
+
+```text
+Non cercare la patch più creativa.
+Cerca la patch che risolve la causa reale,
+tocca il minimo indispensabile,
+non rompe i sistemi sani,
+è verificabile,
+e lascia una traccia chiara per chi verrà dopo.
+```

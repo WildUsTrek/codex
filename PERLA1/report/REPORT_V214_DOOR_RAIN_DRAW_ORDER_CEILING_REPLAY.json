@@ -1,0 +1,50 @@
+{
+  "build": "PERLA1_V214_DOOR_RAIN_DRAW_ORDER_CEILING_REPLAY_LOCAL",
+  "base": "PERLA1_V213_DOOR_RAIN_CEILING_CAP_EARLY_FULLSCREEN_LOCAL",
+  "node_check": "OK (script extracted to /tmp/perla_v214.js)",
+  "png_total_package": 124,
+  "png_raycast": 116,
+  "png_modified_vs_v213": 0,
+  "png_added_vs_v213": 0,
+  "png_removed_vs_v213": 0,
+  "png_modified_list": [],
+  "asset_literal_png_refs": 108,
+  "asset_literal_missing": [],
+  "patch_only_dirs": [],
+  "changed_files_vs_v213": [
+    "01_GIOCO_PRONTO_LOCAL_TEST/index.html",
+    "AVVIA_GIOCO_SERVER_POWERSHELL.ps1",
+    "AVVIA_GIOCO_WINDOWS_SENZA_PYTHON.bat",
+    "report/METODO_LAVORO_ANTI_REGRESSIONE_PERLA1.txt",
+    "report/STATUS_PROGETTO_E_DIPENDENZE_PERLA1.txt"
+  ],
+  "added_files_vs_v213": [
+    "report/README_REPACK_V214.txt",
+    "report/REPORT_V214_DOOR_RAIN_DRAW_ORDER_CEILING_REPLAY.json"
+  ],
+  "removed_files_vs_v213": [],
+  "static_flags": {
+    "v214_constant": true,
+    "v213_yTop_cap_disabled": true,
+    "replay_called_after_weather_overlay": true,
+    "replay_not_before_weather_overlay": true,
+    "collects_actual_ceiling_segments_from_drawWorld": true,
+    "uses_current_roof_layer": true,
+    "uses_current_modern_cover": true,
+    "uses_current_canopy_v121": true,
+    "no_yTop_cap_primary": true,
+    "door_rain_no_legacy_composite_guard": true,
+    "door_renderer_no_ctx_clip": true,
+    "door_renderer_no_drawImage": true,
+    "debug_exposes_obsolete_false": true,
+    "ui_build_v214": true
+  },
+  "checklist": [
+    "1_world_walls_ceiling_roofs_drawn_first",
+    "2_dedicated_door_rain_drawn_second",
+    "3_actual_ceiling_canopy_cover_replayed_after_rain",
+    "4_current_renderer_functions_only_no_obsolete_fallback",
+    "5_rain_hidden_by_draw_order_cover"
+  ],
+  "browser_visual_test": "NOT EXECUTED in sandbox"
+}

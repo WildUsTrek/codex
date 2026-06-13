@@ -1,0 +1,49 @@
+{
+  "build": "PERLA1_V158M_LANDMARK_PROFILE_CLARITY_SAFE_LOCAL",
+  "base": "PERLA1_V158L_HORIZON_TONAL_GROUNDING_SAFE_LOCAL",
+  "goal": "Reduce excessive haze and give geographic landmarks clearer shape/profile without reverting to smog, bands, panels or visibility limits.",
+  "changed_files": [
+    "01_GIOCO_PRONTO_LOCAL_TEST/index.html",
+    "01_GIOCO_PRONTO_LOCAL_TEST/assets/raycast/sky_panorama_360_v158m.png",
+    "01_GIOCO_PRONTO_LOCAL_TEST/assets/raycast/cloud_layer_soft_v158m.png",
+    "STATUS_PROGETTO_E_DIPENDENZE_PERLA1.txt",
+    "METODO_LAVORO_ANTI_REGRESSIONE_PERLA1.txt",
+    "ISTRUZIONI OBBLIGATORIE DA SEGUIRE PER LEGGERE LE COORDINATE.txt",
+    "README_REPACK_V158M.txt"
+  ],
+  "preserved": [
+    "no far wall visibility limit",
+    "no culling or distance cap",
+    "map/fMap/roadMask/cMap/objectBlock/collision/worldgen unchanged",
+    "roof geometry/gable/self-depth unchanged",
+    "sprite placement unchanged",
+    "tower untouched",
+    "V149 roofs/ombre/pergola/lake/festoon preserved"
+  ],
+  "checks": {
+    "node_check": {
+      "ok": true,
+      "stdout": "",
+      "stderr": ""
+    },
+    "asset_refs_count": 108,
+    "asset_missing": [],
+    "sky_size": [
+      4096,
+      384
+    ],
+    "sky_seam_mean_abs_rgba": 8.458984375,
+    "full_band_rows_gt10_86pct": 0,
+    "full_band_rows_gt20_86pct": 0,
+    "full_band_rows_gt40_86pct": 0,
+    "dark_visible_lum_lt120_alpha_gt20": 285,
+    "max_connected_active_width_px_alpha_gt20": 687,
+    "max_connected_active_width_pct": 16.772,
+    "active_y_range_alpha_gt20": [
+      243,
+      367
+    ],
+    "static_symbols_v158m": true,
+    "old_v158l_assets_present": false
+  }
+}

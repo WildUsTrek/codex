@@ -1,0 +1,65 @@
+{
+  "build": "PERLA1_V198_WEATHER_SKY_PERFORMANCE_RECOVERY_LOCAL",
+  "base": "PERLA1_V197_AUDIO_MIX_WIND_STEPS_BIRDS_LOCAL",
+  "scope": "V198.1-V198.7 only; V199 roof fallback not applied",
+  "changed_files": [
+    "01_GIOCO_PRONTO_LOCAL_TEST/index.html",
+    "report/STATUS_PROGETTO_E_DIPENDENZE_PERLA1.txt",
+    "report/METODO_LAVORO_ANTI_REGRESSIONE_PERLA1.txt",
+    "report/README_REPACK_V198.txt",
+    "report/REPORT_V198_WEATHER_SKY_PERFORMANCE_RECOVERY.json"
+  ],
+  "implemented": {
+    "telemetry": [
+      "skyMsV198",
+      "weatherCloudMsV198",
+      "weatherOverlayMsV198",
+      "roofMsV198",
+      "deferredCanopyMsV198"
+    ],
+    "cloud_budget": {
+      "spanPx": 10,
+      "passBudget": {
+        "clear": 0,
+        "cloudy": 1,
+        "rain": "1 + low mass",
+        "storm": "2 + low mass"
+      }
+    },
+    "indoor_gating": {
+      "cloudFactorWhenCovered": 0,
+      "rainOverlayFactorWhenCovered": 0.04
+    },
+    "preTintCache": true,
+    "noNewScreenSpaceCloudBlobs": true,
+    "roofFallbackPatchApplied": false
+  },
+  "preserved": [
+    "V185 horizon target 1.08",
+    "day/night cycle",
+    "x10/dormi commands",
+    "weekly weather distribution",
+    "V197 audio",
+    "map",
+    "collision",
+    "worldgen",
+    "roof geometry",
+    "pergola",
+    "sprites",
+    "tower",
+    "festoons",
+    "lake/boat",
+    "floors",
+    "decals",
+    "PNG assets",
+    "launchers"
+  ],
+  "assetRefs": 108,
+  "missingAssets": [],
+  "pngTotal": 116,
+  "staticChecks": {
+    "nodeCheck": "OK",
+    "oldV192CloudDeckAbsent": true,
+    "oldV195MultiPassLabelsAbsent": true
+  }
+}

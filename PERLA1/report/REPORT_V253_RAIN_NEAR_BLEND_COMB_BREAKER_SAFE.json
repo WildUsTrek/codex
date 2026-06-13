@@ -1,0 +1,32 @@
+{
+  "buildId": "PERLA1_V253_RAIN_NEAR_BLEND_COMB_BREAKER_SAFE_LOCAL",
+  "base": "PERLA1_V252_RAIN_NEAR_PHASE_DESYNCHRONIZATION_SAFE_LOCAL",
+  "scope": "rain visual near_blend comb breaker only",
+  "touched": [
+    "01_GIOCO_PRONTO_LOCAL_TEST/index.html",
+    "AVVIA_GIOCO_WINDOWS_SENZA_PYTHON.bat",
+    "AVVIA_GIOCO_SERVER_POWERSHELL.ps1",
+    "report README/STATUS/METODO"
+  ],
+  "preserved": [
+    "V248 controller",
+    "V249 envelope",
+    "V250 near semantics",
+    "V251 lifecycle diagnostic",
+    "V252 near phase gate",
+    "spawn/refill/lifecycle/canKeep",
+    "map/collision/assets/roof/skybox/audio/high-wall"
+  ],
+  "debug": [
+    "getRainNearBlendCombBreakerSummaryV253",
+    "downloadRainNearBlendCombBreakerReportV253",
+    "toggleRainUnifiedDebugV253 start/stop download"
+  ],
+  "launcher": "PowerShell server tries to close recognized previous PERLA1 server on port 8000 before binding",
+  "expected_debug_success": [
+    "nearBlendSegmentsAfterV253 < nearBlendSegmentsBeforeV253",
+    "nearBlendConvertedToMidThisFrame > 0 in covered/edge bursts",
+    "nearBlendCombScore reduced",
+    "nearSegments remains controlled by V252"
+  ]
+}

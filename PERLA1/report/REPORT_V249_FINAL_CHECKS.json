@@ -1,0 +1,119 @@
+{
+  "build": "PERLA1_V249_RAIN_NEAR_REVEAL_ENVELOPE_SAFE_LOCAL",
+  "base": "PERLA1_V248_RAIN_UNIFIED_TRANSITION_CONTROLLER_SAFE_LOCAL",
+  "checks": {
+    "node_check": "OK",
+    "runtime_mock_desktop": "OK",
+    "runtime_mock_mobile_portrait": "OK",
+    "runtime_mock_mobile_landscape": "OK",
+    "runtime_mock_covered_cell": "OK",
+    "asset_missing": 0,
+    "png_modified_vs_v248": 0,
+    "patch_only_folder": "absent",
+    "browser_visual_test": "NOT_EXECUTED"
+  },
+  "mock_summaries": {
+    "desktop": {
+      "buildId": "PERLA1_V249_RAIN_NEAR_REVEAL_ENVELOPE_SAFE_LOCAL",
+      "viewport": "desktop",
+      "map": {
+        "w": 150,
+        "h": 88
+      },
+      "sprites": 1938,
+      "roofSegments": 2,
+      "rain": {
+        "segments": 4,
+        "processed": 18,
+        "queued": 46,
+        "v247Patch": true,
+        "v248Patch": true,
+        "v249Patch": true,
+        "v249Factor": 0.28,
+        "v249Reason": "weather_start",
+        "exposure": 1,
+        "event": "weather_start",
+        "turn": 0,
+        "v248Processed": 18
+      },
+      "v249Active": true
+    },
+    "portrait": {
+      "buildId": "PERLA1_V249_RAIN_NEAR_REVEAL_ENVELOPE_SAFE_LOCAL",
+      "viewport": "mobile-portrait",
+      "map": {
+        "w": 150,
+        "h": 88
+      },
+      "sprites": 1938,
+      "roofSegments": 2,
+      "rain": {
+        "segments": 172,
+        "processed": 10,
+        "queued": 26,
+        "v247Patch": true,
+        "v248Patch": true,
+        "v249Patch": true,
+        "v249Factor": 0.28,
+        "v249Reason": "weather_start",
+        "exposure": 1,
+        "event": "weather_start",
+        "turn": 0,
+        "v248Processed": 10
+      },
+      "v249Active": true
+    },
+    "landscape": {
+      "buildId": "PERLA1_V249_RAIN_NEAR_REVEAL_ENVELOPE_SAFE_LOCAL",
+      "viewport": "mobile-landscape",
+      "map": {
+        "w": 150,
+        "h": 88
+      },
+      "sprites": 1938,
+      "roofSegments": 2,
+      "rain": {
+        "segments": 125,
+        "processed": 10,
+        "queued": 27,
+        "v247Patch": true,
+        "v248Patch": true,
+        "v249Patch": true,
+        "v249Factor": 0.28,
+        "v249Reason": "weather_start",
+        "exposure": 1,
+        "event": "weather_start",
+        "turn": 0,
+        "v248Processed": 10
+      },
+      "v249Active": true
+    },
+    "cover": {
+      "buildId": "PERLA1_V249_RAIN_NEAR_REVEAL_ENVELOPE_SAFE_LOCAL",
+      "viewport": null,
+      "map": null,
+      "sprites": null,
+      "roofSegments": null,
+      "rain": {
+        "event": "stable_covered",
+        "queued": 0,
+        "processed": 0,
+        "suppressed": 74,
+        "near": 0,
+        "nearEnvelope": 0.06,
+        "nearReason": "stable_covered",
+        "mid": 1,
+        "far": 0
+      },
+      "v249Active": true
+    }
+  },
+  "expected_manual_tests": [
+    "weather rain start from stationary outdoor",
+    "slow shelter exit",
+    "stand on shelter edge",
+    "camera rotation unchanged/good",
+    "outdoor running unchanged",
+    "storm near reveal controlled"
+  ]
+}

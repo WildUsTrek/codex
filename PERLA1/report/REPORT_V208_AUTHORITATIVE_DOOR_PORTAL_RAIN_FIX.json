@@ -1,0 +1,38 @@
+{
+  "build": "PERLA1_V208_AUTHORITATIVE_DOOR_PORTAL_RAIN_FIX_LOCAL",
+  "base": "PERLA1_V207_DOOR_PORTAL_DESCRIPTOR_RAIN_CURTAIN_LOCAL",
+  "intent": "Make manual door portal descriptor authoritative, recognize threshold outside room, fix projected Y, block V206 fallback for mapped doors.",
+  "changed_scope": [
+    "index.html",
+    "launchers",
+    "status/method reports"
+  ],
+  "preserved": [
+    "V204 audio",
+    "V200 roof budget",
+    "V201 rain buffer/cloud budget",
+    "V185 horizon",
+    "map/collision/worldgen/sprites/pergola/tower/canopy"
+  ],
+  "checks_static": {
+    "build_id_present": true,
+    "ui_title_v208": true,
+    "ui_header_v208": true,
+    "v208_constants": true,
+    "threshold_gate_function": true,
+    "descriptor_primary_return": true,
+    "top_uses_min": true,
+    "bottom_z_low": true,
+    "v206_fallback_blocked": true,
+    "direct_ranges_before_v206": true,
+    "drawWeatherCloudDeckV192_absent": true
+  },
+  "debug_keys": [
+    "weatherDoorPortalDescriptorAuthoritativeV208",
+    "weatherDoorPortalDescriptorThresholdV208",
+    "weatherDoorPortalDescriptorSignedV208",
+    "weatherDoorPortalNoV206FallbackV208",
+    "weatherDoorPortalProjectionTopModeV208",
+    "weatherDoorPortalProjectionBottomZV208"
+  ]
+}

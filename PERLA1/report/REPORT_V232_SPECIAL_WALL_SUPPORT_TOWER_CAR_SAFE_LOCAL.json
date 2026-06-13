@@ -1,0 +1,37 @@
+{
+  "build": "PERLA1_V232_SPECIAL_WALL_SUPPORT_TOWER_CAR_SAFE_LOCAL",
+  "base": "PERLA1_V231_CONTINUOUS_WALL_RUN_RASTER_TEXTURE_SAFE_LOCAL",
+  "modified_files": [
+    "01_GIOCO_PRONTO_LOCAL_TEST/index.html",
+    "AVVIA_GIOCO_WINDOWS_SENZA_PYTHON.bat",
+    "AVVIA_GIOCO_SERVER_POWERSHELL.ps1",
+    "report/README_REPACK_V232.txt",
+    "report/REPORT_V232_SPECIAL_WALL_SUPPORT_TOWER_CAR_SAFE_LOCAL.json"
+  ],
+  "interventions": [
+    "continuous wall-run draw containment to simple hedge walls only",
+    "modern building/tower/special runs suppressed from generic draw",
+    "modern roof foreground/support guard",
+    "tower cap near-behind-wall foreground guard",
+    "parked_car visual height multiplier only, no global sprite/occlusion change"
+  ],
+  "preserved": [
+    "map",
+    "collision",
+    "worldgen",
+    "roadMask",
+    "objectBlock",
+    "asset PNG",
+    "tower renderer base",
+    "roof geometry",
+    "sprite placement/groundSink except visual car height only",
+    "weather/audio/skybox"
+  ],
+  "tests_expected": [
+    "node --check",
+    "zip integrity",
+    "tar.gz integrity",
+    "asset refs missing 0",
+    "browser visual tests on 5 screenshots"
+  ]
+}

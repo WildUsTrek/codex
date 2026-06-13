@@ -1,0 +1,10 @@
+{
+  "zip": "/mnt/data/PERLA1_V264_ROOF_COST_WATCHDOG_EMERGENCY_SAFE_LOCAL.zip",
+  "zip_bad": null,
+  "zip_entries": 463,
+  "zip_sha256": "a836896cb870132cba027cfc9f18253cde4408e02f8ce1c39abef5b4ca831b2e",
+  "tar": "/mnt/data/PERLA1_V264_ROOF_COST_WATCHDOG_EMERGENCY_SAFE_LOCAL.tar.gz",
+  "tar_members": 463,
+  "tar_sha256": "0f386215c54ed66a37f994367378160ea1c86e23aafb97a5dc433f114eea2a87",
+  "patch_only_present": false
+}

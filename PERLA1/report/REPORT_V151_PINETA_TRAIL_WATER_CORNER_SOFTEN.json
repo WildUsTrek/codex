@@ -1,0 +1,175 @@
+{
+  "build": "PERLA1_V151_PINETA_TRAIL_WATER_CORNER_SOFTEN_SAFE_LOCAL",
+  "base": "PERLA1_V150_SOFT_FLOORS_ROADS_WATER_SAFE_LOCAL",
+  "scope": [
+    "local widened historic pineta/yoga trail entrance",
+    "visual water/sand corner rounding masks",
+    "no cartoon outline"
+  ],
+  "smokeSummary": {
+    "sprites": 1938,
+    "stones": 43,
+    "roofSegments": 2,
+    "manifestGroups": 94,
+    "floorVisualStats": {
+      "stage": "V151_PINETA_TRAIL_WATER_CORNER_SOFTEN_NO_OUTLINE",
+      "v151PinetaTrailWaterCornerSoften": true,
+      "waterCornerLandCellsV151": 29,
+      "waterCornerInnerCellsV151": 32,
+      "subTileCells": 3969,
+      "nearSubTileCells": 3476,
+      "v151PinetaYogaTrailWiden": {
+        "active": true,
+        "area": "historic_pineta_yoga_entrance",
+        "disks": 5,
+        "beforeTrailCells": 11,
+        "afterTrailCells": 18,
+        "addedApprox": 7,
+        "points": [
+          {
+            "x": 34.1,
+            "y": 25.05,
+            "r": 1.13
+          },
+          {
+            "x": 33.45,
+            "y": 25.95,
+            "r": 1.18
+          },
+          {
+            "x": 32.75,
+            "y": 26.85,
+            "r": 1.2
+          },
+          {
+            "x": 32.05,
+            "y": 27.75,
+            "r": 1.16
+          },
+          {
+            "x": 31.35,
+            "y": 28.6,
+            "r": 1.1
+          }
+        ]
+      }
+    },
+    "probes": [
+      {
+        "name": "pineta_west",
+        "sprites": 916,
+        "visible": 282,
+        "stripes": 4572,
+        "roofSamples": 0,
+        "roofSkipped": 0,
+        "roofBounds": null,
+        "gableCols": 0,
+        "gableClipped": 0,
+        "pergolaSamples": 0,
+        "dense": true,
+        "maxDist": 72,
+        "lod": 380,
+        "v148": true,
+        "roofV148": true
+      },
+      {
+        "name": "pineta_moss",
+        "sprites": 987,
+        "visible": 368,
+        "stripes": 4588,
+        "roofSamples": 0,
+        "roofSkipped": 0,
+        "roofBounds": null,
+        "gableCols": 0,
+        "gableClipped": 0,
+        "pergolaSamples": 0,
+        "dense": true,
+        "maxDist": 72,
+        "lod": 378,
+        "v148": true,
+        "roofV148": true
+      },
+      {
+        "name": "roof_reception",
+        "sprites": 598,
+        "visible": 167,
+        "stripes": 3087,
+        "roofSamples": 4318,
+        "roofSkipped": 41282,
+        "roofBounds": {
+          "x0": 0,
+          "x1": 254,
+          "y0": 160,
+          "y1": 227,
+          "candidateSegments": 1,
+          "oldFullSamples": 45600,
+          "areaRatio": 0.094
+        },
+        "gableCols": 70,
+        "gableClipped": 2,
+        "pergolaSamples": 0,
+        "dense": true,
+        "maxDist": 72,
+        "lod": 249,
+        "v148": true,
+        "roofV148": true
+      },
+      {
+        "name": "roof_bath",
+        "sprites": 580,
+        "visible": 92,
+        "stripes": 1583,
+        "roofSamples": 2781,
+        "roofSkipped": 42819,
+        "roofBounds": {
+          "x0": 326,
+          "x1": 532,
+          "y0": 174,
+          "y1": 227,
+          "candidateSegments": 1,
+          "oldFullSamples": 45600,
+          "areaRatio": 0.06
+        },
+        "gableCols": 103,
+        "gableClipped": 2,
+        "pergolaSamples": 774,
+        "dense": false,
+        "maxDist": 82,
+        "lod": 350,
+        "v148": true,
+        "roofV148": true
+      },
+      {
+        "name": "pergola",
+        "sprites": 1005,
+        "visible": 171,
+        "stripes": 408,
+        "roofSamples": 120,
+        "roofSkipped": 45480,
+        "roofBounds": {
+          "x0": 794,
+          "x1": 800,
+          "y0": 148,
+          "y1": 227,
+          "candidateSegments": 2,
+          "oldFullSamples": 45600,
+          "areaRatio": 0.003
+        },
+        "gableCols": 0,
+        "gableClipped": 0,
+        "pergolaSamples": 8640,
+        "dense": false,
+        "maxDist": 82,
+        "lod": 747,
+        "v148": true,
+        "roofV148": true
+      }
+    ]
+  },
+  "assetPngDiff": {
+    "changed": [],
+    "added": [],
+    "removed": []
+  },
+  "noPatchOnlyFolder": true
+}

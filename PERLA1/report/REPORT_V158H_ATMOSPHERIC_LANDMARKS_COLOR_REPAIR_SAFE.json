@@ -1,0 +1,67 @@
+{
+  "build": "PERLA1_V158H_ATMOSPHERIC_LANDMARKS_COLOR_REPAIR_SAFE_LOCAL",
+  "base": "PERLA1_V158G_SKY_GEOGRAPHIC_LANDMARKS_SAFE_LOCAL",
+  "source_lineage": "V158G <- V158F <- V157 blindata",
+  "goal": "correggere landmark geografici troppo scuri/smog e raccordo cromatico con pareti lontane in fog, senza limitare visibilita pareti",
+  "modified_files": [
+    "01_GIOCO_PRONTO_LOCAL_TEST/index.html",
+    "01_GIOCO_PRONTO_LOCAL_TEST/assets/raycast/sky_panorama_360_v158h.png",
+    "01_GIOCO_PRONTO_LOCAL_TEST/assets/raycast/cloud_layer_soft_v158h.png",
+    "STATUS_PROGETTO_E_DIPENDENZE_PERLA1.txt",
+    "METODO_LAVORO_ANTI_REGRESSIONE_PERLA1.txt",
+    "README_REPACK_V158H.txt"
+  ],
+  "preserved": {
+    "far_wall_visibility_limited": false,
+    "culling_distance_cap": false,
+    "map_logic_changed": false,
+    "collision_changed": false,
+    "worldgen_changed": false,
+    "roof_geometry_changed": false,
+    "sprite_placement_changed": false
+  },
+  "asset_checks": {
+    "sky_size": [
+      4096,
+      384
+    ],
+    "cloud_size": [
+      2048,
+      256
+    ],
+    "sky_alpha_max": 80,
+    "sky_alpha_mean": 6.05043093363444,
+    "sky_full_band_rows_gt20_86pct": 0,
+    "sky_coverage_alpha_gt16_max_row": 0.790771484375,
+    "sky_seam_edge_mean_abs_rgba": 0.0,
+    "sky_dark_visible_pixels_lum_lt110_alpha_gt10": 0,
+    "sky_dark_visible_pixels_lum_lt120_alpha_gt20": 0,
+    "sky_visible_pixels_alpha_gt0": 515835,
+    "cloud_alpha_max": 31,
+    "cloud_alpha_mean": 6.972688674926758,
+    "manifest_unique_png_refs": 108,
+    "asset_missing": [],
+    "sky_file_in_manifest": true,
+    "cloud_file_in_manifest": true,
+    "old_v158g_assets_present": []
+  },
+  "runtime_smoke": {
+    "debugKeys": 330,
+    "skybox": true,
+    "mapW": 150,
+    "mapH": 88,
+    "spriteCount": 1938,
+    "roofSegments": 2,
+    "assetRefs": 108,
+    "snapshotBuild": "PERLA1_V158H_ATMOSPHERIC_LANDMARKS_COLOR_REPAIR_SAFE_LOCAL",
+    "snapshotChecks": {
+      "skyboxV158H": true
+    }
+  },
+  "checks": {
+    "node_check": "OK",
+    "runtime_smoke_node": "OK",
+    "zip_integrity": "pending_final_packaging",
+    "tar_gz_integrity": "pending_final_packaging"
+  }
+}

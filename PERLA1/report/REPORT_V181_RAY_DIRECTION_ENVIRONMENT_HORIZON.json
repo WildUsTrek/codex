@@ -1,0 +1,41 @@
+{
+  "build": "PERLA1_V181_RAY_DIRECTION_ENVIRONMENT_HORIZON_LOCAL",
+  "base": "PERLA1_V169_SKYBOX_EDGE_DEPROJECTED_LOCK_SAFE_LOCAL.zip",
+  "base_reason": "V169 is the clean real package with continuous panorama assets; V177/V178/V179/V180 are failed diagnostic branches not used as code base.",
+  "systems_added": [
+    "PERLA_RAY_DIRECTION_ENV_HORIZON_V181",
+    "drawRayDirectionEnvironmentHorizonV181",
+    "drawRayDirectionEnvironmentImageV181",
+    "envHorizonAngle01AtScreenXV181"
+  ],
+  "systems_disabled_by_priority": [
+    "drawBackdrop calls V181 before V169/V163 fallback"
+  ],
+  "not_used": [
+    "V180 yaw damping",
+    "V179 single bearing 1:1",
+    "V177 segmented slices",
+    "V178 separate dirty crops",
+    "V175 perspective wall",
+    "V172 screen fixed"
+  ],
+  "preserved": [
+    "map",
+    "fMap",
+    "roadMask",
+    "cMap",
+    "objectBlock",
+    "worldgen",
+    "collisioni",
+    "roofSegments",
+    "tower",
+    "sprites",
+    "pergola",
+    "festoni",
+    "lake/boat",
+    "PNG assets",
+    "launchers"
+  ],
+  "tests": {},
+  "browser_test": false
+}

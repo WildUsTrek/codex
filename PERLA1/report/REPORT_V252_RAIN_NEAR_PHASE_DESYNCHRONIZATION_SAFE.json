@@ -1,0 +1,45 @@
+{
+  "buildId": "PERLA1_V252_RAIN_NEAR_PHASE_DESYNCHRONIZATION_SAFE_LOCAL",
+  "base": "PERLA1_V251_RAIN_LIFECYCLE_DIAGNOSTIC_SAFE_LOCAL",
+  "generatedAt": "2026-06-12T13:47:09.262166Z",
+  "scope": "rain-only near visual phase/desync",
+  "touched": [
+    "01_GIOCO_PRONTO_LOCAL_TEST/index.html",
+    "AVVIA_GIOCO_WINDOWS_SENZA_PYTHON.bat",
+    "AVVIA_GIOCO_SERVER_POWERSHELL.ps1",
+    "report/README_REPACK_V252.txt",
+    "report/REPORT_V252_RAIN_NEAR_PHASE_DESYNCHRONIZATION_SAFE.json",
+    "report/EXTRACTED_INDEX_INLINE_SCRIPT_V252.js",
+    "report/STATUS_PROGETTO_E_DIPENDENZE_PERLA1.txt",
+    "report/METODO_LAVORO_ANTI_REGRESSIONE_PERLA1.txt"
+  ],
+  "preserved": [
+    "V248 controller",
+    "V249 envelope fallback",
+    "V250 near semantics",
+    "V251 lifecycle diagnostic",
+    "refill",
+    "angular",
+    "mid/far controller",
+    "map/collision/assets/roof/skybox/audio/high-wall"
+  ],
+  "debug": [
+    "getRainNearPhaseDesyncSummaryV252",
+    "downloadRainNearPhaseDesyncReportV252",
+    "setRainNearPhaseDesyncV252"
+  ],
+  "checks_pending_runtime_browser": "visual browser test by user still required",
+  "checks": {
+    "node_check": "OK",
+    "vm_mock_load": "OK - __PERLA_DEBUG__.getRainNearPhaseDesyncSummaryV252 exported",
+    "asset_manifest_unique": 108,
+    "asset_missing": 0,
+    "png_changed_vs_v251": 0,
+    "ui_version": "V252 title/H2/loading OK",
+    "patch_only_folder": "absent",
+    "high_wall_runtime_expected": "off/preserved",
+    "game_png_total": 116,
+    "package_png_total": 124
+  },
+  "runtime_browser_visual": "not executed in real browser by assistant"
+}

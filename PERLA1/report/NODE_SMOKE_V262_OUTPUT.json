@@ -1,0 +1,27 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-12T19:27:02.512Z",
+  "checks": {
+    "buildId": true,
+    "baseBuild": true,
+    "v262Flag": true,
+    "stableSummary": true,
+    "stableToggle": true,
+    "stableMode": true,
+    "stableDownload": true,
+    "edgeBandConst": true,
+    "hysteresis": true,
+    "emergencyOnly": true,
+    "roofPathLabels": true,
+    "uncappedRoofMetric": true,
+    "recorderMetadata": true,
+    "recorderCoverageV262": true,
+    "v259Preserved": true,
+    "v260Preserved": true,
+    "v261Preserved": true,
+    "windowGlobals": true,
+    "rainPreserved": true,
+    "noPatchOnlyMention": true
+  },
+  "missing": []
+}

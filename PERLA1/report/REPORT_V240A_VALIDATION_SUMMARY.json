@@ -1,0 +1,25 @@
+{
+  "build": "PERLA1_V240A_STABLE_SURFACE_FAMILY_DRAW_REFINEMENT_LOCAL",
+  "base": "PERLA1_V240_COLUMN_FRAGMENT_STABLE_SURFACE_DRAW_PROTOTYPE_LOCAL",
+  "nodeCheck": "OK (executed on extracted JS before packaging)",
+  "debugExportsStatic": {
+    "getStableWallFamilySummaryV240A": true,
+    "stableWallFamilyDrawReportSection": true,
+    "perlaDownloadColumnFragmentDebugReport": true
+  },
+  "assetRefs": 108,
+  "assetMissing": 0,
+  "pngChangedVsV240": "0 (checked by SHA256 over PNG set)",
+  "patchOnlyFolderAbsent": true,
+  "browserInteractiveTest": "not executed in container; required in user browser by rotating camera at erba/bath_garden points",
+  "expectedBehaviorFromUploadedV240Debug": {
+    "bath_garden": "surfaces 4/5/7 grouped into one y57 wall family; primary surface 5 kept; isolated panels 4/7 suppressed in family draw",
+    "erba": "surfaces 1/2/3 grouped into one y30-31 wall family; primary surface 2 kept; surface switching reduced"
+  },
+  "importantLimits": {
+    "zBufferUpdated": false,
+    "spriteOcclusionUpdated": false,
+    "rainOcclusionUpdated": false,
+    "occlusionDivergenceRisk": true
+  }
+}

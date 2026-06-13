@@ -1,0 +1,32 @@
+{
+  "buildId": "PERLA1_V254_RAIN_NEAR_REENTRY_COORDINATOR_SAFE_LOCAL",
+  "base": "PERLA1_V253A_LAUNCHER_PORT_FIX_SAFE_LOCAL",
+  "scope": "rain visual draw-only near mature reentry coordinator",
+  "touches": [
+    "index.html",
+    "launcher labels",
+    "report docs"
+  ],
+  "preserved": [
+    "V248 controller core",
+    "V249 envelope",
+    "V250 semantics",
+    "V251 diagnostic",
+    "V252 phase gate",
+    "V253 comb breaker",
+    "spawn/refill/lifecycle/canKeep",
+    "map/collisions/assets/roof/skybox/audio/high-wall"
+  ],
+  "debug": [
+    "toggleRainUnifiedDebugV254",
+    "getRainNearReentryCoordinatorSummaryV254",
+    "downloadRainNearReentryCoordinatorReportV254",
+    "setRainNearReentryCoordinatorV254"
+  ],
+  "validationTargets": [
+    "nearMatureBypassedRamp\u22480 during reentry",
+    "nearReentryPixelLenP90 below full near during transition",
+    "nearSegmentsAfterV254 lower/smoother than before",
+    "nearBlend remains controlled by V253"
+  ]
+}

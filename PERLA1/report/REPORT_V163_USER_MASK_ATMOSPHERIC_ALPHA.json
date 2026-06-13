@@ -1,0 +1,96 @@
+{
+  "build": "PERLA1_V163_USER_MASK_ATMOSPHERIC_ALPHA_SAFE_LOCAL",
+  "base": "PERLA1_V160_APPROVED_V158M_SKY_RESTORE_SAFE_LOCAL / V158M visual base",
+  "user_source_size_original": [
+    2048,
+    192
+  ],
+  "normalized_size": [
+    4096,
+    384
+  ],
+  "user_alpha_mean_gt5": 133.7198486328125,
+  "new_alpha_nonzero": 217171,
+  "new_alpha_mean_gt5": 41.91165954934754,
+  "new_alpha_max": 95,
+  "base_alpha_mean_gt5": 61.02225694444444,
+  "base_alpha_max": 142,
+  "component_count_user_mask": 5,
+  "component_stats_top20": [
+    {
+      "label": 1,
+      "area": 96064,
+      "bbox": [
+        2752,
+        106,
+        3533,
+        369
+      ],
+      "alphaMean": 42.16352887900932,
+      "alphaMax": 100.83565539469858
+    },
+    {
+      "label": 2,
+      "area": 55432,
+      "bbox": [
+        1744,
+        244,
+        2429,
+        369
+      ],
+      "alphaMean": 46.09481963773044,
+      "alphaMax": 99.58875374199536
+    },
+    {
+      "label": 3,
+      "area": 29488,
+      "bbox": [
+        46,
+        262,
+        571,
+        369
+      ],
+      "alphaMean": 45.56603937153294,
+      "alphaMax": 99.47168946845335
+    },
+    {
+      "label": 4,
+      "area": 25484,
+      "bbox": [
+        846,
+        284,
+        1339,
+        369
+      ],
+      "alphaMean": 47.21201821761596,
+      "alphaMax": 100.76409085075856
+    },
+    {
+      "label": 5,
+      "area": 7148,
+      "bbox": [
+        3790,
+        324,
+        4009,
+        369
+      ],
+      "alphaMean": 50.03273029826311,
+      "alphaMax": 95.55495923222263
+    }
+  ],
+  "diff_bbox_vs_v160": [
+    0,
+    105,
+    4095,
+    383
+  ],
+  "alpha_changed_pixels_vs_v160": 258900,
+  "rgb_changed_pixels_vs_v160": 259881,
+  "seam_mean_abs_rgba": 0.0,
+  "full_band_rows_gt10_86pct": 0,
+  "full_band_rows_list_sample": [],
+  "notes": "User silhouettes are the target. User alpha was remapped to V160-style atmospheric opacity; no renderer/fog/worldgen changes.",
+  "node_check": "OK",
+  "png_refs_detected_count": 108,
+  "asset_missing_filtered": []
+}

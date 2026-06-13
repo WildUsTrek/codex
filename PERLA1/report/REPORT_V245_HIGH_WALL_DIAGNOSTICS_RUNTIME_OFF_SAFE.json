@@ -1,0 +1,58 @@
+{
+  "buildId": "PERLA1_V245_HIGH_WALL_DIAGNOSTICS_RUNTIME_OFF_SAFE_LOCAL",
+  "baseBuild": "PERLA1_V244_HIGH_WALL_DRAW_ROLLBACK_DEBUG_ONLY_LOCAL",
+  "createdAtUtc": "2026-06-12T09:18:54.236295Z",
+  "purpose": "Disable high-wall diagnostics from normal runtime, keep only safe on-demand/one-shot debug status.",
+  "changes": [
+    "central runtime-off gate",
+    "one-shot debug commands",
+    "draw/projection/ranking/drawability skipped in normal drawWorld",
+    "lightweight high-wall debug report"
+  ],
+  "preserved": [
+    "no V242/V242A/V243 visual draw",
+    "no ZBuffer/sprite/rain update",
+    "no map/collision/objectBlock/assets changes",
+    "roof/tower/reception/bath/rain/skybox untouched"
+  ],
+  "manualBrowserTest": "not executed in container",
+  "checks": {
+    "nodeCheck": "OK",
+    "assetRefs": 108,
+    "assetMissing": 0,
+    "pngFiles": 116,
+    "pngModifiedVsV244": 0,
+    "zipIntegrity": "OK_after_packaging",
+    "tarGzIntegrity": "OK_after_packaging",
+    "patchOnlyFolder": "absent",
+    "v242SymbolsActive": false,
+    "v242aSymbolsActive": false,
+    "v243SymbolsActive": false,
+    "runtimeGatePresent": true,
+    "highWallRuntimeEnabledDefault": false,
+    "drawGated": true,
+    "collectionGated": true
+  },
+  "runtimeExpected": {
+    "highWallDiagnosticsRuntime.runtimeEnabled": false,
+    "fragmentSystemComputed": false,
+    "surfaceContinuityComputed": false,
+    "stableSurfaceDryRunComputed": false,
+    "stableWallFamilyDryRunComputed": false,
+    "registryProjectionComputed": false,
+    "faceProjectionComputed": false,
+    "faceMatchRankingComputed": false,
+    "faceDrawabilityComputed": false,
+    "safeInteriorSpansComputed": false,
+    "drawnColumns": 0,
+    "drawnPixels": 0,
+    "zBufferUpdated": false,
+    "spriteOcclusionUpdated": false,
+    "rainOcclusionUpdated": false
+  },
+  "outputs": {
+    "zip": "/mnt/data/PERLA1_V245_HIGH_WALL_DIAGNOSTICS_RUNTIME_OFF_SAFE_LOCAL.zip",
+    "tarGz": "/mnt/data/PERLA1_V245_HIGH_WALL_DIAGNOSTICS_RUNTIME_OFF_SAFE_LOCAL.tar.gz"
+  },
+  "updatedAtUtc": "2026-06-12T09:20:39.088692+00:00"
+}

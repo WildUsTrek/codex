@@ -1,0 +1,76 @@
+{
+  "build": "PERLA1_V239A_COLUMN_FRAGMENT_SURFACE_CONTINUITY_DIAGNOSTIC_LOCAL",
+  "base": "PERLA1_V239_COLUMN_FRAGMENT_COMPOSITOR_DIAGNOSTIC_LOCAL",
+  "createdAtUtc": "2026-06-12T00:14:07.265099+00:00",
+  "purpose": "Surface continuity diagnostic over V239 Column Fragment Compositor; draw remains disabled.",
+  "flags": {
+    "PERLA_V239_COLUMN_FRAGMENT_COMPOSITOR_ENABLED": true,
+    "PERLA_V239_COLUMN_FRAGMENT_DRY_RUN": true,
+    "PERLA_V239_COLUMN_FRAGMENT_DRAW_ENABLED": false,
+    "PERLA_V239A_SURFACE_CONTINUITY_DIAGNOSTIC": true,
+    "PERLA_V239A_DRAW_ENABLED": false
+  },
+  "newDebugCommands": [
+    "perlaDownloadColumnFragmentDebugReport()",
+    "window.__PERLA_DEBUG__.downloadColumnFragmentDebugReport()",
+    "window.__PERLA_DEBUG__.getColumnFragmentDebugSnapshot()",
+    "window.__PERLA_DEBUG__.getColumnFragmentSurfaceSummary()",
+    "window.__PERLA_DEBUG__.getColumnFragmentSurfaceSummaryV239A()"
+  ],
+  "surfaceMetrics": [
+    "surfaceId",
+    "xStart",
+    "xEnd",
+    "columns",
+    "gaps",
+    "maxGap",
+    "avgYTop",
+    "avgYBottom",
+    "avgBandHeight",
+    "avgDepth",
+    "depthStdDev",
+    "depthCoeff",
+    "yTopStdDev",
+    "mapCells",
+    "blockerOverlapCount",
+    "riskScore",
+    "decision",
+    "rejectReason"
+  ],
+  "decisions": [
+    "candidate_stable",
+    "candidate_borderline",
+    "rejected_too_short",
+    "rejected_too_fragmented",
+    "rejected_too_small",
+    "rejected_depth_unstable",
+    "rejected_height_unstable",
+    "rejected_blocker_overlap"
+  ],
+  "forbiddenTouched": {
+    "map": false,
+    "fMap": false,
+    "cMap": false,
+    "roadMask": false,
+    "objectBlock": false,
+    "assetsPng": false,
+    "collision": false,
+    "rainRuntime": false,
+    "towerRenderer": false,
+    "roofGeometry": false,
+    "skybox": false
+  },
+  "antiRegression": {
+    "V233_farWall_heightStep_continuousRun_disabled": "preserved",
+    "V234_rain_car": "preserved",
+    "V235_tower_rainMidfield": "preserved",
+    "V236_roofSupport": "preserved",
+    "V238_v237Closed": "preserved"
+  },
+  "manualBrowserTest": "required; not performed in container",
+  "notes": [
+    "Diagnostic-first only.",
+    "No visual difference expected from V239/V238 because draw remains off.",
+    "Next step after user report: decide whether future V240 draw is justified or continue diagnostics."
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "build": "PERLA1_V158G_SKY_GEOGRAPHIC_LANDMARKS_SAFE_LOCAL",
+  "base": "PERLA1_V158F_SKY_ATMOSPHERE_MINIMAL_PANORAMA_SAFE_LOCAL derived from V157 blindata",
+  "goal": "aggiungere presenza geografica lontana mantenendo cielo minimalista V158F e senza limitare pareti lontane",
+  "modified_files": [
+    "01_GIOCO_PRONTO_LOCAL_TEST/index.html",
+    "STATUS_PROGETTO_E_DIPENDENZE_PERLA1.txt",
+    "METODO_LAVORO_ANTI_REGRESSIONE_PERLA1.txt",
+    "README_REPACK_V158G.txt",
+    "01_GIOCO_PRONTO_LOCAL_TEST/assets/raycast/sky_panorama_360_v158g.png",
+    "01_GIOCO_PRONTO_LOCAL_TEST/assets/raycast/cloud_layer_soft_v158g.png"
+  ],
+  "preserved": [
+    "no far wall visibility cap",
+    "no culling/distance cap",
+    "map/fMap/roadMask/cMap/objectBlock/collisioni/worldgen unchanged",
+    "roof geometry unchanged",
+    "sprite placement unchanged",
+    "roofSegments remains 2",
+    "sprites remains 1938 in smoke"
+  ],
+  "asset_manifest": {
+    "png_refs_unique": 108,
+    "assets_png": 116,
+    "missing": [],
+    "sky_refs": [
+      "cloud_layer_soft_v158g.png",
+      "sky_panorama_360_v158g.png"
+    ]
+  },
+  "panorama_asset": {
+    "file": "sky_panorama_360_v158g.png",
+    "size": [
+      4096,
+      384
+    ],
+    "rgba": "RGBA",
+    "alpha_max": 123,
+    "alpha_mean": 14.193747838338217,
+    "alpha_top_half_max": 53,
+    "full_band_rows_gt20_86pct": 0,
+    "seam_edge_mean_abs_rgba": 0.0,
+    "landmark_layout": "east rolling hills, south low island, west soft forest mass, north blue mountains; all blended into one continuous panorama"
+  },
+  "cloud_asset": {
+    "file": "cloud_layer_soft_v158g.png",
+    "size": [
+      2048,
+      256
+    ],
+    "rgba": "RGBA",
+    "alpha_max": 37,
+    "alpha_mean": 8.460685729980469,
+    "future_ready": "layer separato per meteo/vento/orario"
+  },
+  "checks": {
+    "node_check": "OK",
+    "runtime_smoke": "OK",
+    "runtime": {
+      "debugKeys": 330,
+      "skybox": true,
+      "mapW": 150,
+      "mapH": 88,
+      "spriteCount": 1938,
+      "roofSegments": 2,
+      "assetRefs": 108,
+      "snapshotBuild": "PERLA1_V158G_SKY_GEOGRAPHIC_LANDMARKS_SAFE_LOCAL",
+      "snapshotChecks": {
+        "skyboxV158G": true
+      }
+    },
+    "patch_only_folder": "absent by packaging check pending",
+    "zip_integrity": "pending",
+    "tar_gz_integrity": "pending"
+  },
+  "notes": "Preview offline usate solo per validare logica asset/seam; nessuna app preview aperta."
+}

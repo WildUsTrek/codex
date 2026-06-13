@@ -1,0 +1,22 @@
+{
+  "build": "PERLA1_V158D_SKYBOX_PAINTED_PANORAMA_HAZE_SAFE_LOCAL",
+  "node_check_ok": true,
+  "node_check_stdout": "",
+  "node_check_stderr": "",
+  "manifest_refs": 86,
+  "asset_missing": [],
+  "skybox_asset_exists": true,
+  "skybox_symbols": {
+    "PERLA_SKYBOX_V158D": true,
+    "drawSkyboxV158D": true,
+    "drawWrappedSkyboxPanoramaV158D": true,
+    "wallFogColorForDistanceV158D": true,
+    "PERLA_SKYBOX_HORIZON_RGB_V158D": true
+  },
+  "no_far_wall_visibility_limit": true,
+  "no_patch_only_folder": true,
+  "roofSegments_literal_present": true,
+  "zip_test_ok": true,
+  "zip_test_tail": "    testing: PERLA1_V158D_SKYBOX_PAINTED_PANORAMA_HAZE_SAFE_LOCAL/REPORT_V158D_SKYBOX_PAINTED_PANORAMA_HAZE_SAFE.json   OK\n    testing: PERLA1_V158D_SKYBOX_PAINTED_PANORAMA_HAZE_SAFE_LOCAL/STATUS_PROGETTO_E_DIPENDENZE_PERLA1.txt   OK\nNo errors detected in compressed data of /mnt/data/PERLA1_V158D_SKYBOX_PAINTED_PANORAMA_HAZE_SAFE_LOCAL.zip.",
+  "tar_test_ok": true
+}

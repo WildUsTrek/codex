@@ -1,0 +1,23 @@
+﻿# Codex Projects Sync
+
+Questa cartella e' collegata a GitHub.
+
+## Regola semplice
+
+Prima di lavorare:
+- doppio click su `01_AGGIORNA_PROGETTO_PRIMA_DI_LAVORARE.bat`
+
+Dopo aver finito:
+- doppio click su `02_SALVA_PROGETTO_SU_GITHUB.bat`
+
+## Progetto attivo
+
+PERLA1 si trova in:
+
+`PERLA1/`
+
+Il gioco si avvia da:
+
+`PERLA1/AVVIA_GIOCO_WINDOWS_SENZA_PYTHON.bat`
+
+Non lavorare dalla vecchia cartella in Documents se vuoi mantenere tutto sincronizzato su GitHub.

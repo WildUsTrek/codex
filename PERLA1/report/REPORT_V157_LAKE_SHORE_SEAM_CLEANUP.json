@@ -1,0 +1,29 @@
+{
+  "build": "PERLA1_V157_LAKE_SHORE_SEAM_CLEANUP_SAFE_LOCAL",
+  "base": "PERLA1_V156_LAKE_HOUSE_MULTIMATERIAL_BLEND_SAFE_LOCAL",
+  "scope": "solo zona laghetto/piazzola casa, bordo erba-sabbia-terra",
+  "interventions": [
+    "celle di blend lago-casa ampliate ma limitate alla corona laghetto",
+    "maschera sub-tile piu continua per erba che entra nella sabbia",
+    "riduzione contrasto immediato verde/sabbia/terra con tonalita media che premia il verde",
+    "inclusione celle sotto/prossime ai pini e sprite bloccanti senza toccare objectBlock",
+    "specchio acqua V153/V156, barca, tetti, ombre, pineta/pergola preservati"
+  ],
+  "checks": {
+    "node_check": "OK",
+    "runtime_smoke": "OK",
+    "asset_missing": [],
+    "asset_refs": 106,
+    "sprites": 1938,
+    "stones": 43,
+    "roofSegments": 2,
+    "png_modified": [],
+    "png_added": [],
+    "png_removed": [],
+    "floorStage": "V157_LAKE_SHORE_SEAM_CLEANUP_NO_OUTLINE",
+    "v157SeamCells": 154,
+    "v157TerraSeamCells": 20,
+    "subTileCells": 3977,
+    "nearSubTileCells": 3500
+  }
+}

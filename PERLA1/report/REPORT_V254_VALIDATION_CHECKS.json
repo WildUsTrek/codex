@@ -1,0 +1,19 @@
+{
+  "buildId": "PERLA1_V254_RAIN_NEAR_REENTRY_COORDINATOR_SAFE_LOCAL",
+  "base": "PERLA1_V253A_LAUNCHER_PORT_FIX_SAFE_LOCAL",
+  "nodeCheck": "OK",
+  "mockDesktop": "OK",
+  "mockPortrait": "OK",
+  "mockLandscape": "OK",
+  "mockUnifiedDebug": "OK",
+  "manifestKeys": 27,
+  "pngRefs": 108,
+  "assetMissing": [],
+  "pngTotal": 116,
+  "pngChangedVsV253A": [],
+  "mapRuntime": "150x88 from mock",
+  "spritesRuntime": 1938,
+  "roofSegmentsRuntime": 2,
+  "highWallRuntimeOff": true,
+  "visualBrowserHumanTest": "NOT_RUN"
+}

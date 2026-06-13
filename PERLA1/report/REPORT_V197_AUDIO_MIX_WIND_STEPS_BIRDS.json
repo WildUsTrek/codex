@@ -1,0 +1,33 @@
+{
+  "build": "PERLA1_V197_AUDIO_MIX_WIND_STEPS_BIRDS_LOCAL",
+  "base": "PERLA1_V196_AUDIO_TIMING_BIRDS_RAIN_MIX_LOCAL",
+  "date": "2026-06-10",
+  "scope": "audio-only mix rebalance",
+  "changes": [
+    "Wind bus target lowered for cloudy/rain/storm and target cap reduced.",
+    "Bird bus target raised and per-chirp gain multiplier added while preserving V196 sparse scheduler and six variants.",
+    "Footstep bus and per-step transient raised considerably while preserving V196 slow cadence.",
+    "Thunder/lightning volume unchanged.",
+    "Rain volume unchanged from V196 by this patch."
+  ],
+  "preserved": [
+    "visual weather/cloud layer",
+    "V185 horizon renderer",
+    "day/night cycle",
+    "time acceleration",
+    "map",
+    "collisions",
+    "worldgen",
+    "roofs",
+    "tower",
+    "sprites",
+    "assets",
+    "launcher"
+  ],
+  "expected_manual_test": [
+    "perlaWeatherAudioOn(); perlaSetWeather(\"cloudy\") for lower wind",
+    "perlaSetWeather(\"clear\") for louder sparse birds",
+    "perlaFootstepsOn(); walk on road/sand/grass for louder footsteps"
+  ],
+  "checks": {}
+}

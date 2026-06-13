@@ -1,0 +1,33 @@
+{
+  "build": "PERLA1_V272A_REAL_ROOF_UNDERSIDE_EAVE_RUNTIME_OFF_ROLLBACK_SAFE_LOCAL",
+  "date": "2026-06-13",
+  "reason": "Rollback immediato del runtime V272 dopo fallimento visuale: lastre rosse laterali sul tetto bagno/reception e aumento draw.",
+  "root_causes": [
+    "Validazione precedente non ha usato il launcher reale AVVIA_GIOCO_WINDOWS_SENZA_PYTHON.bat.",
+    "Le pose testate non coprivano la vista laterale del bagno mostrata dall'utente.",
+    "Il pass V272 disegnava una faccia piena orizzontale di intradosso/gronda; in vista laterale la proiezione diventava una grande lastra rossa nel cielo/sopra i muri.",
+    "Il test contava pixel/costo ma non confrontava abbastanza la qualita' visiva della vista critica.",
+    "Il budget V272 aggiungeva comunque fill extra ogni frame, quindi poteva aumentare draw anche quando i campioni V106 restavano a zero."
+  ],
+  "rollback": {
+    "PERLA_V272_REAL_ROOF_UNDERSIDE_EAVE_NEAR_GEOMETRY_SAFE": false,
+    "perlaRealRoofUndersideEaveModeStateV272": "off",
+    "effect": "Il pass V272 torna no-op nel runtime normale. Restano V271/V267 e vecchio roof fill sample-based ancora OFF."
+  },
+  "bat_validation": {
+    "launcher": "AVVIA_GIOCO_WINDOWS_SENZA_PYTHON.bat",
+    "url": "http://127.0.0.1:8000/",
+    "pose": "bath west side, x=92.7 y=65 dx=1 dy=0",
+    "result": {
+      "build": "PERLA1_V272A_REAL_ROOF_UNDERSIDE_EAVE_RUNTIME_OFF_ROLLBACK_SAFE_LOCAL",
+      "v272_enabled": false,
+      "v272_mode": "off",
+      "v272_pixels": 0,
+      "roofSamplesV106": 0,
+      "roofMs": 1.7,
+      "console_errors": 0
+    },
+    "screenshot": "C:/Users/ASUS/AppData/Local/Temp/perla_v272a_bat_bath_west.png"
+  },
+  "next_rule": "Prima di qualsiasi nuovo tetto/gronda: validare sempre con BAT su porta 8000, includere screenshot delle viste critiche bagno laterale/reception, e non promuovere facce piene se non sono occluse correttamente in vista laterale."
+}

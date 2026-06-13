@@ -1,0 +1,47 @@
+{
+  "build": "PERLA1_V193_SKYBOX_CLOUDS_WEATHER_AUDIO_FIX_LOCAL",
+  "base": "PERLA1_V192_WEATHER_VISIBILITY_REBALANCE_LOCAL",
+  "purpose": "Remove flat screen-space cloud ellipses from V192, reinforce clouds through V185 skybox mapping, add procedural rain/thunder audio.",
+  "modifiedFiles": [
+    "01_GIOCO_PRONTO_LOCAL_TEST/index.html",
+    "report/STATUS_PROGETTO_E_DIPENDENZE_PERLA1.txt",
+    "report/METODO_LAVORO_ANTI_REGRESSIONE_PERLA1.txt"
+  ],
+  "createdFiles": [
+    "report/README_REPACK_V193.txt",
+    "report/REPORT_V193_SKYBOX_CLOUDS_WEATHER_AUDIO_FIX.json"
+  ],
+  "preserved": [
+    "V185 distortion-controlled horizon",
+    "map",
+    "fMap",
+    "roadMask",
+    "cMap",
+    "objectBlock",
+    "worldgen",
+    "collisioni",
+    "roofs",
+    "tower",
+    "roofSegments",
+    "sprites",
+    "pergola",
+    "festoni",
+    "lake/boat",
+    "floor visual maps",
+    "decals",
+    "PNG assets",
+    "launchers"
+  ],
+  "checksPending": [
+    "browser visual test for cloud integration",
+    "browser audio unlock and thunder timing test"
+  ],
+  "commands": [
+    "perlaWeatherAudioOn()",
+    "perlaWeatherAudioOff()",
+    "perlaWeatherAudio()",
+    "perlaUnlockWeatherAudio()",
+    "perlaSetWeather('rain')",
+    "perlaSetWeather('storm')"
+  ]
+}

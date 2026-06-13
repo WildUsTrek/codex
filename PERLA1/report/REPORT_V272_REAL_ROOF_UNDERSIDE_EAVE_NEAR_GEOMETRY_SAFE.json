@@ -1,0 +1,85 @@
+{
+  "build": "PERLA1_V272_REAL_ROOF_UNDERSIDE_EAVE_NEAR_GEOMETRY_SAFE_LOCAL",
+  "base": "PERLA1_V271_REAL_CEILING_CLONE_SIDE_AWARE_CONTINUITY_SAFE_LOCAL",
+  "date": "2026-06-13",
+  "goal": "Fixare il fallimento V271 senza riattivare il vecchio roof fill sample-based: la gronda/intradosso deve usare geometria roof-space reale, budgetata, owner-aware e valida anche per il tetto bagno.",
+  "root_cause_from_report_and_runtime": [
+    "V271 usa il clone nel floor/ceiling casting. Quando la gronda e' sotto la near-plane o fuori dalle righe campionate del ceiling, il lato nord/sotto-gronda sparisce.",
+    "Il clone V271 eredita la quota/resa del soffitto, quindi puo' sembrare troppo basso rispetto al tetto alto reale.",
+    "Il vecchio tetto bello era il fill V106 sample-based: visivamente ricco, ma costa troppi campioni nei casi modern roof. V267 lo tiene OFF per policy."
+  ],
+  "implementation": {
+    "new_pass": "perlaRealRoofUndersideEavePassV272()",
+    "hook": "drawRoofLayer2_5D() dopo drawSlopedRoofGableCaps2_5D() e prima del tetto torre",
+    "source_geometry": "roofSegments modernSolid owner 1/2, con x0/x3/y0/y3, core x1/x2/y1/y2, undersideZ/eaveZ/overhang gia' registrati",
+    "rendered_faces": "strisce reali di intradosso/gronda per north/south/east/west, selezionate in base alla posizione player",
+    "visibility": "projectRoofPolyPoints + roofVisibleAt(layer roof_fascia) + clip same-owner wall top",
+    "budget": {
+      "max_roofs": 4,
+      "max_columns_per_roof": 520,
+      "max_pixels_per_frame": 10000,
+      "max_rows_per_column": 18,
+      "near_column_step": 1,
+      "far_column_step": 2
+    },
+    "explicitly_not_done": [
+      "Non riattivato PERLA_V267_ORIGINAL_ROOF_FILL_DEFAULT_ENABLED",
+      "Non reimportate V268/V269",
+      "Nessuna fake perimeter band o overlay finale"
+    ]
+  },
+  "checks": {
+    "node_inline_parse_ok": true,
+    "node_smoke_static_ok": true,
+    "build_id_present": true,
+    "v272_debug_exports_present": true,
+    "old_roof_fill_still_off_constant": true,
+    "v268_logic_absent": true,
+    "v269_fake_band_absent": true,
+    "browser_plugin_attempted": true,
+    "browser_plugin_failure": "node_repl kernel exited unexpectedly: CreateProcessAsUserW failed: 5",
+    "playwright_fallback_used": true,
+    "playwright_browser": "Google Chrome system executable",
+    "console_health": "Solo 404 favicon/resource generico dal server statico temporaneo; nessun pageerror app rilevato."
+  },
+  "runtime_probe": {
+    "viewport": "800x450",
+    "valid_geometry_poses": [
+      {"label":"rec_n_0_80","owner":1,"side":"north","pixels":9360,"roofSamplesV106":0,"roofMs":2.4,"originalFillOff":true,"performancePreserved":true},
+      {"label":"rec_s_10_4","owner":1,"side":"south","pixels":9360,"roofSamplesV106":0,"roofMs":3.0,"originalFillOff":true,"performancePreserved":true},
+      {"label":"bath_w_92_7","owner":2,"side":"west","pixels":9360,"roofSamplesV106":0,"roofMs":2.3,"originalFillOff":true,"performancePreserved":true},
+      {"label":"bath_e_105_3","owner":2,"side":"east","pixels":9360,"roofSamplesV106":0,"roofMs":2.0,"originalFillOff":true,"performancePreserved":true},
+      {"label":"bath_n_59_9","owner":2,"side":"north","pixels":9360,"roofSamplesV106":0,"roofMs":2.4,"originalFillOff":true,"performancePreserved":true},
+      {"label":"bath_s_70_1","owner":2,"side":"south","pixels":9360,"roofSamplesV106":0,"roofMs":2.2,"originalFillOff":true,"performancePreserved":true}
+    ],
+    "ultra_close_note": {
+      "label": "rec_n_ultra_close_1_35",
+      "pixels": 0,
+      "reason": "La faccia reale proiettata cade sopra il viewport; V272 non forza un overlay finto quando la geometria e' fuori frustum.",
+      "roofSamplesV106": 0,
+      "performancePreserved": true
+    },
+    "toggle_probe": {
+      "off": {"enabled": false, "pixels": 0},
+      "on": {"enabled": true, "pixels": 9360}
+    },
+    "mobile_smoke": {
+      "viewport": "390x844",
+      "renderer_canvas": "800x450 internal canvas",
+      "pose": "reception north",
+      "pixels": 9360,
+      "roofSamplesV106": 0,
+      "roofMs": 2.9
+    }
+  },
+  "screenshots": {
+    "reception_north": "C:\\Users\\ASUS\\AppData\\Local\\Temp\\perla_v272_qa\\v272_reception_north_800x450.png",
+    "bath_west": "C:\\Users\\ASUS\\AppData\\Local\\Temp\\perla_v272_qa\\v272_bath_west_800x450.png",
+    "mobile_reception_north": "C:\\Users\\ASUS\\AppData\\Local\\Temp\\perla_v272_qa\\v272_mobile_reception_north_390x844.png"
+  },
+  "notes": [
+    "Il bagno e' automatico perche' V272 itera tutti i roofSegments modernSolid con owner moderno; owner 2 e' stato validato su west/east/north/south.",
+    "Il costo resta budgetato: V272 aggiunge un pass a colonne/pixel cap, non torna ai campioni V106 del vecchio tetto.",
+    "Il caso ultra-vicino non viene forzato: se la gronda reale e' fuori schermo, V272 non inventa una fascia screen-space."
+  ]
+}

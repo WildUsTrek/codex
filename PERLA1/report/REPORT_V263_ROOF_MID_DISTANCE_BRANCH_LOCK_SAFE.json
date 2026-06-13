@@ -1,0 +1,87 @@
+{
+  "buildId": "PERLA1_V263_ROOF_MID_DISTANCE_BRANCH_LOCK_SAFE_LOCAL",
+  "baseBuild": "PERLA1_V262_COVERAGE_STABLE_EDGE_REPAIR_SAFE_LOCAL",
+  "generatedAt": "2026-06-12T20:10:28.710478",
+  "goal": "Bloccare/stabilizzare il branch roof_modern_reception/roof_modern_bath da 15200 samples, senza eccezione full-cost in near, preservando gerarchia visiva e debug precedenti.",
+  "importantClarification": "Full quality near non significa costo illimitato: bordi/gronde/silhouette leggibili, ma owner 1/2 modern roofs restano nel branch economico stabile.",
+  "implemented": [
+    "PERLA_BUILD_ID e UI aggiornati a V263",
+    "Aggiunte costanti PERLA_V263_ROOF_MID_DISTANCE_BRANCH_LOCK_SAFE",
+    "Branch lock owner 1/2 con step stabile 7x5 ordinario",
+    "Emergency branch lock 9x7 quando i dati precedenti indicano rischio roof/coverage alto",
+    "Disabilitata eccezione near full-cost per roof moderni reception/bagni",
+    "Aggiunti summary/toggle/mode/download V263",
+    "Recorder smart aggiornato con roofBranchLockV263",
+    "Metadata report aggiornato a baseBuild V262 / phase V263",
+    "Debug V259/V260/V261/V262 preservati"
+  ],
+  "preserved": [
+    "worldgen",
+    "map/fMap/cMap/roadMask/objectBlock",
+    "asset PNG",
+    "rain V248-V257",
+    "skybox",
+    "wall DDA",
+    "floor globale",
+    "sprite placement globale",
+    "collisioni",
+    "audio/input/CSS",
+    "minimappa",
+    "pergola artistica"
+  ],
+  "thresholds": {
+    "ordinaryStep": "7x5",
+    "emergencyStep": "9x7",
+    "targetMaxSamples": 7000,
+    "targetMaxVisibleSamples": 6000,
+    "targetMaxRoofMs": 14.0
+  },
+  "checks": {
+    "nodeCheck": "OK",
+    "nodeSmokeV263": {
+      "ok": true,
+      "generatedAt": "2026-06-12T20:10:13.940Z",
+      "checks": {
+        "buildId": true,
+        "baseBuild": true,
+        "v263Flag": true,
+        "branchLockStep": true,
+        "emergencyStep": true,
+        "noNearFullCost": true,
+        "branchLockDecision": true,
+        "summary": true,
+        "toggle": true,
+        "mode": true,
+        "download": true,
+        "windowGlobals": true,
+        "recorderMetadata": true,
+        "recorderV263": true,
+        "v259Preserved": true,
+        "v260Preserved": true,
+        "v261Preserved": true,
+        "v262Preserved": true,
+        "rainPreserved": true,
+        "noPatchOnlyMention": true
+      },
+      "missing": []
+    },
+    "assets": {
+      "pngCountOriginal": 116,
+      "pngCountNew": 116,
+      "changedPng": [],
+      "missingPng": [],
+      "addedPng": [],
+      "assetRefs": 108,
+      "missingRefs": [],
+      "patchOnlyFolders": []
+    }
+  },
+  "browserRealTest": "NOT_EXECUTED_IN_THIS_ENVIRONMENT",
+  "recommendedBrowserTests": [
+    "clear/rain/storm davanti reception roof a media distanza",
+    "near reception roof: verificare no ritorno branch 15200",
+    "bath_garden grande tetto",
+    "pergola clear/storm",
+    "report: roof.samples non deve alternare stabilmente 5290/15200 nei worst frame"
+  ]
+}

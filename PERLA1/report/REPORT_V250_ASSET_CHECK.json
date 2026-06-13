@@ -1,0 +1,9 @@
+{
+  "buildId": "PERLA1_V250_RAIN_NEAR_BUCKET_SEMANTICS_REWORK_SAFE_LOCAL",
+  "base": "PERLA1_V249_RAIN_NEAR_REVEAL_ENVELOPE_SAFE_LOCAL",
+  "assetRefsUnique": 108,
+  "assetPngTotal": 116,
+  "missing": [],
+  "changedPngVsV249": [],
+  "noPatchOnlyFolder": true
+}

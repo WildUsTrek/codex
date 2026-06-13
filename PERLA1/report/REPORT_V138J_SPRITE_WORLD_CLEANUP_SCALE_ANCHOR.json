@@ -1,0 +1,584 @@
+{
+  "build": "PERLA1_V138J_SPRITE_WORLD_CLEANUP_SCALE_ANCHOR_SAFE",
+  "base": "PERLA1_V138I_POTS_MICROFLORA_DEPTH_SAFE",
+  "goals": [
+    "remove duplicate sprite clusters at gameplay X49.65/Y23.66 and X54.15/Y42.77",
+    "remove flora from piazzole/terra cells",
+    "replace all bush tex7 with only bush_dark/bush_flower",
+    "reduce pots further",
+    "make flowers smaller/varied/deeper",
+    "make grass variants truly varied",
+    "ensure palm/tamarisk/bush_dark size variance",
+    "one bar counter near barman plus one table under canopy",
+    "deepen deckchair palette"
+  ],
+  "changedAssets": [
+    "deckchair.png",
+    "flower.png",
+    "flower_purple.png",
+    "flower_red.png",
+    "flower_white.png",
+    "grass.png",
+    "grass_reed.png",
+    "grass_soft.png",
+    "grass_variant_0.png",
+    "grass_variant_1.png",
+    "grass_variant_2.png",
+    "pot.png",
+    "pot_purple.png",
+    "pot_red.png"
+  ],
+  "assetChanges": [
+    {
+      "file": "pot.png",
+      "action": "pots_reduced_again_scale_0_72_current",
+      "beforeBottom": 63,
+      "afterBottom": 63
+    },
+    {
+      "file": "pot_red.png",
+      "action": "pots_reduced_again_scale_0_72_current",
+      "beforeBottom": 63,
+      "afterBottom": 63
+    },
+    {
+      "file": "pot_purple.png",
+      "action": "pots_reduced_again_scale_0_72_current",
+      "beforeBottom": 63,
+      "afterBottom": 63
+    },
+    {
+      "file": "flower.png",
+      "action": "smaller_varied_shape_micro_volume_repaint",
+      "beforeBottom": 63,
+      "afterBottom": 63
+    },
+    {
+      "file": "flower_red.png",
+      "action": "smaller_varied_shape_micro_volume_repaint",
+      "beforeBottom": 63,
+      "afterBottom": 63
+    },
+    {
+      "file": "flower_purple.png",
+      "action": "smaller_varied_shape_micro_volume_repaint",
+      "beforeBottom": 63,
+      "afterBottom": 63
+    },
+    {
+      "file": "flower_white.png",
+      "action": "smaller_varied_shape_micro_volume_repaint",
+      "beforeBottom": 63,
+      "afterBottom": 63
+    },
+    {
+      "file": "grass.png",
+      "action": "grass_redrawn_blades_unique_palette",
+      "beforeBottom": 63,
+      "afterBottom": 63
+    },
+    {
+      "file": "grass_soft.png",
+      "action": "grass_redrawn_blades_unique_palette",
+      "beforeBottom": 63,
+      "afterBottom": 63
+    },
+    {
+      "file": "grass_reed.png",
+      "action": "grass_redrawn_blades_unique_palette",
+      "beforeBottom": 63,
+      "afterBottom": 63
+    },
+    {
+      "file": "grass_variant_0.png",
+      "action": "grass_redrawn_blades_unique_palette",
+      "beforeBottom": 63,
+      "afterBottom": 63
+    },
+    {
+      "file": "grass_variant_1.png",
+      "action": "grass_redrawn_blades_unique_palette",
+      "beforeBottom": 63,
+      "afterBottom": 63
+    },
+    {
+      "file": "grass_variant_2.png",
+      "action": "grass_redrawn_blades_unique_palette",
+      "beforeBottom": 63,
+      "afterBottom": 63
+    },
+    {
+      "file": "deckchair.png",
+      "action": "deckchair_deeper_palette_internal_lines",
+      "beforeBottom": 63,
+      "afterBottom": 63
+    }
+  ],
+  "runtimeProbe": {
+    "spriteCount": 2512,
+    "roofSegments": 2,
+    "targets": {
+      "49.65,23.66": [
+        {
+          "i": 892,
+          "tex": 13,
+          "kind": "",
+          "x": 79.94,
+          "y": 23.48,
+          "gx": 49.94,
+          "gy": 23.48,
+          "dist": 0.346,
+          "hScale": 0.48,
+          "wScale": 1,
+          "groundSink": 2,
+          "blocking": false
+        }
+      ],
+      "54.15,42.77": [
+        {
+          "i": 135,
+          "tex": 14,
+          "kind": "",
+          "x": 84,
+          "y": 42.6,
+          "gx": 54,
+          "gy": 42.6,
+          "dist": 0.227,
+          "hScale": 0.88,
+          "wScale": 0.9,
+          "groundSink": 2,
+          "blocking": true
+        },
+        {
+          "i": 99,
+          "tex": 24,
+          "kind": "",
+          "x": 85.45,
+          "y": 42.15,
+          "gx": 55.45,
+          "gy": 42.15,
+          "dist": 1.44,
+          "hScale": 0.68,
+          "wScale": 1,
+          "groundSink": 1,
+          "blocking": false
+        },
+        {
+          "i": 114,
+          "tex": 26,
+          "kind": "camper_managed_hedge_as_bush_flower_v138j",
+          "x": 83.4,
+          "y": 41.2,
+          "gx": 53.4,
+          "gy": 41.2,
+          "dist": 1.74,
+          "hScale": 0.7117876530257345,
+          "wScale": 1.0421818170519548,
+          "groundSink": 2,
+          "blocking": true
+        }
+      ],
+      "23.55,2.55": [
+        {
+          "i": 31,
+          "tex": 26,
+          "kind": "bar_distant_bush",
+          "x": 53.8,
+          "y": 2.35,
+          "gx": 23.8,
+          "gy": 2.35,
+          "dist": 0.32,
+          "hScale": 0.56,
+          "wScale": 0.82,
+          "groundSink": 2.2,
+          "blocking": false
+        }
+      ]
+    },
+    "counts": {
+      "8": 17,
+      "9": 242,
+      "10": 4,
+      "11": 17,
+      "12": 111,
+      "13": 42,
+      "14": 13,
+      "15": 1,
+      "16": 4,
+      "17": 1,
+      "18": 12,
+      "19": 10,
+      "20": 3,
+      "21": 2,
+      "22": 2,
+      "23": 1,
+      "24": 9,
+      "25": 30,
+      "26": 29,
+      "27": 28,
+      "28": 35,
+      "29": 33,
+      "30": 96,
+      "31": 95,
+      "32": 7,
+      "33": 5,
+      "34": 11,
+      "35": 12,
+      "36": 2,
+      "37": 1,
+      "38": 1,
+      "40": 244,
+      "41": 290,
+      "43": 2,
+      "44": 2,
+      "45": 2,
+      "47": 1,
+      "48": 1,
+      "49": 2,
+      "50": 1,
+      "51": 1,
+      "52": 4,
+      "53": 1,
+      "54": 25,
+      "55": 21,
+      "56": 25,
+      "61": 1,
+      "62": 1,
+      "63": 1,
+      "64": 1,
+      "65": 1,
+      "66": 1,
+      "67": 1,
+      "68": 1,
+      "69": 1,
+      "70": 1,
+      "71": 1,
+      "76": 1,
+      "77": 1,
+      "78": 1,
+      "84": 1,
+      "85": 242,
+      "86": 249,
+      "87": 232,
+      "88": 90,
+      "89": 92,
+      "90": 94
+    },
+    "kindTop": [
+      [
+        "",
+        466
+      ],
+      [
+        "pineta2_s_blocker_pine_v75",
+        345
+      ],
+      [
+        "secret_grove_extra_litter_v75",
+        309
+      ],
+      [
+        "secret_grove_floor_litter_v74",
+        217
+      ],
+      [
+        "pine",
+        184
+      ],
+      [
+        "pineta2_floor_litter_v74",
+        175
+      ],
+      [
+        "pineta2_dense_wall_pine_v75",
+        171
+      ],
+      [
+        "secret_grove_border_pine_v73",
+        98
+      ],
+      [
+        "pineta2_rich_litter_v75",
+        91
+      ],
+      [
+        "secret_grove_extra_wall_pine_v75",
+        61
+      ],
+      [
+        "secret_grove_wall_pine_v74",
+        46
+      ],
+      [
+        "secret_grove_lake_pine_v75",
+        34
+      ],
+      [
+        "secret_flower_field_bush_v73",
+        24
+      ],
+      [
+        "palm",
+        20
+      ],
+      [
+        "secret_north_field_wall_tamarisk_v91",
+        20
+      ],
+      [
+        "secret_grove_floor_detail_v72",
+        17
+      ],
+      [
+        "bar_table_low_grass_v74",
+        15
+      ],
+      [
+        "ordered_chokepoint_pot",
+        13
+      ],
+      [
+        "secret_flower_field_flower_v73",
+        12
+      ],
+      [
+        "tamarisk_border_free",
+        11
+      ],
+      [
+        "camper_managed_hedge_as_bush_flower_v138j",
+        10
+      ],
+      [
+        "tamarisk_reception_west",
+        10
+      ],
+      [
+        "tamarisk_parking_field",
+        10
+      ],
+      [
+        "parked_car",
+        9
+      ],
+      [
+        "parking_field_grass_v35",
+        9
+      ],
+      [
+        "tamarisk_pineta_wall_road",
+        7
+      ],
+      [
+        "forced_user_pine_v77",
+        7
+      ],
+      [
+        "bar_dehors_grass",
+        6
+      ],
+      [
+        "secret_grove_pine_v72",
+        6
+      ],
+      [
+        "tent",
+        6
+      ],
+      [
+        "secret_home_wall_pine_v76",
+        6
+      ],
+      [
+        "secret_north_field_tamarisk_v76",
+        6
+      ],
+      [
+        "bush_as_bush_dark_v138j",
+        5
+      ],
+      [
+        "barbecue_avenue_tamarisk_v71",
+        5
+      ],
+      [
+        "parking_corner_pot",
+        4
+      ],
+      [
+        "game_room_column",
+        4
+      ],
+      [
+        "bush_as_bush_flower_v138j",
+        4
+      ],
+      [
+        "camper_managed_hedge_as_bush_dark_v138j",
+        4
+      ],
+      [
+        "shower",
+        4
+      ],
+      [
+        "secret_beach_furniture_v72",
+        4
+      ],
+      [
+        "yoga_canopy_column_v75",
+        4
+      ],
+      [
+        "forced_user_pine_v78",
+        4
+      ],
+      [
+        "bar_outdoor_table",
+        3
+      ],
+      [
+        "bar_dehors_pot",
+        3
+      ],
+      [
+        "secret_home_decor_v73",
+        3
+      ],
+      [
+        "camp_stool",
+        3
+      ],
+      [
+        "forced_user_pine_v79",
+        3
+      ],
+      [
+        "bar_distant_bush",
+        2
+      ],
+      [
+        "barbecue_stool",
+        2
+      ],
+      [
+        "barbecue_border_decor",
+        2
+      ],
+      [
+        "tamarisk_scattered",
+        2
+      ],
+      [
+        "camping_imperio_sign",
+        1
+      ],
+      [
+        "bar_distant_bush_as_bush_dark_v138j",
+        1
+      ],
+      [
+        "billiard_table",
+        1
+      ],
+      [
+        "pingpong_table",
+        1
+      ],
+      [
+        "story_barbecue_long_animated",
+        1
+      ],
+      [
+        "story_barbecue_sign",
+        1
+      ],
+      [
+        "fountain",
+        1
+      ],
+      [
+        "secret_home_sign_casa_v73",
+        1
+      ],
+      [
+        "direction_sign_reception",
+        1
+      ],
+      [
+        "direction_sign_bar",
+        1
+      ],
+      [
+        "direction_sign_pineta",
+        1
+      ],
+      [
+        "direction_sign_camper",
+        1
+      ],
+      [
+        "direction_sign_bagni",
+        1
+      ],
+      [
+        "direction_sign_spiaggia",
+        1
+      ],
+      [
+        "direction_sign_parcheggio",
+        1
+      ],
+      [
+        "direction_sign_tende",
+        1
+      ],
+      [
+        "direction_sign_yoga",
+        1
+      ],
+      [
+        "secret_home_animated_campfire_v74",
+        1
+      ],
+      [
+        "pineta2_mossy_boulder_v74",
+        1
+      ],
+      [
+        "secret_lake_rowboat_v89",
+        1
+      ],
+      [
+        "flower_arch_single_v93",
+        1
+      ],
+      [
+        "special_tall_palm_v95",
+        1
+      ],
+      [
+        "marble_statue_second_v118",
+        1
+      ],
+      [
+        "palm_forced_no_grass_v122",
+        1
+      ],
+      [
+        "bar_counter_single_front_barman_v138j",
+        1
+      ],
+      [
+        "bar_under_canopy_table_v138j",
+        1
+      ]
+    ]
+  },
+  "manifestMissing": [],
+  "pngCount": 110,
+  "lockedSignsUnchanged": {
+    "sign_bar": true,
+    "sign_pineta": true
+  }
+}

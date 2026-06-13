@@ -1,0 +1,151 @@
+{
+  "build": "PERLA1_V236_ROOF_SUPPORT_SYNC_REAL_SAFE_LOCAL",
+  "base": "PERLA1_V235_TOWER_VISIBILITY_RAIN_MIDFIELD_SAFE_LOCAL",
+  "date": "2026-06-11",
+  "scope": "roof/support sync reale per tetti moderni owner 1/2 reception/bagni",
+  "modified_files": [
+    "01_GIOCO_PRONTO_LOCAL_TEST/index.html",
+    "AVVIA_GIOCO_WINDOWS_SENZA_PYTHON.bat",
+    "AVVIA_GIOCO_SERVER_POWERSHELL.ps1",
+    "report/STATUS_PROGETTO_E_DIPENDENZE_PERLA1.txt",
+    "report/METODO_LAVORO_ANTI_REGRESSIONE_PERLA1.txt",
+    "report/README_REPACK_V236.txt",
+    "report/REPORT_V236_ROOF_SUPPORT_SYNC_REAL_SAFE.json"
+  ],
+  "preserved": {
+    "map_collision_worldgen_assets_png": true,
+    "tower": true,
+    "cars": true,
+    "rain_tuning": true,
+    "skybox_audio_weather": true,
+    "v233_overdraw_rollback": true,
+    "v234_rain_airspace_car_lift": true,
+    "v235_tower_visibility_rain_midfield": true
+  },
+  "implementation": {
+    "support_buffers": [
+      "ModernSupportOwnerBufferV236",
+      "ModernSupportTopBufferV236",
+      "ModernSupportBottomBufferV236",
+      "ModernSupportDepthBufferV236",
+      "ModernSupportWallTexBufferV236"
+    ],
+    "helpers": [
+      "resetModernSupportBuffersV236",
+      "recordModernSupportColumnV236",
+      "modernRoofLayerIsSupportCriticalV236",
+      "modernRoofApproxZFromScreenV236",
+      "modernRoofForegroundBlocksSupportV236",
+      "modernRoofSupportVisibleNearColumnV236",
+      "modernRoofSupportAllowsV236"
+    ],
+    "integration_points": [
+      "wallcasting column hit registration",
+      "roofVisibleAt",
+      "slopedRoofPixelVisibleV111/slopedRoofPixelVisibleForRoofV129",
+      "drawStats/window.__PERLA_DEBUG__"
+    ]
+  },
+  "hard_constraints": {
+    "PERLA_V233_DISABLE_FAR_WALL_SPAN_DRAW": true,
+    "PERLA_V233_DISABLE_HEIGHT_STEP_FACE_DRAW": true,
+    "PERLA_V233_DISABLE_CONTINUOUS_WALL_RUN_DRAW": true,
+    "PERLA_V233_DISABLE_FAKE_ROOF_SUPPORT_PIXEL_CLIP": true,
+    "no_patch_only_folder": true,
+    "png_modified": 0
+  },
+  "checks": {
+    "zip_source_testzip": "OK on base V235 before patch",
+    "node_check": "OK on extracted V236 JS",
+    "runtime_mock": {
+      "node_mock_executed": true,
+      "probes": {
+        "default": {
+          "supports": 0,
+          "checks": 0,
+          "rejects": 0,
+          "roofSegments": 2
+        },
+        "reception_south": {
+          "supports": 800,
+          "owner1": 800,
+          "owner2": 0,
+          "checks": 7964,
+          "rejects": 0,
+          "roofSegments": 2
+        },
+        "reception_diag": {
+          "supports": 394,
+          "owner1": 394,
+          "owner2": 0,
+          "checks": 1863,
+          "rejects": 0,
+          "roofSegments": 2
+        },
+        "bath_west": {
+          "supports": 445,
+          "owner1": 0,
+          "owner2": 445,
+          "checks": 4518,
+          "rejects": 1024,
+          "roofSegments": 2
+        },
+        "bath_south": {
+          "supports": 0,
+          "owner1": 0,
+          "owner2": 0,
+          "checks": 2304,
+          "rejects": 2304,
+          "roofSegments": 2
+        }
+      },
+      "world": {
+        "mapW": 150,
+        "mapH": 88,
+        "sprites": 1938,
+        "roofSegments": 2
+      },
+      "interpretation": "I probe mock confermano che i buffer support owner 1/2 si popolano quando il muro moderno è visto; i reject compaiono nei casi bagni con foreground/senza support coerente, come previsto dalla logica V236."
+    },
+    "static_validation": {
+      "build_id": "PERLA1_V236_ROOF_SUPPORT_SYNC_REAL_SAFE_LOCAL",
+      "title_ok": true,
+      "h2_ok": true,
+      "loading_ok": true,
+      "png_total": 116,
+      "asset_png_string_refs": 108,
+      "asset_missing": [],
+      "png_modified": [],
+      "png_added": [],
+      "png_removed": [],
+      "patch_only_dirs": [],
+      "report_dir": true,
+      "flags": {
+        "PERLA_V233_DISABLE_FAR_WALL_SPAN_DRAW": true,
+        "PERLA_V233_DISABLE_HEIGHT_STEP_FACE_DRAW": true,
+        "PERLA_V233_DISABLE_CONTINUOUS_WALL_RUN_DRAW": true,
+        "PERLA_V233_DISABLE_FAKE_ROOF_SUPPORT_PIXEL_CLIP": true,
+        "PERLA_V234_RAIN_AIRSPACE_LOGIC_CAR_ANCHOR_SAFE": true,
+        "PERLA_V234_CAR_VISUAL_ANCHOR_LIFT": true,
+        "PERLA_V235_TOWER_VISIBILITY_STABILIZER": true,
+        "PERLA_V235_RAIN_MIDFIELD_OUTDOOR_VOLUME": true,
+        "PERLA_V236_ROOF_SUPPORT_SYNC_REAL_SAFE": true,
+        "PERLA_V236_MODERN_ROOF_SUPPORT_SYNC": true
+      },
+      "contains_v236_helpers": true,
+      "contains_forbidden_reenable": false
+    },
+    "asset_missing": 0,
+    "png_modified": 0,
+    "patch_only_folder": "absent",
+    "report_folder": "present",
+    "browser_visual_test": "not executed"
+  },
+  "browser_visual_test": "NOT_EXECUTED_BY_ASSISTANT; user/game browser test required for perceptual approval",
+  "validation_notes": [
+    "La patch è runtime-code only + report/launcher; PNG invariati.",
+    "Il vecchio v232ModernRoofForegroundSupportClip resta disabilitato da PERLA_V233_DISABLE_FAKE_ROOF_SUPPORT_PIXEL_CLIP=true.",
+    "La soluzione V236 è collegata anche al renderer Sloped Roof Casting reale, non solo al fallback roofVisibleAt().",
+    "Il risultato percettivo finale richiede test browser reale su reception e bagni."
+  ]
+}

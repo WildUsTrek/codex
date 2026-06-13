@@ -1,0 +1,34 @@
+{
+  "buildId": "PERLA1_V241_WORLD_WALL_REGISTRY_HIERARCHY_DIAGNOSTIC_LOCAL",
+  "baseBuild": "PERLA1_V240A_STABLE_SURFACE_FAMILY_DRAW_REFINEMENT_LOCAL",
+  "generatedAt": "2026-06-12T01:14:27Z",
+  "checks": {
+    "nodeCheck": "OK",
+    "nodeSmokeLoad": "OK",
+    "debugExports": "OK getWorldWallRegistrySummary/getWorldWallRegistryProjectionSummary",
+    "registrySmoke": "OK segmentsTotal=113 drawEnabled=false v240aUnstableDrawDisabled=true",
+    "drawWorldMock": "OK projection drawEnabled=false drawnColumns=0 candidateSegments=64",
+    "assetPngRefs": 108,
+    "assetMissing": 0,
+    "pngImagesCompared": 116,
+    "pngModifiedVsV240A": 0,
+    "patchOnlyFolder": "absent",
+    "zipIntegrity": "to be verified after packaging",
+    "tarGzIntegrity": "to be verified after packaging",
+    "browserInteractiveTest": "not executed in container"
+  },
+  "missingAssets": [],
+  "changedImages": [],
+  "antiRegression": {
+    "v237Closed": true,
+    "v227v232DrawLegacyOff": true,
+    "newDDA": false,
+    "postWallOverlay": false,
+    "zBufferUpdateByV241": false,
+    "spriteOcclusionUpdateByV241": false,
+    "rainOcclusionUpdateByV241": false,
+    "mapMutation": false,
+    "assetMutation": false,
+    "collisionMutation": false
+  }
+}

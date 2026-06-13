@@ -1,0 +1,38 @@
+{
+  "build": "PERLA1_V235_TOWER_VISIBILITY_RAIN_MIDFIELD_SAFE_LOCAL",
+  "base": "PERLA1_V234_RAIN_AIRSPACE_LOGIC_CAR_ANCHOR_SAFE_LOCAL",
+  "intent": "tower visibility stabilizer + rain midfield outdoor volume on stable V234",
+  "drawExtraV228V229V230Reenabled": false,
+  "filesTouched": [
+    "01_GIOCO_PRONTO_LOCAL_TEST/index.html",
+    "AVVIA_GIOCO_WINDOWS_SENZA_PYTHON.bat",
+    "AVVIA_GIOCO_SERVER_POWERSHELL.ps1",
+    "report/STATUS_PROGETTO_E_DIPENDENZE_PERLA1.txt",
+    "report/METODO_LAVORO_ANTI_REGRESSIONE_PERLA1.txt",
+    "report/README_REPACK_V235.txt",
+    "report/REPORT_V235_TOWER_VISIBILITY_RAIN_MIDFIELD_SAFE_LOCAL.json"
+  ],
+  "preserved": [
+    "map",
+    "collisioni",
+    "objectBlock",
+    "roadMask",
+    "asset PNG",
+    "roof geometry",
+    "V233 rollback",
+    "V234 rain airspace",
+    "V234 car anchor lift"
+  ],
+  "tower": {
+    "peekMaxDist": 72,
+    "retrySamples": 13,
+    "minStableColumns": 2,
+    "renderer": "original tower renderer only"
+  },
+  "rain": {
+    "midfieldMinDist": 3.0,
+    "midfieldMaxDist": 14.0,
+    "screenOverlay": false,
+    "respectsCoverage": true
+  }
+}

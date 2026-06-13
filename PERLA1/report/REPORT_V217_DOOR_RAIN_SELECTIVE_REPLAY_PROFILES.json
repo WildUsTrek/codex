@@ -1,0 +1,41 @@
+{
+  "build": "PERLA1_V217_DOOR_RAIN_SELECTIVE_REPLAY_PROFILES_LOCAL",
+  "base": "PERLA1_V216_DOOR_RAIN_EXACT_CEILING_RECT_REPLAY_LOCAL",
+  "goal": "Replay selettivo dei fillRect reali di soffitto/tettoia/canopy dopo rain, con profili per reception, bagni, bar, sala giochi, sala yoga; niente replay globale.",
+  "interventions": [
+    "Aggiunto DOOR_REPLAY_PROFILES_V217 con reception, bagni, bar, sala giochi, sala yoga.",
+    "Aggiunto resolveDoorReplayProfileV217 e filtro rectAllowedByDoorReplayProfileV217.",
+    "Aggiunto drawDoorRainSelectiveCeilingReplayV217 chiamato dopo drawWeatherOverlayV190.",
+    "Disattivato il replay globale V216 nel path attivo; V216 resta storico/debug.",
+    "Mantenuto capture exact fillRect V216 su drawModernCoverCeilingSegment, drawCeilingSegment, drawCanopySpanV121.",
+    "Estesa capture canopy/ceiling con owner e rowDist quando disponibili.",
+    "Aggiunto near-threshold forced fullscreen V217 se profilo near + camera verso outdoor."
+  ],
+  "profiles": [
+    "reception_south_main",
+    "bath_west_main",
+    "bar_canopy_main",
+    "game_room_canopy_main",
+    "yoga_room_canopy_main"
+  ],
+  "preserved": [
+    "V210 renderer dedicato door rain",
+    "V204 audio",
+    "V200 roof budget",
+    "V201 rain buffer globale",
+    "V185 fondale",
+    "mappa/collisioni/worldgen/sprite/pergola/torre/canopy",
+    "asset PNG"
+  ],
+  "forbidden_paths": {
+    "global_replay_v216_active": false,
+    "solid_cover_v215_active": false,
+    "walltop_primary_for_v217_replay": false,
+    "percentile_or_fallback_ratio_in_v217_replay": false,
+    "rainBuffer_clip_drawImage_for_door_replay": false
+  },
+  "notes": [
+    "Il profilo V217 non inventa l architrave: se il bordo alto desiderato non e un fillRect reale catturabile, va affrontato in un pass reale dedicato, non con offset manuale.",
+    "Test browser/visivo reale non eseguito in container."
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "ok": true,
+  "checks": {
+    "buildIdV267": true,
+    "baseV266": true,
+    "originalFillDefaultOff": true,
+    "skipOriginalHook": true,
+    "wallClipHook": true,
+    "ceilingClip": true,
+    "spriteGuard": true,
+    "debugSummary": true,
+    "debugToggle": true,
+    "debugDownload": true,
+    "v266Preserved": true,
+    "v265Preserved": true,
+    "v264Preserved": true,
+    "v259Preserved": true,
+    "noPatchOnlyMention": true
+  }
+}

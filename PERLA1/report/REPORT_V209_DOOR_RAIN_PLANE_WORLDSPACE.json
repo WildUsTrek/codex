@@ -1,0 +1,58 @@
+{
+  "build": "PERLA1_V209_DOOR_RAIN_PLANE_WORLDSPACE_LOCAL",
+  "base": "PERLA1_V208_AUTHORITATIVE_DOOR_PORTAL_RAIN_FIX_LOCAL",
+  "purpose": "Door Rain Plane World-Space: projected portal sheet outside mapped doors with depth/ceiling guard and full-screen threshold override; no fixed V206 Y fallback for mapped doors.",
+  "preserved": [
+    "V204 audio bird/footstep",
+    "V200 roof budget",
+    "V201 rain buffer/cloud budget",
+    "V185 horizon/fondale",
+    "map/collision/worldgen/sprites/pergola/tower/canopy"
+  ],
+  "implemented": [
+    "Added V209 constants and debug flags.",
+    "Added world-space rain plane projection from door descriptor endpoints shifted slightly outside threshold.",
+    "Generated micro-ranges from projected plane geometry rather than fixed screen-space yTop/yBottom.",
+    "Added ZBuffer/wall and CeilingDepthBuffer top-occlusion guard per micro-range.",
+    "Added full-screen override when mapped threshold is open/near/wide enough, so doorway/soglia does not remain a small rain band.",
+    "Blocked V206 fixed-screen fallback for mapped doors when V209 is active.",
+    "Updated in-game visible UI, launcher names, build id, debug checks."
+  ],
+  "checks": {
+    "node_check": "OK",
+    "png_actual": 116,
+    "png_references": 108,
+    "png_missing": [],
+    "png_changed_vs_v208": [],
+    "drawWeatherCloudDeckV192_present": false,
+    "v209_flag_present": true,
+    "ui_title_v209": true,
+    "patch_only_folder": false,
+    "zip_integrity": "OK (initial package, will be recomputed after final report update)",
+    "tar_gz_integrity": "OK (initial package, will be recomputed after final report update)"
+  },
+  "changed_files": [
+    {
+      "path": "AVVIA_GIOCO_SERVER_POWERSHELL.ps1",
+      "change": "modified"
+    },
+    {
+      "path": "AVVIA_GIOCO_WINDOWS_SENZA_PYTHON.bat",
+      "change": "modified"
+    },
+    {
+      "path": "01_GIOCO_PRONTO_LOCAL_TEST/index.html",
+      "change": "modified"
+    }
+  ],
+  "debug_keys": [
+    "weatherDoorRainPlaneV209",
+    "weatherDoorRainPlaneRangesV209",
+    "weatherDoorRainPlaneOpenWidthRatioV209",
+    "weatherDoorRainPlaneFullScreenOverrideV209",
+    "weatherDoorRainPlaneMinTopV209",
+    "weatherDoorRainPlaneMaxBottomV209",
+    "weatherDoorRainPlaneOcclusionCheckedV209",
+    "weatherDoorRainPlaneOcclusionBlockedV209"
+  ]
+}

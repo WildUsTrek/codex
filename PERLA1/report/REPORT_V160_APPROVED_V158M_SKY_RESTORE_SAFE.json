@@ -1,0 +1,30 @@
+{
+  "build": "PERLA1_V160_APPROVED_V158M_SKY_RESTORE_SAFE_LOCAL",
+  "base": "PERLA1_V158M_LANDMARK_PROFILE_CLARITY_SAFE_LOCAL",
+  "purpose": "restore user-approved V158M skybox as clear numeric V160 base; no visual retouch",
+  "visual_asset_policy": "sky/cloud copied byte-identical from V158M and renamed to V160",
+  "excluded_bases": [
+    "V158N",
+    "V158O",
+    "V158P",
+    "V158Q"
+  ],
+  "preserved": [
+    "map",
+    "fMap",
+    "roadMask",
+    "cMap",
+    "objectBlock",
+    "collisioni",
+    "worldgen",
+    "roof geometry",
+    "tower",
+    "sprite placement",
+    "shadows",
+    "pineta/pergola",
+    "lake/shore",
+    "boat",
+    "festoon"
+  ],
+  "future_rule": "island contour fix only after pixel-precise target; diff microscopic; compare before packaging"
+}

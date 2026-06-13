@@ -1,0 +1,28 @@
+{
+  "buildId": "PERLA1_V241C_FACE_DRAWABILITY_ELIGIBILITY_DIAGNOSTIC_LOCAL",
+  "validatedAt": "2026-06-12T02:00:08.203348Z",
+  "checks": {
+    "nodeCheck": "OK",
+    "nodeSmokeLoad": "OK",
+    "debugExportsV241C": "OK",
+    "drawWorldSmoke": "OK",
+    "zipIntegrity": "OK",
+    "tarGzIntegrity": "OK",
+    "assetRefs": 108,
+    "assetMissing": 0,
+    "pngFiles": 124,
+    "pngModifiedVsV241B": 0,
+    "patchOnlyFolder": "absent",
+    "manualBrowserInteractiveTest": "not_run_in_container"
+  },
+  "smokeSummary": {
+    "drawabilityDrawEnabled": false,
+    "drawnColumns": 0,
+    "zBufferUpdated": false,
+    "debugFunctions": [
+      "getWorldWallFaceDrawabilitySummary",
+      "getWorldWallSafeSpanSummary"
+    ]
+  },
+  "artifactHashNote": "Final ZIP/TAR.GZ hashes are computed after packaging and reported in the delivery message."
+}

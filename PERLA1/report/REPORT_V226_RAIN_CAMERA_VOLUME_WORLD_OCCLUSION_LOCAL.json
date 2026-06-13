@@ -1,0 +1,56 @@
+{
+  "build": "PERLA1_V226_RAIN_CAMERA_VOLUME_WORLD_OCCLUSION_LOCAL",
+  "base": "PERLA1_V225B_RAIN_CLIP_NULL_GUARD_LOCAL",
+  "date": "2026-06-11",
+  "intent": "Camera-centered rain volume with world occlusion by solid height; eliminate concentrated fallback and refill gaps after fast turn/run.",
+  "modified_files": [
+    "01_GIOCO_PRONTO_LOCAL_TEST/index.html",
+    "AVVIA_GIOCO_WINDOWS_SENZA_PYTHON.bat",
+    "AVVIA_GIOCO_SERVER_POWERSHELL.ps1",
+    "report/README_REPACK_V226.txt",
+    "report/REPORT_V226_RAIN_CAMERA_VOLUME_WORLD_OCCLUSION_LOCAL.json",
+    "report/STATUS_PROGETTO_E_DIPENDENZE_PERLA1.txt",
+    "report/METODO_LAVORO_ANTI_REGRESSIONE_PERLA1.txt"
+  ],
+  "preserved": [
+    "map",
+    "collisioni",
+    "worldgen",
+    "roadMask",
+    "objectBlock",
+    "sprite placement",
+    "PNG assets",
+    "roof/cMap/roofSegments",
+    "skybox",
+    "audio meteo",
+    "V223 bath authority",
+    "V224 distance LOD",
+    "V225B null guards"
+  ],
+  "technical_changes": [
+    "PERLA_V226_RAIN_CAMERA_VOLUME_WORLD_OCCLUSION flag/constants",
+    "camera-relative lane/depth rain volume",
+    "respawnRainDropV222 rewritten to avoid concentrated near fallback",
+    "rainApplyVolumeManagerV224 uses visible drawn segments/prewarm frames",
+    "rainPointOccludedBySolidHeightV226 prevents full-column ZBuffer authority",
+    "clipLineSegmentToScreenRectV226 for robust screen-top clipping",
+    "debug counters for V226"
+  ],
+  "checks": {
+    "node_check": "OK",
+    "png_assets": 116,
+    "png_refs_detected": 108,
+    "missing_assets": [],
+    "patch_only_folder": "absent by construction"
+  },
+  "runtime_validation_required": [
+    "fast 90/180 degree turn must not produce one-second dry gap",
+    "running must not outrun rain",
+    "near rain must enter from top edge",
+    "no concentrated water column",
+    "rain visible above low hedge walls",
+    "wall bodies still opaque",
+    "yoga canopy blocks rain below but shows rain outside above hedges",
+    "bath_garden outdoor and bath_main real door authority preserved"
+  ]
+}

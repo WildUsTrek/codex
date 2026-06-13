@@ -1,0 +1,93 @@
+{
+  "build": "PERLA1_V258A_PHASE1_REAL_QUICK_WINS_COMPLETE_SAFE_LOCAL",
+  "base": "PERLA1_V258_PERFORMANCE_BASELINE_DEBUG_OVERHEAD_SAFE_LOCAL",
+  "date": "2026-06-12",
+  "scope": "Completamento reale Fase 1/3 Quick Wins performance: debug lazy, checklist clone reduction, smart performance recorder. Nessun cambio visivo/worldgen/asset/rain output.",
+  "files_modified": [
+    "01_GIOCO_PRONTO_LOCAL_TEST/index.html",
+    "AVVIA_GIOCO_WINDOWS_SENZA_PYTHON.bat",
+    "AVVIA_GIOCO_SERVER_POWERSHELL.ps1",
+    "report/STATUS_PROGETTO_E_DIPENDENZE_PERLA1.txt",
+    "report/METODO_LAVORO_ANTI_REGRESSIONE_PERLA1.txt",
+    "report/README_REPACK_V258A.txt",
+    "report/REPORT_V258A_PHASE1_REAL_QUICK_WINS_COMPLETE.json",
+    "report/EXTRACTED_INDEX_INLINE_SCRIPT_V258A.js",
+    "report/NODE_SMOKE_V258A.js",
+    "report/NODE_SMOKE_V258A_RECORDER.js"
+  ],
+  "code_metrics": {
+    "html_lines": 23780,
+    "script_lines": 23643,
+    "script_bytes": 1447077,
+    "raw_CHECKLIST_slice_occurrences_after_patch": 0,
+    "perlaAttachChecklistV258A_calls": 26,
+    "perlaChecklistForSummaryV258A_calls": 19,
+    "smart_exports": [
+      "perlaPerfStart",
+      "perlaPerfMark",
+      "perlaPerfStatus",
+      "perlaPerfStop",
+      "perlaPerfStopAndDownload",
+      "perlaPerfSmartStartV258A",
+      "perlaPerfSmartStopAndDownloadV258A",
+      "perlaPerformanceV258A"
+    ]
+  },
+  "assets": {
+    "png_count": 116,
+    "png_refs_unique": 108,
+    "missing_refs": [],
+    "png_changed_vs_v258": [],
+    "png_changed_count": 0
+  },
+  "preserved": {
+    "map": true,
+    "fMap": true,
+    "cMap": true,
+    "roadMask": true,
+    "objectBlock": true,
+    "worldgen": true,
+    "assetManifest": true,
+    "pngAssets": true,
+    "rainOutput": true,
+    "rainLifecycle": true,
+    "skyboxV257": true,
+    "roofTowerPergolaFestoonsSprites": true,
+    "minimapDefaultBehavior": true
+  },
+  "new_console_commands": [
+    "perlaPerfStart([options])",
+    "perlaPerfMark(label)",
+    "perlaPerfStatus()",
+    "perlaPerfStop()",
+    "perlaPerfStopAndDownload()",
+    "perlaPerfSmartStartV258A(options)",
+    "perlaPerfSmartMarkV258A(label)",
+    "perlaPerfSmartStatusV258A()",
+    "perlaPerfSmartStopV258A()",
+    "perlaPerfSmartStopAndDownloadV258A()",
+    "perlaPerformanceV258A(reason)",
+    "perlaDownloadPerformanceV258A(reason)",
+    "perlaSetDeepDrawStatsV258A(enabled)",
+    "perlaRequestDeepDrawStatsOneShotV258A()"
+  ],
+  "validation_planned": [
+    "node --check",
+    "Node VM smoke",
+    "Node VM smart recorder smoke",
+    "asset refs missing=0",
+    "asset hashes unchanged vs V258",
+    "ZIP integrity",
+    "TAR.GZ integrity"
+  ],
+  "validation_actual": {
+    "node_check": "OK",
+    "node_vm_smoke": "OK - build/export/performance V258A disponibili",
+    "node_vm_smart_recorder_smoke": "OK - start/mark/status/stop report funzionanti",
+    "asset_refs_missing": 0,
+    "png_changed_vs_v258": 0,
+    "raw_CHECKLIST_slice_occurrences_after_patch": 0,
+    "patch_only_folder": "absent",
+    "browser_real_test": "not executed in this environment; manual real browser tour required"
+  }
+}

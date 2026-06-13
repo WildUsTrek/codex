@@ -1,0 +1,47 @@
+{
+  "buildId": "PERLA1_V267_ROOF_SILHOUETTE_MAIN_WALL_CLIP_SAFE_LOCAL",
+  "baseBuild": "PERLA1_V266_ROOF_SILHOUETTE_MASK_BUDGET_HIERARCHY_SAFE_LOCAL",
+  "patchMode": "roof_silhouette_main_wall_clip_safe",
+  "generatedAt": "2026-06-13T00:09:42.107695",
+  "scope": [
+    "promote V266 continuous roof silhouette/mask to main roof renderer",
+    "default-disable original sample-based roof fill in normal runtime",
+    "add strict wall/depth clipping against ZBuffer, WallTop/Bottom and CeilingDepth",
+    "preserve V264 cost watchdog and V265 edge rail as refinement/performance systems",
+    "preserve rain, skybox, map/worldgen/assets/floor/sprite/wall DDA/collisions/audio/input/CSS/minimap"
+  ],
+  "newCommands": [
+    "perlaRoofSilhouetteMainSummaryV267()",
+    "perlaRoofSilhouetteMainToggleV267(false/true)",
+    "perlaRoofSilhouetteMainModeV267('safe'|'debug'|'off'|'original')",
+    "perlaRoofSilhouetteMainDownloadV267()"
+  ],
+  "keyMetrics": [
+    "originalRoofFillSkipped",
+    "silhouetteMainApplied",
+    "wallClipApplied",
+    "wallClipColumns",
+    "wallRejectedPixels",
+    "bushWallClipApplied",
+    "ceilingRejectedPixels",
+    "spriteForegroundGuardApplied",
+    "receptionWallSpriteConflictGuard",
+    "samplesPrevented",
+    "performancePreserved"
+  ],
+  "validation": {
+    "nodeCheck": "OK",
+    "staticSmoke": "OK",
+    "assetHashChangedCount": 0,
+    "pngMissing": 0,
+    "zipIntegrity": "pending",
+    "tarGzIntegrity": "pending",
+    "browserRealTest": "not executed in this environment"
+  },
+  "antiRegression": [
+    "Do not re-enable old sample-based roof fill as main renderer",
+    "Do not raise global roof sampling",
+    "Do not draw silhouette/mask as overlay above walls/sprites",
+    "Any roof/canopy/silhouette must obey wall/depth hierarchy"
+  ]
+}

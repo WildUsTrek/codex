@@ -1,0 +1,95 @@
+{
+  "build": "PERLA1_V189_ENVIRONMENT_DAYCYCLE_HELPERS_LOCAL",
+  "base": "PERLA1_V185_DISTORTION_TARGET_8PCT_RESTORE_LOCAL.zip",
+  "combined_scope": [
+    "V187 debug string fix",
+    "V188 45-minute day/night cycle buckets",
+    "V189 preparatory fog helper and console/game commands"
+  ],
+  "files_modified": [
+    "01_GIOCO_PRONTO_LOCAL_TEST/index.html",
+    "report/README_REPACK_V189.txt",
+    "report/REPORT_V189_ENVIRONMENT_DAYCYCLE_HELPERS.json",
+    "report/STATUS_PROGETTO_E_DIPENDENZE_PERLA1.txt",
+    "report/METODO_LAVORO_ANTI_REGRESSIONE_PERLA1.txt"
+  ],
+  "environment_cycle": {
+    "enabled": true,
+    "day_real_minutes": 45,
+    "sleep_command_skip_hours": 8,
+    "buckets": [
+      "deepNight",
+      "dawn",
+      "morning",
+      "day",
+      "golden",
+      "sunset",
+      "night"
+    ],
+    "bucket_starts": {
+      "deepNight": 0,
+      "dawn": 5,
+      "morning": 7,
+      "day": 10,
+      "golden": 17,
+      "sunset": 19,
+      "night": 21
+    },
+    "frame_advance_clamp_ms": 1000,
+    "console_commands": [
+      "perlaEnv()",
+      "perlaNextCycle()",
+      "perlaSetTime(19)",
+      "perlaSkipHours(8)",
+      "perlaCommand(\"sunset\")",
+      "perlaCommand(\"skip\",8)",
+      "dormi()"
+    ],
+    "game_command_entrypoints": [
+      "window.perlaHandleGameCommand(\"dormi\")",
+      "window.perla.command(\"dormi\")",
+      "CustomEvent(\"perla:command\", {detail:\"dormi\"})"
+    ]
+  },
+  "fog_helper": {
+    "getCurrentFogTargetRGBV189": "returns current bucket horizonLowRGB/horizonRGB fallback",
+    "getCurrentFogNearRGBV189": "returns current bucket fogNearRGB/horizonRGB fallback",
+    "no_parallel_fog": true
+  },
+  "preserved": [
+    "V185 distortion-controlled horizon target 1.08",
+    "asset PNG",
+    "map",
+    "fMap",
+    "roadMask",
+    "cMap",
+    "objectBlock",
+    "worldgen",
+    "collisioni",
+    "tetti/roofSegments/torre",
+    "sprite placement",
+    "ombre",
+    "pergola",
+    "festoni",
+    "lago/barca",
+    "pavimenti",
+    "decal",
+    "launcher"
+  ],
+  "not_changed": [
+    "no skybox architecture reset",
+    "no lightmap yet",
+    "no emissive sprites yet",
+    "no weather particles",
+    "no WebGL",
+    "no map/collision changes",
+    "no asset changes"
+  ],
+  "technical_notes": [
+    "The old V185 intent string was corrected from 1.04/4% to 1.08/8%.",
+    "Environment palettes are deliberately bucket-based; no continuous color mutation or per-frame cache rebuild.",
+    "Roof premix fog cache is invalidated only when environment bucket changes."
+  ],
+  "test_limit": "No real browser/gameplay test executed in ChatGPT environment.",
+  "created_at_utc": "2026-06-10T01:51:45.281425+00:00"
+}

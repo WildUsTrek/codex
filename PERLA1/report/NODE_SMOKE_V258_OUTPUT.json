@@ -1,0 +1,136 @@
+{
+  "buildId": "PERLA1_V258_PERFORMANCE_BASELINE_DEBUG_OVERHEAD_SAFE_LOCAL",
+  "hasDebug": true,
+  "hasPerf": true,
+  "hasSummary": true,
+  "debugText": "X 40.50 / Y 10.00 · zona: erba · day 14:00 · ☀️ Sole · desktop 800x450 · FPS 2.6 · draw 286.0ms · sprite: 1938",
+  "perf": {
+    "buildId": "PERLA1_V258_PERFORMANCE_BASELINE_DEBUG_OVERHEAD_SAFE_LOCAL",
+    "baseBuild": "PERLA1_V257_RAIN_SKYBOX_DEPTH_ANCHOR_FIX_SAFE_LOCAL",
+    "phase": "Fase 1 - performance baseline + debug overhead safe",
+    "reason": "node_smoke",
+    "generatedAt": "2026-06-12T16:42:45.011Z",
+    "uptimeSec": 16.4,
+    "guarantees": {
+      "noVisualOutputChange": true,
+      "noWorldgenChange": true,
+      "noAssetChange": true,
+      "noRainOutputChange": true,
+      "debugHudThrottleMs": 250,
+      "clockHudThrottleMs": 250
+    },
+    "performance": {
+      "frames": 2,
+      "lastFps": 2.56,
+      "fps": {
+        "count": 1,
+        "avg": 2.558,
+        "min": 2.558,
+        "p50": 2.558,
+        "p90": 2.558,
+        "p95": 2.558,
+        "max": 2.558
+      },
+      "frameIntervalMs": {
+        "count": 1,
+        "avg": 391,
+        "min": 391,
+        "p50": 391,
+        "p90": 391,
+        "p95": 391,
+        "max": 391
+      },
+      "updateMs": {
+        "count": 2,
+        "avg": 0,
+        "min": 0,
+        "p50": 0,
+        "p90": 0,
+        "p95": 0,
+        "max": 0
+      },
+      "drawWorldMs": {
+        "count": 2,
+        "avg": 335.5,
+        "min": 286,
+        "p50": 286,
+        "p90": 286,
+        "p95": 286,
+        "max": 385
+      },
+      "miniMapMs": {
+        "count": 2,
+        "avg": 3,
+        "min": 3,
+        "p50": 3,
+        "p90": 3,
+        "p95": 3,
+        "max": 3
+      },
+      "cpuMs": {
+        "count": 2,
+        "avg": 338.5,
+        "min": 289,
+        "p50": 289,
+        "p90": 289,
+        "p95": 289,
+        "max": 388
+      },
+      "longFrames": 1,
+      "longFramesRatio": 0.5,
+      "worstFrameMs": 391,
+      "lastFrameIntervalMs": 391,
+      "lastCpuMs": 289
+    },
+    "lastDrawStatsSummary": {
+      "buildId": "PERLA1_V258_PERFORMANCE_BASELINE_DEBUG_OVERHEAD_SAFE_LOCAL",
+      "available": true,
+      "mode": "desktop",
+      "screenW": 800,
+      "screenH": 450,
+      "floorRows": 112,
+      "floorSegments": 1748,
+      "floorLodBands": 0,
+      "ceilingSegments": 0,
+      "wallColumns": 800,
+      "wallHits": 800,
+      "spriteCandidates": 1122,
+      "spriteConsidered": 1122,
+      "spriteVisible": 155,
+      "spriteStripes": 370,
+      "roofMsV198": 8,
+      "deferredCanopyMsV198": 0,
+      "skyMsV198": 7,
+      "weatherOverlayMsV198": 0,
+      "weatherRainDrawsV201": 0,
+      "rainRendererModeV222": null,
+      "rainVisibleFinalV254": 0,
+      "rainVisibleBodySegmentsV255": 0,
+      "skyboxDepthAnchorActiveV257": false,
+      "farRainSuppressedOnSkyboxV257": 0,
+      "midRainSuppressedOnSkyboxV257": 0
+    },
+    "preservedSystems": {
+      "map": true,
+      "fMap": true,
+      "cMap": true,
+      "roadMask": true,
+      "objectBlock": true,
+      "ZBuffer": true,
+      "roofSegments": true,
+      "sprites": true,
+      "rainV248ToV257": true,
+      "skyboxV257": true,
+      "assets": true
+    },
+    "bottleneckHypothesis": [
+      "drawWorld Canvas/raycast",
+      "floor+ceiling casting",
+      "wall raycasting",
+      "rain world particles/gates",
+      "sprite rendering",
+      "debug/HUD DOM before V258"
+    ]
+  },
+  "rafCount": 3
+}

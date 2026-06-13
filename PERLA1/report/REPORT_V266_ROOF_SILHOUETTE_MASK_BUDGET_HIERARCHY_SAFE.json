@@ -1,0 +1,46 @@
+{
+  "buildId": "PERLA1_V266_ROOF_SILHOUETTE_MASK_BUDGET_HIERARCHY_SAFE_LOCAL",
+  "baseBuild": "PERLA1_V265_COVERAGE_ULTRA_BUDGET_EDGE_RAIL_SAFE_LOCAL",
+  "scope": [
+    "roof silhouette/mask continuous pass",
+    "hierarchy guards for canopy/roof rail",
+    "preserve V264/V265 budget and watchdog",
+    "debug commands V266"
+  ],
+  "changedSystems": [
+    "drawSlopedRoofLayer2_5D hook",
+    "drawDeferredCanopySegmentsV121 visibility gate",
+    "V266 runtime/debug/smart recorder fields"
+  ],
+  "preservedSystems": [
+    "worldgen",
+    "map/fMap/cMap/roadMask/objectBlock",
+    "assets",
+    "rain",
+    "skybox",
+    "wall DDA",
+    "floor global",
+    "sprite placement",
+    "collisioni",
+    "audio/input/CSS",
+    "minimappa",
+    "V259-V265 debug"
+  ],
+  "validation": {
+    "nodeCheckOk": true,
+    "staticSmokeOk": true,
+    "assetCheck": {
+      "pngCountWork": 116,
+      "pngCountBase": 116,
+      "pngHashChangedCount": 0,
+      "pngHashChanged": [],
+      "pngMissingFromWorkCount": 0,
+      "pngExtraCount": 0,
+      "pngLiteralRefsInHtml": 108,
+      "missingRefNamesCount": 0,
+      "missingRefNames": []
+    }
+  },
+  "browserRealTestExecuted": false,
+  "notes": "La patch aggiunge una silhouette/mask continua depth-aware sopra il fill budgetizzato, e una guardia gerarchica canopy per evitare tettoie oltre muri/cespugli. Non riporta il sampling roof ai valori alti."
+}

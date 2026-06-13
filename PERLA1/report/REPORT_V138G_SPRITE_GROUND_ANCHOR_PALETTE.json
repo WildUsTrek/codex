@@ -1,0 +1,314 @@
+{
+  "build": "PERLA1_V138G_SPRITE_GROUND_ANCHOR_PALETTE_SAFE",
+  "base": "PERLA1_V138F_SPRITE_REBUILD_NO_SHADOW_SAFE",
+  "goal": "asset-side ground anchoring and subtle palette harmonization for historical flowers/tamarisks",
+  "rules": {
+    "noRuntimeChanges": true,
+    "noMapCollisionRoadMaskChanges": true,
+    "anchorUsesSolidAlphaThresholdNotSemiTransparentHalo": 160,
+    "groundTargetY": 62,
+    "noGlobalWhiteRemoval": true,
+    "noGroundShadowAdded": true
+  },
+  "changes": [
+    {
+      "file": "bar_counter.png",
+      "beforeSolidBottomY": 60,
+      "afterPaletteSolidBottomY": 60,
+      "anchorShiftDownPx": 2,
+      "finalSolidBottomY": 62,
+      "paletteAction": "none"
+    },
+    {
+      "file": "barbecue_long.png",
+      "beforeSolidBottomY": 59,
+      "afterPaletteSolidBottomY": 59,
+      "anchorShiftDownPx": 3,
+      "finalSolidBottomY": 62,
+      "paletteAction": "none"
+    },
+    {
+      "file": "barbecue_long_0.png",
+      "beforeSolidBottomY": 59,
+      "afterPaletteSolidBottomY": 59,
+      "anchorShiftDownPx": 3,
+      "finalSolidBottomY": 62,
+      "paletteAction": "none"
+    },
+    {
+      "file": "barbecue_long_1.png",
+      "beforeSolidBottomY": 59,
+      "afterPaletteSolidBottomY": 59,
+      "anchorShiftDownPx": 3,
+      "finalSolidBottomY": 62,
+      "paletteAction": "none"
+    },
+    {
+      "file": "barbecue_long_2.png",
+      "beforeSolidBottomY": 59,
+      "afterPaletteSolidBottomY": 59,
+      "anchorShiftDownPx": 3,
+      "finalSolidBottomY": 62,
+      "paletteAction": "none"
+    },
+    {
+      "file": "barman.png",
+      "beforeSolidBottomY": 60,
+      "afterPaletteSolidBottomY": 60,
+      "anchorShiftDownPx": 2,
+      "finalSolidBottomY": 62,
+      "paletteAction": "none"
+    },
+    {
+      "file": "bush.png",
+      "beforeSolidBottomY": 57,
+      "afterPaletteSolidBottomY": 57,
+      "anchorShiftDownPx": 5,
+      "finalSolidBottomY": 62,
+      "paletteAction": "none"
+    },
+    {
+      "file": "bush_dark.png",
+      "beforeSolidBottomY": 59,
+      "afterPaletteSolidBottomY": 59,
+      "anchorShiftDownPx": 3,
+      "finalSolidBottomY": 62,
+      "paletteAction": "none"
+    },
+    {
+      "file": "bush_flower.png",
+      "beforeSolidBottomY": 56,
+      "afterPaletteSolidBottomY": 56,
+      "anchorShiftDownPx": 6,
+      "finalSolidBottomY": 62,
+      "paletteAction": "none"
+    },
+    {
+      "file": "cafe_table_chairs.png",
+      "beforeSolidBottomY": 60,
+      "afterPaletteSolidBottomY": 60,
+      "anchorShiftDownPx": 2,
+      "finalSolidBottomY": 62,
+      "paletteAction": "none"
+    },
+    {
+      "file": "palm_0.png",
+      "beforeSolidBottomY": 60,
+      "afterPaletteSolidBottomY": 60,
+      "anchorShiftDownPx": 2,
+      "finalSolidBottomY": 62,
+      "paletteAction": "none"
+    },
+    {
+      "file": "palm_1.png",
+      "beforeSolidBottomY": 60,
+      "afterPaletteSolidBottomY": 60,
+      "anchorShiftDownPx": 2,
+      "finalSolidBottomY": 62,
+      "paletteAction": "none"
+    },
+    {
+      "file": "palm_dwarf_0.png",
+      "beforeSolidBottomY": 60,
+      "afterPaletteSolidBottomY": 60,
+      "anchorShiftDownPx": 2,
+      "finalSolidBottomY": 62,
+      "paletteAction": "none"
+    },
+    {
+      "file": "palm_dwarf_1.png",
+      "beforeSolidBottomY": 60,
+      "afterPaletteSolidBottomY": 60,
+      "anchorShiftDownPx": 2,
+      "finalSolidBottomY": 62,
+      "paletteAction": "none"
+    },
+    {
+      "file": "palm_tall_0.png",
+      "beforeSolidBottomY": 60,
+      "afterPaletteSolidBottomY": 60,
+      "anchorShiftDownPx": 2,
+      "finalSolidBottomY": 62,
+      "paletteAction": "none"
+    },
+    {
+      "file": "palm_tall_1.png",
+      "beforeSolidBottomY": 60,
+      "afterPaletteSolidBottomY": 60,
+      "anchorShiftDownPx": 2,
+      "finalSolidBottomY": 62,
+      "paletteAction": "none"
+    },
+    {
+      "file": "pine.png",
+      "beforeSolidBottomY": 60,
+      "afterPaletteSolidBottomY": 60,
+      "anchorShiftDownPx": 2,
+      "finalSolidBottomY": 62,
+      "paletteAction": "none"
+    },
+    {
+      "file": "pine_variant_0.png",
+      "beforeSolidBottomY": 60,
+      "afterPaletteSolidBottomY": 60,
+      "anchorShiftDownPx": 2,
+      "finalSolidBottomY": 62,
+      "paletteAction": "none"
+    },
+    {
+      "file": "pine_variant_1.png",
+      "beforeSolidBottomY": 60,
+      "afterPaletteSolidBottomY": 60,
+      "anchorShiftDownPx": 2,
+      "finalSolidBottomY": 62,
+      "paletteAction": "none"
+    },
+    {
+      "file": "pine_variant_2.png",
+      "beforeSolidBottomY": 60,
+      "afterPaletteSolidBottomY": 60,
+      "anchorShiftDownPx": 2,
+      "finalSolidBottomY": 62,
+      "paletteAction": "none"
+    },
+    {
+      "file": "pot.png",
+      "beforeSolidBottomY": 60,
+      "afterPaletteSolidBottomY": 60,
+      "anchorShiftDownPx": 2,
+      "finalSolidBottomY": 62,
+      "paletteAction": "none"
+    },
+    {
+      "file": "pot_purple.png",
+      "beforeSolidBottomY": 60,
+      "afterPaletteSolidBottomY": 60,
+      "anchorShiftDownPx": 2,
+      "finalSolidBottomY": 62,
+      "paletteAction": "none"
+    },
+    {
+      "file": "pot_red.png",
+      "beforeSolidBottomY": 60,
+      "afterPaletteSolidBottomY": 60,
+      "anchorShiftDownPx": 2,
+      "finalSolidBottomY": 62,
+      "paletteAction": "none"
+    },
+    {
+      "file": "stool.png",
+      "beforeSolidBottomY": 58,
+      "afterPaletteSolidBottomY": 58,
+      "anchorShiftDownPx": 4,
+      "finalSolidBottomY": 62,
+      "paletteAction": "none"
+    },
+    {
+      "file": "umbrella.png",
+      "beforeSolidBottomY": 60,
+      "afterPaletteSolidBottomY": 60,
+      "anchorShiftDownPx": 2,
+      "finalSolidBottomY": 62,
+      "paletteAction": "none"
+    },
+    {
+      "file": "flower.png",
+      "beforeSolidBottomY": 63,
+      "afterPaletteSolidBottomY": 63,
+      "anchorShiftDownPx": 0,
+      "finalSolidBottomY": 63,
+      "paletteAction": "flower_micro_volume_palette_softening"
+    },
+    {
+      "file": "flower_red.png",
+      "beforeSolidBottomY": 63,
+      "afterPaletteSolidBottomY": 63,
+      "anchorShiftDownPx": 0,
+      "finalSolidBottomY": 63,
+      "paletteAction": "flower_micro_volume_palette_softening"
+    },
+    {
+      "file": "flower_purple.png",
+      "beforeSolidBottomY": 63,
+      "afterPaletteSolidBottomY": 63,
+      "anchorShiftDownPx": 0,
+      "finalSolidBottomY": 63,
+      "paletteAction": "flower_micro_volume_palette_softening"
+    },
+    {
+      "file": "flower_white.png",
+      "beforeSolidBottomY": 63,
+      "afterPaletteSolidBottomY": 63,
+      "anchorShiftDownPx": 0,
+      "finalSolidBottomY": 63,
+      "paletteAction": "flower_micro_volume_palette_softening"
+    },
+    {
+      "file": "tamarisk_0.png",
+      "beforeSolidBottomY": 60,
+      "afterPaletteSolidBottomY": 60,
+      "anchorShiftDownPx": 2,
+      "finalSolidBottomY": 62,
+      "paletteAction": "tamarisk_palette_harmonization"
+    },
+    {
+      "file": "tamarisk_1.png",
+      "beforeSolidBottomY": 60,
+      "afterPaletteSolidBottomY": 60,
+      "anchorShiftDownPx": 2,
+      "finalSolidBottomY": 62,
+      "paletteAction": "tamarisk_palette_harmonization"
+    },
+    {
+      "file": "tamarisk_2.png",
+      "beforeSolidBottomY": 60,
+      "afterPaletteSolidBottomY": 60,
+      "anchorShiftDownPx": 2,
+      "finalSolidBottomY": 62,
+      "paletteAction": "tamarisk_palette_harmonization"
+    }
+  ],
+  "changedAssets": [
+    "bar_counter.png",
+    "barbecue_long.png",
+    "barbecue_long_0.png",
+    "barbecue_long_1.png",
+    "barbecue_long_2.png",
+    "barman.png",
+    "bush.png",
+    "bush_dark.png",
+    "bush_flower.png",
+    "cafe_table_chairs.png",
+    "flower.png",
+    "flower_purple.png",
+    "flower_red.png",
+    "flower_white.png",
+    "palm_0.png",
+    "palm_1.png",
+    "palm_dwarf_0.png",
+    "palm_dwarf_1.png",
+    "palm_tall_0.png",
+    "palm_tall_1.png",
+    "pine.png",
+    "pine_variant_0.png",
+    "pine_variant_1.png",
+    "pine_variant_2.png",
+    "pot.png",
+    "pot_purple.png",
+    "pot_red.png",
+    "stool.png",
+    "tamarisk_0.png",
+    "tamarisk_1.png",
+    "tamarisk_2.png",
+    "umbrella.png"
+  ],
+  "pngCount": 110,
+  "manifestRefCount": 102,
+  "manifestMissing": [],
+  "criticalChecks": {
+    "sign_bar_unchanged": true,
+    "sign_pineta_unchanged": true,
+    "nodeCheckOk": true,
+    "png64RgbaOk": true
+  }
+}

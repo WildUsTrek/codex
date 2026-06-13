@@ -1,0 +1,18 @@
+{
+  "build": "PERLA1_V219_LOCAL_V216_CEILING_COVERAGE_RESTORE_LOCAL",
+  "base": "PERLA1_V218_LOCAL_SHELTER_REPLAY_LOW_GATE_FLOOR_OCCLUDER_LOCAL",
+  "goal": "restore V216 ceiling/canopy useful coverage locally inside active ShelterProfile without global replay",
+  "changes": [
+    "added V219 constants/debug",
+    "added coverMaxRowDistV219 profile parameter",
+    "rectAllowedByShelterProfileV218 uses V219 cover max rowDist for ceiling/canopy",
+    "UI/launchers/reports updated"
+  ],
+  "no_changes": [
+    "no PNG changes",
+    "no map/collision/worldgen/sprite changes",
+    "no full global replay",
+    "no ceiling y/h offset"
+  ],
+  "timestamp": "2026-06-10"
+}

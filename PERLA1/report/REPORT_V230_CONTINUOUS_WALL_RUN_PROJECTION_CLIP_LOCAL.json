@@ -1,0 +1,37 @@
+{
+  "build": "PERLA1_V230_CONTINUOUS_WALL_RUN_PROJECTION_CLIP_LOCAL",
+  "base": "PERLA1_V229B_HEIGHT_STEP_CONST_GUARD_LOCAL",
+  "intent": "Continuous wall-run projection/clipping for high walls behind low walls; preserve sprite seal.",
+  "files_modified": [
+    "01_GIOCO_PRONTO_LOCAL_TEST/index.html",
+    "AVVIA_GIOCO_WINDOWS_SENZA_PYTHON.bat",
+    "AVVIA_GIOCO_SERVER_POWERSHELL.ps1",
+    "report/README_REPACK_V230.txt",
+    "report/REPORT_V230_CONTINUOUS_WALL_RUN_PROJECTION_CLIP_LOCAL.json",
+    "report/STATUS_PROGETTO_E_DIPENDENZE_PERLA1.txt",
+    "report/METODO_LAVORO_ANTI_REGRESSIONE_PERLA1.txt"
+  ],
+  "preserved": [
+    "map",
+    "collisioni",
+    "worldgen",
+    "roadMask",
+    "objectBlock",
+    "assets",
+    "sprite groundSink/anchor/scale",
+    "roofs/canopies",
+    "audio",
+    "skybox",
+    "V229 sprite seal",
+    "V228 wall occlusion distance > sprite distance",
+    "V226 camera rain volume",
+    "V223 bath authority"
+  ],
+  "new_systems": [
+    "ContinuousWallRunsV230",
+    "buildContinuousWallRunsV230",
+    "drawContinuousWallRunsV230",
+    "sampleContinuousWallRunColumnV230"
+  ],
+  "notes": "No browser visual test executed in container."
+}

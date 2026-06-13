@@ -1,0 +1,34 @@
+{
+  "build": "PERLA1_V199_CLOSED_BUILDING_NEAR_ROOF_FALLBACK_RECOVERY_LOCAL",
+  "base": "PERLA1_V198A_AUDIO_LOUDER_STEPS_BIRDS_THUNDER_ECHO_LOCAL",
+  "scope": "V199 closed-building near-roof fallback recovery; no V200/pergola changes",
+  "patches": [
+    "critical detector for closed-building roof fallback full near_plane_or_partial_roof",
+    "indoor/cMap semantic skip with same-owner ceiling edge safety",
+    "outdoor/door-edge fallback budget instead of skip",
+    "dynamic roof quality governor with hysteresis normal/budget/emergency",
+    "runtime diagnostics perlaRoofPerformanceV199 and perlaRoofQualityV199"
+  ],
+  "preserved": [
+    "V198 weather/cloud recovery",
+    "V198A audio mix",
+    "V185 horizon target 1.08",
+    "map/collision/worldgen/objectBlock",
+    "sprite placement",
+    "pergola/festoni/lago/barca",
+    "PNG assets",
+    "tower/canopy geometry"
+  ],
+  "expected_effect": {
+    "old_full_roof_samples": 45600,
+    "outdoor_near_fallback_normal_budget_estimate": "about half samples (stepY 4, stepX 2)",
+    "governor_budget_estimate": "about quarter samples (stepY 4, stepX 4)",
+    "governor_emergency_estimate": "about one sixth samples (stepY 6, stepX 4)",
+    "safe_indoor_same_owner": "roof plane samples can drop to 0, gable skipped too if safely inside"
+  },
+  "tests": {
+    "syntax": "node --check extracted script OK expected",
+    "asset_refs": "expected 108 png refs, 116 png files, 0 missing, 0 png changed",
+    "browser_real": "not executed in container"
+  }
+}

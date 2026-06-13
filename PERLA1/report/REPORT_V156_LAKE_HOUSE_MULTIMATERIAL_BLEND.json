@@ -1,0 +1,40 @@
+{
+  "build": "PERLA1_V156_LAKE_HOUSE_MULTIMATERIAL_BLEND_SAFE_LOCAL",
+  "base": "PERLA1_V155_LAKE_GRASS_EATS_SAND_BLEND_SAFE_LOCAL",
+  "scope": "solo zona laghetto/piazzola casa; nessuna modifica a logica mappa o asset",
+  "changes": [
+    "blending sub-tile multi-materiale sabbia/erba/terra",
+    "erba aggressiva contro sabbia e terra sul lato casa",
+    "colori ponte coerenti sotto pini/sprite",
+    "specchio acqua V153/V155 preservato"
+  ],
+  "preserved": [
+    "fMap",
+    "roadMask",
+    "collisioni",
+    "objectBlock",
+    "worldgen",
+    "sprite placement",
+    "PNG",
+    "tetti",
+    "ombre",
+    "pineta performance",
+    "pergola",
+    "barca"
+  ],
+  "checks": {
+    "node_check": "OK",
+    "runtime_smoke": "OK",
+    "asset_missing": [],
+    "asset_refs": 106,
+    "png_modified_vs_v155": [],
+    "sprites": 1938,
+    "stones": 43,
+    "roofSegments": 2,
+    "floorStage": "V156_LAKE_HOUSE_MULTIMATERIAL_BLEND_NO_OUTLINE",
+    "v156HouseBlendCells": 33,
+    "v156HouseTerraCells": 14,
+    "subTileCells": 3973,
+    "nearSubTileCells": 3488
+  }
+}

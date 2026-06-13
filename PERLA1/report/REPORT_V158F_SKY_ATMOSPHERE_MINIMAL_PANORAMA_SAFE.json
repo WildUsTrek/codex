@@ -1,0 +1,77 @@
+{
+  "build": "PERLA1_V158F_SKY_ATMOSPHERE_MINIMAL_PANORAMA_SAFE_LOCAL",
+  "base": "PERLA1_V158E_SKYBOX_SOFT_CLOUD_ATMOSPHERE_SAFE_LOCAL (derivata da V157 reale blindata)",
+  "goal": "Correggere lo skybox V158E trasformandolo in atmosfera minimale: cielo dominante, nuvole separate, sagome lontane bassissime e niente fascia/fondale basso.",
+  "changed_files": [
+    "01_GIOCO_PRONTO_LOCAL_TEST/index.html",
+    "01_GIOCO_PRONTO_LOCAL_TEST/assets/raycast/sky_panorama_360_v158f.png",
+    "01_GIOCO_PRONTO_LOCAL_TEST/assets/raycast/cloud_layer_soft_v158f.png",
+    "STATUS_PROGETTO_E_DIPENDENZE_PERLA1.txt",
+    "METODO_LAVORO_ANTI_REGRESSIONE_PERLA1.txt",
+    "README_REPACK_V158F.txt",
+    "REPORT_V158F_SKY_ATMOSPHERE_MINIMAL_PANORAMA_SAFE.json"
+  ],
+  "removed_assets_from_previous_attempt": [
+    "sky_panorama_360_v158e.png",
+    "cloud_layer_soft_v158e.png"
+  ],
+  "key_rules": {
+    "far_wall_visibility_limited": false,
+    "logic_maps_modified": false,
+    "collision_modified": false,
+    "worldgen_modified": false,
+    "roof_geometry_modified": false,
+    "sprite_placement_modified": false,
+    "skybox_as_second_map": false,
+    "clouds_as_separate_future_weather_layer": true
+  },
+  "expected_checks": {
+    "node_check": "OK",
+    "runtime_smoke": "OK",
+    "asset_missing": 0,
+    "roofSegments": 2,
+    "sprites": 1938,
+    "patch_only_folder": false,
+    "zip_integrity": "OK",
+    "tar_gz_integrity": "OK"
+  },
+  "asset_alpha_checks": {
+    "sky_panorama_360_v158f.png": {
+      "size": [
+        4096,
+        384
+      ],
+      "alpha_max": 28,
+      "alpha_mean": 0.902,
+      "row_mean_max": 14.051,
+      "pixels_alpha_gt_80": 0,
+      "sha256_12": "8a6649994b67"
+    },
+    "cloud_layer_soft_v158f.png": {
+      "size": [
+        2048,
+        256
+      ],
+      "alpha_max": 110,
+      "alpha_mean": 29.412,
+      "row_mean_max": 85.129,
+      "pixels_alpha_gt_80": 74048,
+      "sha256_12": "23d00e2ec0bd"
+    }
+  },
+  "actual_checks": {
+    "node_check": "OK",
+    "runtime_smoke": "OK",
+    "asset_refs": 108,
+    "asset_missing": 0,
+    "manifest_v158f_refs": [
+      "sky_panorama_360_v158f.png",
+      "cloud_layer_soft_v158f.png"
+    ],
+    "roofSegments": 2,
+    "sprites": 1938,
+    "map": "150x88",
+    "farWallVisibilityLimitedV158F": false,
+    "patch_only_folder": false
+  }
+}

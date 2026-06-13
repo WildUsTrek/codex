@@ -1,0 +1,78 @@
+{
+  "build": "PERLA1_V237A_SAFE_EMERGING_WALL_LAYER_DEBUG_OFF_LOCAL",
+  "base": "PERLA1_V236_ROOF_SUPPORT_SYNC_REAL_SAFE_LOCAL",
+  "visualIntent": "zero visual change; V237 prototype present but disabled",
+  "v237FlagDefault": false,
+  "modifiedFiles": [
+    "01_GIOCO_PRONTO_LOCAL_TEST/index.html",
+    "AVVIA_GIOCO_WINDOWS_SENZA_PYTHON.bat",
+    "AVVIA_GIOCO_SERVER_POWERSHELL.ps1",
+    "report/STATUS_PROGETTO_E_DIPENDENZE_PERLA1.txt",
+    "report/METODO_LAVORO_ANTI_REGRESSIONE_PERLA1.txt",
+    "report/README_REPACK_V237A.txt",
+    "report/REPORT_V237A_SAFE_EMERGING_WALL_LAYER_DEBUG_OFF.json"
+  ],
+  "interventions": [
+    "updated build/UI/debug identity to V237A",
+    "added V237A constants with PERLA_V237_SAFE_EMERGING_WALL_LAYER_PROTOTYPE=false",
+    "added helper functions for future safe emerging wall layer filtering/drawing",
+    "integrated disabled call inside non-tower wallcasting branch before foreground draw",
+    "added drawStats/debug export for V237A",
+    "updated launcher text and reports"
+  ],
+  "preservedSystems": [
+    "V233 overdraw rollback flags",
+    "V234 rain airspace and car lift",
+    "V235 tower visibility and rain midfield",
+    "V236 roof/support sync real",
+    "map/fMap/cMap/roadMask/objectBlock",
+    "worldgen",
+    "asset PNG",
+    "rain",
+    "tower renderer",
+    "auto/parking",
+    "skybox/far horizon"
+  ],
+  "checks": {
+    "nodeCheck": "OK",
+    "runtimeMock": "OK",
+    "runtimeMockSummary": {
+      "build": "PERLA1_V237A_SAFE_EMERGING_WALL_LAYER_DEBUG_OFF_LOCAL",
+      "v237Active": false,
+      "v237DebugOff": true,
+      "map": [
+        150,
+        88
+      ],
+      "sprites": 1938,
+      "roofSegments": 2,
+      "assetRefs": 108,
+      "v237Columns": 0,
+      "v237Pixels": 0,
+      "v237Accepted": 0,
+      "v236": true,
+      "noDraw": true,
+      "v227BackDraw": 0
+    },
+    "assetRefs": 108,
+    "assetMissing": 0,
+    "assetMissingList": [],
+    "assetPngCount": 116,
+    "assetPngChangedVsV236": 0,
+    "assetPngChangedList": [],
+    "patchOnlyFolder": "absent",
+    "reportFolder": "present"
+  },
+  "staticGuards": {
+    "PERLA_V233_DISABLE_FAR_WALL_SPAN_DRAW": "preserved true",
+    "PERLA_V233_DISABLE_HEIGHT_STEP_FACE_DRAW": "preserved true",
+    "PERLA_V233_DISABLE_CONTINUOUS_WALL_RUN_DRAW": "preserved true",
+    "PERLA_V233_DISABLE_FAKE_ROOF_SUPPORT_PIXEL_CLIP": "preserved true",
+    "PERLA_V236_ROOF_SUPPORT_SYNC_REAL_SAFE": "preserved true",
+    "PERLA_V237_SAFE_EMERGING_WALL_LAYER_PROTOTYPE": "false"
+  },
+  "knownLimits": [
+    "No real browser/manual visual test executed in this environment; V237A is expected to be visually identical to V236 because flag is false."
+  ],
+  "nextStep": "Only after V237A is visually confirmed identical to V236, consider V237B/test with flag true in a separate build."
+}

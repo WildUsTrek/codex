@@ -1,0 +1,214 @@
+{
+  "buildId": "PERLA1_V259_ROOF_CEILING_HOTSPOT_BUDGET_SAFE_LOCAL",
+  "baseBuild": "PERLA1_V258A_PHASE1_REAL_QUICK_WINS_COMPLETE_SAFE_LOCAL",
+  "generatedAt": "2026-06-12T18:03:35.481313Z",
+  "purpose": "Roof/ceiling hotspot-aware safe budget for reception/bath owner roofs. Not a rain patch, not a worldgen/asset patch.",
+  "interventions": [
+    "build id/title/launcher updated",
+    "V259 roof hotspot constants and debug commands added",
+    "owner-limited hotspot budget decision for reception/bath full-like roof bounds",
+    "storm/rain full-like owner roofs use existing emergency sampling step 6x5; clear owner roofs use at least 5x4 unless governor is already stricter",
+    "conservative per-plane bbox reject hook, active only with non-full roof bounds",
+    "V259 fields integrated in smart performance recorder roof samples",
+    "report/README/status/method updated"
+  ],
+  "preserved": [
+    "generateWorld and logical maps",
+    "asset PNG and manifest refs",
+    "rain V248-V257 lifecycle/output",
+    "skybox V257",
+    "tower/pergola/festoni/sprites/collision/audio/input/CSS/minimap default",
+    "wall DDA and floor renderer"
+  ],
+  "checks": {
+    "nodeCheck": "OK",
+    "nodeSmoke": "OK",
+    "nodeRoofHotspotSmoke": "OK",
+    "assetPngCount": 116,
+    "assetHashesChangedVsV258A": [],
+    "pngRefsUnique": 108,
+    "assetMissing": [],
+    "patchOnlyFolderPresent": false
+  },
+  "runtimeProbeSummary": {
+    "buildId": "PERLA1_V259_ROOF_CEILING_HOTSPOT_BUDGET_SAFE_LOCAL",
+    "hasDebug": true,
+    "hasRoofV259": true,
+    "probes": [
+      {
+        "name": "reception_storm",
+        "weather": "storm",
+        "summary": {
+          "buildId": "PERLA1_V259_ROOF_CEILING_HOTSPOT_BUDGET_SAFE_LOCAL",
+          "enabled": true,
+          "mode": "safe",
+          "weather": "storm",
+          "samplesBefore": 45600,
+          "samplesAfter": 6164,
+          "saved": 39436,
+          "roofMs": 63,
+          "candidates": 1,
+          "budgetApplied": 1,
+          "owners": {
+            "reception": 1,
+            "bath": 0
+          },
+          "lastReason": "closed_roof_near_plane_full_bounds+v259_full_like_owner_hotspot",
+          "skippedByBBox": 0,
+          "planeBBoxRejects": 0,
+          "edgeProtectedBandPx": 10,
+          "note": "V259 only changes owner 1/2 roof sampling budget and conservative per-frame gates; map/assets/rain output untouched.",
+          "currentMode": "safe",
+          "lastDraw": {
+            "roofMs": 63,
+            "samples": 6164,
+            "visibleSamples": 694,
+            "decision": "outdoor_near_roof_emergency_budget_v200+roof_hotspot_budget_v259_reception_storm",
+            "v259Applied": 1,
+            "candidates": 1
+          }
+        },
+        "roof": {
+          "roofMs": 63,
+          "roofSamples": 6164,
+          "roofVisibleSamples": 694,
+          "roofSamplesSaved": 39436,
+          "loopStepX": 6,
+          "loopStepY": 5,
+          "decision": "outdoor_near_roof_emergency_budget_v200+roof_hotspot_budget_v259_reception_storm",
+          "quality": "emergency",
+          "governorReason": "emergency_previous_roof_or_draw",
+          "indoorSkip": 0,
+          "outdoorBudget": 1,
+          "playerCMap": 0,
+          "outdoors": true
+        },
+        "last": {
+          "roofMs": 63,
+          "samples": 6164,
+          "visible": 694,
+          "v259": 1,
+          "decision": "outdoor_near_roof_emergency_budget_v200+roof_hotspot_budget_v259_reception_storm"
+        }
+      },
+      {
+        "name": "bath_storm",
+        "weather": "storm",
+        "summary": {
+          "buildId": "PERLA1_V259_ROOF_CEILING_HOTSPOT_BUDGET_SAFE_LOCAL",
+          "enabled": true,
+          "mode": "safe",
+          "weather": "storm",
+          "samplesBefore": 45600,
+          "samplesAfter": 6164,
+          "saved": 39436,
+          "roofMs": 203,
+          "candidates": 1,
+          "budgetApplied": 1,
+          "owners": {
+            "reception": 0,
+            "bath": 1
+          },
+          "lastReason": "closed_roof_full_like_bounds_budget+v259_full_like_owner_hotspot",
+          "skippedByBBox": 0,
+          "planeBBoxRejects": 0,
+          "edgeProtectedBandPx": 10,
+          "note": "V259 only changes owner 1/2 roof sampling budget and conservative per-frame gates; map/assets/rain output untouched.",
+          "currentMode": "safe",
+          "lastDraw": {
+            "roofMs": 203,
+            "samples": 6164,
+            "visibleSamples": 3431,
+            "decision": "outdoor_near_roof_emergency_budget_v200+roof_hotspot_budget_v259_bath_storm",
+            "v259Applied": 1,
+            "candidates": 1
+          }
+        },
+        "roof": {
+          "roofMs": 203,
+          "roofSamples": 6164,
+          "roofVisibleSamples": 3431,
+          "roofSamplesSaved": 39436,
+          "loopStepX": 6,
+          "loopStepY": 5,
+          "decision": "outdoor_near_roof_emergency_budget_v200+roof_hotspot_budget_v259_bath_storm",
+          "quality": "emergency",
+          "governorReason": "emergency_previous_roof_or_draw",
+          "indoorSkip": 0,
+          "outdoorBudget": 1,
+          "playerCMap": 0,
+          "outdoors": false
+        },
+        "last": {
+          "roofMs": 203,
+          "samples": 6164,
+          "visible": 3431,
+          "v259": 1,
+          "decision": "outdoor_near_roof_emergency_budget_v200+roof_hotspot_budget_v259_bath_storm"
+        }
+      },
+      {
+        "name": "bath_clear",
+        "weather": "clear",
+        "summary": {
+          "buildId": "PERLA1_V259_ROOF_CEILING_HOTSPOT_BUDGET_SAFE_LOCAL",
+          "enabled": true,
+          "mode": "safe",
+          "weather": "clear",
+          "samplesBefore": 45600,
+          "samplesAfter": 6164,
+          "saved": 39436,
+          "roofMs": 129,
+          "candidates": 1,
+          "budgetApplied": 1,
+          "owners": {
+            "reception": 0,
+            "bath": 1
+          },
+          "lastReason": "closed_roof_full_like_bounds_budget+v259_full_like_owner_hotspot",
+          "skippedByBBox": 0,
+          "planeBBoxRejects": 0,
+          "edgeProtectedBandPx": 10,
+          "note": "V259 only changes owner 1/2 roof sampling budget and conservative per-frame gates; map/assets/rain output untouched.",
+          "currentMode": "safe",
+          "lastDraw": {
+            "roofMs": 129,
+            "samples": 6164,
+            "visibleSamples": 3431,
+            "decision": "outdoor_near_roof_emergency_budget_v200+roof_hotspot_budget_v259_bath_clear",
+            "v259Applied": 1,
+            "candidates": 1
+          }
+        },
+        "roof": {
+          "roofMs": 129,
+          "roofSamples": 6164,
+          "roofVisibleSamples": 3431,
+          "roofSamplesSaved": 39436,
+          "loopStepX": 6,
+          "loopStepY": 5,
+          "decision": "outdoor_near_roof_emergency_budget_v200+roof_hotspot_budget_v259_bath_clear",
+          "quality": "emergency",
+          "governorReason": "emergency_previous_roof_or_draw",
+          "indoorSkip": 0,
+          "outdoorBudget": 1,
+          "playerCMap": 0,
+          "outdoors": false
+        },
+        "last": {
+          "roofMs": 129,
+          "samples": 6164,
+          "visible": 3431,
+          "v259": 1,
+          "decision": "outdoor_near_roof_emergency_budget_v200+roof_hotspot_budget_v259_bath_clear"
+        }
+      }
+    ],
+    "rafCount": 3
+  },
+  "notes": [
+    "Node smoke uses stub canvas and is not visual validation.",
+    "Browser real test required around reception/bagni clear+storm; compare against V258A smart recorder.",
+    "If any visual roof popping/flicker is seen, use perlaRoofHotspotToggleV259(false) for immediate rollback."
+  ]
+}

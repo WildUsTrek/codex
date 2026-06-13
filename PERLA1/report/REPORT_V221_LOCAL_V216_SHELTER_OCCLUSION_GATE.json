@@ -1,0 +1,21 @@
+{
+  "build": "PERLA1_V221_LOCAL_V216_SHELTER_OCCLUSION_GATE_LOCAL",
+  "base": "PERLA1_V220_V216_OCCLUSION_METHOD_RESTORED_LOCAL",
+  "intent": "Use actual V216 exact ceiling replay function with only active ShelterProfile cover rects, then local walls above.",
+  "fixed": [
+    "V220 global ceiling/canopy input to V216 replay",
+    "risk of distant canopies/tettoie visible through walls",
+    "V218/V219 filtered cover path still disabled"
+  ],
+  "preserved": [
+    "V216 drawDoorRainExactCeilingReplayV216 function",
+    "V220 local wall replay after cover",
+    "V218 ShelterProfile resolution",
+    "V204 audio",
+    "V200 roof budget",
+    "V201 global rain buffer",
+    "V185 background",
+    "map/collision/worldgen/sprites/assets"
+  ],
+  "static_checks_pending_in_report": "see final assistant message"
+}

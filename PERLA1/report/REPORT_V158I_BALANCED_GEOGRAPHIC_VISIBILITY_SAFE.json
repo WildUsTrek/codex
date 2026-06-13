@@ -1,0 +1,68 @@
+{
+  "build": "PERLA1_V158I_BALANCED_GEOGRAPHIC_VISIBILITY_SAFE_LOCAL",
+  "base": "PERLA1_V158H_ATMOSPHERIC_LANDMARKS_COLOR_REPAIR_SAFE_LOCAL",
+  "goal": "Aumentare leggibilita landmark geografici mantenendo cielo/fog V158H, senza smog, bande o culling pareti lontane.",
+  "modified_files": [
+    "01_GIOCO_PRONTO_LOCAL_TEST/index.html",
+    "01_GIOCO_PRONTO_LOCAL_TEST/assets/raycast/sky_panorama_360_v158i.png",
+    "01_GIOCO_PRONTO_LOCAL_TEST/assets/raycast/cloud_layer_soft_v158i.png",
+    "STATUS_PROGETTO_E_DIPENDENZE_PERLA1.txt",
+    "METODO_LAVORO_ANTI_REGRESSIONE_PERLA1.txt",
+    "README_REPACK_V158I.txt",
+    "REPORT_V158I_BALANCED_GEOGRAPHIC_VISIBILITY_SAFE.json"
+  ],
+  "preserved": {
+    "far_wall_visibility_limited": false,
+    "map_logic_changed": false,
+    "collision_changed": false,
+    "worldgen_changed": false,
+    "roof_geometry_changed": false,
+    "sprite_placement_changed": false,
+    "roofSegments_expected": 2
+  },
+  "asset_strategy": {
+    "panorama": "single continuous RGBA 4096x384, transparent atmosphere layer, gradual profiles baked in PNG",
+    "clouds": "separate RGBA 2048x256 layer, future-ready for weather",
+    "no_runtime_blur": true,
+    "no_dark_smog": true,
+    "no_full_width_band": true,
+    "landmark_logic": [
+      "east airy hills",
+      "south low island",
+      "west soft forest mass",
+      "north blue mountains"
+    ]
+  },
+  "asset_stats": {
+    "pano_size": [
+      4096,
+      384
+    ],
+    "cloud_size": [
+      2048,
+      256
+    ],
+    "alpha_nonzero": 272149,
+    "alpha_gt10": 161149,
+    "alpha_gt80": 16145,
+    "max_alpha": 130,
+    "dark_visible_lum_lt110_alpha_gt10": 9,
+    "dark_visible_lum_lt120_alpha_gt20": 0,
+    "seam_edge_mean_abs_rgba": 0.0,
+    "full_band_rows_gt20_86pct": 0,
+    "full_band_rows_gt10_86pct": 0,
+    "rows_with_visible_gt20": 136
+  },
+  "checks": {
+    "node_check": "OK",
+    "runtime_smoke_node_mock": "OK",
+    "map": "150x88",
+    "sprites": 1938,
+    "roofSegments": 2,
+    "asset_refs": 108,
+    "asset_missing": 0,
+    "patch_only_folder": "absent",
+    "zip_integrity": "PENDING_BEFORE_PACKAGING",
+    "tar_gz_integrity": "PENDING_BEFORE_PACKAGING"
+  }
+}

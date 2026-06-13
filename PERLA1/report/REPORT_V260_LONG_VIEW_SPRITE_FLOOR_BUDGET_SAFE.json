@@ -1,0 +1,62 @@
+{
+  "buildId": "PERLA1_V260_LONG_VIEW_SPRITE_FLOOR_BUDGET_SAFE_LOCAL",
+  "baseBuild": "PERLA1_V259_ROOF_CEILING_HOTSPOT_BUDGET_SAFE_LOCAL",
+  "generatedAt": "2026-06-12T18:31:31Z",
+  "scope": "Long View Sprite/Floor Budget Safe: render-time only; no worldgen/assets/rain/roof geometry changes.",
+  "interventions": [
+    "Added V260 constants and build id.",
+    "Added Long View Governor per-frame using previous drawStats: spriteCandidates, spriteStripes, floorSegments, drawWorldMs, weather/zone.",
+    "Added sprite candidate prefilter for far tiny decorative details only.",
+    "Added sprite screen-size LOD decision with protected sprite guard.",
+    "Added stripe-step LOD for far/mid sprites, extending V147 rather than replacing it.",
+    "Added far-floor band-height budget for long-view frames only, preserving near band and floor maps.",
+    "Added V260 summary/download/toggle commands and recorder fields."
+  ],
+  "commands": [
+    "perlaLongViewBudgetToggleV260(false|true)",
+    "perlaLongViewBudgetModeV260(\"safe\"|\"debug\"|\"off\")",
+    "perlaLongViewBudgetSummaryV260()",
+    "perlaLongViewBudgetDownloadV260()",
+    "perlaPerfStart()/perlaPerfMark()/perlaPerfStopAndDownload() include longViewV260 fields"
+  ],
+  "preserved": {
+    "generateWorld": true,
+    "map/fMap/cMap/roadMask/objectBlock": true,
+    "assetPng": true,
+    "ASSET_MANIFEST": true,
+    "rainV248ToV257OutputLifecycle": true,
+    "skyboxV257": true,
+    "roofV259": true,
+    "torre": true,
+    "pergolaStructureAssetsPlacement": true,
+    "festoni": true,
+    "collisioni": true,
+    "audioInputCss": true,
+    "minimapDefault": true
+  },
+  "validation": {
+    "nodeCheck": "OK",
+    "nodeSmoke": "OK",
+    "pngCountCurrent": 116,
+    "pngCountBase": 116,
+    "pngChangedVsV259": 0,
+    "pngMissingVsV259": 0,
+    "pngNewVsV259": 0,
+    "pngRefs": 108,
+    "missingRefs": 0,
+    "patchOnlyFolderAbsent": true
+  },
+  "knownLimitations": [
+    "Browser visual test still required for popping, far sprite poverty, floor banding, pergola storm, pineta/fascia_palme visual long views.",
+    "Floor segment saved estimate is approximate because V260 changes row banding, not map/fMap itself."
+  ],
+  "recommendedManualMarkers": [
+    "erba visuale lunga X65 Y25 storm",
+    "fascia palme storm",
+    "pineta2_s_path storm",
+    "pergola storm",
+    "bagni controllo storm",
+    "reception controllo storm",
+    "secret lake controllo storm"
+  ]
+}

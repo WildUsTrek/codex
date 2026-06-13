@@ -1,0 +1,64 @@
+{
+  "build": "PERLA1_V206_DOOR_RAIN_CURTAIN_PORTAL_RESET_LOCAL",
+  "base": "PERLA1_V204_BIRD_RANDOM_BAG_FOOTSTEP_SOFTEN_PORTAL_COLUMN_MASK_LOCAL",
+  "discarded_base": "PERLA1_V205_PORTAL_RAIN_VERTICAL_ENVELOPE_LOCAL",
+  "scope": [
+    "door rain curtain portal reset",
+    "in-game UI version update",
+    "no V205 envelope overfill"
+  ],
+  "preserved": [
+    "V204 audio",
+    "V200 roof budget",
+    "V201 rain/cloud budget",
+    "V185 horizon",
+    "map/collision/worldgen/sprites/pergola/tower/canopy"
+  ],
+  "debug_keys": [
+    "weatherDoorRainCurtainV206",
+    "weatherDoorRainCurtainRangesV206",
+    "weatherDoorRainCurtainYTopV206",
+    "weatherDoorRainCurtainYBottomV206",
+    "weatherPortalResetApproachV206"
+  ],
+  "checks": {
+    "node_check_ok": true,
+    "node_check_stderr": "",
+    "script_blocks": 1,
+    "build_id_present": true,
+    "ui_title_v206": true,
+    "ui_header_v206": true,
+    "v205_runtime_not_base": true,
+    "v206_door_curtain_constant": true,
+    "v206_bypasses_old_y_heuristic": true,
+    "no_fullheight_guard": true,
+    "drawWeatherCloudDeckV192_absent": true,
+    "png_refs": 108,
+    "png_actual": 116,
+    "png_missing": [],
+    "png_extra": [
+      "barbecue_long.png",
+      "fountain.png",
+      "ivy_arch_hanging_high.png",
+      "ivy_arch_overhead_0.png",
+      "ivy_arch_overhead_1.png",
+      "wall_tile_bath_roof_v39.png",
+      "wall_tower_stone_v126.png",
+      "wall_wood_reception_roof_v39.png"
+    ],
+    "png_changed_vs_v204": [],
+    "patch_only_folder_absent": true,
+    "changed_files_vs_v204": [
+      "01_GIOCO_PRONTO_LOCAL_TEST/index.html",
+      "AVVIA_GIOCO_SERVER_POWERSHELL.ps1",
+      "AVVIA_GIOCO_WINDOWS_SENZA_PYTHON.bat",
+      "report/METODO_LAVORO_ANTI_REGRESSIONE_PERLA1.txt",
+      "report/STATUS_PROGETTO_E_DIPENDENZE_PERLA1.txt"
+    ],
+    "added_files_vs_v204": [
+      "report/README_REPACK_V206.txt",
+      "report/REPORT_V206_DOOR_RAIN_CURTAIN_PORTAL_RESET.json"
+    ],
+    "removed_files_vs_v204": []
+  }
+}

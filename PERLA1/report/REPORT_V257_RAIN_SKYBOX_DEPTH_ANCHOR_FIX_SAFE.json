@@ -1,0 +1,58 @@
+{
+  "build": "PERLA1_V257_RAIN_SKYBOX_DEPTH_ANCHOR_FIX_SAFE_LOCAL",
+  "base": "PERLA1_V256_RAIN_OPEN_SHELTER_VISIBILITY_RESTORE_SAFE_LOCAL",
+  "date": "2026-06-12",
+  "scope": "visual draw/compositing only: rain mid/far skybox depth anchor gate",
+  "rootCause": "skybox/fondale non z-bufferato; near boundary/north wall the world depth in front of camera is short, while mid/far rain can still be projected over skybox and look screen-stuck",
+  "pipeline": [
+    "V250 visual bucket",
+    "V252 near phase/desync",
+    "V253 near_blend comb breaker",
+    "V254 near reentry",
+    "V255 reservoir release smoother",
+    "V256 open shelter visibility restore",
+    "V257 skybox depth anchor gate",
+    "draw finale"
+  ],
+  "modifiedFiles": [
+    "01_GIOCO_PRONTO_LOCAL_TEST/index.html",
+    "AVVIA_GIOCO_WINDOWS_SENZA_PYTHON.bat",
+    "AVVIA_GIOCO_SERVER_POWERSHELL.ps1",
+    "report/STATUS_PROGETTO_E_DIPENDENZE_PERLA1.txt",
+    "report/METODO_LAVORO_ANTI_REGRESSIONE_PERLA1.txt",
+    "report/README_REPACK_V257.txt",
+    "report/REPORT_V257_RAIN_SKYBOX_DEPTH_ANCHOR_FIX_SAFE.json"
+  ],
+  "preserved": [
+    "V248-V256",
+    "spawn/refill/update lifecycle/canKeep",
+    "map/fMap/cMap/roadMask/objectBlock",
+    "rainCoveredMap/rainOpenSkyMap",
+    "asset PNG",
+    "ASSET_MANIFEST",
+    "skybox renderer and assets",
+    "roofSegments/CeilingDepthBuffer/tetti",
+    "audio",
+    "high-wall runtime off",
+    "open shelter V256"
+  ],
+  "newDebug": [
+    "getRainSkyboxDepthAnchorSummaryV257",
+    "downloadRainSkyboxDepthAnchorReportV257",
+    "setRainSkyboxDepthAnchorFixV257",
+    "toggleRainUnifiedDebugV257"
+  ],
+  "checks": {
+    "node_check": "OK",
+    "vm_smoke_exports_draw": "OK",
+    "vm_gate_unit": "OK",
+    "asset_refs": 108,
+    "asset_missing": 0,
+    "game_png_total": 116,
+    "game_png_modified_vs_v256": 0,
+    "powershell_var_colon_problematic": 0,
+    "patch_only_folder": "absent"
+  },
+  "visualTestRequired": true,
+  "visualTestNote": "Browser reale non disponibile nel container; testare nord/muro nord, porte, tettoie aperte, outdoor stabile e storm."
+}

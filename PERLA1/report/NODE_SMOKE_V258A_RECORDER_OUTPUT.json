@@ -1,0 +1,58 @@
+{
+  "start": {
+    "buildId": "PERLA1_V258A_PHASE1_REAL_QUICK_WINS_COMPLETE_SAFE_LOCAL",
+    "active": true,
+    "deep": true,
+    "durationSec": 0,
+    "samples": 0,
+    "worstFrames": 0,
+    "markers": 0,
+    "counters": {
+      "framesSeen": 2,
+      "samples": 3,
+      "periodic": 2,
+      "longFrame": 2,
+      "heavyDraw": 2,
+      "miniMapWarning": 0,
+      "zoneChange": 1,
+      "weatherChange": 1,
+      "modeChange": 1,
+      "manualMarker": 1
+    },
+    "sampleIntervalMs": 100
+  },
+  "mark": {
+    "marker": "node_marker",
+    "zone": "erba"
+  },
+  "report": {
+    "samples": 3,
+    "worst": 3,
+    "markers": 1,
+    "byZone": 1,
+    "recs": 2,
+    "deep": true
+  },
+  "status": {
+    "buildId": "PERLA1_V258A_PHASE1_REAL_QUICK_WINS_COMPLETE_SAFE_LOCAL",
+    "active": false,
+    "deep": true,
+    "durationSec": 0.53,
+    "samples": 3,
+    "worstFrames": 3,
+    "markers": 1,
+    "counters": {
+      "framesSeen": 2,
+      "samples": 3,
+      "periodic": 2,
+      "longFrame": 2,
+      "heavyDraw": 2,
+      "miniMapWarning": 0,
+      "zoneChange": 1,
+      "weatherChange": 1,
+      "modeChange": 1,
+      "manualMarker": 1
+    },
+    "sampleIntervalMs": 100
+  }
+}

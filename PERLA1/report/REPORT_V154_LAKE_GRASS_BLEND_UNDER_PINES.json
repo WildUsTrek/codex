@@ -1,0 +1,22 @@
+{
+  "build": "PERLA1_V154_LAKE_GRASS_BLEND_UNDER_PINES_FINAL_SAFE_LOCAL",
+  "base": "PERLA1_V153_LAKE_EDGE_ROUNDING_BOAT_LIFT_SAFE_LOCAL",
+  "changes": [
+    "Restored a wider but controlled lake sand-to-grass visual blend.",
+    "Added canReceiveSecretLakeGrassBlendV154: ignores objectBlock only for visual lake-grass ring to avoid green squares under/near pine sprites.",
+    "Preserved V153 water rounding and lake water/sand edge.",
+    "No logical map/collision/sprite/PNG changes."
+  ],
+  "no_touch": [
+    "water shape V153",
+    "boat lift V153",
+    "tetti",
+    "torre",
+    "pergola",
+    "ombre",
+    "pineta performance",
+    "PNG",
+    "sprite placement",
+    "collisioni"
+  ]
+}

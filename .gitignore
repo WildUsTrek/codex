@@ -1,0 +1,16 @@
+﻿# PERLA1 local/runtime noise
+AVVIO_GIOCO_POWERSHELL_LOG.txt
+*.tmp
+*.temp
+*.log
+
+# Local screenshots and generated archives
+screenshots/
+*.zip
+*.tar.gz
+
+# OS/editor noise
+Thumbs.db
+Desktop.ini
+.vscode/
+.idea/

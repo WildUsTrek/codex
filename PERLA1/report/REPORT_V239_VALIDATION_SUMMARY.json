@@ -1,0 +1,30 @@
+{
+  "build": "PERLA1_V239_COLUMN_FRAGMENT_COMPOSITOR_DIAGNOSTIC_LOCAL",
+  "base": "PERLA1_V238_CLEAN_DISABLE_SAFE_EMERGING_WALL_EXPERIMENTS_LOCAL",
+  "staticChecks": {
+    "nodeCheck": "OK",
+    "buildIdPresent": true,
+    "drawEnabledFalse": true,
+    "dryRunTrue": true,
+    "v237PrototypeFalse": true,
+    "legacyFarWallGuarded": true,
+    "legacyHeightStepGuarded": true,
+    "legacyContinuousGuarded": true,
+    "debugSnapshotExported": true,
+    "debugDownloadExported": true,
+    "globalDebugCommand": true
+  },
+  "assetChecks": {
+    "manifestRefs": 108,
+    "uniqueManifestRefs": 108,
+    "missing": 0,
+    "missingList": []
+  },
+  "browserRuntime": "not executed: Chromium/Playwright page navigation blocked in container by ERR_BLOCKED_BY_ADMINISTRATOR",
+  "expectedVisual": "identical to V238 because PERLA_V239_COLUMN_FRAGMENT_DRAW_ENABLED=false",
+  "debugCommands": [
+    "perlaDownloadColumnFragmentDebugReport()",
+    "window.__PERLA_DEBUG__.downloadColumnFragmentDebugReport()",
+    "window.__PERLA_DEBUG__.getColumnFragmentDebugSnapshot()"
+  ]
+}

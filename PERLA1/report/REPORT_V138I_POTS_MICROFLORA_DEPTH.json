@@ -1,0 +1,282 @@
+{
+  "build": "PERLA1_V138I_POTS_MICROFLORA_DEPTH_SAFE",
+  "base": "PERLA1_V138H_GLOBAL_ANCHOR_TAMARISK_POTS_FIX_SAFE",
+  "goals": [
+    "further reduce modern pots",
+    "repaint historical ground flowers with strong internal line/depth",
+    "repaint grass tufts with blade lines and depth"
+  ],
+  "changedAssets": [
+    "flower.png",
+    "flower_purple.png",
+    "flower_red.png",
+    "flower_white.png",
+    "grass.png",
+    "grass_reed.png",
+    "grass_soft.png",
+    "grass_variant_0.png",
+    "grass_variant_1.png",
+    "grass_variant_2.png",
+    "pot.png",
+    "pot_purple.png",
+    "pot_red.png"
+  ],
+  "changes": [
+    {
+      "file": "pot.png",
+      "action": "V138I_pots_extra_scale_down",
+      "oldAlphaBBox": [
+        17,
+        21,
+        46,
+        64
+      ],
+      "oldSolidBBox": [
+        17,
+        21,
+        45,
+        64
+      ],
+      "newAlphaBBox": [
+        21,
+        33,
+        42,
+        64
+      ],
+      "scaleFromV138H": 0.72
+    },
+    {
+      "file": "pot_red.png",
+      "action": "V138I_pots_extra_scale_down",
+      "oldAlphaBBox": [
+        19,
+        20,
+        45,
+        64
+      ],
+      "oldSolidBBox": [
+        19,
+        21,
+        45,
+        64
+      ],
+      "newAlphaBBox": [
+        22,
+        32,
+        41,
+        64
+      ],
+      "scaleFromV138H": 0.72
+    },
+    {
+      "file": "pot_purple.png",
+      "action": "V138I_pots_extra_scale_down",
+      "oldAlphaBBox": [
+        12,
+        20,
+        52,
+        64
+      ],
+      "oldSolidBBox": [
+        13,
+        21,
+        52,
+        64
+      ],
+      "newAlphaBBox": [
+        17,
+        32,
+        46,
+        64
+      ],
+      "scaleFromV138H": 0.72
+    },
+    {
+      "file": "flower.png",
+      "action": "V138I_extreme_microflower_repaint_with_lines_depth",
+      "oldAlphaBBox": [
+        23,
+        33,
+        42,
+        64
+      ],
+      "newAlphaBBox": [
+        19,
+        21,
+        46,
+        64
+      ],
+      "palette": "yellow"
+    },
+    {
+      "file": "flower_red.png",
+      "action": "V138I_extreme_microflower_repaint_with_lines_depth",
+      "oldAlphaBBox": [
+        23,
+        33,
+        42,
+        64
+      ],
+      "newAlphaBBox": [
+        19,
+        21,
+        46,
+        64
+      ],
+      "palette": "red"
+    },
+    {
+      "file": "flower_purple.png",
+      "action": "V138I_extreme_microflower_repaint_with_lines_depth",
+      "oldAlphaBBox": [
+        23,
+        33,
+        42,
+        64
+      ],
+      "newAlphaBBox": [
+        19,
+        21,
+        46,
+        64
+      ],
+      "palette": "purple"
+    },
+    {
+      "file": "flower_white.png",
+      "action": "V138I_extreme_microflower_repaint_with_lines_depth",
+      "oldAlphaBBox": [
+        23,
+        33,
+        42,
+        64
+      ],
+      "newAlphaBBox": [
+        19,
+        21,
+        46,
+        64
+      ],
+      "palette": "white"
+    },
+    {
+      "file": "grass.png",
+      "action": "V138I_extreme_grass_blades_repaint_with_lines_depth",
+      "oldAlphaBBox": [
+        16,
+        41,
+        42,
+        64
+      ],
+      "newAlphaBBox": [
+        14,
+        36,
+        51,
+        64
+      ],
+      "style": "normal"
+    },
+    {
+      "file": "grass_soft.png",
+      "action": "V138I_extreme_grass_blades_repaint_with_lines_depth",
+      "oldAlphaBBox": [
+        16,
+        41,
+        42,
+        64
+      ],
+      "newAlphaBBox": [
+        16,
+        41,
+        49,
+        64
+      ],
+      "style": "soft"
+    },
+    {
+      "file": "grass_reed.png",
+      "action": "V138I_extreme_grass_blades_repaint_with_lines_depth",
+      "oldAlphaBBox": [
+        16,
+        41,
+        42,
+        64
+      ],
+      "newAlphaBBox": [
+        14,
+        34,
+        52,
+        64
+      ],
+      "style": "reed"
+    },
+    {
+      "file": "grass_variant_0.png",
+      "action": "V138I_extreme_grass_blades_repaint_with_lines_depth",
+      "oldAlphaBBox": [
+        14,
+        41,
+        42,
+        64
+      ],
+      "newAlphaBBox": [
+        14,
+        36,
+        51,
+        64
+      ],
+      "style": "normal"
+    },
+    {
+      "file": "grass_variant_1.png",
+      "action": "V138I_extreme_grass_blades_repaint_with_lines_depth",
+      "oldAlphaBBox": [
+        17,
+        39,
+        42,
+        64
+      ],
+      "newAlphaBBox": [
+        16,
+        41,
+        49,
+        64
+      ],
+      "style": "soft"
+    },
+    {
+      "file": "grass_variant_2.png",
+      "action": "V138I_extreme_grass_blades_repaint_with_lines_depth",
+      "oldAlphaBBox": [
+        14,
+        42,
+        43,
+        64
+      ],
+      "newAlphaBBox": [
+        14,
+        34,
+        52,
+        64
+      ],
+      "style": "reed"
+    }
+  ],
+  "rules": {
+    "noRuntimeShadowEngineChange": true,
+    "noTowerRoofChange": true,
+    "noMapChange": true,
+    "noGlobalWhiteRemoval": true,
+    "groundAnchored": true,
+    "noGroundShadowInsidePng": true,
+    "historicalFlowerIdentityPreservedButRepainted": true
+  },
+  "checks": {
+    "nodeCheckOk": true,
+    "manifestMissing": [],
+    "pngCount": 110,
+    "png64RgbaOk": true,
+    "sign_bar_unchanged": true,
+    "sign_pineta_unchanged": true
+  }
+}

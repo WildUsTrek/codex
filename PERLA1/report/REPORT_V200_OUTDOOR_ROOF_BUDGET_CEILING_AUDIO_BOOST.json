@@ -1,0 +1,30 @@
+{
+  "build": "PERLA1_V200_OUTDOOR_ROOF_BUDGET_CEILING_AUDIO_BOOST_LOCAL",
+  "base": "PERLA1_V199_CLOSED_BUILDING_NEAR_ROOF_FALLBACK_RECOVERY_LOCAL",
+  "changes": [
+    "Outdoor closed-building roof full-like budget: detects areaRatio/top-half full bounds even without explicit v149Fallback.",
+    "Budget steps: baseline 4x3, governor budget 5x4, emergency 6x5.",
+    "Self-depth write covers the budgeted block size to avoid gable/cap overlap artifacts.",
+    "Indoor modern cover ceiling/soffit color now derives from roof palette, darkened and V106-fogged; no grey hardcoded panel.",
+    "Footstep and bird volumes increased considerably while preserving V196 cadence/sparse timing."
+  ],
+  "preserved": [
+    "map/collision/worldgen/objectBlock/assets PNG",
+    "V198 weather/sky recovery",
+    "V199 indoor skip/governor",
+    "V185 horizon target 1.08",
+    "tower/canopy/pergola/sprites/lake/floors/decal"
+  ],
+  "new_debug_keys": [
+    "roofFullLikeCandidateV200",
+    "roofFullLikeAreaRatioV200",
+    "roofFallbackReasonEffectiveV200",
+    "roofOutdoorFallbackBudgetModeV200",
+    "roofLoopDecisionV200",
+    "roofOutdoorBudgetRealAppliedV200",
+    "roofSamplesActualV200",
+    "roofSamplesSavedEstimateV200",
+    "roofInteriorCeilingColorSourceV200",
+    "audioMixV200"
+  ]
+}

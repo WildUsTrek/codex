@@ -1,0 +1,61 @@
+{
+  "build": "PERLA1_V183_DISTORTION_CONTROLLED_HORIZON_LOCAL",
+  "base": "PERLA1_V182_CENTER_RAY_EDGE_DEPROJECTED_HORIZON_LOCAL.zip",
+  "date": "2026-06-10",
+  "purpose": "Distortion-controlled environment horizon: cap lateral stretch mathematically instead of tuning manual edge parameters.",
+  "changed_files": [
+    "01_GIOCO_PRONTO_LOCAL_TEST/index.html",
+    "report/README_REPACK_V183.txt",
+    "report/REPORT_V183_DISTORTION_CONTROLLED_HORIZON.json",
+    "report/STATUS_PROGETTO_E_DIPENDENZE_PERLA1.txt",
+    "report/METODO_LAVORO_ANTI_REGRESSIONE_PERLA1.txt",
+    "AVVIA_GIOCO_SERVER_POWERSHELL.ps1",
+    "AVVIA_GIOCO_WINDOWS_SENZA_PYTHON.bat"
+  ],
+  "preserved": [
+    "map",
+    "fMap",
+    "roadMask",
+    "cMap",
+    "objectBlock",
+    "worldgen",
+    "collisioni",
+    "tetti",
+    "torre",
+    "roofSegments",
+    "fog globale",
+    "sprite",
+    "ombre",
+    "pergola",
+    "festoni",
+    "lago/barca",
+    "pavimenti",
+    "decal",
+    "PNG assets"
+  ],
+  "renderer": {
+    "active": "PERLA_DISTORTION_CONTROLLED_ENV_HORIZON_V183",
+    "disabled_previous": "PERLA_EDGE_DEPROJECTED_ENV_HORIZON_V182",
+    "panorama_tex": 98,
+    "cloud_tex": 99,
+    "cloud_render": false,
+    "span_px": 2,
+    "target_stretch": 1.08,
+    "formula": {
+      "raw_delta": "atan(tan(FOV/2) * cameraX)",
+      "raw_stretch": "1 + (tan(FOV/2)*cameraX)^2",
+      "edge_start": "sqrt(targetStretch - 1) / tan(FOV/2)",
+      "target_derivative": "tan(FOV/2) / targetStretch"
+    }
+  },
+  "mock_observations": {
+    "v183_active": true,
+    "v182_active": false,
+    "raw_max_stretch": 1.81,
+    "corrected_max_stretch": 1.08,
+    "target_stretch": 1.08
+  },
+  "integrity": {},
+  "real_browser_test": false,
+  "anti_regression_rule": "Do not return to manual EDGE_BLEND tuning when a stretch target can be computed from FOV/cameraPlane."
+}

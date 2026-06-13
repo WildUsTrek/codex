@@ -1,0 +1,50 @@
+{
+  "buildId": "PERLA1_V241B_FACE_PROJECTION_MATCH_RANKING_DIAGNOSTIC_LOCAL",
+  "baseBuild": "PERLA1_V241A_FACE_REGISTRY_CANONICALIZATION_DIAGNOSTIC_LOCAL",
+  "createdAt": "2026-06-12T01:43:06.168523Z",
+  "purpose": "Face Projection & Match Ranking Diagnostic: dominant face selection, cap/side/edge classification, no draw.",
+  "filesModified": [
+    "01_GIOCO_PRONTO_LOCAL_TEST/index.html",
+    "AVVIA_GIOCO_WINDOWS_SENZA_PYTHON.bat",
+    "AVVIA_GIOCO_SERVER_POWERSHELL.ps1",
+    "report/README_REPACK_V241B.txt",
+    "report/REPORT_V241B_FACE_PROJECTION_MATCH_RANKING_DIAGNOSTIC.json",
+    "report/REPORT_V241B_VALIDATION_SUMMARY.json",
+    "report/STATUS_PROGETTO_E_DIPENDENZE_PERLA1.txt",
+    "report/METODO_LAVORO_ANTI_REGRESSIONE_PERLA1.txt"
+  ],
+  "runtimeFlagsExpected": {
+    "V240A_draw": "OFF",
+    "V241_registry_draw": "OFF",
+    "V241A_face_draw": "OFF",
+    "V241B_face_draw": "OFF",
+    "ZBufferUpdate": "OFF",
+    "spriteOcclusionUpdate": "OFF",
+    "rainOcclusionUpdate": "OFF"
+  },
+  "debugExports": [
+    "getWorldWallFaceRankingSummary()",
+    "getWorldWallFaceMatchSummary()",
+    "getWorldWallFaceProjectionSummary()",
+    "perlaDownloadColumnFragmentDebugReport()"
+  ],
+  "debugDownloadName": "PERLA1_V241B_FACE_MATCH_RANKING_DEBUG_*.json",
+  "assetRefs": 108,
+  "assetMissing": 0,
+  "pngFiles": 124,
+  "pngModifiedVsV241A": 0,
+  "antiRegression": {
+    "noNewDDA": true,
+    "noLegacyOverlayDraw": true,
+    "noContinuousWallRun": true,
+    "noMapMutation": true,
+    "noAssetMutation": true,
+    "noCollisionMutation": true,
+    "noPerFrameGlobalScan": true
+  },
+  "notes": [
+    "V241B does not draw any face; it only ranks and classifies candidate matches.",
+    "Dominant face ranking penalizes cap/edge/side matches when a longer compatible face exists.",
+    "Raw registry segments and V240A surfaces now expose candidateFaceMatches and matchedDominantFaceKey/dominantFaceKey diagnostics."
+  ]
+}

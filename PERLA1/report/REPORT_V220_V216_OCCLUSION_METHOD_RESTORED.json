@@ -1,0 +1,25 @@
+{
+  "build": "PERLA1_V220_V216_OCCLUSION_METHOD_RESTORED_LOCAL",
+  "base": "PERLA1_V219_LOCAL_V216_CEILING_COVERAGE_RESTORE_LOCAL",
+  "node_check": "OK",
+  "asset_refs_png": 108,
+  "asset_refs_missing": [],
+  "raycast_png_count": 116,
+  "package_png_count": 124,
+  "png_modified_vs_v219": [],
+  "v220_const": true,
+  "v216_real_function_called_after_rain": true,
+  "v218_filtered_cover_path_disabled_after_rain": true,
+  "v220_wall_replay_after_v216_cover": true,
+  "v220_cover_excludes_wall_floor_from_v216_function": true,
+  "force_v216_replay_for_active_shelter_rain": true,
+  "no_walltop_primary_in_v220_helpers": true,
+  "no_percentile_in_v220_helpers": true,
+  "no_fallback_ratio_in_v220_helpers": true,
+  "drawLocalShelterReplayV218_occurrences": 1,
+  "notes": [
+    "V220 closes the explicit V219 error: V216 exact replay is no longer disabled in draw loop.",
+    "drawLocalShelterReplayV218 remains defined but is not called as final cover path.",
+    "V216 replay receives only ceiling/canopy rects to avoid drawing wall/floor objects with fillRect."
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "build": "PERLA1_V195_WEATHER_CLOUD_LAYER_VISIBILITY_LOCAL",
+  "base": "PERLA1_V194_AUDIO_MIX_AMBIENCE_FOOTSTEPS_LOCAL.zip",
+  "goal": "Make cloudy/rain/storm clouds much more present and legible using only the existing V185 skybox cloud layer.",
+  "changes": [
+    "Applied canvasFilter parameter inside drawDistortionControlledEnvironmentImageV185().",
+    "Increased cloudy/rain/storm cloud passes and cloud-bank draw calls within drawWeatherCloudLayerV190().",
+    "Darkened and increased contrast of cloudy/rain/storm cloud filters.",
+    "Updated UI/build labels and reports."
+  ],
+  "preserved": [
+    "V185 horizon renderer",
+    "V193/V194 visual rain/audio",
+    "map/collisions/worldgen",
+    "roofs/tower/roofSegments",
+    "sprites/pergola/festoons/lake/floors/decals",
+    "PNG assets",
+    "launchers"
+  ],
+  "anti_regression": [
+    "No drawWeatherCloudDeckV192",
+    "No ellipses/radial gradients for clouds",
+    "No new PNG assets",
+    "No map or renderer architecture changes"
+  ],
+  "checks": {
+    "node_check": "OK",
+    "asset_png_count": 116,
+    "png_reference_count": 108,
+    "missing_assets": 0,
+    "drawWeatherCloudDeckV192_occurrences": 0,
+    "canvas_filter_application_occurrences": 2,
+    "cloud_layer_v195_stats_present": true,
+    "png_assets_modified": "0 expected; verified later against V194 by hash"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "build": "PERLA1_V155_LAKE_GRASS_EATS_SAND_BLEND_SAFE_LOCAL",
+  "base": "PERLA1_V154_LAKE_GRASS_BLEND_UNDER_PINES_FINAL_SAFE_LOCAL",
+  "scope": "lake shore sand/grass visual blend only",
+  "water": "V153/V154 lake water rounding preserved",
+  "logic_preserved": [
+    "fMap",
+    "roadMask",
+    "cMap",
+    "objectBlock",
+    "zoneMask",
+    "worldgen",
+    "collisioni",
+    "sprite placement"
+  ],
+  "no_png_modified": true,
+  "no_patch_only_folder": true,
+  "v155": {
+    "grass_eats_sand_subtile": true,
+    "cell_ring_strength_reduced": true,
+    "old_lake_grass_decal_reduced": true,
+    "coherent_under_pines": true
+  }
+}

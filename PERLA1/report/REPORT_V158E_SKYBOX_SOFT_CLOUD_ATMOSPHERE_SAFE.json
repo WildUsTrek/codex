@@ -1,0 +1,71 @@
+{
+  "build": "PERLA1_V158E_SKYBOX_SOFT_CLOUD_ATMOSPHERE_SAFE_LOCAL",
+  "base": "PERLA1_V158D_SKYBOX_PAINTED_PANORAMA_HAZE_SAFE_LOCAL (derivata da V157 blindata)",
+  "goal": "Correzione palette atmosfera/skybox: niente bianco-latte, niente grigio-smog, niente dettagli fuori scala; nuvole layer separato.",
+  "files_modified": [
+    "01_GIOCO_PRONTO_LOCAL_TEST/index.html",
+    "STATUS_PROGETTO_E_DIPENDENZE_PERLA1.txt",
+    "METODO_LAVORO_ANTI_REGRESSIONE_PERLA1.txt"
+  ],
+  "assets_added": [
+    "assets/raycast/sky_panorama_360_v158e.png",
+    "assets/raycast/cloud_layer_soft_v158e.png"
+  ],
+  "assets_removed_from_package": [
+    "assets/raycast/sky_panorama_360_v158d.png"
+  ],
+  "manifest_refs": 108,
+  "manifest_unique_refs": 108,
+  "asset_missing": [],
+  "new_assets": {
+    "sky_panorama_360_v158e.png": {
+      "size": [
+        4096,
+        384
+      ],
+      "mode": "RGBA",
+      "sha256": "40fb900377309b485f37815f76afeb13690de2cb8b65277b993ce14a7632c80e"
+    },
+    "cloud_layer_soft_v158e.png": {
+      "size": [
+        2048,
+        256
+      ],
+      "mode": "RGBA",
+      "sha256": "78cf6f3474c4667289e77081b20491c0d482148c15a19c327b36fa5da9e31e56"
+    }
+  },
+  "preserved": [
+    "map/fMap/roadMask/cMap/objectBlock/collisioni/worldgen",
+    "sprite placement",
+    "roofSegments=2 geometria tetti",
+    "ombre",
+    "pineta/pergola",
+    "laghetto/riva",
+    "barca",
+    "torre",
+    "festoni"
+  ],
+  "technical_changes": {
+    "environmentPalette": "day attivo, golden/night predisposti per futuro ma non usati",
+    "horizonRgb": [
+      155,
+      216,
+      234
+    ],
+    "wallFog": "alpha storica dist/25 preservata; nessun limite visibilita pareti",
+    "roofFog": "roofPremixedFogColorV106 converge allo stesso target atmosfera dei muri",
+    "cloudLayer": "texture 99 separata e weather-ready, wrapping proprio, drift lentissimo"
+  },
+  "checks": {
+    "node_check": "OK",
+    "runtime_smoke_node": "OK",
+    "skyboxV158E": true,
+    "skyboxPanoramaAssetV158E": true,
+    "skyboxCloudAssetV158E": true,
+    "roofSegments": 2,
+    "farWallVisibilityLimitedV158E": false,
+    "no_patch_only_folder": true
+  },
+  "notes": "Non aperta anteprima browser/app preview; validazione tecnica offline + asset preview interno."
+}

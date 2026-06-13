@@ -1,0 +1,28 @@
+{
+  "build": "PERLA1_V148_ROOF_BOUNDS_PINETA_PERFORMANCE_SAFE_LOCAL",
+  "base": "PERLA1_V147_PINETA_PERGOLA_PERFORMANCE_SAFE_LOCAL",
+  "intent": "Conservative performance pass for reception/bath roofs and dense pineta scenes.",
+  "changed": [
+    "index.html",
+    "STATUS_PROGETTO_E_DIPENDENZE_PERLA1.txt",
+    "METODO_LAVORO_ANTI_REGRESSIONE_PERLA1.txt",
+    "README_REPACK_V148.txt",
+    "REPORT_V148_ROOF_BOUNDS_PINETA_PERFORMANCE.json"
+  ],
+  "preserved": [
+    "PNG assets",
+    "worldgen",
+    "map/cMap/roadMask/objectBlock logic",
+    "tower V136 integrated cap",
+    "roof visual style V106-V117",
+    "pergola system",
+    "festoon system",
+    "boat",
+    "stones/flowers/statue assets"
+  ],
+  "technical": {
+    "roof": "cached sloped roof planes/gable caps; projected screen bounds; gable x-range clipping; self-depth reset skip when no candidate roofs",
+    "pineta": "denser broadphase maxDist in pineta; stricter tiny/tree LOD; more stripe collapse for distant trees; stricter far tree shadow cap"
+  },
+  "no_patch_only_folder": true
+}

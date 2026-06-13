@@ -1,0 +1,37 @@
+{
+  "build": "PERLA1_V228_FAR_WALL_SPAN_AND_SPRITE_OCCLUSION_DISTANCE_LOCAL",
+  "base": "PERLA1_V227_LAYERED_WALL_OCCLUSION_HEIGHT_FIX_LOCAL",
+  "date": "2026-06-11",
+  "intent": [
+    "stabilize far wall spans behind low walls",
+    "group second-hit wall layers into coherent spans",
+    "recover thin/intermittent columns inside confident spans",
+    "ensure wall occlusion distance is greater than sprite draw distance",
+    "feed extended WallOcclusionRanges to sprite/rain consumers"
+  ],
+  "modified_files": [
+    "01_GIOCO_PRONTO_LOCAL_TEST/index.html",
+    "AVVIA_GIOCO_SERVER_POWERSHELL.ps1",
+    "AVVIA_GIOCO_WINDOWS_SENZA_PYTHON.bat"
+  ],
+  "preserved": [
+    "map",
+    "collisioni",
+    "worldgen",
+    "roadMask",
+    "objectBlock",
+    "assets",
+    "roof/canopy",
+    "audio",
+    "skybox",
+    "bath authority",
+    "camera rain volume"
+  ],
+  "browser_test_executed": false,
+  "static_checks_planned": [
+    "node --check",
+    "zip integrity",
+    "tar.gz integrity",
+    "asset missing"
+  ]
+}

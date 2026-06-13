@@ -1,0 +1,1268 @@
+AGGIORNAMENTO COORDINATE V132 — TORRE 2X2 + TETTO/FASCIA
+Build corrente: PERLA1_V133_TOWER_ROOF_FASCIA_DEPTH_LOCK_SAFE.zip
+
+Coordinate torre confermate:
+- Base interna torre: X70..71 / Y34..35.
+- Base gameplay torre: X40..41 / Y34..35.
+- Formula invariata: X_INTERNA = X_GAMEPLAY + 30, Y invariata.
+- La torre resta al posto della statua storica vicino pergola/camper; la statua nuova vicino al bar resta preservata.
+- Altezza visuale torre: 7.35.
+- Tetto torre: roofSegment elevato con wallTopZ 7.35, eaveZ 7.35, ridgeZ circa 8.15, fascia/gronda V132 vincolata alla sagoma visibile del corpo torre.
+
+================================================================================
+
+AGGIORNAMENTO COORDINATE V126 — TORRE 2X2 STATUA STORICA
+Build corrente: PERLA1_V126_TOWER_2X2_STATUE_FOUNDATION_LOCAL.zip
+
+Regola coordinate invariata:
+- Coordinate gameplay richieste dall'utente: X_GAMEPLAY / Y.
+- Coordinate interne motore: X_INTERNA = X_GAMEPLAY + 30, Y invariata.
+
+Nuova torre V126:
+- Statua storica rimossa: marble_statue tex 53, posizione circa gameplay X40.55 / Y34.65, interno X70.55 / Y34.65.
+- Torre 2x2 inserita sulle celle interne X70..71 / Y34..35.
+- Coordinate gameplay celle torre: X40..41 / Y34..35.
+- Altezza visuale wallHeightMap: 3.35.
+- Texture muro torre: wall_tower_stone_v126.png tex 92.
+- Owner torre: 10.
+- Statua nuova V118 preservata: gameplay X2.57 / Y2.22, interno X32.57 / Y2.22.
+
+Nota visiva fondamentale:
+- La parte alta della torre deve essere visibile sopra i muri standard dove sopra il muro c'e' cielo libero. Per questo V126 usa wallcasting estruso e secondo-hit peek sopra foreground wall, non sprite/overlay/cMap.
+
+================================================================================
+
+AGGIORNAMENTO COORDINATE V125 — DECAL COCKTAIL BAR
+Build corrente: PERLA1_V125_BAR_COCKTAIL_WALL_DECAL_LOCAL.zip
+
+Regola coordinate invariata:
+- Coordinate gameplay richieste dall'utente: X_GAMEPLAY / Y.
+- Coordinate interne motore: X_INTERNA = X_GAMEPLAY + 30, Y invariata.
+
+Nuovo punto V125:
+- Decal cocktail sul muro vicino al bar: interno X45/Y16, gameplay circa X15/Y16.
+- Asset usato: giant_cocktail.png tex 91.
+- label wallDecalMap: decal_bar_cocktail_v125.
+- face: north; flip:true per mantenere verso asset su faccia nord.
+
+Coordinate recenti preservate:
+- Muro pergola corretto V123 endpoint gameplay X51.60/Y31.31.
+- Palma forzata V122 gameplay X69.28/Y8.45.
+- Statua seconda V118 gameplay X2.57/Y2.22.
+
+================================================================================
+
+AGGIORNAMENTO COORDINATE V120 — NESSUN NUOVO CAMBIO COORDINATE
+Build corrente: PERLA1_V123_COCKTAIL_ABOVE_CANOPY_WALL_TRIM_LOCAL.zip
+
+V120 non introduce nuove coordinate.
+Conferma: il muro vicino alla pergola alzato in V119 è stato confermato corretto dall'utente e va preservato.
+Formula coordinate sempre valida: X_INTERNA = X_GAMEPLAY + 30, Y invariata.
+
+AGGIORNAMENTO COORDINATE V119 — MURO PERGOLA
+Build corrente: PERLA1_V119_CANOPY_SKY_GUARD_PERGOLA_WALL_FIX_LOCAL.zip
+
+Coordinate gameplay principali:
+- Tratto richiesto muro cespuglio: circa X 70.20 / Y 30.44 -> X 54.33 / Y 28.81.
+- Formula resta: X_INTERNA = X_GAMEPLAY + 30; Y invariata.
+- V119 usa queste coordinate come guida ma alza il tratto reale di muro map==1 dove nasce la pergola, nel band attorno a gameplay X 54..70.5 e Y 29..30, per risolvere il mancato rialzo V118.
+
+AGGIORNAMENTO COORDINATE V118 — MICROFIX MAPPA
+Build corrente: PERLA1_V118_SKY_GUARD_MAP_INPUT_FIX_LOCAL.zip
+Base reale: PERLA1_V117_MODERN_WALL_ROOF_MERGE_LOCAL.zip
+
+Formula coordinate invariata:
+    X_INTERNA = X_GAMEPLAY + 30
+    Y_INTERNA = Y_GAMEPLAY
+
+Coordinate usate in V118:
+- Muro cespuglio da alzare visivamente: gameplay circa X 70.20/Y30.44 -> interno X 100.20/Y30.44, fino a gameplay X 54.33/Y28.81 -> interno X 84.33/Y28.81. Applicato solo a celle muro esistenti `map==1`.
+- Cespuglio da rimuovere: gameplay X 56.46/Y15.19 -> interno X 86.46/Y15.19.
+- Tamerice da rimuovere: gameplay X 34.26/Y10.25 -> interno X 64.26/Y10.25.
+- Seconda statua: gameplay X 2.57/Y2.22 -> interno X 32.57/Y2.22.
+
+================================================================================
+
+AGGIORNAMENTO COORDINATE V112 — NESSUNA NUOVA COORDINATA
+Build corrente: PERLA1_V112_ROOF_SELF_DEPTH_GABLE_FIX_LOCAL.zip
+Base reale: PERLA1_V111_ROOF_SEAM_VANISH_VISIBILITY_GUARD_LOCAL.zip
+
+V112 non introduce nuove coordinate gameplay e non sposta oggetti. Interviene solo sul rendering/depth interno dei tetti.
+Formula coordinate invariata:
+    X_INTERNA = X_GAMEPLAY + 30
+    Y_INTERNA = Y_GAMEPLAY
+
+================================================================================
+
+AGGIORNAMENTO COORDINATE V111 — NESSUNA NUOVA COORDINATA
+Build corrente: PERLA1_V111_ROOF_SEAM_VANISH_VISIBILITY_GUARD_LOCAL.zip
+Base reale: PERLA1_V110_ROOF_WALL_TOP_SEAM_FIX_LOCAL.zip
+
+V111 non introduce nuove coordinate gameplay e non sposta oggetti. Interviene solo sul rendering dei tetti/seam/fog guard.
+Formula coordinate invariata:
+    X_INTERNA = X_GAMEPLAY + 30
+    Y_INTERNA = Y_GAMEPLAY
+
+================================================================================
+
+AGGIORNAMENTO COORDINATE V110 — NESSUNA NUOVA COORDINATA
+Build corrente: PERLA1_V110_ROOF_WALL_TOP_SEAM_FIX_LOCAL.zip
+Base reale: PERLA1_V109_ROOF_SOFFIT_RED_LINE_FIX_LOCAL.zip
+
+V110 non introduce nuove coordinate gameplay. Interviene solo sul rendering della micro-linea residua soffit/fine muro dei tetti moderni.
+Formula coordinate invariata:
+    X_INTERNA = X_GAMEPLAY + 30
+    Y_INTERNA = Y_GAMEPLAY
+
+================================================================================
+
+AGGIORNAMENTO COORDINATE V106 — NESSUNA NUOVA COORDINATA, SOLO TETTI
+Build corrente: PERLA1_V106_ROOF_SPAN_PREMIX_LOCAL.zip
+Base reale: PERLA1_V105_CAMPER_FESTOON_LOS_CACHE_LOCAL.zip
+
+V106 non introduce nuove coordinate gameplay e non modifica coordinate esistenti.
+Formula coordinate invariata:
+    X_INTERNA = X_GAMEPLAY + 30
+    Y_INTERNA = Y_GAMEPLAY
+
+Coordinate/sistemi preservati:
+- Palma gigante: gameplay X 75.06 / Y 20.27 -> interno X 105.06 / Y 20.27.
+- Stanza camper: gameplay X 52..77 / Y 37..57, pareti rialzate solo visualmente a wallHeightMap 2.0.
+- Festoni camper: corde a gameplay X 56.5, 64.5, 72.5; Y 37.70..56.35.
+- Tetti reception/bagni: nessuna modifica alle coordinate o alla geometria; V106 cambia solo batching/fog premiscelato nel rendering.
+
+Regola pratica:
+- Per future patch coordinate, continuare a convertire X gameplay con +30.
+- Per future ottimizzazioni tetti, non usare coordinate gameplay: lavorare sulle funzioni renderer e sui debug stats, non sulla mappa.
+
+================================================================================
+
+AGGIORNAMENTO COORDINATE V105 — FESTONI CAMPER LOS CACHE / FOV
+Build corrente: PERLA1_V105_CAMPER_FESTOON_LOS_CACHE_LOCAL.zip
+Base reale: PERLA1_V104_CAMPER_FESTOON_FASTPATH_CACHE_LOCAL.zip
+
+Formula coordinate invariata:
+    X_INTERNA = X_GAMEPLAY + 30
+    Y_INTERNA = Y_GAMEPLAY
+
+Coordinate preservate:
+- Palma gigante: gameplay X 75.06 / Y 20.27 -> interno X 105.06 / Y 20.27.
+- Stanza camper: perimetro gameplay X 52..77 / Y 37..57, pareti rialzate solo visualmente a wallHeightMap 2.0.
+- Bounds fast path interno V104/V105 con isteresi:
+  - entrata: gameplay X 52.22..76.78, Y 37.22..56.78;
+  - uscita mantenuta: gameplay X 51.85..77.15, Y 36.85..57.15.
+- Festoni camper: corde nord-sud a gameplay X 56.5, 64.5, 72.5; Y 37.70..56.35.
+
+Regola visibilita' V105:
+- Dentro bounds stanza: fast path V104 invariato, senza DDA.
+- Fuori bounds stanza: DDA/supercover su `map[][]` e clipping bordo muro V103, ma con cache LoS V105 durante rotazione da stessa posizione.
+- Fuori FOV o oltre distanza utile: early return, nessun DDA/clip/render.
+- Nessuna nuova coordinata gameplay e nessuna modifica a `map`, `roadMask`, `objectBlock` o collisioni.
+
+================================================================================
+
+AGGIORNAMENTO COORDINATE V104 — FESTONI CAMPER FAST PATH / CACHE
+Build corrente: PERLA1_V104_CAMPER_FESTOON_FASTPATH_CACHE_LOCAL.zip
+Base reale: PERLA1_V103_CAMPER_FESTOON_WALL_EDGE_CLIP_LOCAL.zip
+
+Formula coordinate invariata:
+    X_INTERNA = X_GAMEPLAY + 30
+    Y_INTERNA = Y_GAMEPLAY
+
+Coordinate preservate:
+- Palma gigante: gameplay X 75.06 / Y 20.27 -> interno X 105.06 / Y 20.27.
+- Stanza camper: perimetro gameplay X 52..77 / Y 37..57, pareti rialzate solo visualmente a wallHeightMap 2.0.
+- Bounds fast path interno V104 con isteresi:
+  - entrata: gameplay X 52.22..76.78, Y 37.22..56.78;
+  - uscita mantenuta: gameplay X 51.85..77.15, Y 36.85..57.15.
+- Festoni camper: corde nord-sud a gameplay X 56.5, 64.5, 72.5; Y 37.70..56.35.
+
+Regola visibilita' V104:
+- Dentro bounds stanza: festoni disegnati in fast path senza DDA, perche' sono nella stessa stanza del player.
+- Fuori bounds stanza: resta la regola V103/V102, distanza + DDA/supercover su `map[][]` + clipping corda al bordo muro.
+- Oltre distanza utile: early return, nessun calcolo DDA/clip/render.
+
+================================================================================
+
+AGGIORNAMENTO COORDINATE V103 — FESTONI CAMPER E CLIPPING MURO
+Build corrente: PERLA1_V103_CAMPER_FESTOON_WALL_EDGE_CLIP_LOCAL.zip
+Base reale: PERLA1_V102_CAMPER_FESTOON_DDA_OCCLUSION_LOCAL.zip
+
+Formula coordinate invariata:
+    X_INTERNA = X_GAMEPLAY + 30
+    Y_INTERNA = Y_GAMEPLAY
+
+Coordinate preservate:
+- Palma gigante: gameplay X 75.06 / Y 20.27 -> interno X 105.06 / Y 20.27.
+- Stanza camper: perimetro gameplay X 52..77 / Y 37..57, pareti rialzate solo visualmente a wallHeightMap 2.0.
+- Festoni camper: corde nord-sud a gameplay X 56.5, 64.5, 72.5; Y 37.70..56.35.
+
+Regola coordinate/visibilita' V103:
+- Ogni punto festone viene controllato in world-space con DDA/supercover su map[][].
+- Per la corda, quando un segmento arriva contro un muro, viene clippato verso il bordo muro per evitare tagli sospesi.
+- Nessuna nuova cella map, roadMask, objectBlock o collisione viene aggiunta.
+
+================================================================================
+
+AGGIORNAMENTO COORDINATE V101 — PARETI CAMPER COMPLETE + PORTA
+Build corrente: PERLA1_V102_CAMPER_FESTOON_DDA_OCCLUSION_LOCAL.zip
+Base reale: PERLA1_V100_CAMPER_ROOM_OCCLUDER_FESTOON_FIX_LOCAL.zip
+
+AGGIORNAMENTO COORDINATE V100 — QUINTA EST CAMPER E FESTONI STABILI
+
+Formula coordinate invariata:
+    X_INTERNA = X_GAMEPLAY + 30
+    Y_INTERNA = Y_GAMEPLAY
+
+Coordinate V100:
+- Muro est stanza camper rialzato solo visualmente: gameplay X 77 / Y 37..57 -> interno X 107 / Y 37..57.
+- Altezza visuale wallHeightMap impostata a 2.0 sulle celle muro esistenti; nessuna nuova collisione.
+- Festoni camper preservati: corde nord-sud a gameplay X 56.5, 64.5, 72.5; Y 37.70..56.35.
+- Palma gigante preservata: gameplay X 75.06 / Y 20.27 -> interno X 105.06 / Y 20.27.
+
+Regola visibilita' V100:
+- Festoni visibili se il giocatore e' dentro stanza camper o area porta/ingresso.
+- Festoni nascosti come intero layer se il centro del gruppo e' dietro il muro est rialzato o se il giocatore e' fuori stanza in vista lunga.
+
+================================================================================
+
+AGGIORNAMENTO COORDINATE V99 — FESTONI CAMPER STABILI
+
+Formula coordinate invariata:
+    X_INTERNA = X_GAMEPLAY + 30
+    Y_INTERNA = Y_GAMEPLAY
+
+Coordinate artistiche preservate:
+- Corde camper nord-sud a gameplay X 56.5, 64.5, 72.5; Y 37.70..56.35.
+- Palma gigante preservata a gameplay X 75.06 / Y 20.27, interno X 105.06 / Y 20.27.
+
+Cambio V99:
+- Nessuna nuova coordinata.
+- Visibilità: corde e lucine sempre disegnabili attraverso muri entro distanza/fade; bandierine e pali occlusi da muri.
+- maxDist 30, fadeStart 15.5, fadeEnd 29.5.
+
+================================================================================
+
+AGGIORNAMENTO COORDINATE V98 — FESTONI CAMPER
+
+Le coordinate gameplay restano convertite con:
+    X_INTERNA = X_GAMEPLAY + 30
+    Y_INTERNA = Y_GAMEPLAY
+
+Festone camper V95/V96/V97/V98:
+- corde verticali nord-sud interne alla stanza camper a gameplay X 56.5, 64.5, 72.5; Y 37.70..56.35.
+- V98 non cambia coordinate artistiche; modifica solo la visibilità: maxDist 32, fade a zero fra 16 e 31, line-of-sight world-space su map[][] per evitare apparizioni attraverso muri.
+- Palma gigante preservata a gameplay X 75.06 / Y 20.27, interno X 105.06 / Y 20.27.
+
+================================================================================
+
+AGGIORNAMENTO COORDINATE V97 — FESTONI CAMPER
+
+Formula coordinate invariata:
+X_INTERNA = X_GAMEPLAY + 30
+Y_INTERNA = Y_GAMEPLAY
+
+Coordinate V96 preservate:
+- Palma gigante speciale: gameplay X 75.06 / Y 20.27 -> interno X 105.06 / Y 20.27.
+
+Festoni camper V97:
+- Corde decorative nella stanza camper ai gameplay X 56.5, 64.5, 72.5.
+- Estensione nord-sud gameplay Y 37.70 -> 56.35.
+- I pali sono agli estremi delle corde e sono disegnati come layer Canvas proiettato, non come celle mappa/sprite/collisione.
+- Nessuna nuova coordinata bloccante; objectBlock e roadMask non devono cambiare per questi festoni.
+
+================================================================================
+
+AGGIORNAMENTO COORDINATE V96 — PALMA GIGANTE SPOSTATA E FESTONI CAMPER
+
+Regola invariata:
+    X_INTERNA = X_GAMEPLAY + 30
+    Y_INTERNA = Y_GAMEPLAY
+
+Palma gigante V96:
+    Coordinate gameplay nuove: X 75.06 / Y 20.27
+    Coordinate interne: X 105.06 / Y 20.27
+    Nota: è la palma speciale introdotta in V95, spostata di un blocco verso est e un blocco verso sud.
+
+Festone camper V96:
+    Le corde decorative restano nella stanza camper e attraversano internamente da parete nord a parete sud.
+    Gameplay X corde: 56.5, 64.5, 72.5
+    Y corde: 37.70 .. 56.35
+    Tipi alternati: lucine, bandierine, lucine.
+    Pali: due estremità per ogni corda, disegnati come pali di legno verticali verso terra, non collisioni.
+
+Packaging:
+    Conservare sempre launcher/server root nello ZIP finale.
+    Eliminare solo la cartella patch-only SOLO_FILE_DA_SOSTITUIRE, non i file di avvio.
+
+================================================================================
+
+ISTRUZIONI OBBLIGATORIE DA SEGUIRE PER LEGGERE LE COORDINATE — PERLA1
+====================================================================
+
+Build di riferimento: PERLA1 V96 — CAMPER COLOR FESTOON POLES + SPECIAL PALM MOVED
+Progetto: Camping Sole, Mare & Zanzare / PERLA1
+
+SCOPO
+-----
+Questo file serve a evitare errori sulle coordinate dopo le espansioni della mappa.
+Quando l’utente fornisce coordinate prese dal gioco/debug, quelle coordinate sono coordinate GAMEPLAY e vanno considerate corrette come riferimento artistico.
+
+REGOLA MADRE
+------------
+Le coordinate lette in gioco sono coordinate gameplay.
+Dal codice V74 in poi, il mondo storico è stato espanso verso ovest con uno shift interno.
+Quindi il codice usa coordinate interne diverse dalla X vista in gameplay.
+
+FORMULA ATTUALE
+---------------
+WEST_EXPAND_V74 = 30
+PERLA_DISPLAY_X_OFFSET_V74 = 30
+
+Da gameplay a codice:
+    X_INTERNA = X_GAMEPLAY + 30
+    Y_INTERNA = Y_GAMEPLAY
+
+Da codice a gameplay:
+    X_GAMEPLAY = X_INTERNA - 30
+    Y_GAMEPLAY = Y_INTERNA
+
+Esempi:
+    gameplay X 67.39 / Y 30.50 -> interno X 97.39 / Y 30.50
+    gameplay X 55.00 / Y 30.50 -> interno X 85.00 / Y 30.50
+    gameplay X 117.04 / Y 42.23 -> interno X 147.04 / Y 42.23
+
+MAPPATURA ATTUALE DEL MONDO
+---------------------------
+Dimensione mappa attuale: 150 x 88
+Mappa storica pre-espansione ovest: traslata internamente di +30 in X.
+Nuova pineta2 ovest: usa coordinate interne basse/nuove, ma in debug gameplay appare con X compensata.
+Nuova ala est / lago / casa / labirinto: coordinate interne alte; leggerle tramite debug compensato o convertire con formula sopra.
+
+MAPPATURE IMPORTANTI RECENTI
+----------------------------
+- Banner BARBECUE: gameplay circa x79/y33..36; interno x109/y33..36; face west.
+- Decal P parcheggio V76: interno x101/y18, face south; gameplay circa x71/y18.
+- Pergola edera/fiori V81: gameplay X 55..67.2, Y 29.35..38.10; interno X 85..97.2, Y 29.35..38.10; quota visuale z=1.30.
+- Pini obbligatori V77: 97.37/35.51, 103.00/36.60, 105.90/38.29, 117.49/39.99, 117.61/41.20, 117.51/43.52, 116.06/38.59.
+- Pini obbligatori V78: 107.29/39.10, 107.26/45.05, 117.79/37.62, 117.29/44.40.
+- Pini obbligatori V79: 94.72/37.38, 107.00/38.06, 117.04/42.23.
+- Colonne yoga ripristinate V75: interne (43.5,45.5), (50.5,45.5), (43.5,52.5), (50.5,52.5); in gameplay appaiono con X -30.
+
+REGOLE PER PATCH FUTURE
+-----------------------
+1. Se l’utente fornisce coordinate lette in gioco, trattarle come coordinate gameplay valide.
+2. Prima di piazzare oggetti nel codice, convertire X con +30.
+3. Non convertire Y.
+4. Per sprite liberi: usare X_INTERNA/Y_INTERNA.
+5. Per wall decal: convertire X, poi agganciare il decal alla cella muro corretta e alla face corretta.
+6. Per testi su muro: usare sempre wallDecalMap face-aware e getWallDecalTexX(); mai sprite billboard per scritte.
+7. Per coordinate su muri/cespugli: verificare tile e face, perché una coordinata gameplay identifica il punto, ma il wall decal deve sapere su quale faccia del tile muro disegnare.
+8. Non spostare coordinate storiche a mano. Se cambia lo shift, aggiornare questo file.
+9. Ogni nuova espansione o modifica alla logica coordinate deve aggiornare questo file.
+10. Per decorazioni alte tipo arco/pergola: non usare sprite billboard verticali; usare layer procedurale alto/non bloccante con footprint dichiarato e supporto visivo credibile.
+
+AGGIORNAMENTO V81 — IVY PERGOLA TRELLIS BALANCE
+------------------------------------------------
+- La V81 non cambia la formula coordinate: X_INTERNA = X_GAMEPLAY + 30, Y invariata.
+- La V81 mantiene il footprint ampliato V80 della pergola: gameplay X 55..67.2, Y 29.35..38.10; codice X 85..97.2, Y 29.35..38.10; quota z=1.30.
+- La V81 corregge solo la resa della pergola: aggiunge una struttura metallica/rete/traliccio visibile sotto l’edera per evitare l’effetto foglie sospese in cielo.
+- Densità pergola: intermedia fra V79 e V80; più piena della V80 ma meno lastra verde della V79.
+- Non reintrodurre gli archetti billboard V78.
+- Per futuri interventi sulla pergola, mantenere il supporto portante visibile e modificare solo densità, colore, buchi, pendenti o quota; non usare objectBlock e non modificare collisioni/roadMask.
+
+DA TENERE OBBLIGATORIAMENTE AGGIORNATO
+
+AGGIORNAMENTO V95 — PALMA SPECIALE E CORDE CAMPER
+--------------------------------------------------
+- Formula coordinate invariata: X_INTERNA = X_GAMEPLAY + 30, Y invariata.
+- Palma speciale richiesta a gameplay X 74.06 / Y 19.27: piazzata a interno X 104.06 / Y 19.27.
+- Stanza camper reale dopo shift: gameplay circa X 52..77 / Y 37..57; interno circa X 82..107 / Y 37..57.
+- Corde decorative camper V95: tre linee interne da parete nord a parete sud, su gameplay X 56.5, 64.5, 72.5, con Y 37.70..56.35.
+- Le corde camper non sono sprite e non sono muri: sono un layer Canvas proiettato alto, senza collisione e senza objectBlock.
+- Per futuri interventi simili, convertire sempre le X gameplay con +30 prima di agganciare il layer al mondo.
+
+
+AGGIORNAMENTO V82 — PERGOLA CLEAN NET + LAKE BOAT
+
+- La formula coordinate resta invariata: X_INTERNA = X_GAMEPLAY + 30, Y invariata.
+- Pergola: footprint gameplay X 55..67.2, Y 29.35..38.10; footprint interno X 85..97.2, Y 29.35..38.10.
+- Barchetta lago: coordinate gameplay X 99 / Y 42; coordinate interne X 129 / Y 42. È uno sprite intenzionale su acqua lago (`secret_lake`), non un errore su mare aperto.
+- Nei check futuri distinguere `spriteOpenSea` da oggetti volutamente nel lago interno.
+
+DA TENERE OBBLIGATORIAMENTE AGGIORNATO
+
+
+================================================================================
+AGGIORNAMENTO V83 — PERGOLA E BARCA
+================================================================================
+La formula coordinate resta invariata:
+X_INTERNA = X_GAMEPLAY + 30
+Y_INTERNA = Y_GAMEPLAY
+
+La pergola V83 usa ancora il footprint gameplay X 55..67.2 / Y 29.35..38.10,
+ma il disegno non e' piu' basato su archetti billboard o puntini procedurali.
+La rete metallica e' un layer continuo e protetto; le foglie sono masse organiche disegnate sopra,
+poi la rete viene ripassata sopra.
+
+La barca lago resta a coordinate gameplay X 99 / Y 42, interna X 129 / Y 42,
+ma lo sprite e' ora di profilo e ancorato piu' in basso sull'acqua.
+
+DA TENERE OBBLIGATORIAMENTE AGGIORNATO.
+
+
+================================================================================
+AGGIORNAMENTO V84 — PERGOLA V81 STABILIZZATA
+================================================================================
+Base reale: V83. Correzione mirata: rimossa la strategia instabile V83/V82 della pergola che si appiccicava allo schermo, moltiplicava elementi e usava blob/foglie pesanti. Ripristinato il concetto V81: pergola ancorata al mondo con projectRoofPoint, rete metallica continua e protetta disegnata sotto e sopra la vegetazione. Niente blob/ellissi pesanti, niente micro-puntinismo denso: vegetazione leggera a piccole tessere stabili, appoggiata alla rete. Barca V83 di profilo mantenuta. Non toccati mappa, collisioni, roadMask, tetti, mobile optimizer, sentieri, pinete o coordinate.
+
+
+=================================================================
+AGGIORNAMENTO V85 — PERGOLA RIPRISTINATA IDENTICA A V79
+=================================================================
+La V85 preserva la formula coordinate attuale:
+X_INTERNA = X_GAMEPLAY + 30
+Y_INTERNA = Y_GAMEPLAY
+
+La pergola è stata ripristinata esattamente al footprint della reale V79:
+- gameplay X 55.0 -> 67.2
+- gameplay Y 30.35 -> 37.10
+- interno X 85.0 -> 97.2
+- interno Y 30.35 -> 37.10
+
+Nota obbligatoria: non usare le estensioni V80/V81/V82/V83/V84 come riferimento per la pergola. Il riferimento pergola valido è V79.
+
+DA TENERE OBBLIGATORIAMENTE AGGIORNATO
+
+
+================================================================================
+AGGIORNAMENTO V86 — PERGOLA DUE LAYER
+================================================================================
+La formula coordinate resta invariata:
+X_INTERNA = X_GAMEPLAY + 30
+Y_INTERNA = Y_GAMEPLAY
+
+Pergola V86:
+- Coordinate gameplay: X 55.0 .. 67.2 / Y 29.35 .. 38.10
+- Coordinate interne:  X 85.0 .. 97.2 / Y 29.35 .. 38.10
+- Quota visiva: z = 1.30
+
+Motivo del cambio:
+La pergola V85/V79 era il riferimento corretto. In V86 viene mantenuto quel metodo, ma con footprint piu' largo di un blocco a nord e un blocco a sud e con resa a due layer:
+1) rete metallica continua e protetta;
+2) foglie/fiori con buchi organici che NON cancellano la rete.
+
+DA TENERE OBBLIGATORIAMENTE AGGIORNATO
+
+
+=================================================================
+AGGIORNAMENTO V87 — PERGOLA PROTECTED MESH
+=================================================================
+La formula coordinate resta invariata:
+X_INTERNA = X_GAMEPLAY + 30
+Y_INTERNA = Y_GAMEPLAY
+
+La pergola attuale resta nel footprint V86:
+- gameplay X 55..67.2
+- gameplay Y 29.35..38.10
+- interno X 85..97.2
+- z circa 1.30
+
+V87 non modifica coordinate, mappa o collisioni. Corregge solo il disegno interno della pergola:
+- rete metallica protetta;
+- buchi piccoli e grandi solo nel fogliame;
+- nessuna nuova geometria o nuovo sprite.
+
+DA TENERE OBBLIGATORIAMENTE AGGIORNATO
+
+
+================================================================================
+AGGIORNAMENTO V88 — PERGOLA UNA RETE + BARCA DI PROFILO
+================================================================================
+
+V88 non modifica la formula coordinate:
+
+X_INTERNA = X_GAMEPLAY + 30
+Y_INTERNA = Y_GAMEPLAY
+
+Nessuna nuova coordinata di mappa e' stata aggiunta in V88.
+La patch interviene solo su:
+- disegno interno della pergola nel footprint gia' definito;
+- sprite asset `lake_rowboat.png`;
+- parametri dello sprite barchetta del lago.
+
+Coordinate/proprietà rilevanti:
+- Pergola: footprint invariato rispetto V86/V87, gameplay X 55..67.2 / Y 29.35..38.10.
+- Barca lago: gameplay circa X 99 / Y 42, interno circa X 129 / Y 42.
+
+Regola da rispettare:
+- La rete della pergola non deve mai essere bucata dai buchi del fogliame.
+- Le coordinate gameplay fornite dall'utente restano l'unica fonte per piazzamenti futuri.
+
+DA TENERE OBBLIGATORIAMENTE AGGIORNATO
+
+
+AGGIORNAMENTO V89
+-----------------
+La formula coordinate resta invariata:
+    X_INTERNA = X_GAMEPLAY + 30
+    Y_INTERNA = Y_GAMEPLAY
+
+La V89 non modifica mappe o coordinate. Interviene solo su:
+- ottimizzazione pergola dentro il footprint gia' mappato gameplay X 55..67.2, Y 29.35..38.10; interno X 85..97.2;
+- sprite barchetta lago al centro del lago segreto, gameplay X 99 / Y 42, interno X 129 / Y 42.
+
+Da tenere aggiornato: eventuali futuri spostamenti di pergola/barca devono essere registrati qui.
+
+
+AGGIORNAMENTO V90
+-----------------
+La formula coordinate resta invariata:
+    X_INTERNA = X_GAMEPLAY + 30
+    Y_INTERNA = Y_GAMEPLAY
+
+La V90 non modifica coordinate, mappe, footprint o piazzamenti.
+Interviene solo sul modo in cui la pergola gia' mappata viene scansionata/renderizzata:
+- footprint pergola invariato: gameplay X 55..67.2 / Y 29.35..38.10;
+- interno invariato: X 85..97.2 / Y 29.35..38.10;
+- nessun nuovo pino, nessun nuovo asset, nessuna nuova collisione.
+
+Nota obbligatoria:
+- Eventuali artefatti di bordo della pergola non vanno corretti cambiando coordinate o mappa, ma regolando bbox/margini/step del renderer pergola.
+
+DA TENERE OBBLIGATORIAMENTE AGGIORNATO
+
+================================================================================
+AGGIORNAMENTO V91 — FOREST VARIANTS + GROUND CLEANUP
+================================================================================
+Base reale: PERLA1_V90_PERGOLA_EDGE_QUALITY_FIX_LOCAL.
+Interventi mirati:
+- rimozione deterministica di 1/3 degli sprite bassi a terra (pigne, aghi, ciuffi d'erba) nella pineta storica ovest e nella pineta2 ovest col masso;
+- rimozione deterministica di metà delle sole pigne nella pineta est / area CASA;
+- aggiunta di tamerici non bloccanti lungo tutti i muri del campo nord-est sopra la pineta CASA;
+- aggiunta di 3 varianti sprite pino e 3 varianti sprite ciuffi d'erba, distribuite deterministicamente fra gli sprite già presenti senza spostare coordinate/collisioni;
+- rimozione mirata del cespuglio più vicino alla coordinata gameplay X 54.60 / Y 18.14;
+- preservata integralmente la pergola V90, la barca lago, la mappa, i percorsi, i tetti Sloped Roof Casting e il mobile optimizer.
+Metodo corretto da mantenere: riduzioni e varianti devono essere post-processing deterministico sugli sprite già generati, non refactor della mappa, non spostamento di coordinate, non cancellazioni larghe.
+Errori da evitare: non ridurre pini, non toccare sentieri/porte, non usare random runtime, non cambiare roadMask/fMap per effetti visivi, non modificare la pergola ora approvata.
+
+
+V91: rimozione cespuglio richiesta
+- Coordinata gameplay indicata: X 54.60 / Y 18.14.
+- Formula ancora valida: X_INTERNA = X_GAMEPLAY + 30, Y invariata.
+- Target interno: X 84.60 / Y 18.14.
+- La rimozione deve cercare solo uno sprite coerente tipo cespuglio/bush vicino al target, non muri, pini, tamerici, cartelli o elementi narrativi.
+
+DA TENERE OBBLIGATORIAMENTE AGGIORNATO
+
+
+V91 asset variant mapping
+- Pini: tex 9 originale, tex 85 pine_variant_0.png, tex 86 pine_variant_1.png, tex 87 pine_variant_2.png.
+- Erba: tex 12/30/31 originali, tex 88 grass_variant_0.png, tex 89 grass_variant_1.png, tex 90 grass_variant_2.png.
+- Questi cambi sono varianti visuali: non modificano coordinate, collisioni, roadMask o objectBlock.
+
+DA TENERE OBBLIGATORIAMENTE AGGIORNATO
+
+
+================================================================================
+AGGIORNAMENTO V92 — ATTENZIONE AI NOMI KIND E ALLE VARIANTI
+================================================================================
+La formula coordinate resta invariata:
+X_INTERNA = X_GAMEPLAY + 30
+Y_INTERNA = Y_GAMEPLAY
+
+Nota V92:
+I kind italiani come `pineta` e `pineta2` NON indicano un pino individuale. Non usare la parola/frammento
+`pine` per selezionare i pini: `pineta` contiene `pine` e può corrompere cartelli, massi e litter.
+Usare sempre helper sicuri o texture originali controllate.
+
+DA TENERE OBBLIGATORIAMENTE AGGIORNATO
+
+
+================================================================================
+V93 - PINETA SIGN / ARCH PRUNE / SAFE PINETA2 PINE REDUCTION
+================================================================================
+Coordinate V93: cartello PINETA richiesto a gameplay X 36.83 / Y 28.33 -> interno X 66.83 / Y 28.33. Arco floreale unico richiesto a gameplay X 51.22 / Y 51.09 -> interno X 81.22 / Y 51.09. Formula ancora valida: X_INTERNA = X_GAMEPLAY + 30, Y invariata. DA TENERE OBBLIGATORIAMENTE AGGIORNATO.
+
+
+================================================================================
+V94 — COORDINATE SHORTCUT SPIAGGIA E RIMOZIONE SPRITE
+================================================================================
+Formula ancora valida:
+    X_INTERNA = X_GAMEPLAY + 30
+    Y_INTERNA = Y_GAMEPLAY
+
+Chiusura due corridoi stretti spiaggia -> nord:
+- Corridoio ovest: gameplay X 1 / Y 53..54 -> interno X 31 / Y 53..54.
+- Corridoio est: gameplay X 78 / Y 51..52 -> interno X 108 / Y 51..52.
+
+Rimozioni sprite target:
+- Tamerice richiesto gameplay X 48.34 / Y 39.75 -> interno X 78.34 / Y 39.75; rimosso target reale vicino `tamarisk_scattered`, tex 55, circa gameplay X 48.40 / Y 40.20.
+- Vaso richiesto gameplay X 47.20 / Y 39.76 -> interno X 77.20 / Y 39.76; rimosso target reale vicino tex 14, circa gameplay X 47.50 / Y 40.80.
+- Vaso richiesto gameplay X 50.94 / Y 43.06 -> interno X 80.94 / Y 43.06; rimosso target reale vicino tex 34, circa gameplay X 50.90 / Y 43.20.
+
+Regola nuova di consegna: niente cartella patch-only/`SOLO_FILE_DA_SOSTITUIRE...` negli ZIP finali PERLA1. Bastano TXT aggiornati + cartella gioco completa.
+
+DA TENERE OBBLIGATORIAMENTE AGGIORNATO
+
+
+================================================================================
+NOTA PACKAGING V94 REPACK
+================================================================================
+La regola coordinate resta invariata. Nota operativa: lo ZIP finale non deve contenere
+cartelle patch-only, ma deve conservare i file root di avvio/server del pacchetto.
+
+
+================================================================================
+AGGIORNAMENTO V101 — CAMPER FULL WALLS + DOOR VISIBILITY
+================================================================================
+Base reale usata: PERLA1_V100_CAMPER_ROOM_OCCLUDER_FESTOON_FIX_LOCAL.zip.
+Build prodotta: PERLA1_V102_CAMPER_FESTOON_DDA_OCCLUSION_LOCAL.zip.
+
+Scopo:
+- correggere la visibilita' dei festoni camper rendendoli visibili anche da fuori stanza
+  quando il giocatore guarda attraverso la porta/apertura reale, ma non attraverso i muri.
+- evitare sia il sempre-visibile fuori contesto della V99 sia il gate troppo rigido della V100.
+
+Interventi:
+- rialzate visualmente tutte le pareti della stanza camper a wallHeightMap 2.0
+  lungo il perimetro gameplay X 52..77 / Y 37..57, solo sulle celle muro esistenti.
+- nessuna modifica a map, collisioni, roadMask o objectBlock.
+- aggiunto gate stabile world-space/porta:
+  * dentro stanza camper => festoni visibili;
+  * fuori stanza => festoni visibili solo se il player guarda verso porta/centro e la linea
+    verso porta + centro festoni e' libera su map[][];
+  * se un muro sta in mezzo => layer nascosto;
+  * oltre distanza massima/fade => layer nascosto progressivamente.
+- corde/lucine restano stabili dentro il gate; bandierine/pali restano piu' severi come elementi opachi.
+
+Regole packaging confermate:
+- ZIP finale con cartella gioco completa, launcher/server root e TXT aggiornati.
+- niente cartella SOLO_FILE_DA_SOSTITUIRE / patch-only.
+
+Non toccati:
+- asset PNG, collisioni, objectBlock, wall segment, sprite chain, pergola, barca,
+  tetti Sloped Roof Casting, pavimenti morbidi, mobile optimizer, V94 shortcut, palma gigante.
+
+
+================================================================================
+AGGIORNAMENTO V102 — CAMPER FESTOON DDA OCCLUSION
+================================================================================
+Build: PERLA1_V102_CAMPER_FESTOON_DDA_OCCLUSION_LOCAL
+Base reale: V101.
+
+Intervento: revisione pulita del sistema festoni camper. Rimossi dal ramo attivo i gate
+vecchi V99/V100/V101: niente più lucine/corde sempre visibili, niente gate dentro stanza,
+niente obbligo di guardare la porta. Tutte le parti del festone — corde, lampadine,
+bandierine e pali — seguono la stessa regola: distanza utile + linea di vista reale su
+map[][].
+
+Sistema tecnico: introdotto DDA/supercover world-space (`camperFestoonGridLineBlockedV102`)
+che attraversa le celle tra player e punto festone; se incontra `map[y][x] > 0`, quel
+elemento non viene disegnato. Il caso angolo/corner controlla anche le celle laterali
+per evitare buchi diagonali tra muri. Il controllo non usa più ZBuffer/WallTopBuffer come
+criterio primario di visibilità dei festoni.
+
+Preservato: rialzo visuale completo delle pareti stanza camper su `wallHeightMap` a 2.0,
+senza modificare map/collisioni/roadMask/objectBlock; palma gigante a gameplay X 75.06 /
+Y 20.27; pergola V90; barca lago; tetti Sloped Roof Casting; mobile optimizer; pavimenti
+morbidi; scorciatoie V94 chiuse.
+
+Packaging: ZIP finale con cartella gioco completa + launcher/server root + TXT aggiornati;
+nessuna cartella patch-only.
+
+
+================================================================================
+V109 — ROOF SOFFIT RED LINE FIX SU BASE V106 REALE
+================================================================================
+Build: PERLA1_V109_ROOF_SOFFIT_RED_LINE_FIX_LOCAL.zip
+Base reale: PERLA1_V106_ROOF_SPAN_PREMIX_LOCAL.zip. V107 e V108 sono scartate: non vanno usate come base.
+Intervento: preservata integralmente la geometria/pendenza V106 e lo span rendering/fog premiscelato V106. Correzione mirata della riga rossa solo nel layer modern cover soffit/ceiling (`drawModernCoverCeilingSegment`), sostituendo il soffit rosso visibile con una tinta d'ombra neutra/calda. Nessuna tinta azzurra applicata al roof plane, nessun cambio a near/far/gable/eave/ridge, nessun cambio a map/collisioni/roadMask/objectBlock/asset.
+Metodo aggiornato: se compare una linea di bordo, identificare prima il layer reale che la disegna; vietato correggerla colorando la falda o aggiungendo nuovi fog/overlay.
+Packaging: cartella gioco completa + launcher/server root + TXT aggiornati; niente cartella patch-only.
+
+
+================================================================================
+AGGIORNAMENTO V114 — WALL TOP TEXTURE LINE FIX
+================================================================================
+Build: PERLA1_V115_MODERN_COVER_FOG_FUSION_LOCAL
+Base reale: V112, non V113.
+Nota importante: V113 è bocciata/scartata e non va usata come base; le micro-fasce gable/front-edge non erano il colpevole corretto della riga residua.
+Intervento V114: preserva V106 span/fog, V111 seam vanish e V112 self-depth. Non tocca falda, pendenza, gable cap, asset, map, collisioni, roadMask, objectBlock, pergola o festoni. Corregge solo la top-row della texture dei muri moderni sotto tetto, sostituendo i primi 1-2 pixel visibili del muro con righe interne della stessa texture, per eliminare la linea di fine muro senza disegnare una nuova maschera colorata.
+
+
+================================================================================
+AGGIORNAMENTO V115 — MODERN COVER FOG FUSION / RIGA RESIDUA TETTO
+================================================================================
+Base reale: V114, che ripartiva da V112 reale e non da V113 bocciata.
+Scopo: investigazione/fix mirato del nuovo indiziato forte della riga residua sotto tetto:
+il layer drawModernCoverCeilingSegment / modern cover ceiling-soffit, che poteva disegnare
+un bordo/rect non foggato correttamente e quindi restare visibile anche oltre la nebbia.
+
+Intervento:
+- NON toccati roof plane, falda, gable cap, pendenza, RoofSelfDepthBuffer V112, span rendering V106.
+- NON reintrodotte funzioni V113 bocciate.
+- drawModernCoverCeilingSegment ora premiscela il suo colore soffit con lo stesso fog V106
+  tramite roofPremixedFogColorV106(rawBase,rowDist), invece di restare come rect raw/unfogged.
+- Rimossa la seconda passata autonoma del top pixel: il bordo superiore del cover viene fuso
+  nel rettangolo soffit già foggato, senza linea separata.
+- Conservato V114 top-row muro moderno perché ha ridotto parte del difetto senza toccare i tetti.
+
+Regola di metodo confermata:
+- pergola e festoni sono fuori cantiere.
+- niente patch-only nello ZIP.
+- preservare launcher/server root.
+- ZIP finale = cartella gioco completa + TXT + launcher/server root.
+================================================================================
+
+
+================================================================================
+AGGIORNAMENTO V116 — NOTA COORDINATE
+================================================================================
+La V116 non introduce nuove coordinate gameplay.
+Intervento solo renderer: overlap owner-aware fra modern cover soffit e muri moderni.
+Resta valida la formula generale: X_INTERNA = X_GAMEPLAY + 30, Y invariata.
+================================================================================
+
+
+================================================================================
+NOTE COORDINATE / V117
+================================================================================
+V117 non aggiunge coordinate gameplay nuove. Resta valida la regola: X_INTERNA = X_GAMEPLAY + 30, Y invariata.
+L'intervento V117 è renderer-only su muri moderni reception/bagni e non modifica mappa, collisioni o posizionamenti.
+
+
+================================================================================
+CHECKPOINT V121 — CANOPY DEPTH FIX / NO SKY RECTS
+================================================================================
+Base reale: PERLA1_V120_CANOPY_OCCLUSION_NO_SKY_RECTS_LOCAL.
+Scopo: risolvere il problema storico delle tettoie non moderne vicino a reception/bar/yoga che venivano coperte da muri/tetti lontani e facevano sembrare i pali/colonne davanti alla tettoia da distanza, senza reintrodurre i rettangoli semi-trasparenti nel cielo.
+Intervento: mantenuto disegno conservativo del ceiling segment nel floor pass, ma raccolti anche i segmenti non moderni in una lista differita V121. Dopo wallcasting e roof layer, `drawDeferredCanopySegmentsV121()` ridisegna solo i pezzi di tettoia realmente davanti, usando depth test contro `ZBuffer` e `RoofSelfDepthBufferV112`. Il full-width ceiling fog resta disabilitato: nessun `fillRect(0, ceilY, screenW, bandH)` per tettoie.
+Clipping pali: `ceilingSpriteClipY()` mantiene la protezione per arredi interni sotto roof, ma forza il clipping per colonne/pali tettoia (`tex 18`, kind `_column`/`canopy_column`), così i pali non spuntano davanti alla copertura da lontano.
+Preservati: V117 tetti/giunzione, V106 span rendering/fog premix, V112 self-depth, V114/V115/V116 fix tetti, V118 P/rimozioni/statua/input, V119 muro pergola rialzato, V120 no sky rect, pergola V90, festoni V105. Nessuna modifica ad asset PNG, map, collisioni, roadMask, objectBlock, pavimenti, barca, mobile optimizer.
+Packaging: cartella gioco completa + launcher/server root + TXT aggiornati; nessuna cartella patch-only.
+
+
+================================================================================
+AGGIORNAMENTO V122 — FINAL TOUCHES COCKTAIL / PALMA / MURO PERGOLA
+================================================================================
+Base reale: PERLA1_V121_CANOPY_DEPTH_FIX_LOCAL.
+Build prodotta: PERLA1_V122_FINAL_TOUCHES_COCKTAIL_PALM_WALL_LOCAL.
+
+Interventi applicati:
+- Spostato il cartello target vicino a gameplay X 74.18 / Y 33.56 alla nuova posizione gameplay X 74.19 / Y 36.60. Target reale trovato: tex 71, kind story_barbecue_sign, prima circa gameplay X 74.35 / Y 33.85.
+- Aggiunto nuovo asset PNG 64x64 RGBA giant_cocktail.png e registrato nel manifest come tex 91.
+- Aggiunto sprite decorativo gigante cocktail sopra la tettoia del bar, al centro del gazebo: gameplay X 15.35 / Y 10.90, kind giant_cocktail_bar_canopy_v122, non bloccante, allowRoof true.
+- Aggiunta palma forzata a gameplay X 69.28 / Y 8.45 anche se il floor non è erba. Nel runtime il punto è floor ghiaia/parcheggio e roadMask era 1: per evitare regressioni di passaggio/road, la palma è stata piazzata non bloccante, kind palm_forced_no_grass_v122.
+- Rimosso il tamerice target a gameplay X 49.94 / Y 36.31. Target reale rimosso: tex 55, kind barbecue_avenue_tamarisk_v71, circa gameplay X 49.50 / Y 36.50, distanza 0.479.
+- Esteso il tratto di muro cespuglio alto vicino alla pergola fino al nuovo endpoint richiesto gameplay X 50.60 / Y 31.31. L’intervento alza solo celle muro già esistenti map==1 a wallHeightMap >= 2.0; nessuna modifica a map, collisioni, roadMask o objectBlock. Celle coinvolte nel probe: 12, di cui diverse nuove nella fascia gameplay X 49..53 / Y 30..31.
+
+Preservazioni obbligatorie:
+- Tettoie V121 preservate.
+- No sky rect V120 preservato.
+- Muro pergola già rialzato V119 preservato ed esteso.
+- Fix P/rimozioni/statua/input V118 preservati.
+- Tetti/giunzione V117 e V106/V112/V114/V115/V116 preservati.
+- Pergola V90 preservata.
+- Festoni camper V105 preservati.
+- Nessuna cartella patch-only nello ZIP finale; packaging solo gioco completo + launcher/server root + TXT aggiornati.
+
+Check eseguiti:
+- node --check OK su script estratto.
+- Runtime mock/probe OK.
+- Asset manifest: 100 file PNG referenziati, missing 0.
+- PNG locali: 107, tutti 64x64 RGBA.
+- Mappa runtime: 150x88.
+- Sprite runtime: 2531.
+- roofSegments: 2.
+- Cartello spostato confermato a gameplay X 74.19 / Y 36.60.
+- Cocktail tex 91 confermato a gameplay X 15.35 / Y 10.90.
+- Palma tex 32 confermata a gameplay X 69.28 / Y 8.45.
+- Tamerice target rimosso: il più vicino rimasto al target dista oltre 7 tile.
+
+
+================================================================================
+AGGIORNAMENTO V123 — COCKTAIL SOPRA TETTOIA + TRIM MURO PERGOLA
+================================================================================
+Base reale: PERLA1_V122_FINAL_TOUCHES_COCKTAIL_PALM_WALL_LOCAL.
+Build prodotta: PERLA1_V123_COCKTAIL_ABOVE_CANOPY_WALL_TRIM_LOCAL.
+
+Motivo della patch:
+- Dopo V122 l’utente ha confermato che il muro cespuglio vicino alla pergola era stato alzato un blocco di troppo verso ovest: va ridotto di 1 blocco, senza toccare il tratto buono già rialzato.
+- Il cocktail gigante creato in V122 nasceva sotto/dentro la tettoia del bar perché era stato piazzato come normale sprite billboard con anchor/groundSink da pavimento e cMap/underRoof; non garantiva una quota visiva sopra la copertura.
+
+Interventi V123:
+1) Muro pergola:
+- La funzione di estensione del muro alto vicino alla pergola mantiene la logica conservativa: alza solo celle già esistenti map==1, senza creare muri e senza modificare collisioni, roadMask o objectBlock.
+- Endpoint ovest corretto: V122 arrivava fino a gameplay X 50.60 / Y 31.31; V123 riduce di 1 tile verso est e usa endpoint gameplay X 51.60 / Y 31.31.
+- Il tratto già corretto V119/V122 rimane alto; viene evitato solo l’ultimo blocco troppo a ovest.
+
+2) Cocktail gigante sopra tettoia bar:
+- L’asset giant_cocktail.png tex 91 viene preservato.
+- Non viene più inserito come normale sprite di pavimento/cMap.
+- Il cocktail viene renderizzato tramite layer proiettato dedicato drawGiantCocktailAboveCanopyV123(), con quota z=2.18, dopo il replay/depth delle tettoie V121.
+- Questo lo fa nascere sopra la tettoia del bar invece che sotto/dentro.
+- Rimane decorativo: zero collisione, zero objectBlock, nessuna modifica alla mappa.
+- Rispetta un controllo ZBuffer prudente contro muri solidi davanti, ma non viene più assorbito dalla tettoia.
+
+Preservazioni obbligatorie:
+- V121 tettoie depth fix preservato.
+- V120 no sky rect preservato.
+- V119 muro pergola rialzato preservato, con solo trim del blocco ovest extra.
+- V118 P/rimozioni/statua/input preservati.
+- V117 tetti/giunzione preservati.
+- V105 festoni preservati.
+- V90 pergola preservata.
+- Asset PNG già esistenti preservati; nessun nuovo PNG in V123.
+- Packaging corretto: gioco completo + launcher/server root + TXT aggiornati; nessuna cartella patch-only.
+
+Check previsti/eseguiti in consegna:
+- node --check OK.
+- Zip integrity OK.
+- Manifest PNG refs invariato rispetto a V122: 100 refs, missing 0.
+- PNG locali invariati rispetto a V122: 107.
+- Sprite runtime atteso: 2530 circa, perché il cocktail non è più uno sprite world-list ma layer proiettato; rimangono la palma V122, la statua V118 e la rimozione tamerice V122.
+- Cocktail V123 confermato come layer sopra tettoia, non come sprite sotto cMap.
+- Muro pergola corretto con endpoint V123 a gameplay X 51.60 / Y 31.31.
+
+
+================================================================================
+CHECKPOINT V124 — COCKTAIL ROOF-ANCHORED / NO FLOATING HUD MARKER
+================================================================================
+Base reale: PERLA1_V123_COCKTAIL_ABOVE_CANOPY_WALL_TRIM_LOCAL.
+Scopo: correggere la regressione V123 del cocktail gigante sopra la tettoia del bar, che era stato trasformato in un layer proiettato troppo alto e quasi sempre visibile, risultando un oggetto volante nel cielo.
+Intervento: il cocktail resta asset locale giant_cocktail.png tex 91 e non torna nella lista sprite/world-blocking, ma ora è renderizzato come decorazione roof-anchored: base a quota tettoia zBase 1.36, dimensione ridotta, ombra di contatto minima, gate distanza/FOV e under-canopy gate. Non è più a z=2.18 e non viene più disegnato come marker alto.
+Visibilità: sparisce oltre distanza/fade utile, non viene disegnato se il player è sotto la tettoia del bar, e non altera collisioni/objectBlock.
+Preservati: muro pergola corretto V123, asset cocktail tex 91, V121 tettoie depth fix, V120 no sky rect, V117 tetti/giunzione, V105 festoni, pergola V90, mappa/collisioni/asset.
+Packaging: cartella gioco completa + launcher/server root + TXT aggiornati; nessuna cartella patch-only.
+
+
+================================================================================
+V126B — REPACK 7-ZIP SAFE + LAUNCHER POWERSHELL ROBUSTO
+================================================================================
+Questa variante non modifica il codice gioco della V126: mantiene la torre 2x2,
+la rimozione della statua storica, la statua nuova V118 preservata, il cocktail
+V125 come wall decal e tutti i sistemi V121/V117/V105/V90.
+
+Motivo della variante: alcuni ambienti Windows/7-Zip hanno segnalato problemi
+all'estrazione o rumore nel launcher PowerShell con eccezioni di Write quando il
+browser cancella richieste HTTP. Il pacchetto V126B è stato ricreato con Info-ZIP
+(-X, senza attributi extra) e il server PowerShell ora ignora le disconnessioni
+benigne del browser durante le Write.
+
+Regola: se si prosegue dalla V126, usare preferibilmente questa V126B come base
+di consegna/packaging, perché il gioco è lo stesso ma il pacchetto e il launcher
+sono più robusti.
+
+
+================================================================================
+COORDINATE TORRE V127
+================================================================================
+Formula coordinate invariata:
+X_INTERNA = X_GAMEPLAY + 30
+Y_INTERNA = Y_GAMEPLAY
+
+Torre bagnino V127:
+- base interna: X70..71 / Y34..35;
+- base gameplay: X40..41 / Y34..35;
+- sostituisce la statua storica vicino pergola/camper;
+- NON sostituisce la statua nuova V118 vicino bar;
+- base richiesta e preservata: 2x2 blocchi;
+- altezza visuale V127: 7.35.
+
+
+================================================================================
+AGGIORNAMENTO COORDINATE V128 — TORRE BAGNINO
+================================================================================
+La torre bagnino resta al posto della statua storica vicino pergola/camper.
+Base torre: 2x2 celle interne X70..71 / Y34..35.
+Coordinate gameplay equivalenti: X40..41 / Y34..35, secondo formula obbligatoria X_INTERNA = X_GAMEPLAY + 30, Y invariata.
+Statua nuova V118 area bar non va confusa con la statua storica: deve restare preservata.
+V128 non sposta la torre e non modifica la base: corregge solo clipping/visibilita' rispetto a tetti/ceiling e smooth projection.
+================================================================================
+
+
+================================================================================
+COORDINATE IMPORTANTI V129 — TORRE BAGNINO
+================================================================================
+Formula sempre valida:
+    X_INTERNA = X_GAMEPLAY + 30
+    Y_INTERNA = Y_GAMEPLAY
+
+Torre bagnino:
+    base interna: X70..71 / Y34..35
+    base gameplay: X40..41 / Y34..35
+    origine storica: sostituisce la vecchia marble_statue vicino pergola/camper
+    statua nuova V118 area bar: da non toccare
+
+Tetto/garitta V129:
+    roofSegment kind: tower_lifeguard_roof_v129
+    ownerId: 10
+    footprint logico: sulla base torre 2x2 con overhang 0.34
+    wallTopZ: 7.35
+    eaveZ: circa 7.41
+    ridgeZ: circa 8.21
+
+Nota: il tetto è roofSegment elevato, non sprite/overlay; deve rispettare i buffer e non deve essere usato come riferimento per collisioni o roadMask.
+
+
+================================================================================
+AGGIORNAMENTO V130 — TOWER ROOF LOCK / SELF OCCLUSION FIX
+================================================================================
+Build: PERLA1_V130_TOWER_ROOF_LOCK_SAFE
+Base reale: PERLA1_V129_TOWER_ROOF_SAFE
+
+Scopo:
+- Correggere il tetto/garitta della torre bagnino V129 che compariva/scompariva separatamente dal fusto.
+- Impedire alla falda/testata interna o dietro del tetto torre di pitturarsi sopra il corpo della torre.
+- Preservare integralmente torre V128/V129, base 2x2, altezza 7.35, statua nuova bar, cocktail decal, canopy V121, tetti reception/bagni e sistemi storici.
+
+Interventi tecnici:
+- Aggiunto TOWER_ROOF_LOCK_PATCH_V130.
+- Aggiunto buffer leggero TowerVisibleColumnBufferV130: il tetto torre viene considerato solo se il corpo torre è visibile nello stesso frame.
+- Aggiunto shouldConsiderRoofSegmentV130(): per i roof normali resta il culling storico; per roof torre usa body-lock + limite dedicato TOWER_ROOF_MAX_DIST_V130.
+- Aggiunto roofMaxDistForSegmentV130(): il tetto torre non usa più il limite dist=48 standard che lo faceva sparire prima del fusto.
+- Aggiunto towerRoofGableCapFacesCameraV130(): per il tetto torre viene candidata solo la testata/faccia realmente rivolta alla camera; reception/bagni mantengono la regola storica delle due testate.
+- Stretta la same-owner guard del tetto torre con TOWER_ROOF_SELF_WALL_EPS_V130: il tetto non può più disegnare liberamente la falda dietro sopra il proprio fusto.
+- Il roof tower continua a leggere ZBuffer/CeilingDepthBuffer/RoofSelfDepthBuffer; non scrive buffer globali invasivi e non cambia WallTopBuffer/WallOwnerBuffer della scena.
+
+Cose NON toccate:
+- Nessun nuovo sprite, overlay o painter algorithm.
+- Nessun aumento del tower-peek maxDist 44.
+- Nessuna modifica alla posizione/altezza/base/texture della torre.
+- Nessuna modifica a roadMask/collisioni.
+- Nessuna modifica a V121 canopy, V117 roof merge, V106/V112 roof rendering, pergola V90, festoni V105.
+
+Risultato atteso:
+- Il tetto appare e scompare insieme al corpo torre, non in ritardo/anticipo.
+- Il tetto interno/dietro non copre più il fusto della torre.
+- Il tetto resta visibile dove la torre è visibile e c'è cielo libero.
+- Il tetto resta nascosto da reception/bagni/tettoie quando sono davanti.
+
+
+================================================================================
+AGGIORNAMENTO V131 — TOWER ROOF BODY MASK SAFE
+================================================================================
+Base reale: PERLA1_V130_TOWER_ROOF_LOCK_SAFE.
+Intervento: aggiunta maschera screen-space del corpo torre per impedire al roof layer della torre di pitturarsi sopra cabina/fusto.
+La torre resta 2x2, altezza 7.35, posizione statua storica vicino pergola/camper. Tetto torre preservato come roofSegment elevato, ma clippato contro TowerBodyTop/Bottom/Dist buffer V131.
+Preservati V128 guard, V121 tettoie, V117/V106 tetti moderni, cocktail wall decal V125, statua nuova bar, niente sprite/overlay/painter.
+================================================================================
+
+
+================================================================================
+V133 — TOWER ROOF FASCIA DEPTH LOCK / RAW TOP + WARM FOG
+================================================================================
+Base reale: PERLA1_V132_TOWER_ROOF_FASCIA_ANCHOR_SAFE.
+Scopo: correggere due residui della fascia/gronda V132 senza toccare falde, testate,
+corpo torre, tetti reception/bagni o tettoie V121.
+
+Interventi:
+- PERLA_BUILD_ID aggiornato a PERLA1_V133_TOWER_ROOF_FASCIA_DEPTH_LOCK_SAFE.
+- Aggiunto TOWER_ROOF_FASCIA_DEPTH_LOCK_PATCH_V133.
+- La fascia della torre ora usa anche TowerBodyRawTopYBufferV133, cioè il top reale
+  non clippato della torre, per evitare la riga marrone a y=0 quando la cima della
+  torre esce sopra lo schermo.
+- La fascia viene saltata se il raw top reale è fuori/attaccato al bordo superiore:
+  niente più banda disegnata sul bordo del canvas.
+- La fascia non usa più il fog pieno azzurro V106: usa towerRoofFasciaFogColorV133
+  con fog limitato e caldo, così da lontano non appare come alone azzurro/trasparente.
+- La fascia resta compatta e controllata; falde/testate continuano a usare body mask
+  severa V131/V132.
+
+Preservato:
+- torre 2x2 altezza 7.35 al posto della statua storica vicino pergola/camper;
+- statua nuova vicino bar preservata;
+- cocktail V125 come wall decal;
+- V128 roof/ceiling guard;
+- V131 body mask;
+- V129 roofSegment elevato;
+- tetti reception/bagni, canopy V121, pergola V90, festoni V105;
+- nessun overlay, sprite o painter algorithm.
+
+
+================================================================================
+AGGIORNAMENTO V134 — TOWER ROOF UNDERSIDE / EAVE SAFE
+================================================================================
+Base reale: V133. Intervento mirato: sostituita la fascia/gronda screen-space autonoma V132/V133 con underside/eave del tetto torre depth-aware e fog-coerente. Le falde/testate restano severe e body-mask V131 rimane attiva; il nuovo lato inferiore del tetto è disegnato solo nell'anello di overhang, usa roofPremixedFogColorV106, rispetta CeilingDepthBuffer/RoofSelfDepthBuffer/ZBuffer e non scrive WallTopBuffer/WallOwnerBuffer. Non toccati: altezza torre 7.35, base 2x2, posizione statua storica pergola/camper, statua nuova bar, cocktail wall decal, V128 guard, V121 canopy, tetti reception/bagni, pergola V90, festoni V105, skyline/area casa.
+
+
+================================================================================
+AGGIORNAMENTO V135 — TOWER ROOF SIDE THICKNESS SAFE
+================================================================================
+Base reale: PERLA1_V134_TOWER_ROOF_UNDERSIDE_EAVE_SAFE.
+Scopo: correggere il residuo del tetto torre che, dopo V134, aveva underside fog-coerente ma non ancora un vero fianco/spessore laterale. La V135 mantiene la torre bagnino 2x2 approvata, altezza 7.35, posizione al posto della statua storica vicino pergola/camper, tetto roofSegment V129, guard V128 e body mask V131.
+Intervento: aggiunti TOWER_ROOF_SIDE_THICKNESS_PATCH_V135, drawTowerRoofSideThicknessV135(), towerRoofSideThicknessPixelVisibleV135(), towerRoofSideThicknessEdgesV135(). L'underside V134 diventa più severo sulla facciata (overlap dedicato V135), mentre il raccordo visivo è affidato a un fianco/spessore esterno depth-aware, foggato con roofPremixedFogColorV106 e limitato all'anello/perimetro del tetto torre.
+Preservato: tetti reception/bagni, tettoie V121, pergola V90, festoni V105, cocktail V125 wall decal, statua nuova bar, roadMask, skyline/casa e launcher/server. Nessuno sprite/overlay/painter algorithm.
+Check richiesti: node --check, runtime mock/drawWorld, asset refs missing 0, roofSegments 3, towerRoofSegments 1, towerCells 4, PNG 64x64 RGBA, zip integrity.
+
+
+================================================================================
+AGGIORNAMENTO V136 — TOWER INTEGRATED ROOF CAP SAFE
+================================================================================
+Base reale: PERLA1_V135_TOWER_ROOF_SIDE_THICKNESS_SAFE.
+Intervento: il tetto della torre bagnino non viene più registrato come roofSegment separato.
+Motivo: dopo V129-V135 il roofSegment torre, pur migliorato, restava fragile nei casi ravvicinati/tagliati dal bordo superiore perché veniva disegnato dopo il fusto e richiedeva maschere successive.
+Soluzione V136: roof-cap integrato nel render della torre, derivato dalle colonne visibili del fusto, con stesso rawTop, distanza, body visibility e guard ceiling/roof V128.
+Preservato: tower wallcasting 2x2, altezza 7.35, statua nuova bar, cocktail wall decal, reception/bagni roofSegments, canopy V121, pergola V90, festoni V105, roadMask/collisioni.
+Dettagli tecnici: registerTowerLifeguardRoofV129() resta presente ma con V136 attiva non pusha più il roofSegment torre; roofSegments tornano a 2 (reception + bagni). Nuove funzioni: nearestTowerCapBodyColumnV136(), towerIntegratedCapPixelVisibleV136(), drawIntegratedTowerRoofCapV136(). Il cap non scrive WallTopBuffer/WallOwnerBuffer e usa roofPremixedFogColorV106.
+Packaging: ZIP completo, nessuna cartella patch-only.
+================================================================================
+
+================================================================================
+AGGIORNAMENTO V137
+================================================================================
+Nessuna modifica alla conversione coordinate.
+La regola resta:
+    X_INTERNA = X_GAMEPLAY + 30
+    Y_INTERNA = Y_GAMEPLAY
+V137 interviene solo sul broadphase sprite del renderer, non su posizioni, mappa, collisioni o coordinate.
+
+
+================================================================================
+AGGIORNAMENTO V138F — SPRITE REBUILD NO SHADOW SAFE
+================================================================================
+Base reale: PERLA1_V137_SPRITE_BROADPHASE_SAFE.
+Intervento limitato agli asset PNG approvati dopo review V138E4. Nessuna modifica a mappa, collisioni, roadMask, objectBlock, tetti, tettoie, pergola, festoni, torre V136 o broadphase V137.
+
+Regola regina applicata: asset moderni usati solo se nominati e approvati; tutti gli altri restano storici V137, nella versione storica/no-shadow prevista dalla review.
+
+Asset manuali utente applicati senza cleanup aggressivo: stool.png, pot.png, pot_red.png, bush_flower.png, bush_dark.png, bush.png.
+Cartelli sign_bar.png e sign_pineta.png preservati originali.
+Palme animate: frame derivati dalla stessa sorgente per evitare trasformazioni fra palme diverse.
+V138E2 scartata: vietata rimozione globale dei bianchi interni; usare solo sagoma/alpha e asset manuali approvati.
+
+Check eseguiti: node --check OK, PNG 64x64 RGBA OK, asset manifest missing 0, ZIP integrity OK.
+
+
+================================================================================
+AGGIORNAMENTO V138G — SPRITE GROUND ANCHOR + PALETTE SAFE
+================================================================================
+Base reale: PERLA1_V138F_SPRITE_REBUILD_NO_SHADOW_SAFE.
+Scopo: correggere asset-side l'ancoraggio a terra degli sprite modificati e armonizzare fiori storici/tamerici senza introdurre ombre integrate.
+
+Regola tecnica: il motore ancora il rettangolo sprite 64x64; i nuovi asset no-shadow possono sembrare sospesi se la sagoma opaca finisce troppo alta. V138G abbassa il contenuto grafico dei PNG interessati in base al fondo opaco/solido (alpha alto), non in base ai pixel semitrasparenti/alone.
+
+Fiori storici senza vaso: non sono stati semplicemente desaturati/scuriti; è stata applicata una micro-armonizzazione con volume delicato, piccoli gradienti/highlight/ombre interne leggere e palette meno piena/contrastata, senza ombra a terra.
+Tamerici storici: sagoma e identità preservate, palette/foglia/contrasto ammorbiditi e ancoraggio corretto.
+
+Divieto confermato: niente rimozione globale del bianco interno; niente asset moderni non nominati; niente modifica a torre V136, broadphase V137, tetti, tettoie, pergola, festoni, mappe o collisioni.
+Check: node --check OK, PNG 64x64 RGBA OK, asset manifest missing 0, ZIP integrity OK.
+
+
+================================================================================
+AGGIORNAMENTO V138H — GLOBAL SPRITE GROUND ANCHOR + TAMARISK/POTS FIX
+================================================================================
+Base reale: PERLA1_V138G_SPRITE_GROUND_ANCHOR_PALETTE_SAFE.
+Interventi: audit ancoraggio su tutti gli asset usati come sprite billboard; riduzione considerevole dei vasi moderni; cleanup/zero runtime shadow per tamerici; rimozione mirata di 2 sprite sovrapposti vicino gameplay X 23.55 / Y 2.55.
+Coordinate rimozione: gameplay X 23.55 / Y 2.55 => interno X 53.55 / Y 2.55. Rimossi solo i target vicini filtrati per tex/kind; nessuna cancellazione larga.
+Regola asset: nessuna rimozione globale del bianco interno; nessun asset moderno non approvato; sign_bar e sign_pineta originali preservati.
+Preservati: torre integrata V136, broadphase V137, tetti, tettoie V121, pergola V90, festoni V105, mappa/collisioni/roadMask/objectBlock salvo rebuild coerente dopo la rimozione dei due sprite.
+Check: node --check OK, PNG 64x64 RGBA OK, asset manifest missing 0, ZIP integrity OK.
+
+
+================================================================================
+AGGIORNAMENTO V138I — POTS MICROFLORA DEPTH SAFE
+================================================================================
+Base reale: PERLA1_V138H_GLOBAL_ANCHOR_TAMARISK_POTS_FIX_SAFE.
+Interventi: vasi moderni ridotti ulteriormente; fiori storici senza vaso ridisegnati con micro-volume, linee interne, highlight/ombra delicata e più toni; ciuffi d'erba ridisegnati con lame e linee interne. Nessuna ombra a terra integrata, nessuna rimozione globale del bianco interno. Torre V136, broadphase V137, tetti, tettoie, pergola, festoni, mappa/collisioni/roadMask non toccati.
+Check: node --check OK, PNG 64x64 RGBA OK, asset manifest missing 0, ZIP integrity OK.
+
+
+================================================================================
+AGGIORNAMENTO V138J — SPRITE WORLD CLEANUP, SCALE, VARIANCE, MICROFLORA DEPTH
+================================================================================
+Base reale: PERLA1_V138I_POTS_MICROFLORA_DEPTH_SAFE.
+Interventi richiesti: rimozione sovrapposizioni sprite vicino gameplay X49.65/Y23.66 e X54.15/Y42.77; eliminazione cespugli/erba/fiori da piazzole/spazi terrosi; riduzione ulteriore dei vasi; repaint fiori molto più piccoli e differenziati per forma, non solo colore; repaint erbe con palette variate; varianza dimensionale per palme, tamerici e bush_dark; sostituzione totale del bush generico tex 7 con bush_dark/bush_flower; un solo banco da bar vicino al barman; tavolino sotto tettoia bar; sdraio con palette più profonda/ombre interne.
+Regole preservate: nessun asset moderno non approvato, sign_bar/sign_pineta originali, torre V136, broadphase V137, tetti, tettoie, pergola, festoni, mappa/collisioni/roadMask salvo rebuild coerente dopo rimozioni sprite mirate.
+Check obbligatori: node --check, runtime mock targets, PNG 64x64 RGBA, manifest missing 0, zip integrity.
+
+
+---
+V138M — Pines / Ground Litter / Bar / Tree Anchor Safe
+Base: V138L.
+- Aggiunti 11 pini esatti alle coordinate richieste dall'utente.
+- Ridotto di circa 1/4 il ground litter della pineta casa, rimuovendo soprattutto cluster densi.
+- Aggiunta erba leggera e distribuita nella secret flower field.
+- Aggiunti bush_dark lungo main-road dalla torre verso la spiaggia, su entrambi i lati e non su strada.
+- Sotto la tettoia bar rimosso il tavolo con sedie e inserito tavolino piccolo.
+- Alberi moderni/pini/palme affondati con decisione nel terreno tramite groundSink e anchor multiplier V138M.
+- Preservati torre V136, broadphase V137, tetti/tettoie, pergola, festoni, mappa e asset bloccati.
+
+
+================================================================================
+V141 — SHADOW CACHE + TENT ANCHOR REPAIR SAFE LOCAL
+================================================================================
+Base reale: PERLA1_V138Q_MICROFLORA_DIRECTIONAL_RELOCATION_SAFE.
+Motivo: V139/V140 ombre bocciate. V139 produceva righe/fillRect e ombre brutte; V140 aveva tolto troppe ombre utili, aggiunto gradienti costosi per sprite e modificato troppi ancoraggi.
+
+Intervento V141:
+- Ripartito da V138Q blindata, non dalla V140 bocciata.
+- Ripristinato il sistema completo originale di ancoraggio V138Q per tutti gli sprite.
+- Unica eccezione autorizzata: tende. Il vecchio moltiplicatore tent 1.42 seppelliva le tende; la correzione V140 le faceva fluttuare. V141 usa groundSink originale delle tende 2.8 con moltiplicatore 0.92: piu' basso della V140, ma non piantato come V138Q.
+- Rimosso il vecchio renderer ombre a righe/fillRect; niente piu' collasso in linea in lontananza.
+- Aggiunto renderer ombre V141 con cache di canvas morbidi: ombre tonde/ellittiche, semi-trasparenti e sfumate, disegnate via drawImage cached invece di creare gradienti per ogni sprite ogni frame.
+- Profili ombra selettivi per alberi/palme/tamerici, ombrelloni, tavoli bar, tende, auto/camper, vasi e piccoli oggetti sicuri.
+- Esclusi in modo assoluto dalle ombre runtime: microflora, erbe, fiori, aghi, pigne, parking_line e cartelli/decal/cartelli direzionali.
+- Barca/lake_rowboat ignorata nel cantiere V141: nessun profilo ombra dedicato e nessuna modifica di ancoraggio.
+- Nessun PNG modificato, nessuna modifica a tetti, torre, pergola, festoni, mappa/collisioni o worldgen.
+
+Controlli specifici V141:
+- spriteContactShadowAlpha legacy rimosso dal runtime.
+- vecchio ciclo shadow fillRect(stripe, shY, 2, shH) assente.
+- shadowRects legacy resta a 0 nei probe V141.
+- Microflora tex 12,13,27,28,29,30,31,40,41,88,89,90 shadowless.
+- Asset PNG invariati rispetto a V138Q.
+- Packaging: ZIP completo con launcher/server root e TXT aggiornati; nessuna cartella patch-only/SOLO_FILE_DA_SOSTITUIRE.
+
+
+================================================================================
+V142 — SHADOW VISIBILITY / TAMARISK LIFT / TENT SHADOW TUNE
+================================================================================
+Build: PERLA1_V142_SHADOW_VISIBILITY_TAMARISK_TENT_SHADOW_SAFE_LOCAL
+Base: PERLA1_V141_SHADOW_CACHE_TENT_ANCHOR_SAFE_LOCAL, derivata da V138Q blindata.
+
+Intervento approvato:
+- mantenere il sistema cached V141 ma correggere la scala ombre vicino/lontano;
+- rendere le ombre più visibili, semi-trasparenti ma non quasi invisibili;
+- impedire che le ombre diventino piccole quando ci si avvicina a uno sprite;
+- mantenere ombre tonde/ellittiche e sfumate, mai righe;
+- lasciare invariato l'ancoraggio tende già sistemato in V141;
+- aggiungere/rendere visibile l'ombra delle tende;
+- alzare appena i tamerici dal terreno con eccezione mirata;
+- non toccare barca, asset PNG, tetti, torre, pergola, festoni, mappa/collisioni, worldgen.
+
+Dettagli tecnici:
+- La funzione spriteAnchorSink resta identica a V141 per le tende: groundSink originale 2.8 con moltiplicatore 0.92.
+- Nuova eccezione mirata tamerici: tex 54/55/56 o kind contenente tamarisk usa moltiplicatore 0.94 per ridurre leggermente il sink e sollevare lo sprite.
+- Profili ombra *_v142 con alpha maggiore, maxW/maxH più ampi, nearBoost e farSizeFade.
+- Microflora shadowless invariata: tex 12/13/27/28/29/30/31/40/41/88/89/90.
+- Barca tex 84/rowboat esclusa come richiesto.
+- Il renderer resta cached: niente gradienti per-sprite ogni frame salvo fallback non usato nei probe.
+
+Regola packaging confermata:
+- ZIP completo con cartella gioco + launcher/server root + TXT aggiornati.
+- Nessuna cartella SOLO_FILE_DA_SOSTITUIRE / patch-only.
+
+
+================================================================================
+V143 — GROUND FOOTPRINT SHADOW SAFE LOCAL
+================================================================================
+Build: PERLA1_V143_GROUND_FOOTPRINT_SHADOW_SAFE_LOCAL
+Base: PERLA1_V142_SHADOW_VISIBILITY_TAMARISK_TENT_SHADOW_SAFE_LOCAL.
+
+Motivo:
+- V142 aveva migliorato visibilita e prestazioni delle ombre, ma il modello restava sbagliato: ombra ellittica screen-space con maxW/maxH e centro clampato.
+- Avvicinandosi allo sprite, l ombra risultava visivamente piu piccola rispetto allo sprite.
+- La correzione vera e' trattare l ombra come impronta a terra, non come mini-sprite centrato.
+
+Intervento V143:
+- La maschera cached non e' piu un ellisse completa: ora e' una footprint shadow con parte superiore piatta e parte inferiore arrotondata/sfumata.
+- L ombra viene ancorata dal suo bordo superiore vicino alla base dello sprite: shadowTopY = contactY - h*topOverlap.
+- Rimosso il clamp del centro cy: se l ombra vicina esce dal fondo schermo, viene clippata naturalmente dal canvas invece di essere rimpicciolita o ricentrata.
+- In near range non ci sono piu maxW/maxH piccoli fissi: i massimi sono dinamici e legati a screenW/screenH.
+- Il fade dimensionale resta solo in lontananza; vicino l ombra cresce in proporzione allo sprite.
+- Mantenuta cache canvas, senza gradienti per-sprite ogni frame.
+- Tende lasciate intatte come ancoraggio gia approvato; resta solo profilo ombra footprint.
+- Tamerici mantengono il lieve lift V142.
+
+Preservati:
+- asset PNG invariati;
+- mappa/collisioni/worldgen invariati;
+- tetti, torre V136, pergola, festoni, broadphase V137 e microflora V138Q invariati;
+- barca esclusa dal cantiere;
+- nessuna cartella patch-only/SOLO_FILE_DA_SOSTITUIRE.
+
+Debug/check:
+- Flag runtime: v143GroundFootprintShadow, v143FlatTopRoundedBottom, v143TopAnchoredNoCenterClamp, v143NearShadowNotShrunk, v143BottomClipsInsteadOfScaling.
+- Probe scala tree: distanza 2/3/4/5 => ombra circa 138/90/66/52 px, quindi il near range cresce invece di restringersi.
+- Probe runtime: roofSegments 2, v143 true, footprint profiles attivi.
+
+
+================================================================================
+V144 — SHADOW GROUND ANCHOR + PERSPECTIVE TUNE SAFE
+================================================================================
+Build: PERLA1_V144_SHADOW_GROUND_ANCHOR_PERSPECTIVE_TUNE_SAFE_LOCAL
+Base reale: PERLA1_V143_GROUND_FOOTPRINT_SHADOW_SAFE_LOCAL
+
+Scopo:
+- correggere il difetto residuo V143 in cui l’ombra, pur scalando con lo sprite, risultava troppo staccata dalla base e troppo lunga;
+- far sì che l’ombra sia agganciata al piano terreno reale dello sprite, non al groundSink grafico usato per l’ancoraggio del PNG;
+- comprimere molto di più la profondità verticale dell’ombra in lontananza, evitando la macchia fuori prospettiva;
+- aggiungere un piccolo contact core vicino alla base per dare effetto appoggio/3D;
+- preservare tutti gli ancoraggi sprite V143/V142: tende lasciate in pace, tamerici con lieve lift V142, nessun audit globale.
+
+Interventi tecnici:
+- `drawSpriteContactShadowV141()` ora calcola `groundY = baseY + profile.groundBias`, senza sommare `anchorSink` al punto ombra.
+- La footprint ombra conserva top piatto + fondo arrotondato, ma è più corta e meno “lingua lunga”.
+- Aggiunta compressione prospettica verticale con `flattenStart` e `flattenStrength`: da lontano la shadowH viene schiacciata molto più della larghezza.
+- Rimosso il minimo visibile fisso che faceva sopravvivere blob troppo alte in lontananza: se l’ombra diventerebbe troppo piccola/riga/macchia, viene saltata.
+- Aggiunto contact core cached piccolo e più scuro sotto la base.
+
+Regole preservate:
+- Nessuna modifica PNG.
+- Nessuna modifica a mappa, collisioni, worldgen, pavimenti, tetti, torre, pergola, festoni, barca.
+- Microflora/aghi/pigne/erbe/fiori/cartelli/barca restano esclusi dalle ombre runtime.
+- Nessuna cartella patch-only/SOLO_FILE_DA_SOSTITUIRE nello ZIP finale.
+
+Check V144:
+- node --check: OK.
+- Runtime probe Node: OK.
+- Shadow scale probe: vicino cresce in proporzione allo sprite; lontano si schiaccia verticalmente e poi sparisce.
+- Asset manifest: 91 gruppi, 103 PNG referenziati, missing 0.
+- PNG modificati rispetto a V143: 0.
+- roofSegments: 2.
+- Torre V136 preservata.
+- Packaging: ZIP completo con launcher/server root e TXT aggiornati, nessuna patch-only.
+
+Nota critica per futuro:
+Il punto ombra NON deve più usare `baseY + anchorSink`. `anchorSink` è una correzione visiva del PNG, non il piano di appoggio della shadow.
+
+
+================================================================================
+CHECKPOINT V145 — BUSH SHADOW + TAMARISK CLEAN + SMALL STONES SAFE
+================================================================================
+Build: PERLA1_V145_BUSH_SHADOW_TAMARISK_CLEAN_STONES_SAFE_LOCAL
+Base: PERLA1_V144_SHADOW_GROUND_ANCHOR_PERSPECTIVE_TUNE_SAFE_LOCAL
+
+Intervento:
+- ombra runtime aggiunta ai cespugli volumetrici tex 7/25/26 tramite profilo bush_footprint_v145;
+- ombra baked rimossa solo dai PNG tamarisk_0.png, tamarisk_1.png, tamarisk_2.png con maschera mirata su pixel semi-trasparenti quasi neri in basso;
+- aggiunti 3 asset sasso piccoli stone_small_0/1/2.png e 33 istanze distribuite, non bloccanti, solo su erba sicura;
+- la pergola non è stata modificata: il debug V144 segnalava aumento draw quando la pergola occupa quasi tutto lo schermo, ma FPS/p95 restavano stabili;
+- preservati tetti, torre, festoni, mappa, collisioni, roadMask logico, barca, tende, microflora e renderer ombre V144.
+
+Regole permanenti:
+- niente cartella SOLO_FILE_DA_SOSTITUIRE nei pacchetti PERLA1 salvo richiesta esplicita;
+- per aggiunte decorative nuove usare helper di sicurezza su map/fMap/cMap/roadMask/objectBlock/noNature e distanza da altri sprite;
+- non usare filtri globali sugli asset: la pulizia tamerici V145 è autorizzata SOLO sui tre PNG tamerici.
+
+
+V150: nessuna modifica al sistema coordinate. Pavimenti/acqua sono solo resa visuale precalcolata; coordinate gameplay e formula X_INTERNA=X_GAMEPLAY+30 restano invariate.
+
+
+================================================================================
+AGGIORNAMENTO PERLA1_V158M_LANDMARK_PROFILE_CLARITY_SAFE_LOCAL
+================================================================================
+Data: 2026-06-08
+Base reale: PERLA1_V158L_HORIZON_TONAL_GROUNDING_SAFE_LOCAL
+
+Obiettivo:
+- correggere V158L, dove il grounding ciano-marino era utile ma la sfumatura era eccessiva;
+- ridare forma geografica leggibile ai landmark senza tornare a smog, bande, pannelli o alberi fuori scala;
+- mantenere nessun limite alla visibilita' delle pareti lontane.
+
+Interventi:
+- nuovo sky_panorama_360_v158m.png con profili piu' nitidi e gerarchici: bordo alto leggibile, corpo presente, base dissolta;
+- sud: isola compatta e bassa con piccole masse e costa, non blob/oggetto e non riga sospesa;
+- nord: montagne divise in creste/valli, non arco continuo;
+- est: colline basse; ovest: masse forestali basse senza singoli alberi;
+- cloud_layer_soft_v158m.png resta layer nuvole separato future-ready;
+- palette day e wallFogColorForDistanceV158M ridotti nella lavatura, mantenendo il ciano-marino coerente.
+
+Preservato:
+- nessun culling, nessun distance cap, nessun limite visibilita' pareti;
+- nessuna modifica a map/fMap/roadMask/cMap/objectBlock/collisioni/worldgen;
+- nessuna modifica a roof geometry/gable/self-depth/roofSegments;
+- torre, sprite placement, ombre, pineta/pergola, laghetto/riva, barca, festoni invariati.
+================================================================================

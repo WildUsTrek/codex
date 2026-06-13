@@ -1,0 +1,82 @@
+{
+  "build": "PERLA1_V224_RAIN_VFX_LOD_FRUSTUM_REFILL_LOCAL",
+  "base": "PERLA1_V223_WORLD_RAIN_NEARFIELD_BATH_AUTHORITY_LOCAL",
+  "date": "2026-06-11",
+  "intent": "Rain VFX stabilization: distance LOD, frustum refill, motion compensation, bucket rendering. Preserve V223 world-rain architecture and bath authority.",
+  "files_modified": [
+    "01_GIOCO_PRONTO_LOCAL_TEST/index.html",
+    "AVVIA_GIOCO_WINDOWS_SENZA_PYTHON.bat",
+    "AVVIA_GIOCO_SERVER_POWERSHELL.ps1",
+    "report/README_REPACK_V224.txt",
+    "report/REPORT_V224_RAIN_VFX_LOD_FRUSTUM_REFILL_LOCAL.json",
+    "report/STATUS_PROGETTO_E_DIPENDENZE_PERLA1.txt",
+    "report/METODO_LAVORO_ANTI_REGRESSIONE_PERLA1.txt"
+  ],
+  "systems_touched": [
+    "world rain particle VFX constants",
+    "respawnRainDropV222 options for forceFront/preferNear/preferFar",
+    "updateRainParticlesV222 volume manager call",
+    "drawWorldRainParticlesV222 bucketed near/mid/far rendering",
+    "debug drawStats V224",
+    "launcher text/version"
+  ],
+  "systems_preserved": [
+    "map",
+    "collisioni",
+    "roadMask",
+    "objectBlock",
+    "cMap",
+    "roofSegments",
+    "tetti",
+    "fog",
+    "skybox/fondale",
+    "sprite placement",
+    "assets PNG",
+    "audio meteo",
+    "ciclo giorno/notte",
+    "bath authority V223",
+    "open canopy semantics V223"
+  ],
+  "new_functions": [
+    "angleDiffAbsV224",
+    "rainFrontMinRequiredV224",
+    "rainMeasureCameraMotionV224",
+    "rainFrontParticleStatsV224",
+    "rainRefillParticlesV224",
+    "rainApplyVolumeManagerV224",
+    "rainDistanceLodV224",
+    "clampRainSegmentPixelLengthV224"
+  ],
+  "new_debug_keys": [
+    "rainRendererModeV224",
+    "rainCameraTurnDeltaV224",
+    "rainPlayerMoveDeltaV224",
+    "rainFrustumRefillCountV224",
+    "rainMotionRefillCountV224",
+    "rainEmergencyRefillCountV224",
+    "rainFrontAliveCountV224",
+    "rainFrontVisibleCountV224",
+    "rainFrontMinRequiredV224",
+    "rainLodNearSegmentsV224",
+    "rainLodMidSegmentsV224",
+    "rainLodFarSegmentsV224",
+    "rainFarPixelLengthClampedV224",
+    "rainMidPixelLengthClampedV224",
+    "rainNearPixelLengthClampedV224",
+    "rainLegacyOverlayDisabledV224",
+    "rainDoorPortalPrimaryDisabledV224",
+    "rainV216ReplayPrimaryDisabledV224"
+  ],
+  "static_checks": {
+    "node_check": "OK",
+    "asset_missing": 0,
+    "png_modified": 0,
+    "patch_only_folder": "absent"
+  },
+  "visual_test_status": "not executed in container; requires user browser test",
+  "risk_notes": [
+    "Path remains Canvas 2D particle rendering, not true GPU particles.",
+    "Frustum refill is intentionally capped per frame to reduce pop and mobile cost.",
+    "If rain appears too dense after sharp turns, lower refill ratios or front minimum."
+  ]
+}

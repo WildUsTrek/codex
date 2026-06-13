@@ -1,0 +1,52 @@
+{
+  "build": "PERLA1_V246_RAIN_VFX_STABILIZER_SAFE_LOCAL",
+  "base": "PERLA1_V245_HIGH_WALL_DIAGNOSTICS_RUNTIME_OFF_SAFE_LOCAL",
+  "date": "2026-06-12",
+  "scope": "rain-only stabilizer",
+  "modified_files": [
+    "01_GIOCO_PRONTO_LOCAL_TEST/index.html",
+    "AVVIA_GIOCO_WINDOWS_SENZA_PYTHON.bat",
+    "AVVIA_GIOCO_SERVER_POWERSHELL.ps1",
+    "report/STATUS_PROGETTO_E_DIPENDENZE_PERLA1.txt",
+    "report/METODO_LAVORO_ANTI_REGRESSIONE_PERLA1.txt",
+    "report/README_REPACK_V246.txt",
+    "report/REPORT_V246_RAIN_VFX_STABILIZER_SAFE.json",
+    "report/EXTRACTED_INDEX_INLINE_SCRIPT_V246.js",
+    "report/REPORT_V246_ASSET_CHECK.json"
+  ],
+  "preserved": [
+    "map/fMap/cMap/roadMask/objectBlock/noNature/zoneMask",
+    "asset PNG",
+    "ASSET_MANIFEST",
+    "roofSegments/Sloped Roof Casting/V236",
+    "tower/pergola/festoni/skybox/sprite placement/audio",
+    "high-wall runtime-off V245"
+  ],
+  "technical_checks": {
+    "node_check": "OK",
+    "runtime_mock_desktop": "OK",
+    "runtime_mock_mobile_portrait": "OK",
+    "runtime_mock_mobile_landscape": "OK",
+    "rain_probe_drawWorld_weather_rain": "OK",
+    "asset_missing": 0,
+    "png_changed_vs_v245": 0,
+    "png_total": 116,
+    "asset_refs_unique": 108,
+    "runtime_map": "150x88",
+    "runtime_sprites": 1938,
+    "runtime_roof_segments": 2,
+    "high_wall_runtime_enabled": false
+  },
+  "browser_visual_test": "not executed here; required by user on local browser",
+  "debug_exports": [
+    "getRainVfxStabilizerSummaryV246",
+    "downloadRainVfxStabilizerReportV246",
+    "setRainVfxStabilizerV246"
+  ],
+  "archive_checks": {
+    "zip_integrity": "OK",
+    "tar_gz_integrity": "OK",
+    "zip_name": "PERLA1_V246_RAIN_VFX_STABILIZER_SAFE_LOCAL.zip",
+    "tar_gz_name": "PERLA1_V246_RAIN_VFX_STABILIZER_SAFE_LOCAL.tar.gz"
+  }
+}

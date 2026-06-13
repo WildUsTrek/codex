@@ -1,0 +1,23 @@
+{
+  "build": "PERLA1_V211_DOOR_RAIN_PORTAL_3X1_GEOMETRY_LOCAL",
+  "base": "PERLA1_V210_TRUE_DOOR_RAIN_PLANE_RENDERER_LOCAL",
+  "node_check": "OK",
+  "door_portal_geometry": "3_tiles_x_1_world_unit",
+  "door_renderer_path": "drawDoorRainPlaneWorldSpaceV210 preserved; V211 fixes geometry source",
+  "no_min_height_expand": "PERLA_WEATHER_DOOR_RAIN_PLANE_NO_MIN_HEIGHT_EXPAND_V211 true",
+  "legacy_door_composite_guard": "perlaCompositeRainBufferV201 still forbids world plane ranges",
+  "ui_version_updated": true,
+  "drawWeatherCloudDeckV192_present": false,
+  "png_refs": 108,
+  "png_actual_raycast": 116,
+  "png_missing": [],
+  "png_changed_vs_v210": [],
+  "patch_only_folder_present": false,
+  "preserved": [
+    "V204 audio",
+    "V200 roof budget",
+    "V201 global rain buffer/cloud budget",
+    "V185 horizon",
+    "map/collision/worldgen/sprite/pergola/tower/canopy"
+  ]
+}

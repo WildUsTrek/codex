@@ -1,0 +1,74 @@
+{
+  "build": "PERLA1_V138F_SPRITE_REBUILD_NO_SHADOW_SAFE",
+  "base": "PERLA1_V137_SPRITE_BROADPHASE_SAFE",
+  "review_source": "PERLA1_V138E4_MANUAL_APPROVED_SPRITES_REVIEW",
+  "notes": {
+    "v138e2_discarded": true,
+    "modern_allow_list": [
+      "pines",
+      "palms_same_source_animation",
+      "bushes_manual_user_approved",
+      "vases_manual_user_approved",
+      "barman_modern",
+      "bar_tables_modern",
+      "bar_counter_variant_b",
+      "umbrella_modern"
+    ],
+    "golden_rule": "Any modern asset not explicitly allowed is not used; historical V137 asset remains, no-shadow when present in review.",
+    "manual_user_replacements": [
+      "stool.png",
+      "pot.png",
+      "pot_red.png",
+      "bush_flower.png",
+      "bush_dark.png",
+      "bush.png"
+    ],
+    "locked_originals": [
+      "sign_bar.png",
+      "sign_pineta.png",
+      "boat/barbecue historical-preserve policy from review set"
+    ]
+  },
+  "png_count": 110,
+  "changed_assets_count": 28,
+  "changed_assets": [
+    "bar_counter.png",
+    "barbecue_long.png",
+    "barbecue_long_0.png",
+    "barbecue_long_1.png",
+    "barbecue_long_2.png",
+    "barman.png",
+    "bush.png",
+    "bush_dark.png",
+    "bush_flower.png",
+    "cafe_table_chairs.png",
+    "grass_variant_0.png",
+    "grass_variant_1.png",
+    "grass_variant_2.png",
+    "palm_0.png",
+    "palm_1.png",
+    "palm_dwarf_0.png",
+    "palm_dwarf_1.png",
+    "palm_tall_0.png",
+    "palm_tall_1.png",
+    "pine.png",
+    "pine_variant_0.png",
+    "pine_variant_1.png",
+    "pine_variant_2.png",
+    "pot.png",
+    "pot_purple.png",
+    "pot_red.png",
+    "stool.png",
+    "umbrella.png"
+  ],
+  "unchanged_assets_count": 82,
+  "node_check_ok": true,
+  "manifest_ref_count": 102,
+  "manifest_missing": [],
+  "critical_checks": {
+    "sign_bar_original_preserved": true,
+    "sign_pineta_original_preserved": true,
+    "manual_user_pngs_exact_match": true,
+    "palm_animation_frames_differ": true
+  }
+}

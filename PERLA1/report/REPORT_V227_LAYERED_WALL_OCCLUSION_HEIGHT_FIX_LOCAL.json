@@ -1,0 +1,50 @@
+{
+  "build": "PERLA1_V227_LAYERED_WALL_OCCLUSION_HEIGHT_FIX_LOCAL",
+  "base": "PERLA1_V226_RAIN_CAMERA_VOLUME_WORLD_OCCLUSION_LOCAL",
+  "timestamp_utc": "2026-06-11T13:43:24Z",
+  "intent": "Layered wall occlusion height fix: low walls occlude only their projected span, not taller walls/sprites/rain above them.",
+  "changed_files": [
+    "01_GIOCO_PRONTO_LOCAL_TEST/index.html",
+    "AVVIA_GIOCO_WINDOWS_SENZA_PYTHON.bat",
+    "AVVIA_GIOCO_SERVER_POWERSHELL.ps1",
+    "report/README_REPACK_V227.txt",
+    "report/REPORT_V227_LAYERED_WALL_OCCLUSION_HEIGHT_FIX_LOCAL.json",
+    "report/STATUS_PROGETTO_E_DIPENDENZE_PERLA1.txt",
+    "report/METODO_LAVORO_ANTI_REGRESSIONE_PERLA1.txt"
+  ],
+  "preserved": [
+    "assets PNG",
+    "map",
+    "collisioni",
+    "roadMask",
+    "objectBlock",
+    "sprite placement",
+    "skybox/fondale",
+    "audio meteo",
+    "roof budget",
+    "bath authority V223",
+    "camera rain volume V226"
+  ],
+  "technical_notes": [
+    "Added WallLayerBufferV227 and WallOcclusionRangesV227 per screen column.",
+    "Wallcasting collects limited multi-hit layers and draws higher far wall portions above lower front walls.",
+    "Sprite strips use vertical span clipping against wall layers instead of full ZBuffer rejection.",
+    "Rain checks ceiling/indoor first, then wall layer spans; z>1 shortcut is no longer the authority.",
+    "Airspace rain is allowed only over outdoor low/hedge walls, not modern building walls or covered cells."
+  ],
+  "checks_planned": [
+    "node --check",
+    "zip integrity",
+    "tar.gz integrity",
+    "asset refs missing 0",
+    "PNG unchanged",
+    "no patch-only folder"
+  ],
+  "visual_tests_required": [
+    "low wall in front of high wall",
+    "tall sprite behind low wall",
+    "rain above hedges but not inside reception/bath",
+    "yoga canopy looking out",
+    "run/turn rain stability"
+  ]
+}

@@ -1,0 +1,289 @@
+{
+  "build": "PERLA1_V169_SKYBOX_EDGE_DEPROJECTED_LOCK_SAFE_LOCAL",
+  "base_zip": "/mnt/data/PERLA1_V163_USER_MASK_ATMOSPHERIC_ALPHA_SAFE_LOCAL.zip",
+  "base_logic": "V163 clean; V164/V165/V166/V167/V168 not used as base.",
+  "changed_files_intent": [
+    "01_GIOCO_PRONTO_LOCAL_TEST/index.html",
+    "README_REPACK_V169.txt",
+    "REPORT_V169_SKYBOX_EDGE_DEPROJECTED_LOCK_SAFE.json",
+    "STATUS/METODO append"
+  ],
+  "sky_asset_byte_identical_to_v163": true,
+  "cloud_asset_byte_identical_to_v163": true,
+  "sky_hash": "0aa100fa4226e18f67c25d70041b24cc37194df852f96d77b327ad2d449c71bc",
+  "cloud_hash": "9c0387f6b0c487c00918fb803fed217f7483957018df394f1e35b7c6fe61bfa2",
+  "mapping": {
+    "mode": "edge_deprojected_lock_safe",
+    "exact_center": "atan(cameraX*k)",
+    "edge_target": "cameraX*k",
+    "why_not_v168": "V168 target cameraX*atan(k) equals exact at cameraX=±1, so edge protection was nearly neutral.",
+    "edge_start": 0.4,
+    "edge_full": 0.92,
+    "edge_power": 1.25,
+    "edge_tangent_blend_max": 0.72,
+    "span_px": 2,
+    "cloud_render": false
+  },
+  "preserved": [
+    "fog",
+    "palette",
+    "sea",
+    "map",
+    "fMap",
+    "roadMask",
+    "cMap",
+    "objectBlock",
+    "collisioni",
+    "worldgen",
+    "roof geometry",
+    "tower",
+    "sprite placement",
+    "ombres",
+    "pergola",
+    "lake",
+    "boat",
+    "festoni",
+    "far wall visibility"
+  ],
+  "math_probes": {
+    "desktop": {
+      "k": 0.9,
+      "exact_edge_rad": 0.73282,
+      "tangent_edge_rad": 0.9,
+      "safe_edge_rad": 0.85319,
+      "safe_edge_delta_px_vs_v166": 78.47,
+      "samples": [
+        {
+          "cameraX": -1,
+          "exactRad": -0.73282,
+          "safeRad": -0.85319,
+          "deltaPx": -78.47,
+          "blend": 0.72
+        },
+        {
+          "cameraX": -0.92,
+          "exactRad": -0.69158,
+          "safeRad": -0.7898,
+          "deltaPx": -64.03,
+          "blend": 0.72
+        },
+        {
+          "cameraX": -0.75,
+          "exactRad": -0.59375,
+          "safeRad": -0.63453,
+          "deltaPx": -26.58,
+          "blend": 0.5019
+        },
+        {
+          "cameraX": -0.5,
+          "exactRad": -0.42285,
+          "safeRad": -0.42391,
+          "deltaPx": -0.69,
+          "blend": 0.0388
+        },
+        {
+          "cameraX": 0,
+          "exactRad": 0.0,
+          "safeRad": 0.0,
+          "deltaPx": 0.0,
+          "blend": 0
+        },
+        {
+          "cameraX": 0.5,
+          "exactRad": 0.42285,
+          "safeRad": 0.42391,
+          "deltaPx": 0.69,
+          "blend": 0.0388
+        },
+        {
+          "cameraX": 0.75,
+          "exactRad": 0.59375,
+          "safeRad": 0.63453,
+          "deltaPx": 26.58,
+          "blend": 0.5019
+        },
+        {
+          "cameraX": 0.92,
+          "exactRad": 0.69158,
+          "safeRad": 0.7898,
+          "deltaPx": 64.03,
+          "blend": 0.72
+        },
+        {
+          "cameraX": 1,
+          "exactRad": 0.73282,
+          "safeRad": 0.85319,
+          "deltaPx": 78.47,
+          "blend": 0.72
+        }
+      ]
+    },
+    "mobile_landscape": {
+      "k": 0.91,
+      "exact_edge_rad": 0.73831,
+      "tangent_edge_rad": 0.91,
+      "safe_edge_rad": 0.86193,
+      "safe_edge_delta_px_vs_v166": 80.58,
+      "samples": [
+        {
+          "cameraX": -1,
+          "exactRad": -0.73831,
+          "safeRad": -0.86193,
+          "deltaPx": -80.58,
+          "blend": 0.72
+        },
+        {
+          "cameraX": -0.92,
+          "exactRad": -0.69702,
+          "safeRad": -0.79795,
+          "deltaPx": -65.8,
+          "blend": 0.72
+        },
+        {
+          "cameraX": -0.75,
+          "exactRad": -0.59888,
+          "safeRad": -0.64085,
+          "deltaPx": -27.36,
+          "blend": 0.5019
+        },
+        {
+          "cameraX": -0.5,
+          "exactRad": -0.427,
+          "safeRad": -0.42809,
+          "deltaPx": -0.71,
+          "blend": 0.0388
+        },
+        {
+          "cameraX": 0,
+          "exactRad": 0.0,
+          "safeRad": 0.0,
+          "deltaPx": 0.0,
+          "blend": 0
+        },
+        {
+          "cameraX": 0.5,
+          "exactRad": 0.427,
+          "safeRad": 0.42809,
+          "deltaPx": 0.71,
+          "blend": 0.0388
+        },
+        {
+          "cameraX": 0.75,
+          "exactRad": 0.59888,
+          "safeRad": 0.64085,
+          "deltaPx": 27.36,
+          "blend": 0.5019
+        },
+        {
+          "cameraX": 0.92,
+          "exactRad": 0.69702,
+          "safeRad": 0.79795,
+          "deltaPx": 65.8,
+          "blend": 0.72
+        },
+        {
+          "cameraX": 1,
+          "exactRad": 0.73831,
+          "safeRad": 0.86193,
+          "deltaPx": 80.58,
+          "blend": 0.72
+        }
+      ]
+    },
+    "mobile_portrait": {
+      "k": 1.06,
+      "exact_edge_rad": 0.81452,
+      "tangent_edge_rad": 1.06,
+      "safe_edge_rad": 0.99126,
+      "safe_edge_delta_px_vs_v166": 115.22,
+      "samples": [
+        {
+          "cameraX": -1,
+          "exactRad": -0.81452,
+          "safeRad": -0.99126,
+          "deltaPx": -115.22,
+          "blend": 0.72
+        },
+        {
+          "cameraX": -0.92,
+          "exactRad": -0.77284,
+          "safeRad": -0.91854,
+          "deltaPx": -94.98,
+          "blend": 0.72
+        },
+        {
+          "cameraX": -0.75,
+          "exactRad": -0.67168,
+          "safeRad": -0.73358,
+          "deltaPx": -40.35,
+          "blend": 0.5019
+        },
+        {
+          "cameraX": -0.5,
+          "exactRad": -0.48736,
+          "safeRad": -0.48901,
+          "deltaPx": -1.08,
+          "blend": 0.0388
+        },
+        {
+          "cameraX": 0,
+          "exactRad": 0.0,
+          "safeRad": 0.0,
+          "deltaPx": 0.0,
+          "blend": 0
+        },
+        {
+          "cameraX": 0.5,
+          "exactRad": 0.48736,
+          "safeRad": 0.48901,
+          "deltaPx": 1.08,
+          "blend": 0.0388
+        },
+        {
+          "cameraX": 0.75,
+          "exactRad": 0.67168,
+          "safeRad": 0.73358,
+          "deltaPx": 40.35,
+          "blend": 0.5019
+        },
+        {
+          "cameraX": 0.92,
+          "exactRad": 0.77284,
+          "safeRad": 0.91854,
+          "deltaPx": 94.98,
+          "blend": 0.72
+        },
+        {
+          "cameraX": 1,
+          "exactRad": 0.81452,
+          "safeRad": 0.99126,
+          "deltaPx": 115.22,
+          "blend": 0.72
+        }
+      ]
+    }
+  },
+  "checks": {
+    "node_check_returncode": 0,
+    "node_stdout": "",
+    "node_stderr": ""
+  },
+  "asset_refs": 108,
+  "asset_missing": [],
+  "sky_panorama_360_v169.png": {
+    "size": [
+      4096,
+      384
+    ],
+    "mode": "RGBA"
+  },
+  "cloud_layer_soft_v169.png": {
+    "size": [
+      2048,
+      256
+    ],
+    "mode": "RGBA"
+  },
+  "patch_like_dirs": [],
+  "residue_check": "no active V164/V165/V166/V167/V168 skybox renderer constants/functions found"
+}

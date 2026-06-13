@@ -1,0 +1,59 @@
+{
+  "build": "PERLA1_V247_RAIN_TEMPORAL_ANGULAR_BALANCE_SAFE_LOCAL",
+  "base": "PERLA1_V246_RAIN_VFX_STABILIZER_SAFE_LOCAL",
+  "scope": "rain-only temporal/angular correction above V246",
+  "modified_files": [
+    "01_GIOCO_PRONTO_LOCAL_TEST/index.html",
+    "AVVIA_GIOCO_WINDOWS_SENZA_PYTHON.bat",
+    "AVVIA_GIOCO_SERVER_POWERSHELL.ps1",
+    "report/STATUS_PROGETTO_E_DIPENDENZE_PERLA1.txt",
+    "report/METODO_LAVORO_ANTI_REGRESSIONE_PERLA1.txt",
+    "report/README_REPACK_V247.txt",
+    "report/REPORT_V247_RAIN_TEMPORAL_ANGULAR_BALANCE_SAFE.json"
+  ],
+  "preserved": [
+    "map/fMap/cMap/roadMask/objectBlock",
+    "assets PNG",
+    "ASSET_MANIFEST",
+    "roofSegments/tetti/V236",
+    "tower/pergola/festoni",
+    "skybox",
+    "sprite placement",
+    "audio",
+    "high-wall runtime-off",
+    "V234 rain airspace",
+    "V235 rain midfield",
+    "V246 stabilizer"
+  ],
+  "features": [
+    "exposure warmup",
+    "frontMin ramp",
+    "near target ramp",
+    "anti double-pulse refill arbiter",
+    "angular lookahead mid/far prefill",
+    "mid/far optical boost",
+    "V247 debug summary/download/toggle"
+  ],
+  "asset_check": {
+    "png_total": 116,
+    "refs_unique": 108,
+    "missing": []
+  },
+  "notes": "No browser visual test performed here; runtime mock only.",
+  "checks": {
+    "node_check": "OK",
+    "runtime_mock_desktop": "OK",
+    "runtime_mock_portrait": "OK",
+    "runtime_mock_landscape": "OK",
+    "asset_refs_unique": 108,
+    "asset_png_total": 116,
+    "asset_missing": [],
+    "png_changed_vs_v246": [],
+    "map_runtime_mock": "150x88",
+    "sprites_runtime_mock": 1938,
+    "roofSegments_runtime_mock": 2,
+    "highWallRuntimeEnabled": false,
+    "patch_only_folder": "absent",
+    "browser_visual_test": "not_performed"
+  }
+}

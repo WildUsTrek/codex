@@ -1,0 +1,55 @@
+{
+  "build": "PERLA1_V190_SMOOTH_CLOCK_FULL_WEATHER_LOCAL",
+  "base": "PERLA1_V189_ENVIRONMENT_DAYCYCLE_HELPERS_LOCAL",
+  "stable_line": "V185 distortion-controlled horizon preserved",
+  "interventions": [
+    "smooth visual palette interpolation between environment buckets",
+    "visible HUD digital clock/weather chip",
+    "daily weather bag: 3 clear, 2 cloudy, 1 rain, 1 storm per 7 game days",
+    "deterministic shuffled weekly weather order",
+    "weather console helpers",
+    "weather cloud layer via existing cloud PNG",
+    "lightweight procedural rain/storm overlay and lightning"
+  ],
+  "preserved": [
+    "assets PNG",
+    "map",
+    "fMap",
+    "roadMask",
+    "cMap",
+    "objectBlock",
+    "worldgen",
+    "collisioni",
+    "roofSegments",
+    "tetti",
+    "torre",
+    "sprite placement",
+    "pergola",
+    "festoni",
+    "lago/barca",
+    "pavimenti",
+    "decal",
+    "launcher",
+    "V185 horizon target 1.08"
+  ],
+  "commands": [
+    "perlaEnv()",
+    "perlaNextCycle()",
+    "perlaSetTime(19)",
+    "dormi()",
+    "perlaWeather()",
+    "perlaSetWeather(\"storm\")",
+    "perlaNextWeather()",
+    "perlaCommand(\"meteo\",\"rain\")"
+  ],
+  "checks": {
+    "node_check": "OK",
+    "unit_environment_weather": "OK",
+    "runtime_vm_smoke": "OK",
+    "browser_real": "NOT_EXECUTED_HERE"
+  },
+  "known_limits": [
+    "weather is visual/atmospheric only; it does not affect gameplay/collision/accessibility",
+    "browser visual approval still required"
+  ]
+}

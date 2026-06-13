@@ -1,0 +1,54 @@
+{
+  "build": "PERLA1_V249_RAIN_NEAR_REVEAL_ENVELOPE_SAFE_LOCAL",
+  "base": "PERLA1_V248_RAIN_UNIFIED_TRANSITION_CONTROLLER_SAFE_LOCAL",
+  "type": "rain-only near-only draw-time reveal envelope",
+  "modified_files": [
+    "01_GIOCO_PRONTO_LOCAL_TEST/index.html",
+    "AVVIA_GIOCO_WINDOWS_SENZA_PYTHON.bat",
+    "AVVIA_GIOCO_SERVER_POWERSHELL.ps1",
+    "report/README_REPACK_V249.txt",
+    "report/REPORT_V249_RAIN_NEAR_REVEAL_ENVELOPE_SAFE.json"
+  ],
+  "preserved": [
+    "RainUnifiedControllerV248",
+    "angular prefill",
+    "mid/far density",
+    "V235 midfield",
+    "V246 bucket balance",
+    "map/fMap/cMap/roadMask/objectBlock",
+    "rainCoveredMap geometry",
+    "assets PNG",
+    "ASSET_MANIFEST",
+    "tetti/roofSegments",
+    "skybox",
+    "sprite placement",
+    "audio",
+    "high-wall runtime-off"
+  ],
+  "debug": [
+    "getRainNearRevealEnvelopeSummaryV249",
+    "downloadRainNearRevealEnvelopeReportV249",
+    "setRainNearRevealEnvelopeV249"
+  ],
+  "checks_planned": [
+    "node --check",
+    "runtime mock desktop/mobile",
+    "asset missing 0",
+    "PNG modified 0",
+    "zip/tar integrity"
+  ],
+  "honesty": "No browser visual test executed inside assistant environment.",
+  "checks_executed": {
+    "node_check": "OK",
+    "runtime_mock_desktop": "OK",
+    "runtime_mock_mobile_portrait": "OK",
+    "runtime_mock_mobile_landscape": "OK",
+    "runtime_mock_covered_cell": "OK",
+    "asset_missing": 0,
+    "png_modified_vs_v248": 0,
+    "patch_only_folder": "absent",
+    "browser_visual_test": "NOT_EXECUTED"
+  },
+  "asset_check": "REPORT_V249_ASSET_CHECK.json",
+  "final_checks": "REPORT_V249_FINAL_CHECKS.json"
+}

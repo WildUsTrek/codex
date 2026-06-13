@@ -1,0 +1,1303 @@
+PERLA1 — REPORT COMPLETO SISTEMI SFONDI / SKYBOX / FAR-LANDMARKS
+=================================================================
+Progetto: PERLA1 — Camping Sole, Mare & Zanzare
+Motore: raycasting 2.5D custom, Vanilla JavaScript + Canvas 2D
+Oggetto: ricostruzione completa dei tentativi fatti per sistemare cielo, fondale, montagne, isole e landmark remoti
+Periodo tecnico coperto: V158D -> V179, con richiamo alla base blindata V157
+Data report: 2026-06-10
+Formato: TXT operativo, pensato per migrazione e per non ripetere errori
+
+
+0. PREMESSA DI VALIDITÀ
+=======================
+
+Questo report ricostruisce il cantiere sfondi/fondali su base reale, usando:
+
+- pacchetti ZIP reali presenti in area lavoro:
+  - PERLA1_V169_SKYBOX_EDGE_DEPROJECTED_LOCK_SAFE_LOCAL.zip
+  - PERLA1_V171_FAR_LANDMARKS_DIAGNOSTIC_LOCAL.zip
+  - PERLA1_V172_SCREEN_FIXED_BACKDROP_DIAGNOSTIC_LOCAL.zip
+  - PERLA1_V173_WORLD_COORD_BACKDROP_DIAGNOSTIC_LOCAL.zip
+  - PERLA1_V174_NORTH_WORLD_SEGMENT_BACKDROP_FIX_LOCAL.zip
+  - PERLA1_V175_NORTH_WORLD_SEGMENT_BACKDROP_SCALE_FIX_LOCAL.zip
+  - PERLA1_V176_WORLD_ORTHO_HORIZON_BACKDROP_LOCAL.zip
+  - PERLA1_V177_WORLD_SEGMENTED_HORIZON_LOCK_LOCAL.zip
+  - PERLA1_V178_SEPARATE_WORLD_LANDMARKS_LOCAL.zip
+  - PERLA1_V179_ANGULAR_WORLD_LOCKED_HORIZON_LOCAL.zip
+
+- report JSON e README contenuti nei pacchetti, in particolare:
+  - REPORT_V158D... -> REPORT_V158M...
+  - REPORT_V160_APPROVED_V158M_SKY_RESTORE_SAFE.json
+  - REPORT_V163_USER_MASK_ATMOSPHERIC_ALPHA.json
+  - REPORT_V169_SKYBOX_EDGE_DEPROJECTED_LOCK_SAFE.json
+  - REPORT_V171_FAR_LANDMARKS_DIAGNOSTIC.json
+  - REPORT_V172_SCREEN_FIXED_BACKDROP_DIAGNOSTIC.json
+  - REPORT_V173_WORLD_COORD_BACKDROP_DIAGNOSTIC.json
+  - REPORT_V174_NORTH_WORLD_SEGMENT_BACKDROP_FIX.json
+  - REPORT_V175_NORTH_WORLD_SEGMENT_BACKDROP_SCALE_FIX.json
+  - REPORT_V176_WORLD_ORTHO_HORIZON_BACKDROP.json
+  - REPORT_V177_WORLD_SEGMENTED_HORIZON_LOCK.json
+  - REPORT_V178_SEPARATE_WORLD_LANDMARKS.json
+  - REPORT_V179_ANGULAR_WORLD_LOCKED_HORIZON.json
+
+- file di migrazione:
+  - PERLA1_MIGRAZIONE_CHAT_V170_FAR_LANDMARKS_WORLD_ANCHORED.txt
+
+- osservazioni visive dell'utente tramite screenshot reali durante le patch V176, V177 e V178.
+
+Nota importante: molte build sono tecnicamente valide nei check statici, ma visivamente bocciate. Questo report distingue sempre tra:
+
+- validità tecnica: node --check OK, asset missing 0, ZIP integro;
+- validità percettiva: comportamento corretto in gioco ruotando la camera.
+
+Nel cantiere sfondi, la seconda è quella decisiva.
+
+
+1. EXECUTIVE SUMMARY — CHE COSA ABBIAMO IMPARATO DAVVERO
+=========================================================
+
+Il problema principale non era uno solo. Era un conflitto tra quattro nature diverse del fondale:
+
+1. Cielo/atmosfera:
+   - può essere camera-attached;
+   - può essere gradiente o skybox puro;
+   - non deve contenere landmark troppo riconoscibili se questi devono restare coerenti col mondo.
+
+2. Landmark remoti:
+   - montagne, isole, profili lontani;
+   - non devono comportarsi come muri vicini;
+   - non devono deformarsi in larghezza ai bordi;
+   - non devono essere screen-fixed puri;
+   - devono essere legati alla direzione del mondo, non al movimento immediato della camera.
+
+3. Geometria vicina del raycaster:
+   - torre, muri, siepi, edifici;
+   - usa prospettiva reale del motore;
+   - può cambiare altezza apparente quando ruoti, perché la distanza perpendicolare cambia.
+
+4. Asset panoramico 2D:
+   - il panorama skybox è una texture angolare, non una mappa di oggetti con coordinate mondo;
+   - se lo tratti come muro, si deforma;
+   - se lo tagli in fette, si vedono cuciture e fisarmonica;
+   - se lo tagli in crop rettangolari sporchi, rompi l'immagine.
+
+Conclusione architetturale finale raggiunta:
+
+    Il fondale remoto nord non deve essere un muro, non deve essere uno skybox puro,
+    non deve essere screen-fixed, non deve essere segmentato in fette prospettiche.
+    Deve essere un orizzonte remoto a bussola: world-bearing + scala screen-space stabile.
+
+Questa è la logica della V179:
+
+    remote horizon = fixed world bearing + stable screen-space scale
+
+La V179 non è ancora stata dichiarata visivamente approvata in browser, ma è la prima patch che incorpora la lezione corretta dopo i fallimenti V171-V178.
+
+
+2. VOCABOLARIO TECNICO PER NON CONFONDERSI PIÙ
+==============================================
+
+2.1 Skybox camera-attached
+--------------------------
+È un'immagine panoramica che si muove in base alla rotazione della camera.
+
+Teoria:
+- ogni colonna del panorama rappresenta una direzione angolare;
+- va bene per cielo, atmosfera, nuvole diffuse;
+- non va bene per landmark molto riconoscibili dietro oggetti del mondo, perché possono sembrare scorrere diversamente da torre e muri.
+
+Esempio:
+- V163/V169: panorama 4096x384 con montagne/isole dentro la texture.
+
+Problema:
+- la torre è geometria del mondo;
+- le montagne sono pixel dello skybox;
+- ruotando, possono non sembrare parte dello stesso spazio.
+
+
+2.2 Screen-fixed
+----------------
+È un fondale disegnato sempre negli stessi pixel dello schermo.
+
+Teoria:
+- non legge camera, yaw, dirX, dirY, planeX, planeY;
+- utile come diagnostica estrema;
+- sbagliato come soluzione finale perché non appartiene al mondo.
+
+Esempio:
+- V172.
+
+Risultato:
+- il fondale resta fermo sempre;
+- però il mondo si muove davanti e il fondale non è più coerente con una direzione geografica.
+
+
+2.3 Muro o piano mondo prospettico
+----------------------------------
+È un fondale collocato con coordinate X/Y nel mondo e proiettato come geometria.
+
+Teoria:
+- ogni raggio della camera può intercettare il piano;
+- la texture viene campionata con hitX/hitY;
+- assomiglia a un muro lontano.
+
+Esempi:
+- V173, V174, V175.
+
+Problema:
+- un orizzonte remoto non deve scalare/deformarsi come un muro;
+- ai bordi del FOV la larghezza apparente cambia;
+- se il piano è troppo largo, si vede anche di obliquo;
+- se i raggi sono sbagliati, si vede quasi sempre e si deforma.
+
+
+2.4 Orizzonte ortografico world-anchored
+----------------------------------------
+È un fondale con coordinate mondo fisse ma disegnato a scala stabile.
+
+Teoria:
+- la posizione orizzontale è legata a un riferimento mondo;
+- altezza e larghezza non scalano come muri;
+- evita deformazione da prospettiva.
+
+Esempio:
+- V176.
+
+Problema V176:
+- era agganciato solo dal centro;
+- poi veniva disegnato come rettangolo unico;
+- quindi le parti interne del panorama non avevano coordinate proprie.
+
+
+2.5 Fondale segmentato world-horizon
+------------------------------------
+È un tentativo di dare coordinate mondo a più fette del panorama.
+
+Teoria:
+- invece di un rettangolo unico, si dividono N segmenti;
+- ogni segmento ha X0/X1 mondo;
+- si proietta ogni segmento con trasformazione orizzontale compatibile col raycaster.
+
+Esempio:
+- V177, 48 segmenti.
+
+Problema:
+- la sorgente texture è divisa in fette uguali;
+- la destinazione schermo cambia larghezza con la prospettiva;
+- le fette si comprimono/allargano: effetto fisarmonica;
+- con alpha semitrasparente, floor/ceil e overlap generano righe verticali.
+
+
+2.6 Landmark separati da crop
+-----------------------------
+È un tentativo di creare montagne singole ritagliando il panorama.
+
+Teoria:
+- invece di un panorama unico, ogni montagna è un oggetto remoto;
+- ogni oggetto ha worldX/worldY o bearing, scala, alpha.
+
+Esempio:
+- V178.
+
+Problema:
+- i crop non erano sagome pulite;
+- erano rettangoli contaminati da cielo, foschia, altre montagne e alpha già miscelato;
+- sovrapponendoli si rompeva l'immagine.
+
+
+2.7 Orizzonte angolare world-locked
+-----------------------------------
+È l'approccio attuale V179.
+
+Teoria:
+- il fondale remoto ha un bearing mondo fisso, ad esempio nord;
+- la posizione orizzontale dipende dal delta tra camera yaw e bearing;
+- larghezza e altezza restano costanti in screen-space;
+- non c'è proiezione murale, non c'è segmentazione, non c'è crop sporco.
+
+Esempio:
+- V179.
+
+Regola:
+- torre/muri/sprite = prospettiva raycaster;
+- fondale remoto = direzione mondo + scala stabile.
+
+
+3. MAPPA CRONOLOGICA COMPLETA DEGLI INTERVENTI
+==============================================
+
+3.1 V157 — base blindata prima del cantiere cielo
+-------------------------------------------------
+Sistema:
+- base stabile dopo laghetto/riva/seam cleanup, ombre, pavimenti, tetti, sprite e performance.
+
+Ruolo nel cantiere sfondi:
+- punto di partenza sicuro per aprire V158.
+
+Lezione:
+- il lavoro sul cielo non doveva toccare mappa, collisioni, tetti, sprite o pavimenti.
+
+
+3.2 V158D — painted continuous 360 sky panorama + haze
+------------------------------------------------------
+Base: V157.
+Sistema provato:
+- panorama skybox 360 continuo;
+- asset `sky_panorama_360_v158d.png`;
+- haze cromatico verso orizzonte;
+- nessun limite alla visibilità delle pareti lontane.
+
+Teoria:
+- migliorare atmosfera e profondità usando una texture panoramica continua.
+
+Tecnica:
+- nuovo asset panorama;
+- renderer skybox V158D;
+- fog pareti non limitato, solo target cromatico verso horizon RGB.
+
+Esempio concreto:
+- al posto di cielo piatto, il mondo aveva una fascia atmosferica lontana.
+
+Esito:
+- tecnicamente valido;
+- artisticamente ancora da calibrare.
+
+Lezione:
+- un asset skybox può migliorare molto il mondo senza toccare collisioni o mappa.
+
+
+3.3 V158E — soft cloud atmosphere
+---------------------------------
+Base: V158D.
+Sistema provato:
+- correzione palette;
+- cloud layer separato `cloud_layer_soft_v158e.png`;
+- eliminazione bianco-latte/grigio-smog.
+
+Teoria:
+- separare cielo e nuvole per preparare eventuali sistemi atmosferici futuri.
+
+Tecnica:
+- sky panorama nuovo;
+- cloud asset separato;
+- manifest asset aggiornato;
+- mappe e worldgen preservati.
+
+Esito:
+- migliore struttura tecnica;
+- ancora non risolutivo sulla presenza geografica.
+
+Lezione:
+- nuvole e cielo devono restare layer separabili; non legare tutto a un unico asset se il difetto è specifico.
+
+
+3.4 V158F — atmosfera minimale
+------------------------------
+Base: V158E.
+Sistema provato:
+- cielo dominante;
+- sagome lontane bassissime;
+- niente fascia/fondale basso troppo evidente.
+
+Teoria:
+- ridurre la presenza del fondale per evitare smog, bande e oggetti fuori scala.
+
+Tecnica:
+- nuovi asset `sky_panorama_360_v158f.png` e cloud;
+- nessuna modifica a map/fMap/roadMask/collisioni.
+
+Esito:
+- cielo più pulito;
+- però troppo vuoto per il tipo di mondo desiderato.
+
+Lezione:
+- togliere landmark risolve molti artefatti, ma impoverisce la geografia percepita.
+
+
+3.5 V158G — geographic landmarks
+--------------------------------
+Base: V158F.
+Sistema provato:
+- reintroduzione di landmark geografici lontani.
+
+Teoria:
+- dare al campeggio un orizzonte riconoscibile, non solo aria vuota.
+
+Tecnica:
+- panorama con landmark disegnati;
+- controlli su seam, bande, alpha e dark pixels.
+
+Esito:
+- presenza geografica migliore;
+- ma landmark troppo scuri/smog.
+
+Lezione:
+- i landmark devono essere atmosferici, non silhouette scure fuori scala.
+
+
+3.6 V158H — color repair dei landmark
+-------------------------------------
+Base: V158G.
+Sistema provato:
+- schiarimento e azzurramento dei landmark;
+- raccordo cromatico con pareti in fog.
+
+Teoria:
+- l'orizzonte deve fondersi con il fog storico, non contrastarlo.
+
+Tecnica:
+- asset ridipinto in toni aria/cielo;
+- nessun cap alla distanza delle pareti;
+- fog muri lontani preservato.
+
+Esito:
+- meno smog;
+- landmark diventati troppo poco leggibili.
+
+Lezione:
+- l'atmosfera non deve cancellare completamente la forma.
+
+
+3.7 V158I / V158J / V158K / V158L / V158M — leggibilità, ancoraggio, tonal grounding
+------------------------------------------------------------------------------------
+Sistema provato:
+- progressiva rifinitura asset skybox:
+  - V158I: visibilità geografica più bilanciata;
+  - V158J: ancoraggio orizzonte/isola sud;
+  - V158K: leggibilità silhouette;
+  - V158L: grounding tonale;
+  - V158M: profilo più chiaro e meno haze eccessivo.
+
+Teoria:
+- il problema sembrava ancora artistico: forma, alpha, altezza, profilo, tonalità.
+
+Tecnica:
+- asset sky/cloud aggiornati;
+- no worldgen, no collisioni, no roof changes;
+- check seam, full band rows, dark pixels, alpha.
+
+Esito:
+- V158M diventa riferimento artistico/visivo più accettabile.
+
+Lezione:
+- ottimo lavoro asset, ma non risolve ancora il conflitto più profondo tra landmark camera-attached e mondo raycast.
+
+
+3.8 V160 — restore della V158M approvata
+----------------------------------------
+Base: V158M.
+Sistema:
+- ripristino asset V158M come base numerica pulita.
+
+Teoria:
+- ridurre confusione di versioni letterali V158N/O/P/Q.
+
+Tecnica:
+- asset copiati byte-identici e rinominati;
+- nessun retouch visuale.
+
+Esito:
+- utile come checkpoint pulito.
+
+Lezione:
+- quando le lettere diventano troppe, usare numero nuovo pulito.
+
+
+3.9 V161 / V162 — tentativi su isola/base/profilo
+-------------------------------------------------
+Sistema provato:
+- rifiniture successive sulla forma/isola/base del panorama.
+
+Teoria:
+- si cercava ancora di correggere il problema lavorando sull'asset.
+
+Esito riportato dalla migrazione:
+- non risolutivo, invariato o peggiorativo.
+
+Lezione:
+- oltre un certo punto, il problema non era più solo asset.
+
+
+3.10 V163 — user mask + atmospheric alpha
+-----------------------------------------
+Base: V160/V158M.
+Sistema provato:
+- sagome disegnate dall'utente integrate nel panorama;
+- alpha rimappata in stile atmosferico;
+- panorama normalizzato a 4096x384.
+
+Teoria:
+- usare silhouette dell'utente come target reale invece di inventare profili generici.
+
+Tecnica:
+- `sky_panorama_360_v163.png`;
+- alpha max circa 95, media atmosferica;
+- seam 0;
+- nessun cambio renderer/fog/worldgen.
+
+Esempio concreto:
+- l'asset contiene componenti/masse più coerenti con ciò che l'utente voleva vedere.
+
+Esito:
+- asset fondamentale e poi ereditato in V169/V179;
+- ma ancora dentro paradigma skybox.
+
+Lezione:
+- V163 è buona come materia visiva; non basta come soluzione geometrica.
+
+
+3.11 V164 — sampling / rounding / edge cleanup
+----------------------------------------------
+Sistema provato:
+- stabilizzazione sampling e pulizia bordi del panorama.
+
+Teoria:
+- il difetto poteva dipendere da arrotondamenti/campionamento.
+
+Esito:
+- inefficace.
+
+Lezione:
+- non era solo un problema di pixel rounding.
+
+
+3.12 V165 — infinite lock + FOV scale
+-------------------------------------
+Sistema provato:
+- tentativo di blocco infinito con scala FOV.
+
+Teoria:
+- legare lo skybox meglio al FOV avrebbe ridotto la sensazione di scorrimento.
+
+Esito:
+- inefficace.
+
+Lezione:
+- migliorare parametri FOV non risolve il rapporto con oggetti mondo.
+
+
+3.13 V166 — ray-aligned per-column skybox
+-----------------------------------------
+Sistema provato:
+- mapping del panorama allineato ai raggi/colonne.
+
+Teoria:
+- usare la matematica del raycaster avrebbe reso il fondale coerente.
+
+Tecnica probabile:
+- ogni colonna del fondale veniva campionata in relazione al raggio camera.
+
+Esito:
+- peggiorativo: lo sfondo sembrava un muro vicino, “appiccicato alla faccia”.
+
+Lezione:
+- il fondale remoto non deve essere trattato come geometria/raggio di muro.
+
+
+3.14 V167 — infinite matte scroll
+---------------------------------
+Sistema provato:
+- scroll panoramico uniforme tipo matte painting infinito.
+
+Teoria:
+- evitare la deformazione prospettica trattando il cielo come fondale matte.
+
+Esito:
+- peggiorativo: sfondo scollegato dal mondo, scorreva come fondale indipendente.
+
+Lezione:
+- screen/matte troppo puro rompe il legame geografico.
+
+
+3.15 V168 — angular lock edge-safe
+----------------------------------
+Sistema provato:
+- tentativo ibrido tra V166 e linearizzazione ai bordi.
+
+Teoria:
+- mantenere il centro stabile e correggere i bordi.
+
+Esito:
+- quasi uguale a V166; il blend era matematicamente troppo debole/inefficace.
+
+Lezione:
+- non basta un blend tra due modelli sbagliati se il paradigma resta ambiguo.
+
+
+3.16 V169 — edge-deprojected lock safe
+--------------------------------------
+Base: V163 pulita, non V164-V168.
+Sistema provato:
+- mapping `edge_deprojected_lock_safe`;
+- centro ispirato a V166;
+- bordi de-proiettati verso target `cameraX*k`;
+- span 2 px;
+- cloud non renderizzato;
+- asset sky/cloud byte-identici a V163.
+
+Teoria:
+- trovare compromesso tra ray-aligned e scroll stabile, riducendo deformazione ai bordi.
+
+Tecnica reale:
+- `PERLA_SKYBOX_V169 = true`;
+- `PERLA_SKYBOX_EDGE_DEPROJECTED_LOCK_SAFE_V169 = true`;
+- `drawSkyboxV169()`;
+- `drawEdgeDeprojectedLockSkyboxImageV169()`;
+- source tex 98, cloud 99;
+- sky hash: 0aa100fa4226e18f67c25d70041b24cc37194df852f96d77b327ad2d449c71bc.
+
+Esito:
+- miglior compromesso temporaneo del vecchio paradigma;
+- utente lo giudica molto meglio rispetto ai tentativi precedenti;
+- ma non risolve concettualmente il conflitto skybox/landmark.
+
+Lezione:
+- si può ottenere compromesso accettabile, ma non soluzione definitiva.
+
+
+3.17 V170 — strong edge deprojection
+------------------------------------
+Sistema provato:
+- spingere di più la deproiezione di V169.
+
+Teoria:
+- se V169 migliora, rafforzare il principio potrebbe migliorare ancora.
+
+Esito:
+- peggiore di V169.
+
+Lezione:
+- non era un problema di “più deproiezione”; il tuning aveva raggiunto il limite.
+
+
+3.18 V171 — farLandmarks diagnostic, un solo landmark world-bearing
+-------------------------------------------------------------------
+Base: V169 reale.
+Sistema provato:
+- cielo semplice;
+- un solo crop nord dal panorama;
+- landmark con bearing iniziale `Math.PI*1.5` / angle01 .75;
+- crop sorgente circa sx 2560, sy 106, sw 1024, sh 263;
+- `drawSimpleSkyV171()` + `drawFarLandmarksV171()`.
+
+Teoria:
+- separare skybox e landmark;
+- il landmark dovrebbe appartenere a una direzione mondo.
+
+Tecnica:
+- `PERLA_FAR_LANDMARKS_V171 = true`;
+- `FAR_LANDMARKS_V171` con un elemento;
+- posizione tramite delta bearing-camera.
+
+Esito utente:
+- bocciata: il fondale ruotava assieme alla camera.
+
+Diagnosi:
+- era ancora un pezzo unico del panorama agganciato tramite bearing;
+- non risolveva la percezione richiesta in quel momento;
+- troppo vicino a “skybox travestito da landmark”.
+
+Lezione:
+- un solo crop non basta; bisogna capire meglio cosa significa “fermo”.
+
+
+3.19 V172 — screen-fixed backdrop diagnostic
+-------------------------------------------
+Base: V169 reale.
+Sistema provato:
+- fondale completamente fisso sullo schermo;
+- niente yaw, niente camera, niente dirX/dirY, niente planeX/planeY.
+
+Teoria:
+- test estremo: se lo schermo non deve cambiare, eliminiamo ogni dipendenza dalla camera.
+
+Tecnica:
+- `PERLA_SCREEN_FIXED_BACKDROP_V172`;
+- stesso crop/pixel nello stesso punto a ogni frame.
+
+Esito:
+- utile come diagnostica;
+- richiesto poi dall'utente: “fermo, ma su coordinate mondo, non coordinate camera”.
+
+Lezione:
+- screen-fixed risolve movimento ma non appartenenza al mondo.
+
+
+3.20 V173 — world-coordinate remote plane
+-----------------------------------------
+Base: V172, derivata da V169.
+Sistema provato:
+- piano remoto nord con Y mondo fisso;
+- texture campionata via `hitX` mondo;
+- range enorme X -360..540, Y -220.
+
+Teoria:
+- fondale fermo su coordinate mondo reali, non schermo.
+
+Tecnica:
+- ray intersection:
+  - rDirX = dirX + planeX * cameraX;
+  - rDirY = dirY + planeY * cameraX;
+  - t = (planeY - posY) / rDirY;
+  - hitX = posX + rDirX * t.
+
+Errore reale:
+- bug di shadowing `planeY`:
+  - `const planeY = PERLA_WORLD_BACKDROP_PLANE_Y_V173;`
+  - questo contaminava il `planeY` della camera.
+
+Esito:
+- fondale visibile quasi sempre/in troppe angolazioni;
+- deformato.
+
+Lezione:
+- due errori:
+  - naming/shadowing può distruggere la geometria;
+  - un piano enorme fuori mappa può essere visibile di obliquo perché i raggi lo intercettano.
+
+
+3.21 V174 — finite north world segment + planeY fix
+---------------------------------------------------
+Base: V173 reale.
+Sistema provato:
+- correzione bug planeY;
+- piano nord non più enorme, ma segmento finito X 10..140, Y -190;
+- gate globale north-facing.
+
+Teoria:
+- fondale su coordinate mondo ma limitato a settore coerente.
+
+Tecnica:
+- separazione tra:
+  - `backdropY` mondo;
+  - `planeY` camera.
+- range finito X0/X1.
+
+Esito:
+- direzionalmente più corretto;
+- utente: “sembra funzionare”; però fondale minuscolo.
+
+Lezione:
+- restringere il segmento elimina leakage, ma riduce troppo la dimensione apparente.
+
+
+3.22 V175 — scale fix del segmento mondo
+----------------------------------------
+Base: V174.
+Sistema provato:
+- segmento finito ma molto più largo:
+  - X -190..330;
+  - Y -190;
+- altezza aumentata:
+  - da circa `screenH*.50+18` a `screenH*.60+36`.
+
+Teoria:
+- mantenere visibilità corretta ma restituire dimensione grande tipo V169.
+
+Esito:
+- più grande;
+- però distorceva in altezza e sembrava più basso.
+
+Diagnosi:
+- il fondale era ancora trattato come muro/segmento prospettico;
+- l'aumento di skyH abbassava la posizione apparente del corpo montagne;
+- campionamento non lineare del panorama generava deformazioni percettive.
+
+Lezione:
+- ingrandire un muro lontano non trasforma il muro in orizzonte.
+
+
+3.23 V176 — world-anchored orthographic far-horizon
+---------------------------------------------------
+Base: V175.
+Sistema provato:
+- coordinate mondo fisse X -190..330, Y -190;
+- niente ray intersection, niente `rDir`, niente `t`, niente `hitX`;
+- posizione schermo calcolata dall'angolo del centro mondo;
+- altezza ripristinata V169: `screenH*.50+18`.
+
+Teoria:
+- fondale con coordinate mondo, ma rendering ortografico/stabile, non murale.
+
+Tecnica:
+- `PERLA_WORLD_ORTHO_HORIZON_BACKDROP_V176 = true`;
+- disegno singolo rettangolo/crop;
+- drawWidth clamped tra min/max.
+
+Esito da screenshot utente:
+- niente distorsione murale grossa;
+- però le montagne ruotavano diversamente da torre/muri.
+
+Diagnosi:
+- V176 agganciava solo il centro del fondale;
+- il resto del panorama era rettangolo unico senza coordinate interne;
+- matematica `delta/fov` diversa dalla proiezione del raycaster.
+
+Lezione:
+- un rettangolo unico ancorato al centro non basta quando dentro ci sono landmark riconoscibili.
+
+
+3.24 V177 — world segmented horizon lock
+----------------------------------------
+Base: V176.
+Sistema provato:
+- fondale nord X -190..330, Y -190;
+- crop diviso in 48 segmenti verticali;
+- ogni segmento con coordinate mondo X0/X1;
+- proiezione orizzontale compatibile con camera-plane/raycaster;
+- altezza fissa far-horizon, senza depth scaling.
+
+Teoria:
+- dare coordinate mondo a più parti del panorama, non solo al centro.
+
+Tecnica:
+- `PERLA_WORLD_SEGMENTED_HORIZON_BACKDROP_V177 = true`;
+- 48 fette;
+- `transX/transY -> screenX` per ciascun segmento;
+- drawImage slice per slice.
+
+Esito da screenshot utente:
+- fondale deformato in larghezza;
+- righe verticali evidenti;
+- effetto fisarmonica.
+
+Diagnosi precisa:
+- sorgente texture divisa in fette uguali;
+- destinazione schermo con fette di larghezza variabile;
+- alpha semitrasparente + floor/ceil/overlap = cuciture verticali;
+- panorama angolare usato come texture di geometria mondo.
+
+Lezione:
+- segmentare una texture panoramica continua crea cuciture e fisarmonica.
+
+
+3.25 V178 — separate world landmarks da crop rettangolari
+---------------------------------------------------------
+Base: V177 reale.
+Sistema provato:
+- disattivare V177;
+- creare 6 landmark remoti separati;
+- ognuno con coordinate/proiezione propria e crop sorgente proprio.
+
+Teoria:
+- invece di un panorama a fette, creare montagne come oggetti remoti indipendenti.
+
+Tecnica:
+- `PERLA_SEPARATE_WORLD_LANDMARKS_V178 = true`;
+- crop rettangolari dal panorama esistente;
+- ogni crop con alpha/scala/proiezione.
+
+Esito da screenshot utente:
+- immagine fondale rotta, impastata, duplicata;
+- profili sovrapposti;
+- peggiore della V177.
+
+Diagnosi:
+- i crop non erano vere sagome isolate;
+- erano rettangoli sporchi con cielo, foschia, altre montagne e alpha già miscelato;
+- sovrapponendoli si sommano trasparenze e si perde identità dei picchi.
+
+Lezione:
+- se si vogliono landmark separati, servono asset puliti separati, non rettangoli ritagliati dal panorama.
+
+
+3.26 V179 — angular world-locked horizon
+----------------------------------------
+Base: V177 reale, non V178.
+Sistema attuale:
+- disattiva V177 segmentato;
+- usa crop nord continuo del panorama;
+- nessuna segmentazione;
+- nessun crop separato sporco;
+- nessuna proiezione murale;
+- posizione tramite bearing mondo nord e camera yaw;
+- larghezza e altezza stabili in screen-space.
+
+Teoria:
+- fondale remoto come orizzonte a bussola, non come oggetto geometrico vicino.
+
+Tecnica reale:
+- `PERLA_ANGULAR_WORLD_LOCKED_HORIZON_V179 = true`;
+- `PERLA_WORLD_SEGMENTED_HORIZON_BACKDROP_V177 = false`;
+- crop continuo tex 98, source center circa .75, width circa .30;
+- bearing nord fisso `-Math.PI/2`;
+- drawW costante `screenW * 1.42`;
+- skyH `screenH*.50+18`;
+- gate direzionale `fov*.5 + .18 rad`;
+- nessun `transX/transY`, nessun `rDir/t/hitX`, nessuna fetta.
+
+Esito tecnico:
+- node --check OK;
+- asset refs 108;
+- missing 0;
+- PNG invariati;
+- mock direzionale: nord visibile, sud/est/ovest nascosti, NE/NW parziali.
+
+Esito visivo:
+- non ancora validato dall'utente nel momento di questo report.
+
+Lezione:
+- questa è la prima implementazione coerente con la diagnosi finale:
+  - world-bearing sì;
+  - scala stabile sì;
+  - niente prospettiva di larghezza;
+  - niente segmentazione;
+  - niente crop sporchi.
+
+
+4. MAPPA SINTETICA DEI SISTEMI PROVATI
+======================================
+
+| Versione | Sistema | Tipo | Esito | Motivo principale |
+|---------|---------|------|-------|-------------------|
+| V158D | panorama 360 + haze | asset/skybox | parziale | atmosfera, ma ancora da calibrare |
+| V158E | cloud layer separato | asset/layer | parziale | buona struttura, non basta |
+| V158F | cielo minimale | asset | parziale | pulito ma troppo vuoto |
+| V158G | landmark geografici | asset | parziale | presenza buona, troppo scuro/smog |
+| V158H | color repair | asset/fog tone | parziale | meno smog, meno leggibilità |
+| V158I-M | shape/alpha/grounding | asset | migliore | V158M base artistica buona |
+| V160 | restore V158M | checkpoint | utile | base numerica pulita |
+| V163 | user mask alpha | asset | importante | sagome utente + alpha atmosferico |
+| V164 | sampling/rounding | mapping | fallito | non era solo sampling |
+| V165 | FOV scale/infinite lock | mapping | fallito | non basta FOV |
+| V166 | ray-aligned | mapping/ray | fallito | effetto muro vicino |
+| V167 | matte-scroll | screen/matte | fallito | scollegato dal mondo |
+| V168 | angular edge blend | mapping ibrido | fallito | quasi V166 |
+| V169 | edge-deprojected | mapping ibrido | migliore temporaneo | compromesso, non soluzione |
+| V170 | strong deprojection | mapping tuning | fallito | peggiora V169 |
+| V171 | 1 farLandmark bearing | world-bearing crop | fallito | ancora crop unico camera/bearing |
+| V172 | screen-fixed | diagnostico | non finale | fermo ma non mondo |
+| V173 | piano mondo remoto | world XY/ray | fallito | bug planeY + piano troppo largo |
+| V174 | segmento finito | world XY/ray | parziale | visibilità ok, troppo piccolo |
+| V175 | segmento largo | world XY/ray | fallito | scala ok, deformazione/vertical anchor |
+| V176 | ortho center-world | angular/ortho | fallito parziale | agganciato solo al centro |
+| V177 | 48 segmenti mondo | segmented projection | fallito | righe/fisarmonica |
+| V178 | crop landmark separati | dirty crops | fallito | asset contaminati/sovrapposti |
+| V179 | angular world-locked | bearing + stable scale | candidato | attende test reale |
+
+
+5. ANALISI TEORICA DEI FALLIMENTI PRINCIPALI
+============================================
+
+5.1 Perché lo skybox non bastava
+--------------------------------
+Il cielo può seguire la camera. Le montagne riconoscibili dietro la torre no, o almeno non devono essere percepite come “appiccicate alla camera”.
+
+Esempio:
+- se la torre è al centro e ruoti, la torre viene proiettata dal raycaster;
+- se le montagne sono dentro lo skybox, scorrono secondo mapping panoramico;
+- il cervello confronta torre e montagne e nota che non appartengono allo stesso spazio.
+
+
+5.2 Perché il muro lontano non funziona
+---------------------------------------
+Un muro nel raycaster subisce prospettiva. Un orizzonte remoto no.
+
+Esempio V175:
+- il segmento nord viene campionato via hitX;
+- vicino ai bordi del FOV la larghezza apparente cambia;
+- il panorama viene stirato.
+
+Errore concettuale:
+- montagne lontane non devono avere la stessa fisica visuale di un muro vicino.
+
+
+5.3 Perché “fuori mappa” non significa invisibile di obliquo
+------------------------------------------------------------
+Un piano a nord fuori dalla mappa può comunque essere intercettato dai raggi laterali.
+
+Esempio V173:
+- piano Y=-220;
+- X=-360..540;
+- anche guardando di sbieco, molti raggi laterali lo colpiscono;
+- se il piano è enorme, appare in troppe angolazioni.
+
+Lezione:
+- serve gating direzionale e bounds, non basta mettere il fondale fuori mappa.
+
+
+5.4 Perché la torre sembrava “alzarsi”
+--------------------------------------
+La torre è geometria vicina del raycaster. La sua altezza apparente può cambiare ruotando, anche se il player è fermo.
+
+Formula concettuale:
+
+    altezza_muro ≈ screenH / distanza_perpendicolare
+
+La distanza perpendicolare cambia con la direzione della camera. Quindi confrontare la cima della torre con un picco lontano può trarre in inganno.
+
+Lezione:
+- il fondale remoto non deve inseguire pixel-per-pixel la torre;
+- deve restare stabile come orizzonte remoto.
+
+
+5.5 Perché V177 produceva righe verticali
+-----------------------------------------
+La V177 disegnava 48 fette.
+
+Origine righe:
+- fette sorgente uguali;
+- fette destinazione variabili;
+- arrotondamenti floor/ceil;
+- overlap per evitare buchi;
+- alpha semitrasparente che si somma.
+
+Esempio:
+- dove due fette si sovrappongono di 1 px, l'alpha aumenta;
+- appare una riga verticale.
+
+Lezione:
+- non segmentare un panorama atmosferico alpha in strisce proiettate.
+
+
+5.6 Perché V178 rompeva l'immagine
+----------------------------------
+I “landmark separati” non erano asset separati. Erano crop rettangolari del vecchio panorama.
+
+Ogni crop conteneva:
+- cielo;
+- foschia;
+- altre montagne;
+- porzioni incomplete;
+- alpha già miscelato.
+
+Quando sovrapposti:
+- si duplicano profili;
+- si sommano trasparenze;
+- i picchi perdono identità;
+- il fondale appare rotto.
+
+Lezione:
+- landmark separati funzionano solo con asset puliti, non crop sporchi.
+
+
+6. MAPPA TECNICA DEI FLAG / RENDERER PRINCIPALI
+===============================================
+
+V169:
+- PERLA_SKYBOX_V169 = true
+- PERLA_SKYBOX_EDGE_DEPROJECTED_LOCK_SAFE_V169 = true
+- drawSkyboxV169()
+- drawEdgeDeprojectedLockSkyboxImageV169()
+
+V171:
+- PERLA_FAR_LANDMARKS_V171 = true
+- drawSimpleSkyV171()
+- drawFarLandmarksV171()
+- drawBackdropV171()
+
+V172:
+- PERLA_SCREEN_FIXED_BACKDROP_V172 = true
+- fondale indipendente da camera/yaw
+
+V173:
+- PERLA_WORLD_COORD_BACKDROP_V173 = true
+- piano nord Y mondo fisso
+- campionamento texture via hitX
+- bocciato per bug planeY e piano troppo largo
+
+V174:
+- PERLA_NORTH_WORLD_SEGMENT_BACKDROP_V174 = true
+- V173 disattivata
+- segmento mondo finito X 10..140, Y -190
+
+V175:
+- PERLA_NORTH_WORLD_SEGMENT_BACKDROP_V175 = true
+- segmento mondo X -190..330, Y -190
+- skyH aumentato a screenH*.60+36
+
+V176:
+- PERLA_WORLD_ORTHO_HORIZON_BACKDROP_V176 = true
+- V175 disattivata
+- niente rDir/t/hitX
+- rettangolo unico agganciato al centro mondo
+
+V177:
+- PERLA_WORLD_SEGMENTED_HORIZON_BACKDROP_V177 = true
+- V176 disattivata
+- 48 segmenti verticali
+- ogni segmento con X0/X1 mondo
+
+V178:
+- PERLA_SEPARATE_WORLD_LANDMARKS_V178 = true
+- V177 disattivata
+- 6 landmark/crop separati
+
+V179:
+- PERLA_ANGULAR_WORLD_LOCKED_HORIZON_V179 = true
+- PERLA_WORLD_SEGMENTED_HORIZON_BACKDROP_V177 = false
+- orizzonte a bearing mondo + scala stabile
+
+
+7. COSA NON BISOGNA RIPETERE
+============================
+
+Non ripetere:
+
+1. Asset-only tuning infinito se il problema è geometrico.
+   - Le V158 hanno migliorato l'arte, ma non risolto il paradigma.
+
+2. Skybox camera-attached con landmark prominenti.
+   - Va bene per cielo/aria, non per montagne dietro oggetti mondo.
+
+3. Ray-aligned come V166.
+   - Produce effetto muro vicino.
+
+4. Matte-scroll puro come V167.
+   - Produce fondale scollegato.
+
+5. Strong deprojection come V170.
+   - Peggiora V169.
+
+6. Piano mondo enorme come V173.
+   - Visibile di obliquo e deformato.
+
+7. Segmento mondo prospettico come V175.
+   - Si deforma in larghezza/altezza.
+
+8. Rettangolo unico center-anchored come V176.
+   - Aggancio insufficiente; interno del panorama senza coordinate proprie.
+
+9. Segmentazione V177.
+   - Righe verticali e fisarmonica.
+
+10. Crop separati sporchi V178.
+    - Immagine rotta, sovrapposizioni sporche.
+
+11. Patchare mappa/collisioni/tetti/sprite per problemi di sfondo.
+    - Il cantiere sfondo deve preservare worldgen, roofSegments, tower, sprites, fog globale.
+
+
+8. COSA INVECE È ANCORA VALIDO
+==============================
+
+Restano validi:
+
+1. Asset V163/V169 come sorgente visiva.
+   - sky e cloud sono byte-identici tra V163 e V169.
+   - il panorama ha sagome utente e alpha atmosferico.
+
+2. Altezza/ancoraggio V169:
+   - `screenH*.50+18` è risultata più coerente di `screenH*.60+36`.
+
+3. Gate direzionale.
+   - Il fondale nord non deve apparire da sud/est/ovest.
+
+4. Scala screen-space stabile.
+   - La larghezza non deve cambiare ai bordi.
+
+5. Separazione concettuale:
+   - cielo = atmosfera;
+   - fondale remoto = bearing mondo;
+   - torre/muri = raycaster prospettico.
+
+6. V179 come candidato pulito.
+   - Non segmenta;
+   - non sporca l'asset;
+   - non lo proietta come muro;
+   - non è screen-fixed puro;
+   - usa un bearing mondo con scala stabile.
+
+
+9. DIAGNOSI FINALE ATTUALE
+==========================
+
+La radice degli oltre dieci tentativi falliti è stata il tentativo di far convivere due sistemi incompatibili:
+
+    panorama skybox angolare
+    vs
+    geometria mondo prospettica
+
+Il panorama contiene montagne come pixel angolari, non come entità con coordinate X/Y reali.
+
+Quando abbiamo provato a forzarlo nel mondo fisico:
+- come piano -> si vede di obliquo e si deforma;
+- come segmento -> diventa piccolo o stirato;
+- come fette -> righe e fisarmonica;
+- come crop -> immagine rotta.
+
+Quando lo abbiamo lasciato troppo camera/screen:
+- come skybox -> segue la camera;
+- come screen-fixed -> non appartiene al mondo;
+- come matte-scroll -> scorre scollegato.
+
+La soluzione teoricamente più corretta è:
+
+    Fondale remoto = orizzonte a direzione mondo, non muro.
+
+Quindi:
+
+    posizione = bearing mondo rispetto alla camera
+    larghezza = stabile
+    altezza = stabile
+    visibilità = gate direzionale
+    asset = crop continuo, non fette e non crop sporchi
+
+Questo è V179.
+
+
+10. STATO ATTUALE E RACCOMANDAZIONE OPERATIVA
+=============================================
+
+Stato ultima build prodotta:
+
+- PERLA1_V179_ANGULAR_WORLD_LOCKED_HORIZON_LOCAL.zip
+- base reale: V177
+- V178 esclusa perché bocciata
+- V177 renderer disattivato
+- renderer attivo: angular/world-bearing V179
+- asset PNG invariati
+- asset refs: 108
+- PNG presenti: 116
+- missing: 0
+- node --check: OK
+- test browser reale: non eseguito da me
+
+Raccomandazione:
+
+1. Testare V179 in browser davanti alla torre.
+2. Non confrontare la cima della torre e la montagna come se dovessero scalare uguali.
+   - La torre è prospettica.
+   - Il fondale è remoto.
+3. Valutare invece questi criteri:
+   - il fondale non deve allargarsi ai bordi;
+   - non deve avere righe verticali;
+   - non deve rompersi/duplicarsi;
+   - non deve apparire da sud/est/ovest;
+   - quando guardi nord deve restare stabile come orizzonte remoto;
+   - deve essere coperto dal mondo davanti dove coerente.
+
+Se V179 funziona quasi ma non perfettamente, i prossimi interventi devono essere solo calibrazioni:
+
+- bearing nord;
+- crop center/width;
+- drawW factor;
+- alpha;
+- horizonY/skyH;
+- gate direzionale.
+
+Non cambiare più paradigma, salvo prova visiva chiaramente negativa.
+
+
+11. APPENDICE — ESEMPI CONCRETI DEI PARADOSSI
+=============================================
+
+Esempio A — perché V173 vedeva il fondale ovunque
+-------------------------------------------------
+
+Piano nord:
+
+    y = -220
+    x = -360..540
+
+Anche se fuori mappa, un raggio laterale può intercettarlo.
+Fuori mappa non significa invisibile: significa solo lontano.
+Se il piano è larghissimo, lo intercetti da molte angolazioni.
+
+In più V173 aveva un bug:
+
+    const planeY = PERLA_WORLD_BACKDROP_PLANE_Y_V173;
+
+Questo nome contaminava il concetto di `planeY` camera.
+Quindi i raggi venivano falsati.
+
+
+Esempio B — perché V175 abbassava il fondale
+--------------------------------------------
+
+V169:
+
+    skyH = 450*.50+18 = circa 243 px
+
+V175:
+
+    skyH = 450*.60+36 = circa 306 px
+
+Disegnando tutto il PNG verticale dentro 306 px, un punto a y=114 del PNG scende:
+
+    V169: 114/384*243 = circa 72 px
+    V175: 114/384*306 = circa 91 px
+
+Quindi il profilo sembra più basso e il corpo viene coperto dal mondo.
+
+
+Esempio C — perché V177 mostrava righe
+--------------------------------------
+
+Sorgente:
+
+    48 fette uguali dal PNG
+
+Destinazione:
+
+    fette di larghezza diversa per proiezione
+
+Per evitare buchi:
+
+    floor / ceil / +2 px overlap
+
+Con alpha:
+
+    overlap = alpha più scuro/visibile
+
+Risultato:
+
+    righe verticali.
+
+
+Esempio D — perché V178 rompeva il panorama
+-------------------------------------------
+
+Crop rettangolare del “picco alto” non contiene solo il picco.
+Contiene anche:
+
+- cielo;
+- foschia;
+- parti di altre montagne;
+- alpha semitrasparente.
+
+Se disegni 6 crop simili sovrapposti, non ottieni 6 montagne.
+Ottieni 6 rettangoli atmosferici che si contaminano.
+
+
+Esempio E — perché la torre inganna il giudizio verticale
+---------------------------------------------------------
+
+La torre è raycast/prospettica.
+Se ruoti, la sua distanza perpendicolare cambia.
+Quindi la torre può apparire più alta o più bassa.
+
+Il fondale remoto non deve inseguire la torre.
+Deve restare stabile come orizzonte.
+
+
+12. CONCLUSIONE FINALE
+======================
+
+Il cantiere sfondi ha attraversato tre fasi:
+
+1. Fase artistica asset:
+   - V158D -> V163;
+   - ha prodotto un panorama buono e alpha atmosferico corretto.
+
+2. Fase tuning/mapping skybox:
+   - V164 -> V170;
+   - ha dimostrato che il problema non si risolve con parametri del mapping.
+
+3. Fase architetturale fondo/mondo:
+   - V171 -> V179;
+   - ha esplorato bearing, screen-fixed, piano mondo, segmento finito, ortografico, segmentazione, landmark crop e infine orizzonte angolare world-locked.
+
+La scoperta definitiva:
+
+    Le montagne lontane non sono muri e non sono sprite vicini.
+    Sono orizzonte remoto.
+    Devono avere direzione mondo, ma scala stabile da fondale.
+
+La regola per il futuro:
+
+    Non cercare più di far comportare il fondale come la torre.
+    La torre è vicina e prospettica.
+    Le montagne sono remote e atmosferiche.
+
+La base candidata attuale è V179.

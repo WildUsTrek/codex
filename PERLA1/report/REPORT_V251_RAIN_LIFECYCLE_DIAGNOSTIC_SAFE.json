@@ -1,0 +1,35 @@
+{
+  "buildId": "PERLA1_V251_RAIN_LIFECYCLE_DIAGNOSTIC_SAFE_LOCAL",
+  "base": "PERLA1_V250_RAIN_NEAR_BUCKET_SEMANTICS_REWORK_SAFE_LOCAL",
+  "type": "diagnostic_only",
+  "filesTouched": [
+    "01_GIOCO_PRONTO_LOCAL_TEST/index.html",
+    "AVVIA_GIOCO_WINDOWS_SENZA_PYTHON.bat",
+    "AVVIA_GIOCO_SERVER_POWERSHELL.ps1",
+    "report/STATUS_PROGETTO_E_DIPENDENZE_PERLA1.txt",
+    "report/METODO_LAVORO_ANTI_REGRESSIONE_PERLA1.txt",
+    "report/README_REPACK_V251.txt",
+    "report/REPORT_V251_RAIN_LIFECYCLE_DIAGNOSTIC_SAFE.json",
+    "report/REPORT_V251_ASSET_CHECK.json"
+  ],
+  "debugCommands": [
+    "resetRainLifecycleDiagnosticV251",
+    "startRainLifecycleDiagnosticV251",
+    "stopRainLifecycleDiagnosticV251",
+    "getRainLifecycleDiagnosticSummaryV251",
+    "downloadRainLifecycleDiagnosticReportV251",
+    "setRainLifecycleDiagnosticV251"
+  ],
+  "assetRefsUnique": 108,
+  "pngTotal": 116,
+  "missingAssets": [],
+  "pngChangedVsV250": [],
+  "preserved": [
+    "V248 controller",
+    "V250 near semantics",
+    "V249 envelope fallback",
+    "angular prefill",
+    "mid/far",
+    "map/collision/assets/roof/skybox/audio/high-wall"
+  ]
+}

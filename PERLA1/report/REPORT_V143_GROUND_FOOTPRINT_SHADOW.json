@@ -1,0 +1,211 @@
+{
+  "build": "PERLA1_V143_GROUND_FOOTPRINT_SHADOW_SAFE_LOCAL",
+  "base": "PERLA1_V142_SHADOW_VISIBILITY_TAMARISK_TENT_SHADOW_SAFE_LOCAL",
+  "derived_from": "V142, which derives from V141 and V138Q blindata",
+  "date": "2026-06-08",
+  "purpose": "Fix reale del bug scala ombre: le ombre non devono rimpicciolirsi avvicinandosi; sostituzione ellisse centrata con footprint ground shadow flat-top/rounded-bottom.",
+  "modified_files": [
+    "01_GIOCO_PRONTO_LOCAL_TEST/index.html",
+    "STATUS_PROGETTO_E_DIPENDENZE_PERLA1.txt",
+    "METODO_LAVORO_ANTI_REGRESSIONE_PERLA1.txt",
+    "ISTRUZIONI OBBLIGATORIE DA SEGUIRE PER LEGGERE LE COORDINATE.txt",
+    "README_REPACK_V143.txt",
+    "REPORT_V143_GROUND_FOOTPRINT_SHADOW.json"
+  ],
+  "unchanged_systems": [
+    "asset PNG",
+    "map/collisioni/worldgen",
+    "tetti/reception/bagni",
+    "torre V136 integrated cap",
+    "pergola",
+    "festoni camper",
+    "barca/lake_rowboat",
+    "microflora placement",
+    "broadphase V137"
+  ],
+  "technical_changes": [
+    "Cache ombre trasformata da ellisse centrata a maschera footprint con top piatto e fondo arrotondato/sfumato.",
+    "drawSpriteContactShadowV141 mantiene il nome per compatibilita debug, ma usa logica V143 top-anchored.",
+    "Rimosso clamp del centro cy: ombra ancorata con topY = contactY - h*topOverlap; se vicina viene clippata dal fondo schermo, non ridimensionata.",
+    "Rimossi maxW/maxH rigidi da near range: vicino usa massimi dinamici legati a screenW/screenH.",
+    "LOD/fade dimensionale solo lontano; vicino ombra cresce con spriteWidth.",
+    "Tende non modificate nell ancoraggio; solo profilo shadow footprint.",
+    "Tamerici mantengono lift V142; nessuna nuova modifica ancoraggio."
+  ],
+  "shadow_scale_probe_tree": [
+    {
+      "d": 2,
+      "spSize": 225,
+      "spriteWidth": 225,
+      "w": 138,
+      "h": 90,
+      "distFade": 1,
+      "nearBoost": 1.06
+    },
+    {
+      "d": 3,
+      "spSize": 150,
+      "spriteWidth": 150,
+      "w": 90,
+      "h": 59,
+      "distFade": 1,
+      "nearBoost": 1.04
+    },
+    {
+      "d": 4,
+      "spSize": 112,
+      "spriteWidth": 112,
+      "w": 66,
+      "h": 43,
+      "distFade": 1,
+      "nearBoost": 1.02
+    },
+    {
+      "d": 5,
+      "spSize": 90,
+      "spriteWidth": 90,
+      "w": 52,
+      "h": 34,
+      "distFade": 1,
+      "nearBoost": 1
+    },
+    {
+      "d": 7,
+      "spSize": 64,
+      "spriteWidth": 64,
+      "w": 37,
+      "h": 24,
+      "distFade": 1,
+      "nearBoost": 1
+    },
+    {
+      "d": 10,
+      "spSize": 45,
+      "spriteWidth": 45,
+      "w": 26,
+      "h": 17,
+      "distFade": 1,
+      "nearBoost": 1
+    },
+    {
+      "d": 13,
+      "spSize": 34,
+      "spriteWidth": 34,
+      "w": 22,
+      "h": 13,
+      "distFade": 1,
+      "nearBoost": 1
+    },
+    {
+      "d": 16,
+      "spSize": 28,
+      "spriteWidth": 28,
+      "w": 22,
+      "h": 13,
+      "distFade": 0.75,
+      "nearBoost": 1
+    },
+    {
+      "d": 20,
+      "spSize": 22,
+      "spriteWidth": 22,
+      "w": 22,
+      "h": 13,
+      "distFade": 0.42,
+      "nearBoost": 1
+    },
+    {
+      "d": 24,
+      "spSize": 18,
+      "spriteWidth": 18,
+      "w": 22,
+      "h": 13,
+      "distFade": 0.08,
+      "nearBoost": 1
+    }
+  ],
+  "runtime_probe": [
+    {
+      "name": "pineta2_west",
+      "spriteVisible": 3,
+      "spriteStripes": 21,
+      "shadows": 0,
+      "profiles": {},
+      "skippedFar": 42,
+      "skippedZ": 0,
+      "v142": true,
+      "v143": true,
+      "flatTop": 0,
+      "topAnchored": 0,
+      "clippedBottom": 0,
+      "nearNotShrunk": 0,
+      "roofSegments": 2
+    },
+    {
+      "name": "yoga_room",
+      "spriteVisible": 1222,
+      "spriteStripes": 5760,
+      "shadows": 93,
+      "profiles": {
+        "tree_footprint_v143": 93
+      },
+      "skippedFar": 195,
+      "skippedZ": 31,
+      "v142": true,
+      "v143": true,
+      "flatTop": 93,
+      "topAnchored": 93,
+      "clippedBottom": 1,
+      "nearNotShrunk": 9,
+      "roofSegments": 2
+    },
+    {
+      "name": "bar_reception",
+      "spriteVisible": 9,
+      "spriteStripes": 470,
+      "shadows": 1,
+      "profiles": {
+        "table_footprint_v143": 1
+      },
+      "skippedFar": 0,
+      "skippedZ": 0,
+      "v142": true,
+      "v143": true,
+      "flatTop": 1,
+      "topAnchored": 1,
+      "clippedBottom": 0,
+      "nearNotShrunk": 0,
+      "roofSegments": 2
+    },
+    {
+      "name": "camper_road",
+      "spriteVisible": 805,
+      "spriteStripes": 788,
+      "shadows": 11,
+      "profiles": {
+        "tree_footprint_v143": 10,
+        "tent_footprint_v143": 1
+      },
+      "skippedFar": 162,
+      "skippedZ": 34,
+      "v142": true,
+      "v143": true,
+      "flatTop": 11,
+      "topAnchored": 11,
+      "clippedBottom": 0,
+      "nearNotShrunk": 0,
+      "roofSegments": 2
+    }
+  ],
+  "asset_manifest_groups": 25,
+  "png_total": 111,
+  "changed_png_vs_v142": [],
+  "no_patch_only_folder": true,
+  "expected_flags": [
+    "v143GroundFootprintShadow",
+    "v143FlatTopRoundedBottom",
+    "v143TopAnchoredNoCenterClamp",
+    "v143NearShadowNotShrunk",
+    "v143BottomClipsInsteadOfScaling"
+  ]
+}

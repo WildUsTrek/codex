@@ -1,0 +1,43 @@
+{
+  "build": "PERLA1_V196_AUDIO_TIMING_BIRDS_RAIN_MIX_LOCAL",
+  "base": "PERLA1_V195_WEATHER_CLOUD_LAYER_VISIBILITY_LOCAL.zip",
+  "scope": "audio-only timing/mix rebalance",
+  "interventions": [
+    "rain target lowered from .075/.105 to .052/.082 and capped at .095",
+    "rain noise bed softened and filters lowered slightly",
+    "footstep distance threshold multiplied by 3.15 and cooldown set to 420ms",
+    "footstep amplitude slightly reduced",
+    "bird bus gain lowered and bird scheduler changed to long variable pauses",
+    "six procedural bird variants with no immediate same-variant repeat",
+    "thunder gain and thunder synthesis left unchanged"
+  ],
+  "preserved": [
+    "V185 horizon/fondale",
+    "V195 cloud layer visual weather",
+    "map",
+    "collision",
+    "worldgen",
+    "roofs",
+    "tower",
+    "roofSegments",
+    "sprites",
+    "assets",
+    "launcher"
+  ],
+  "checks": {
+    "node_check": "OK",
+    "runtime_smoke_vm": "OK",
+    "asset_png_count": 116,
+    "asset_refs_count": 108,
+    "asset_missing_count": 0,
+    "png_modified_count": 0,
+    "drawWeatherCloudDeckV192_absent": true,
+    "footstep_distance_mult": 3.15,
+    "bird_variants": 6,
+    "rain_targets": {
+      "rain": 0.052,
+      "storm": 0.082
+    },
+    "browser_audio_real_test": "not executed in packaging"
+  }
+}

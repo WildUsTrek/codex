@@ -1,0 +1,94 @@
+{
+  "build": "PERLA1_V258_PERFORMANCE_BASELINE_DEBUG_OVERHEAD_SAFE_LOCAL",
+  "base": "PERLA1_V257_RAIN_SKYBOX_DEPTH_ANCHOR_FIX_SAFE_LOCAL",
+  "date": "2026-06-12",
+  "phase": "Fase 1 - Interventi a rischio zero / performance baseline",
+  "objective": "Ridurre overhead DOM/debug e aggiungere baseline performance esportabile senza cambiare resa visiva, mappa, asset, rain output o sistemi core.",
+  "filesModified": [
+    "01_GIOCO_PRONTO_LOCAL_TEST/index.html",
+    "AVVIA_GIOCO_WINDOWS_SENZA_PYTHON.bat",
+    "AVVIA_GIOCO_SERVER_POWERSHELL.ps1",
+    "report/STATUS_PROGETTO_E_DIPENDENZE_PERLA1.txt",
+    "report/METODO_LAVORO_ANTI_REGRESSIONE_PERLA1.txt"
+  ],
+  "filesCreated": [
+    "report/EXTRACTED_INDEX_INLINE_SCRIPT_V258.js",
+    "report/NODE_SMOKE_V258.js",
+    "report/NODE_SMOKE_V258_OUTPUT.json",
+    "report/PERLA1_V258_UNUSED_PATTUMIERA_AUDIT_PHASE1.json",
+    "report/README_REPACK_V258.txt",
+    "report/REPORT_V258_PERFORMANCE_BASELINE_DEBUG_OVERHEAD_SAFE.json"
+  ],
+  "codeChanges": [
+    "Aggiornato PERLA_BUILD_ID e testi UI/launcher a V258.",
+    "Aggiunte costanti V258 per baseline performance e garanzie no visual/worldgen/asset/rain change.",
+    "Throttling update HUD orologio/meteo a 250 ms, evitando innerHTML ogni frame quando non cambia markup.",
+    "Throttling update debugLine a 250 ms, evitando textContent ogni frame.",
+    "Aggiunto collectPerlaPerformanceBaselineV258() esportabile via window.perlaPerformanceV258() e window.__PERLA_DEBUG__.collectPerlaPerformanceBaselineV258().",
+    "Aggiunto downloadPerlaPerformanceBaselineV258() per esportare JSON runtime performance.",
+    "Aggiunto perlaLastDrawStatsSummaryV258() per snapshot leggero dei colli di bottiglia, senza alterare perlaLastDrawStats completo."
+  ],
+  "preserved": {
+    "map_fMap_cMap_roadMask_objectBlock": "unchanged by patch intent",
+    "assets": "no asset byte changes versus V257",
+    "ASSET_MANIFEST": "no manifest change",
+    "rainV248ToV257": "output/gates/lifecycle not changed",
+    "skyboxV257": "not changed",
+    "roof_tower_pergola_festoon_sprites": "not changed",
+    "DOM gameplay canvas": "render loop unchanged except HUD/debug text throttling after draw"
+  },
+  "assetAudit": {
+    "pngFiles": 116,
+    "pngRefs": 108,
+    "missingRefs": 0,
+    "unusedCandidates": [
+      "barbecue_long.png",
+      "fountain.png",
+      "ivy_arch_hanging_high.png",
+      "ivy_arch_overhead_0.png",
+      "ivy_arch_overhead_1.png",
+      "wall_tile_bath_roof_v39.png",
+      "wall_tower_stone_v126.png",
+      "wall_wood_reception_roof_v39.png"
+    ]
+  },
+  "indexStats": {
+    "htmlLines": 23662,
+    "jsLines": 23525,
+    "jsChars": 1429491,
+    "functionDeclarations": 1252,
+    "uniqueFunctionNames": 1245,
+    "indexSha256": "21684dca443f0f68b3942366ad8ce1f495e27bc46d46bd90ed7252ae97611d9d"
+  },
+  "runtimeDebugCommands": [
+    "window.perlaPerformanceV258()",
+    "window.perlaDownloadPerformanceV258()",
+    "window.perlaLastDrawStatsSummaryV258()",
+    "window.__PERLA_DEBUG__.collectPerlaPerformanceBaselineV258()"
+  ],
+  "checksPlanned": [
+    "node --check extracted JS",
+    "asset refs missing = 0",
+    "asset byte changes vs V257 = 0",
+    "zip integrity",
+    "tar.gz integrity",
+    "headless browser smoke if possible"
+  ],
+  "riskAssessment": {
+    "visualRegressionRisk": "very low",
+    "functionalRegressionRisk": "very low",
+    "debugUxChange": "debug text and clock HUD refresh at 4Hz instead of every frame; gameplay/rendering unchanged",
+    "notDone": "No dead code deletion; no asset archive; no rain pipeline refactor; no minimap logic change."
+  },
+  "nextRecommendedPhase": "Dopo test reale V258, eventuale V259: audit/rimozione pattumiera solo su candidati confermati.",
+  "checksExecuted": {
+    "zipBaseIntegrity": "unzip/extract OK",
+    "nodeCheck": "OK on report/EXTRACTED_INDEX_INLINE_SCRIPT_V258.js",
+    "nodeVmSmoke": "OK: build id exported, __PERLA_DEBUG__ present, perlaPerformanceV258 present, two RAF frames executed with fake DOM/canvas",
+    "assetRefsMissing": 0,
+    "assetByteChangesVsV257": 0,
+    "assetChanges": [],
+    "headlessBrowserSmoke": "attempted with Chromium/Playwright but environment blocked navigation with ERR_BLOCKED_BY_ADMINISTRATOR; not counted as app failure",
+    "patchOnlyFolder": "absent by design pending packaging"
+  }
+}

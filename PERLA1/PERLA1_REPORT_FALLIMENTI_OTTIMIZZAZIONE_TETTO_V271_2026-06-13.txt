@@ -1,0 +1,1036 @@
+# PERLA1 — REPORT COMPLETO DEI FALLIMENTI NELL'OTTIMIZZAZIONE DEI TETTI / ROOF / CEILING / COVERAGE
+
+Data: 2026-06-13
+Progetto: PERLA1 — “Camping Sole, Mare & Zanzare”
+Stack: Vanilla JavaScript + Canvas 2D, raycasting 2.5D, singolo `index.html` monolitico dentro `01_GIOCO_PRONTO_LOCAL_TEST/`
+Ambito del report: cantiere di ottimizzazione e stabilizzazione dei tetti/coperture/soffitti da V258/V258A fino a V271, con richiamo agli antecedenti storici utili.
+Stato onesto: FASE 2/3 in corso, non chiusa. FASE 1 completata. FASE 3 non iniziata.
+
+---
+
+## 0. PREMESSA ONESTA
+
+Questo report non è un elenco autocelebrativo delle versioni prodotte. È il documento dei fallimenti, dei falsi positivi, dei vicoli ciechi e delle correzioni concettuali emerse durante il tentativo di ottimizzare i tetti mantenendo:
+
+- prestazioni alte;
+- tetti belli e non zig-zag;
+- gronde leggibili;
+- continuità soffitto/intradosso;
+- gerarchia visiva sacra;
+- muri, cespugli, ceiling, sprite e foreground sempre coerenti;
+- nessun overlay finale finto;
+- vecchio roof fill sample-based disattivato nel runtime normale dopo V267.
+
+La conclusione principale è questa:
+
+```text
+Non esiste una singola scorciatoia semplice per ottimizzare il tetto.
+Ogni tentativo che ha sacrificato la gerarchia o la silhouette in favore della performance ha prodotto regressioni visive.
+Ogni tentativo che ha reso il roof principale più permissivo per recuperare la gronda ha ridisegnato sopra muri sbagliati.
+Ogni tentativo di simulare il soffitto senza passare dal path reale del soffitto è risultato falso o insufficiente.
+```
+
+La base più sicura da cui ragionare oggi, dopo i test reali, resta:
+
+```text
+V267 = buona base architetturale per roof silhouette main alto + old roof fill OFF.
+V270/V271 = esperimenti utili perché usano il path reale del soffitto, ma non finali.
+V268 = bocciata per permissività sopra muri.
+V269 = bocciata per falso clone/fascia esterna.
+V271 = bocciata/incompleta: nord scompare, interno non visibile, clone troppo basso rispetto al tetto.
+```
+
+---
+
+## 1. CONTESTO GENERALE DEL CANTIERE
+
+### 1.1 Le tre fasi del lavoro
+
+Il lavoro era organizzato in tre fasi:
+
+```text
+FASE 1/3 — Baseline / diagnostica / strumenti performance
+Stato: completata.
+
+FASE 2/3 — Stabilizzazione rendering tetti / ceiling / coverage / gerarchia
+Stato: in corso, non terminata.
+
+FASE 3/3 — Rifinitura finale / polishing / validazione globale
+Stato: non iniziata.
+```
+
+Il cantiere dei fallimenti qui documentato appartiene quasi tutto alla FASE 2.
+
+### 1.2 Sistemi coinvolti
+
+Il problema non riguarda solo “un tetto”. Tocca una rete delicata di sistemi:
+
+- `drawSlopedRoofLayer2_5D()`;
+- `drawRoofLayer2_5D()`;
+- `drawModernCoverCeilingSegment()`;
+- floor/ceiling casting;
+- `roofVisibleAt()`;
+- `ZBuffer`;
+- `WallTopBuffer`;
+- `WallBottomBuffer`;
+- `WallOwnerBuffer`;
+- `CeilingDepthBuffer`;
+- `CeilingOwnerBuffer`;
+- `CeilingColumnHasDepth`;
+- `roofSegments`;
+- sprite foreground order;
+- wall DDA;
+- V264 roof watchdog;
+- V265 budget/edge rail;
+- V266/V267 roof silhouette/mask;
+- V270/V271 real ceiling clone.
+
+### 1.3 Obiettivo reale
+
+L'obiettivo non era solo “aumentare gli FPS”. Era ottimizzare il tetto senza perdere:
+
+- forma alta del tetto;
+- gronda/sporgenza;
+- intradosso/soffitto coerente;
+- niente buchi;
+- niente zig-zag;
+- niente pass speciali sopra muri/sprite;
+- niente tettoie oltre muri cespugliosi;
+- niente riattivazione del vecchio fill sample-based.
+
+---
+
+## 2. CONTEGGIO DEI FALLIMENTI E CLASSIFICAZIONE
+
+Conteggio onesto del cantiere V258A–V271:
+
+```text
+Fallimenti / incompleti principali: 12
+Versioni pienamente bocciate come base: V268, V269, V271
+Versioni utili ma non definitive: V259, V260, V261, V262, V263, V264, V265, V266, V267, V270
+Base architetturale più utile: V267
+Esperimento tecnico utile ma incompleto: V270/V271 path reale ceiling
+```
+
+Classi di fallimento:
+
+1. Fallimenti di diagnosi: si è colpito il sistema sbagliato o troppo genericamente.
+2. Fallimenti di budget: si è ridotto il costo, ma si è rotta la silhouette.
+3. Fallimenti di gerarchia: pass speciali hanno iniziato a disegnare sopra muri/sprite.
+4. Fallimenti di clipping: taglio troppo severo o troppo permissivo.
+5. Fallimenti di simulazione: si è imitato il soffitto invece di riusare il path reale.
+6. Fallimenti di continuità: esterno/interno non si raccordano.
+7. Fallimenti di quota: soffitto coerente con sé stesso ma troppo basso rispetto al tetto alto.
+
+---
+
+## 3. ANTECEDENTI STORICI UTILI: PRIMA DEL CANTIERE PERFORMANCE V258+
+
+Questi non sono tutti parte della fase di ottimizzazione performance recente, ma sono fondamentali per capire perché il tetto è diventato un sistema “sacro”.
+
+### 3.1 V47 / V48 / V49 — Modern roof block e soffitto moderno
+
+#### Tentativo / contesto
+
+Si tentava di creare un blocco tetto moderno unico per reception e bagni/docce, separando il cMap come maschera tecnica e rendendo roof/ceiling in pipeline corretta.
+
+#### Fallimento precedente
+
+In V47 il “blocco unico” non era davvero unico:
+
+- cMap visuale era spento;
+- l'intradosso interno moderno era disegnato dopo i muri;
+- il depth test lo faceva sparire dentro;
+- fuori apparivano strisce/fasce isolate.
+
+#### Lezione
+
+Non basta avere un oggetto logico “tetto”. Bisogna collocarlo nella pipeline corretta:
+
+```text
+ceiling-pass per intradosso interno;
+roof layer per guscio esterno;
+nessuna striscia/sottogronda libera fuori contesto;
+pareti davanti sempre autorità visiva.
+```
+
+Questa lezione è tornata in modo drammatico in V268/V269: appena un pass tetto diventa troppo autonomo, rompe la gerarchia.
+
+### 3.2 V110–V121 — Tetti moderni, micro-linee, tettoie non moderne
+
+#### Contesto
+
+In questa fase si erano risolti problemi di tetti moderni, soffit, merge muro/soffitto, pali/tettoie e depth vicino a reception/bar/yoga.
+
+#### Lezione
+
+Il tetto non è solo una texture: è una gerarchia tra:
+
+- pareti;
+- soffitti;
+- tettoie;
+- sprite;
+- occlusione colonna per colonna;
+- fog e distanza.
+
+Ogni ottimizzazione successiva deve rispettare questa memoria.
+
+---
+
+## 4. CANTIERE RECENTE: FALLIMENTI V258A–V271
+
+---
+
+# V258 / V258A — BASELINE E STRUMENTI: NON FALLIMENTO, MA PUNTO DI PARTENZA
+
+## Teoria/logica
+
+Prima di ottimizzare bisognava misurare. V258/V258A servivano a capire se il costo fosse dovuto a rain, sprite, floor, roof, minimappa o debug.
+
+## Lavoro tecnico
+
+Sono stati introdotti:
+
+- recorder performance;
+- smart performance tour;
+- riduzione overhead debug;
+- marker e campionamento per frame pesanti;
+- report per zona/meteo/mode;
+- metriche roof/floor/sprite.
+
+## Risultato reale
+
+La fase baseline non è stata un fallimento. Ha rivelato però che i costi forti erano localizzati su roof/coverage:
+
+- `bath_garden` con roof cost alto;
+- reception/roof moderno con branch costosi;
+- in alcuni casi `roof.samples` e `visibleSamples` fuori scala;
+- il problema non era soltanto pioggia, né soltanto sprite.
+
+## Lezione
+
+Senza V258/V258A avremmo continuato a colpire sistemi sbagliati. La baseline ha chiuso la Fase 1.
+
+---
+
+# V259 — ROOF/CEILING HOTSPOT BUDGET: SUCCESSO PARZIALE, NON SOLUZIONE FINALE
+
+File:
+
+```text
+PERLA1_V259_ROOF_CEILING_HOTSPOT_BUDGET_SAFE_LOCAL
+```
+
+## Teoria/logica
+
+Prima ipotesi: i roof hotspots specifici di reception/bagni potevano essere ridotti con budget locale, senza cambiare architettura generale.
+
+Idea:
+
+```text
+identifica roof/ceiling hotspot;
+limita campioni dove serve;
+preserva edge/gronda/gable/cap;
+non toccare rain/skybox/worldgen.
+```
+
+## Lavoro tecnico
+
+Interventi:
+
+- screen bounds candidate list;
+- bbox reject;
+- owner budget;
+- edge/gronda/gable/cap protection;
+- cache per frame;
+- debug `perlaRoofHotspotSummaryV259()`, `perlaRoofHotspotColumnsV259()`, toggle/mode/download.
+
+## Risultato pratico
+
+Ha migliorato la situazione rispetto al baseline, ma non ha chiuso il problema. Alcuni report indicavano miglioramenti importanti, ma restavano zone come `erba`, `secret_lake_path`, reception/bath con costi ancora alti in certe condizioni.
+
+## Fallimento rispetto all'obiettivo finale
+
+V259 colpiva alcuni owner/roof hotspot, ma non era path-independent. Quando il costo passava da rami non previsti o da coverage generico, il budget non intercettava tutto.
+
+## Lezione
+
+Ottimizzare “owner noti” non basta. Serve intercettare il costo dove nasce, non solo dove pensiamo che nasca.
+
+---
+
+# V260 — LONG VIEW SPRITE/FLOOR BUDGET: DIAGNOSI TROPPO LARGA / NON RISOLVE IL ROOF
+
+File:
+
+```text
+PERLA1_V260_LONG_VIEW_SPRITE_FLOOR_BUDGET_SAFE_LOCAL
+```
+
+## Teoria/logica
+
+Dopo V259 si ipotizzò che il problema residuo fosse anche long-view: molti sprite, floor segments, ampie visuali.
+
+## Lavoro tecnico
+
+Interventi:
+
+- governor long view;
+- sprite LOD/prefilter;
+- stripe-step LOD far/tiny/non-protected;
+- floor far LOD;
+- debug `perlaLongViewBudgetSummaryV260()`.
+
+## Risultato pratico
+
+Ha aiutato genericamente, ma non ha risolto il difetto principale roof/pergola.
+
+Il test empirico utente ha corretto la diagnosi:
+
+```text
+mondo normale in storm: circa 10–11 draw;
+zone tetti/pergola: circa 22–24 draw.
+```
+
+## Fallimento
+
+V260 era un'ottimizzazione troppo generica. Il collo di bottiglia principale era locale su coverage roof/pergola, non sul long view globale.
+
+## Lezione
+
+Quando i marker dicono “roof/pergola local hotspot”, non bisogna disperdere interventi su sprite/floor salvo prove precise.
+
+---
+
+# V261 — ROOF/PERGOLA HARD CAP: FLICKER, JAGGED, CAP TROPPO GREZZO
+
+File:
+
+```text
+PERLA1_V261_ROOF_PERGOLA_HARD_CAP_SAFE_LOCAL
+```
+
+## Teoria/logica
+
+Ipotesi: imporre un hard cap locale su roof/ceiling/pergola avrebbe contenuto i draw nei punti critici.
+
+## Lavoro tecnico
+
+Interventi:
+
+- coverage profiler V261;
+- local hard cap roof/ceiling;
+- pergola/canopy cap;
+- pressure state moving average;
+- debug `perlaCoverageSurfaceSummaryV261()` e `perlaPergolaBudgetSummaryV261()`.
+
+## Risultato pratico
+
+Ha colpito la zona giusta, ma in modo troppo grezzo. Il test utente segnalò:
+
+- flickering tettoie in clear;
+- jagged edges;
+- rumore camminando;
+- pergola con difetti simili;
+- cap che entrava solo in alcuni casi.
+
+Report reali mostravano ancora casi con roof samples elevati e `hardCapApplied` non sempre coerente.
+
+## Fallimento
+
+Il cap lavorava troppo a blocchi/segmenti, non abbastanza stabile e non abbastanza coerente con silhouette/edge. Ha ridotto il costo in alcuni rami ma ha introdotto instabilità visiva.
+
+## Lezione
+
+Un hard cap non può decidere la forma visibile del tetto. Se il budget campioni influisce sulla silhouette, il tetto sfarfalla o diventa dentato.
+
+---
+
+# V262 — COVERAGE STABLE EDGE REPAIR: PEGGIORATIVA, NON INTERCETTA IL RAMO COSTOSO
+
+File:
+
+```text
+PERLA1_V262_COVERAGE_STABLE_EDGE_REPAIR_SAFE_LOCAL
+```
+
+## Teoria/logica
+
+Dopo V261 serviva una versione più stabile:
+
+- edge/silhouette/gronde/gable/cap full quality;
+- interior budget deterministico;
+- hysteresis clear/storm;
+- emergency cap;
+- separazione labels roof/canopy/pergola.
+
+## Lavoro tecnico
+
+Interventi pianificati/implementati:
+
+- stable coverage mode;
+- edge repair;
+- budget deterministico;
+- debug `perlaCoverageStableSummaryV262()`.
+
+## Risultato pratico
+
+V262 è stata peggiorativa, soprattutto su roof/reception e rain.
+
+Osservazioni riportate:
+
+- branch alternati a ~5290 samples e 15200 samples;
+- visibleSamples ~9670 in alcuni casi;
+- roof.ms 23–28;
+- emergency cap spesso non entrava quando serviva;
+- dichiarava stable budget ma non riduceva davvero il ramo costoso.
+
+## Fallimento
+
+Il nome “stable edge repair” non corrispondeva a un controllo effettivo del ramo costoso. Il sistema era più sofisticato come debug, ma non abbastanza autorevole sul costo reale.
+
+## Lezione
+
+La diagnostica non basta. Se `uncappedRoofSamples` resta alto e il cap non entra, la patch è fallita anche se i contatori esistono.
+
+---
+
+# V263 — ROOF MID-DISTANCE BRANCH LOCK: TROPPO STRETTA, NON SI ATTIVA NEI CASI REALI
+
+File:
+
+```text
+PERLA1_V263_ROOF_MID_DISTANCE_BRANCH_LOCK_SAFE_LOCAL
+```
+
+## Teoria/logica
+
+Ipotesi: il ramo costoso era un branch specifico modern/reception/bath a media distanza. Quindi si poteva bloccare quel branch.
+
+## Lavoro tecnico
+
+Interventi:
+
+- branch lock mirato;
+- debug `perlaRoofBranchLockSummaryV263()`;
+- obiettivo: impedire 15200/30000 campioni nelle visuali problematiche.
+
+## Risultato pratico
+
+Il test reale mostrò ancora draw intorno a 20 in clear a certe distanze da bagni/reception.
+
+Report indicativi:
+
+- `fascia_palme`: draw avg circa 20.568, p50 20, p95 22, max 38;
+- roof samples circa 30102;
+- `roofBranchLockV263.enabled=false`, `applied=0`, owner/path null;
+- `uncappedRoofSamples=30102`.
+
+## Fallimento
+
+Il branch lock era troppo specifico. Nei casi reali il costo passava da un ramo/label non riconosciuto, quindi il sistema non entrava.
+
+## Lezione
+
+Non bisogna ottimizzare un nome di branch presunto. Serve un watchdog cost-based/path-independent.
+
+---
+
+# V264 — ROOF COST WATCHDOG: SUCCESSO PERFORMANCE, FALLIMENTO VISIVO DELLA SILHOUETTE
+
+File:
+
+```text
+PERLA1_V264_ROOF_COST_WATCHDOG_EMERGENCY_SAFE_LOCAL
+```
+
+## Teoria/logica
+
+Dopo V263 la correzione giusta era rendere il sistema path-independent:
+
+```text
+se roof.ms / roof.samples / visibleSamples / uncappedRoofSamples superano soglia,
+applica emergenza indipendentemente dal branch.
+```
+
+## Lavoro tecnico
+
+Interventi:
+
+- `RoofCostWatchdogV264` sempre attivo;
+- livelli warning/pressure/emergency;
+- soglie su roof.ms, roof.samples, visibleSamples, drawWorld;
+- obbligo logico: se emergency è vera, `emergencyApplied` non può restare 0 senza registrare failure;
+- debug `perlaRoofCostWatchdogSummaryV264()`.
+
+## Risultato pratico
+
+La performance è migliorata molto.
+
+Dati reali dal report V264:
+
+```text
+drawWorld avg: circa 9.583
+p50: 8
+p95: 9
+fps avg: 60
+roof samples: 2600
+visibleSamples: 281
+uncappedRoofSamples: 21437
+samplesSaved: 18837
+loopStepX: 7
+loopStepY: 5
+```
+
+## Fallimento
+
+Il watchdog ha risolto il costo, ma ha distrutto la qualità del profilo. Il tetto è diventato zigrinato/zig-zag, soprattutto lontano e sulle diagonali.
+
+Causa:
+
+```text
+il budget interno stava ancora determinando anche la silhouette esterna.
+```
+
+## Lezione
+
+Ottimo per performance, non sufficiente per estetica. La silhouette non può dipendere dal sampling interno budgetizzato.
+
+---
+
+# V265 — ULTRA BUDGET + EDGE RAIL: LINEA SOTTILE SOPRA TETTO ROTTO
+
+File:
+
+```text
+PERLA1_V265_COVERAGE_ULTRA_BUDGET_EDGE_RAIL_SAFE_LOCAL
+```
+
+## Teoria/logica
+
+Tentativo: mantenere il costo basso V264 e riparare i bordi con un edge rail depth-aware.
+
+Formula:
+
+```text
+interno ultra-budget;
+edge rail leggero sui bordi;
+nessun ritorno a sampling alto.
+```
+
+## Lavoro tecnico
+
+Interventi:
+
+- budget più severo clear/rain/storm;
+- edge rail per tetti/pergola/canopy;
+- linee roof e pergola con sampling limitato;
+- debug `perlaCoverageEdgeRailSummaryV265()`.
+
+## Risultato pratico
+
+Prestazioni buone, ma visivamente il tetto era ancora a zig-zag. L'utente vedeva la linea sottile disegnata, ma sotto rimaneva il profilo scomposto.
+
+## Fallimento
+
+L'edge rail era una decorazione sopra un fill già rotto. Non poteva cancellare la silhouette scalettata sotto.
+
+Causa teorica:
+
+```text
+se la silhouette è costruita dal fill budgetizzato, una linea sopra non la corregge davvero.
+```
+
+## Lezione
+
+Il bordo non deve essere una toppa. Deve essere l'autorità geometrica del tetto.
+
+---
+
+# V266 — ROOF SILHOUETTE MASK: DIREZIONE GIUSTA MA GERARCHIA ANCORA SPORCA
+
+File:
+
+```text
+PERLA1_V266_ROOF_SILHOUETTE_MASK_BUDGET_HIERARCHY_SAFE_LOCAL
+```
+
+## Teoria/logica
+
+Nuova direzione: separare silhouette/maschera continua dal fill interno ultra-budget.
+
+Formula:
+
+```text
+silhouette/mask continua = profilo del tetto;
+fill interno = economico;
+edge rail = rifinitura, non soluzione principale.
+```
+
+## Lavoro tecnico
+
+Interventi:
+
+- roof silhouette/mask continua;
+- edge rail V265 preservato ma demansionato;
+- prime guardie gerarchiche anti-overlay;
+- debug `perlaRoofSilhouetteMaskSummaryV266()`.
+
+## Risultato pratico
+
+Il tetto semplificato appariva bello e promettente. Però disegnava parti interne sopra muri/frontali.
+
+## Fallimento
+
+La silhouette era bella, ma ancora non abbastanza wall-clipped. Il problema non era la forma; era la gerarchia.
+
+## Lezione
+
+Promuovere una mask/silhouette senza clipping severo contro WallTop/Bottom/ZBuffer produce overlay.
+
+---
+
+# V267 — SILHOUETTE MAIN + OLD FILL OFF: BUONA BASE, MA CLIPPING/GRONDA/FORMA NON RISOLTI
+
+File:
+
+```text
+PERLA1_V267_ROOF_SILHOUETTE_MAIN_WALL_CLIP_SAFE_LOCAL
+```
+
+## Teoria/logica
+
+La V267 ha preso la decisione giusta:
+
+```text
+vecchio roof fill sample-based OFF;
+silhouette/mask continua ON come renderer principale;
+wall clip severo per evitare overlay sui muri.
+```
+
+## Lavoro tecnico
+
+Interventi:
+
+- old roof fill spento default;
+- silhouette/mask V266 promossa a main renderer;
+- clipping con ZBuffer, WallTop/Bottom, CeilingDepth;
+- modalità `original` solo fallback/debug;
+- debug `perlaRoofSilhouetteMainSummaryV267()`.
+
+## Risultato pratico
+
+La V267 funziona bene come architettura: niente più vecchio fill zig-zag, tetto più stabile, performance preservata.
+
+Ma l'utente ha rilevato difetti reali:
+
+1. forma cambiata: tetto meno verticale e più schiacciato;
+2. gronda/sporgenza sparisce da sotto vicino al muro;
+3. sparizione influenzata anche dall'angolo camera;
+4. se una tettoia davanti tocca di striscio, cancella un segmento intero;
+5. linee V265 ormai inutili.
+
+## Fallimento
+
+V267 è il miglior checkpoint architetturale, ma non chiude la FASE 2 perché:
+
+- il clipping è troppo severo in certi casi;
+- il sistema taglia per span/segmento, non abbastanza per colonna/micro-span;
+- la gronda viene trattata come parte del roof principale, causando conflitto con i muri;
+- la forma del tetto richiede tuning ma non va schiacciata.
+
+## Lezione
+
+Il roof top alto e la gronda/intradosso non devono essere lo stesso problema. Serve separare tetto alto, soffitto/intradosso e clipping.
+
+---
+
+# V268 — EAVE/ANGLE CLIP REFINEMENT: REGRESSIONE NETTA, TROPPO PERMISSIVA
+
+File:
+
+```text
+PERLA1_V268_ROOF_EAVE_ANGLE_CLIP_REFINEMENT_SAFE_LOCAL
+```
+
+## Teoria/logica
+
+Tentativo: rifinire V267 con:
+
+- ridge lift;
+- eave allowance;
+- same-building wall più permissivo;
+- grazing-angle relax;
+- partial clip;
+- edge rail off.
+
+## Lavoro tecnico
+
+Interventi pianificati:
+
+- eave allowance;
+- near-wall/grazing relax;
+- clipping meno brutale;
+- edge rail default off;
+- debug `perlaRoofEaveClipSummaryV268()`.
+
+## Risultato pratico
+
+Bocciata dall'utente:
+
+```text
+“no no regressione, assolutamente peggiorato, bocciato! le gronde non funzionano, anzi, ora hanno di nuovo disegnato sopra ai muri sbagliati.”
+```
+
+## Fallimento
+
+La patch ha rilassato il roof principale per salvare la gronda, riaprendo il problema degli overlay sopra muri sbagliati.
+
+## Lezione fondamentale
+
+```text
+Non bisogna rendere il roof principale più permissivo per salvare la gronda.
+La gronda va gestita come intradosso/soffitto dedicato, owner-aware e depth-aware.
+```
+
+V268 non va usata come base.
+
+---
+
+# V269 — EXTERNAL SOFFIT/EAVE: FALSO CLONE, SOLO FASCIA/RIGA ESTERNA
+
+File:
+
+```text
+PERLA1_V269_ROOF_EXTERNAL_SOFFIT_EAVE_CONTINUITY_SAFE_LOCAL
+```
+
+## Teoria/logica
+
+Idea corretta dell'utente: creare due soffitti coerenti:
+
+- soffitto interno attuale, preciso coi muri;
+- clone esterno leggermente più largo/lungo, per continuità visiva della gronda;
+- muri davanti vincono sempre.
+
+## Lavoro tecnico effettivo
+
+La realizzazione è stata sbagliata. Invece di clonare il soffitto, è stata creata una fascia perimetrale esterna:
+
+- quattro bande nord/sud/ovest/est;
+- colore simile al soffitto;
+- posizione più bassa/perimetrale;
+- non riuso reale di `drawModernCoverCeilingSegment()`.
+
+## Risultato pratico
+
+L'utente ha visto correttamente:
+
+```text
+una riga di soffitto un po' più bassa e solo esterna.
+```
+
+## Fallimento
+
+Concettualmente grave: la patch prometteva un clone del soffitto, ma ha implementato una cornice/fascia.
+
+## Lezione
+
+Non bisogna imitare il soffitto. Bisogna passare dallo stesso path reale del soffitto oppure non farlo.
+
+V269 non va usata come base.
+
+---
+
+# V270 — REAL CEILING CLONE: PATH GIUSTO, MA PARZIALE
+
+File:
+
+```text
+PERLA1_V270_REAL_CEILING_CLONE_EAVE_SAFE_LOCAL
+```
+
+## Teoria/logica
+
+Correzione onesta del fallimento V269: usare davvero il path del soffitto reale.
+
+Formula:
+
+```text
+il clone esterno viene generato nel floor/ceiling casting;
+fa “vedere” un cover moderno virtuale appena fuori dal footprint;
+viene disegnato da drawModernCoverCeilingSegment();
+usa stesso materiale/fog/proiezione del soffitto interno;
+non è overlay finale;
+i muri lo coprono naturalmente perché passano dopo.
+```
+
+## Lavoro tecnico
+
+Interventi:
+
+- rimozione concetto fascia V269;
+- resolver virtuale per cover esterno;
+- path `drawModernCoverCeilingSegment()`;
+- debug `perlaRealCeilingCloneSummaryV270()`;
+- V267 roof silhouette main preservato;
+- old roof fill OFF.
+
+## Risultato pratico
+
+Parzialmente positivo:
+
+- ovest, est e nord finalmente mostravano il soffitto;
+- non era più una riga finta;
+- passava dal path reale del ceiling.
+
+Difetti:
+
+- a sud non compariva;
+- dentro non si vedeva;
+- il profilo interno del tetto restava visibile;
+- clone troppo “esterno-only”.
+
+## Fallimento
+
+V270 non è bocciata concettualmente, ma è incompleta. Ha dimostrato il path corretto, non la soluzione finale.
+
+## Lezione
+
+Il path reale del soffitto è giusto. Ma il clone deve essere side-aware, continuo interno/esterno e coordinato col roof profile.
+
+---
+
+# V271 — SIDE-AWARE CONTINUITY: NON FUNZIONA, NORD SPARISCE, INTERNO ASSENTE, QUOTA PROBLEMATICA
+
+File:
+
+```text
+PERLA1_V271_REAL_CEILING_CLONE_SIDE_AWARE_CONTINUITY_SAFE_LOCAL
+```
+
+## Teoria/logica
+
+Tentativo di completare V270:
+
+- side-aware outset;
+- sud più generoso;
+- inner continuity band;
+- guard per far vincere ceiling/clone sul profilo roof interno;
+- mantenere path reale `drawModernCoverCeilingSegment()`.
+
+## Lavoro tecnico
+
+Interventi dichiarati:
+
+- lato sud boost;
+- fascia interna continuità;
+- soppressione del profilo roof interno dove ceiling dovrebbe vincere;
+- debug `perlaRealCeilingCloneContinuitySummaryV271()`;
+- V268/V269 assenti;
+- old roof fill OFF.
+
+## Risultato pratico reale
+
+Bocciata/incompleta dall'utente:
+
+```text
+- a nord scompare;
+- all'interno non si vede;
+- anche se è alto come il soffitto originale interno, rispetto al tetto è troppo in basso;
+- non è chiaro se alzare il soffitto o abbassare il tetto, ma entrambe le opzioni possono creare regressioni.
+```
+
+## Fallimento
+
+La patch ha mantenuto il path tecnico corretto, ma non ha risolto la continuità. Inoltre ha introdotto una nuova incoerenza: la quota del soffitto/intradosso, coerente internamente, appare troppo bassa rispetto al tetto alto V267.
+
+## Lezione
+
+Non basta far passare il clone dal path reale. Bisogna risolvere un problema architetturale più profondo:
+
+```text
+quale deve essere la relazione verticale tra roof top alto, soffitto/intradosso e muri?
+```
+
+Non decidere impulsivamente “alziamo soffitto” o “abbassiamo tetto”: entrambe possono rompere gerarchia, interno, fog, e silhouette.
+
+---
+
+## 5. TABELLA RIASSUNTIVA DEI FALLIMENTI
+
+| Versione | Obiettivo | Esito | Tipo di fallimento | Lezione |
+|---|---|---|---|---|
+| V259 | Budget hotspot roof/ceiling | Parziale | Non intercetta tutti i rami | Owner-specific non basta |
+| V260 | Long view sprite/floor | Parziale/errata direzione | Troppo generica | Il problema era roof/pergola locale |
+| V261 | Hard cap roof/pergola | Fallita visivamente | Flicker/jagged/cap grezzo | Hard cap non deve decidere silhouette |
+| V262 | Stable edge repair | Peggiorativa | Non intercetta ramo costoso | Debug senza controllo reale non basta |
+| V263 | Branch lock | Fallita | Branch troppo stretto/non attivo | Serve watchdog cost-based |
+| V264 | Cost watchdog | Performance OK, visual fail | Zig-zag silhouette | Budget interno non deve fare il bordo |
+| V265 | Edge rail | Fallita visualmente | Linea sopra tetto rotto | Il bordo deve essere geometria, non toppa |
+| V266 | Silhouette mask | Parziale | Disegno sopra muri | Silhouette senza clipping = overlay |
+| V267 | Silhouette main | Miglior base, non finale | Forma/gronda/clipping | Separare roof alto e intradosso |
+| V268 | Eave relax | Regressione | Ridisegna sopra muri | Non rendere roof permissivo |
+| V269 | External soffit | Concettualmente fallita | Falsa fascia, non clone | Riusare path reale ceiling |
+| V270 | Real ceiling clone | Parziale | Sud/interior assenti | Path giusto, continuità incompleta |
+| V271 | Side-aware continuity | Fallita/incompleta | Nord sparisce, interno assente, quota bassa | Risolvere relazione verticale roof/soffitto |
+
+---
+
+## 6. CAUSE RADICE GENERALI
+
+### 6.1 Causa radice 1 — Un sistema solo stava facendo troppi lavori
+
+Il roof principale è stato usato per:
+
+- tetto alto;
+- gronda;
+- intradosso;
+- continuità interna/esterna;
+- clipping contro muri;
+- ottimizzazione performance.
+
+Questo è troppo.
+
+Architettura più corretta:
+
+```text
+roof top silhouette = forma alta del tetto;
+ceiling/soffit = intradosso/continuità;
+wall DDA/ZBuffer = autorità foreground;
+old roof fill = OFF;
+edge rail = debug, non soluzione.
+```
+
+### 6.2 Causa radice 2 — Il budget ha contaminato la silhouette
+
+In V264/V265 il budget ha ridotto il costo, ma ha prodotto zig-zag perché il profilo esterno dipendeva ancora dalla griglia di sampling.
+
+Regola definitiva:
+
+```text
+Il budget interno non deve mai determinare la silhouette esterna del tetto.
+```
+
+### 6.3 Causa radice 3 — Le patch speciali rischiano overlay
+
+V268/V269 dimostrano che ogni pass speciale che disegna “dopo” o “fuori” dalla gerarchia tende a:
+
+- comparire sopra muri;
+- attraversare cespugli;
+- scavalcare sprite foreground;
+- creare righe/fasce artificiali.
+
+Regola:
+
+```text
+Nessun roof/canopy/soffit/rail deve essere overlay finale.
+```
+
+### 6.4 Causa radice 4 — Il soffitto reale è il path corretto, ma la quota non è risolta
+
+V270/V271 dimostrano che `drawModernCoverCeilingSegment()` dà resa coerente, ma non basta. Resta da decidere, con cautela, la relazione tra:
+
+- tetto alto V267;
+- soffitto interno attuale;
+- clone esterno/intradosso;
+- muri e wall top;
+- visibilità interna/esterna.
+
+---
+
+## 7. ERRORI DA NON RIPETERE MAI
+
+1. Non usare V268 come base.
+2. Non usare V269 come base.
+3. Non riattivare il vecchio roof fill sample-based nel runtime normale.
+4. Non aumentare il sampling globale per risolvere la qualità.
+5. Non disegnare linee/edge rail sopra un tetto rotto sperando di correggerlo.
+6. Non lasciare che il budget interno determini la silhouette.
+7. Non rendere il roof principale permissivo contro i muri per salvare la gronda.
+8. Non simulare un soffitto con fasce perimetrali se il piano dice “clone del soffitto”.
+9. Non disegnare soffit/eave come overlay finale.
+10. Non cambiare asset/mappa/rain/skybox per problemi di roof clipping.
+11. Non risolvere il sud disegnando sopra muri.
+12. Non decidere impulsivamente se alzare soffitto o abbassare tetto: prima serve analisi di quota/gerarchia.
+13. Non dichiarare “successo” senza test browser reale sui punti: nord/sud/est/ovest, interno, entrata/uscita, bar→reception, muri cespugliosi, rain/storm.
+14. Non usare debug counters come prova se l'immagine reale è sbagliata.
+15. Non confondere “prestazioni buone” con “soluzione pronta”.
+
+---
+
+## 8. STATO ATTUALE DOPO V271
+
+Stato reale:
+
+```text
+Fase 1/3 completata.
+Fase 2/3 in corso, non chiusa.
+Fase 3/3 non iniziata.
+```
+
+Build disponibili e status:
+
+```text
+V267 — base architetturale più sicura per roof silhouette main + old fill OFF.
+V268 — bocciata, non usare.
+V269 — bocciata, non usare.
+V270 — utile come esperimento path reale ceiling, ma incompleto.
+V271 — bocciata/incompleta: nord scompare, interno assente, quota troppo bassa rispetto al tetto.
+```
+
+Il problema aperto è:
+
+```text
+Come creare continuità roof/soffitto/gronda mantenendo il tetto alto e senza far disegnare soffitto/clone sopra i muri?
+```
+
+Punti da indagare nella nuova chat/lavoro:
+
+1. relazione verticale tra roof top alto e soffitto/intradosso;
+2. perché il clone reale scompare a nord in V271;
+3. perché interno non vede il clone/ceiling come atteso;
+4. come impedire il profilo roof interno senza spegnere il tetto esterno;
+5. se serve un livello intermedio tra soffitto e roof, non una fascia finta;
+6. se la quota del soffitto interno è storicamente corretta e solo il tetto è troppo alto, oppure se il roof top deve restare alto e l'intradosso deve avere un piano visivo diverso.
+
+---
+
+## 9. RACCOMANDAZIONE OPERATIVA PER LA RIPRESA
+
+Non ripartire subito con una patch creativa. Prima fare una mini-diagnosi su V267/V270/V271:
+
+```text
+1. Estrarre V267, V270, V271.
+2. Confrontare le funzioni ceiling/roof interessate.
+3. Mappare esattamente: quota roof top, quota ceiling interno, quota clone, wallTop.
+4. Verificare ordine pipeline: ceiling pass, wall pass, roof layer, sprite layer.
+5. Isolare perché V271 perde il nord rispetto a V270.
+6. Isolare perché interno non vede il ceiling/clone.
+7. Solo dopo pianificare V272.
+```
+
+Possibile nome futuro:
+
+```text
+PERLA1_V272_ROOF_CEILING_HEIGHT_RELATION_DIAGNOSTIC_SAFE_LOCAL
+```
+
+Non dovrebbe essere subito una patch estetica, ma una diagnostica di quota/gerarchia se si vuole evitare un altro V268/V269/V271.
+
+---
+
+## 10. CONCLUSIONE
+
+La catena dei fallimenti ha prodotto una conoscenza utile:
+
+- la performance si può salvare: V264 lo ha dimostrato;
+- il vecchio fill sample-based non deve tornare come principale;
+- la silhouette main V267 è la migliore base roof;
+- l'edge rail è una toppa insufficiente;
+- la gronda non va risolta rilassando il roof;
+- il clone soffitto deve passare dal path reale, non da fasce finte;
+- il path reale ceiling è promettente ma incompleto;
+- la prossima sfida non è più “ottimizzare campioni”, ma risolvere la geometria/gerarchia tra tetto alto, soffitto/intradosso e muri.
+
+Questo è il punto reale in cui siamo fermi.

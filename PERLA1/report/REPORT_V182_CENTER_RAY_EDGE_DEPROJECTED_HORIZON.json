@@ -1,0 +1,44 @@
+{
+  "build": "PERLA1_V182_CENTER_RAY_EDGE_DEPROJECTED_HORIZON_LOCAL",
+  "base": "PERLA1_V181_RAY_DIRECTION_ENVIRONMENT_HORIZON_LOCAL.zip",
+  "date": "2026-06-10",
+  "intent": "Center ray-mapped horizon from V181 + light V169-style edge deprojection to reduce lateral FOV stretch.",
+  "modified_files": [
+    "01_GIOCO_PRONTO_LOCAL_TEST/index.html",
+    "report/STATUS_PROGETTO_E_DIPENDENZE_PERLA1.txt",
+    "report/METODO_LAVORO_ANTI_REGRESSIONE_PERLA1.txt",
+    "report/README_REPACK_V182.txt",
+    "report/REPORT_V182_CENTER_RAY_EDGE_DEPROJECTED_HORIZON.json"
+  ],
+  "preserved": [
+    "map/fMap/roadMask/cMap/objectBlock",
+    "worldgen",
+    "collisioni",
+    "tetti/torre/roofSegments",
+    "fog globale",
+    "sprite/ombre",
+    "pergola/festoni/lago/barca",
+    "pavimenti/decal",
+    "asset PNG",
+    "launcher"
+  ],
+  "renderer": {
+    "PERLA_EDGE_DEPROJECTED_ENV_HORIZON_V182": true,
+    "PERLA_RAY_DIRECTION_ENV_HORIZON_V181": false,
+    "edgeStart": 0.46,
+    "edgeFull": 0.96,
+    "edgePower": 1.35,
+    "edgeBlendMax": 0.32,
+    "spanPx": 2,
+    "cloudRender": false,
+    "center": "rayDir/cameraPlane strict angle",
+    "edges": "progressive deprojection toward cameraX*k with low max blend",
+    "height": "screenH*.50+18"
+  },
+  "asset_check": {
+    "manifest_unique_png_refs": 108,
+    "png_present": 116,
+    "missing": []
+  },
+  "browser_real_test": "not executed"
+}

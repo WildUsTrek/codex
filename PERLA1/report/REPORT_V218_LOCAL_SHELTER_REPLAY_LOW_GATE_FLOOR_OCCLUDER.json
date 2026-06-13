@@ -1,0 +1,45 @@
+{
+  "build": "PERLA1_V218_LOCAL_SHELTER_REPLAY_LOW_GATE_FLOOR_OCCLUDER_LOCAL",
+  "base": "PERLA1_V217_DOOR_RAIN_SELECTIVE_REPLAY_PROFILES_LOCAL",
+  "created_utc": "2026-06-10T17:47:41Z",
+  "summary": "Full rain + local ShelterProfile replay; selective walls/ceiling/canopy/floor occluder; no fake doors; no global replay.",
+  "checks": {
+    "node_check_ok": true,
+    "build_id_v218": true,
+    "ui_v218": true,
+    "shelter_profiles_v218": true,
+    "profiles_required": true,
+    "resolve_shelter_profile": true,
+    "draw_local_shelter_replay": true,
+    "replay_called_after_weather": true,
+    "v217_global_replay_not_active": true,
+    "v215_solid_cover_not_active": true,
+    "wall_capture_present": true,
+    "floor_capture_present": true,
+    "full_rain_under_shelter": true,
+    "yoga_open_canopy": true,
+    "bath_real_building_door_flag": true,
+    "no_percentile_in_v218_replay": true,
+    "no_fallback_ratio_in_v218_replay": true,
+    "no_walltop_primary_in_v218_replay": true,
+    "asset_refs": 108,
+    "asset_unique_refs": 108,
+    "asset_missing": 0,
+    "raycast_png_total": 116,
+    "png_changed_vs_v217": 0,
+    "png_changed_list": [],
+    "no_percentile_note": "Only debug flag percentileFallbackUsedV218=false is present; no percentile calculation in V218 replay."
+  },
+  "node_stderr": "",
+  "changed_files_expected": [
+    "01_GIOCO_PRONTO_LOCAL_TEST/index.html",
+    "AVVIA_GIOCO_SERVER_POWERSHELL.ps1",
+    "AVVIA_GIOCO_WINDOWS_SENZA_PYTHON.bat",
+    "report/METODO_LAVORO_ANTI_REGRESSIONE_PERLA1.txt",
+    "report/STATUS_PROGETTO_E_DIPENDENZE_PERLA1.txt"
+  ],
+  "notes": [
+    "No browser/visual test executed in this environment.",
+    "V218 intentionally keeps V217 legacy functions as compatibility/debug but active post-rain path is drawLocalShelterReplayV218."
+  ]
+}

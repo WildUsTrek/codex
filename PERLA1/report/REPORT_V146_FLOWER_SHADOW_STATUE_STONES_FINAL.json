@@ -1,0 +1,28 @@
+{
+  "build": "PERLA1_V146_FLOWER_SHADOW_STATUE_STONES_FINAL_SAFE_LOCAL",
+  "base": "PERLA1_V145_BUSH_SHADOW_TAMARISK_CLEAN_STONES_SAFE_LOCAL",
+  "changedAssets": [
+    "01_GIOCO_PRONTO_LOCAL_TEST/assets/raycast/marble_statue.png"
+  ],
+  "addedAssets": [],
+  "codeChanges": [
+    "flower shadow profile tex 13/27/28/29",
+    "modern statue shadow profile tex 53",
+    "stone placement target 43 with pineta additions",
+    "stone groundSink 2.35",
+    "debug V146 fields"
+  ],
+  "preserved": [
+    "pergola",
+    "roofs",
+    "tower",
+    "festoon",
+    "boat",
+    "map",
+    "collision",
+    "worldgen",
+    "tents",
+    "tamarisk cleaned assets from V145"
+  ],
+  "noPatchOnlyFolder": true
+}

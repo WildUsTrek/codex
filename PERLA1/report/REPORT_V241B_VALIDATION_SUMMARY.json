@@ -1,0 +1,18 @@
+{
+  "buildId": "PERLA1_V241B_FACE_PROJECTION_MATCH_RANKING_DIAGNOSTIC_LOCAL",
+  "baseBuild": "PERLA1_V241A_FACE_REGISTRY_CANONICALIZATION_DIAGNOSTIC_LOCAL",
+  "nodeCheck": "OK",
+  "zipIntegrity": "OK",
+  "tarGzIntegrity": "OK",
+  "assetRefs": 108,
+  "assetMissing": [],
+  "pngFiles": 124,
+  "pngModifiedVsV241A": [],
+  "patchOnlyFolder": "absent",
+  "debugExports": {
+    "getWorldWallFaceRankingSummary": "present",
+    "getWorldWallFaceMatchSummary": "present",
+    "perlaDownloadColumnFragmentDebugReport": "present"
+  },
+  "browserInteractiveTest": "not executed in container"
+}

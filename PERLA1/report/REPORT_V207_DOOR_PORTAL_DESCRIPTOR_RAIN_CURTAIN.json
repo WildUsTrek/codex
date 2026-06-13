@@ -1,0 +1,32 @@
+{
+  "build": "PERLA1_V207_DOOR_PORTAL_DESCRIPTOR_RAIN_CURTAIN_LOCAL",
+  "base": "PERLA1_V206_DOOR_RAIN_CURTAIN_PORTAL_RESET_LOCAL",
+  "discarded_base": "PERLA1_V205_PORTAL_RAIN_VERTICAL_ENVELOPE_LOCAL",
+  "scope": "Hybrid manual door portal descriptors + rain curtain; no raycaster stencil rewrite; no roof/map/fondale/audio changes.",
+  "changed_systems": [
+    "weather indoor door rain curtain descriptor anchoring",
+    "door threshold fullscreen transition",
+    "in-game UI visible version",
+    "debug/report metadata"
+  ],
+  "preserved_systems": [
+    "V204 audio birds/footsteps",
+    "V200 roof budget",
+    "V201 rain buffer/cloud budget",
+    "V185 horizon/fondale",
+    "map/collision/worldgen/sprites/pergola/tower/canopy"
+  ],
+  "descriptors": [
+    "reception_south_main",
+    "bath_west_main"
+  ],
+  "debug_keys": [
+    "weatherDoorPortalDescriptorV207",
+    "weatherDoorPortalDescriptorIdV207",
+    "weatherDoorPortalProjectionYTopV207",
+    "weatherDoorPortalProjectionYBottomV207",
+    "weatherDoorPortalThresholdFullScreenV207",
+    "weatherDoorPortalDescriptorNoFullHeightV207"
+  ],
+  "notes": "Browser visual/audio test not executed in container; static/integrity checks executed during packaging."
+}

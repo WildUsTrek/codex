@@ -1,0 +1,47 @@
+{
+  "build": "PERLA1_V158D_SKYBOX_PAINTED_PANORAMA_HAZE_SAFE_LOCAL",
+  "base": "PERLA1_V157_LAKE_SHORE_SEAM_CLEANUP_SAFE_LOCAL",
+  "purpose": "Painted continuous 360 sky panorama and chromatic horizon haze without limiting far wall visibility.",
+  "changed_files": [
+    "01_GIOCO_PRONTO_LOCAL_TEST/index.html",
+    "01_GIOCO_PRONTO_LOCAL_TEST/assets/raycast/sky_panorama_360_v158d.png",
+    "README_REPACK_V158D.txt",
+    "REPORT_V158D_SKYBOX_PAINTED_PANORAMA_HAZE_SAFE.json",
+    "STATUS_PROGETTO_E_DIPENDENZE_PERLA1.txt",
+    "METODO_LAVORO_ANTI_REGRESSIONE_PERLA1.txt"
+  ],
+  "asset": {
+    "id": 98,
+    "file": "sky_panorama_360_v158d.png",
+    "size": [
+      4096,
+      512
+    ],
+    "type": "single seamless painted cylindrical panorama",
+    "orientation": "E hills -> S low island -> W forests -> N mountains -> E hills"
+  },
+  "far_wall_visibility_limit": false,
+  "fog_change": "drawExistingWallFogOverlay alpha unchanged from V57; far color target blends toward V158D horizon RGB only.",
+  "manifest": {
+    "refs_count": 86,
+    "missing": []
+  },
+  "preserved": [
+    "map",
+    "fMap",
+    "roadMask",
+    "cMap",
+    "objectBlock",
+    "collisioni",
+    "worldgen",
+    "roofSegments=2",
+    "ombre V144-V146",
+    "pergola",
+    "laghetto V157",
+    "sprite placement",
+    "barca",
+    "torre",
+    "festoni"
+  ],
+  "known_limit": "No real browser/app preview opened; aesthetic must be judged in game by user."
+}

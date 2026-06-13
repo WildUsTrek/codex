@@ -1,0 +1,71 @@
+{
+  "build": "PERLA1_V147_PINETA_PERGOLA_PERFORMANCE_SAFE_LOCAL",
+  "base": "PERLA1_V146_FLOWER_SHADOW_STATUE_STONES_FINAL_SAFE_LOCAL",
+  "changedFiles": [
+    "01_GIOCO_PRONTO_LOCAL_TEST/index.html",
+    "STATUS_PROGETTO_E_DIPENDENZE_PERLA1.txt",
+    "METODO_LAVORO_ANTI_REGRESSIONE_PERLA1.txt",
+    "README_REPACK_V147.txt"
+  ],
+  "changedAssets": [],
+  "addedAssets": [],
+  "codeChanges": [
+    "desktop broadphase maxDist 82",
+    "tiny detail LOD",
+    "tree stripe-step depth-safe",
+    "dense tree shadow skip",
+    "pergola conservative LOD/padding",
+    "debug V147 fields"
+  ],
+  "preserved": [
+    "PNG assets",
+    "roofs",
+    "tower",
+    "pergola logic/footprint",
+    "festoon",
+    "boat",
+    "map",
+    "collision",
+    "worldgen",
+    "stones",
+    "flowers",
+    "modern statue",
+    "tamarisk cleaned assets"
+  ],
+  "noPatchOnlyFolder": true,
+  "probeComparison": {
+    "pineta_masso_v146": {
+      "spriteCandidates": 1665,
+      "spriteVisible": 707,
+      "spriteStripes": 8677,
+      "shadowSoftCached": 75,
+      "broadphaseMaxDist": 999
+    },
+    "pineta_masso_v147_node_probe": {
+      "spriteCandidates": 1017,
+      "spriteVisible": 446,
+      "spriteStripes": 5425,
+      "shadowSoftCached": 65,
+      "broadphaseMaxDist": 82,
+      "spriteLodSkipped": 309,
+      "spriteTinyLodSkipped": 243,
+      "spriteTreeLodSkipped": 66,
+      "spriteStripeStepApplied": 418,
+      "spriteStripePixelsCollapsed": 2786,
+      "shadowTreeLodSkipped": 143
+    },
+    "pergola_v146_node_probe": {
+      "scanSamples": 8640,
+      "fogCalls": 4831,
+      "stepX": 5,
+      "stepY": 4
+    },
+    "pergola_v147_node_probe": {
+      "scanSamples": 5896,
+      "fogCalls": 3252,
+      "stepX": 6,
+      "stepY": 5,
+      "pergolaLodV147": true
+    }
+  }
+}

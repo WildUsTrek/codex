@@ -1,0 +1,37 @@
+{
+  "build": "PERLA1_V152_LAKE_SHORE_SOFT_RING_BOAT_LIFT_SAFE_LOCAL",
+  "base": "PERLA1_V151_PINETA_TRAIL_WATER_CORNER_SOFTEN_SAFE_LOCAL",
+  "scope": "secret lake shore visual soft ring and rowboat lift only",
+  "changes": {
+    "lakeVisualMaps": [
+      "lakeWaterRingMapV152",
+      "lakeSandInnerRingMapV152",
+      "lakeSandOuterRingMapV152",
+      "lakeGrassOuterRingMapV152"
+    ],
+    "lakeWaterRingCellsV152": 48,
+    "lakeSandInnerRingCellsV152": 59,
+    "lakeSandOuterRingCellsV152": 59,
+    "lakeGrassOuterRingCellsV152": 108,
+    "rowboatGroundSinkBefore": 4.75,
+    "rowboatGroundSinkAfter": 3.85
+  },
+  "preserved": {
+    "logicMaps": true,
+    "collision": true,
+    "roadMask": true,
+    "objectBlock": true,
+    "worldgen": true,
+    "pngAssets": true,
+    "roofSegments": 2,
+    "spriteRuntime": 1938,
+    "stones": 43,
+    "noPatchOnlyFolder": true
+  },
+  "checks": {
+    "nodeCheckExtractedScript": "OK",
+    "runtimeMock": "OK",
+    "zipIntegrity": "OK",
+    "tarGzReadable": "OK"
+  }
+}

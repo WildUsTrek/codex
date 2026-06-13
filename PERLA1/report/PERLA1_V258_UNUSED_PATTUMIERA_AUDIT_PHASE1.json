@@ -1,0 +1,19 @@
+{
+  "build": "PERLA1_V258_PERFORMANCE_BASELINE_DEBUG_OVERHEAD_SAFE_LOCAL",
+  "base": "PERLA1_V257_RAIN_SKYBOX_DEPTH_ANCHOR_FIX_SAFE_LOCAL",
+  "policy": "Fase 1 solo audit. Nessun file, funzione o asset viene rimosso.",
+  "assetUnusedCandidates": [
+    "barbecue_long.png",
+    "fountain.png",
+    "ivy_arch_hanging_high.png",
+    "ivy_arch_overhead_0.png",
+    "ivy_arch_overhead_1.png",
+    "wall_tile_bath_roof_v39.png",
+    "wall_tower_stone_v126.png",
+    "wall_wood_reception_roof_v39.png"
+  ],
+  "assetDecision": "keep_in_place_for_now",
+  "reason": "Gli asset non referenziati non impattano FPS se non sono caricati; in PERLA1 possono essere residui storici o fallback artistici.",
+  "codeDeadRemovalDecision": "not_performed_in_v258",
+  "nextStep": "Creare V259 separata solo dopo conferma browser e confronto debug; rimuovere/archiviare un gruppo alla volta."
+}

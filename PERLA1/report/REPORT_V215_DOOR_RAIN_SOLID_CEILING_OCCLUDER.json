@@ -1,0 +1,39 @@
+{
+  "build": "PERLA1_V215_DOOR_RAIN_SOLID_CEILING_OCCLUDER_LOCAL",
+  "base": "PERLA1_V214_DOOR_RAIN_DRAW_ORDER_CEILING_REPLAY_LOCAL",
+  "purpose": "solid draw-after-rain ceiling/architrave occluder for indoor door rain and threshold/global rain",
+  "static_checks": {
+    "build_id_v215": true,
+    "ui_title_v215": true,
+    "v215_const": true,
+    "v215_function": true,
+    "called_after_weather": true,
+    "solid_full_cover": true,
+    "not_yTop_guess": true,
+    "not_segment_replay_primary": true,
+    "no_obsolete": true,
+    "uses_current_walltop": true,
+    "uses_current_soffit_palette": true,
+    "covers_threshold_fullscreen": true,
+    "no_clouddeck_v192": true
+  },
+  "asset_manifest_refs": 108,
+  "missing_png": [],
+  "png_total_game": 116,
+  "png_raycast": 116,
+  "png_modified_vs_v214": [],
+  "changed_files_expected": [
+    "01_GIOCO_PRONTO_LOCAL_TEST/index.html",
+    "AVVIA_GIOCO_SERVER_POWERSHELL.ps1",
+    "AVVIA_GIOCO_WINDOWS_SENZA_PYTHON.bat",
+    "report/STATUS_PROGETTO_E_DIPENDENZE_PERLA1.txt",
+    "report/METODO_LAVORO_ANTI_REGRESSIONE_PERLA1.txt",
+    "report/README_REPACK_V215.txt",
+    "report/REPORT_V215_DOOR_RAIN_SOLID_CEILING_OCCLUDER.json"
+  ],
+  "browser_visual_test": "not_executed",
+  "notes": [
+    "V215 does not rely on V214 collected segments as primary cover.",
+    "V215 draws full upper ceiling/architrave cover after rain if player is still covered, descriptor active, and rain/storm drawn."
+  ]
+}

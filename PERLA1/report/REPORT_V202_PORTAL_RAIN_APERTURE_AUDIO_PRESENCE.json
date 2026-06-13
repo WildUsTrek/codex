@@ -1,0 +1,42 @@
+{
+  "build": "PERLA1_V202_PORTAL_RAIN_APERTURE_AUDIO_PRESENCE_LOCAL",
+  "base": "PERLA1_V201_WEATHER_PORTAL_CONTINUITY_STORM_BUDGET_LOCAL",
+  "scope": "portal rain aperture X+Y and procedural audio presence",
+  "changes": {
+    "portalRainMask": "ranges now include x0/x1/yTop/yBottom and are used for rain buffer + lightning clipping",
+    "footsteps": {
+      "busGain": 0.96,
+      "ampMult": 8.65,
+      "transient": true,
+      "bodyThump": true
+    },
+    "birds": {
+      "targets": {
+        "clear": 0.46,
+        "cloudy": 0.14,
+        "rain": 0,
+        "storm": 0
+      },
+      "chirpGainMult": 6.65,
+      "melodicPhrases": 6,
+      "busCap": 0.55
+    },
+    "thunder": "multi-tap lowpass echo with longer tail"
+  },
+  "preserved": [
+    "V200 roof outdoor budget",
+    "V201 rain buffer/cloud budget",
+    "V185 horizon",
+    "map",
+    "collisions",
+    "worldgen",
+    "sprite placement",
+    "pergola",
+    "festoons",
+    "lake",
+    "tower",
+    "canopy",
+    "PNG assets"
+  ],
+  "generatedAt": "2026-06-10T11:25:15.596342Z"
+}

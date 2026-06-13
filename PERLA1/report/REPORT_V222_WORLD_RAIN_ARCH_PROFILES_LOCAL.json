@@ -1,0 +1,75 @@
+{
+  "build": "PERLA1_V222_WORLD_RAIN_ARCH_PROFILES_LOCAL",
+  "base": "PERLA1_V221_LOCAL_V216_SHELTER_OCCLUSION_GATE_LOCAL",
+  "intent": "Replace the failed 2D rain overlay/portal/replay primary path with world-space rain particles and authoritative architecture profiles.",
+  "files_modified": [
+    "01_GIOCO_PRONTO_LOCAL_TEST/index.html",
+    "AVVIA_GIOCO_WINDOWS_SENZA_PYTHON.bat",
+    "AVVIA_GIOCO_SERVER_POWERSHELL.ps1",
+    "report/STATUS_PROGETTO_E_DIPENDENZE_PERLA1.txt",
+    "report/METODO_LAVORO_ANTI_REGRESSIONE_PERLA1.txt",
+    "report/README_REPACK_V222.txt",
+    "report/REPORT_V222_WORLD_RAIN_ARCH_PROFILES_LOCAL.json"
+  ],
+  "systems_touched": [
+    "weather rendering path",
+    "new V222 world rain particle renderer",
+    "new V222 architecture profile registry",
+    "new V222 rain coverage/open sky maps",
+    "debug stats/export",
+    "launcher/version text"
+  ],
+  "systems_preserved": [
+    "map/collision/roadMask/objectBlock",
+    "asset PNGs",
+    "skybox V185/V169 assets",
+    "roof/canopy rendering geometry",
+    "sprites placement",
+    "audio V204/V198 weather audio",
+    "pergola/festoons/tower/lake/boat/floors"
+  ],
+  "new_functions": [
+    "buildRainCoverageMapsV222",
+    "registerArchProfileV222",
+    "getArchProfileAtV222",
+    "isOpenSkyAtV222",
+    "drawWorldRainParticlesV222",
+    "updateRainParticlesV222",
+    "respawnRainDropV222",
+    "projectRainPointV222",
+    "rainPointVisibleV222"
+  ],
+  "arch_profiles": [
+    "reception_main",
+    "bath_main",
+    "bar_canopy_main",
+    "game_room_canopy_main",
+    "yoga_canopy_main"
+  ],
+  "critical_design": {
+    "bath_main": "uses real bath building door; bath_garden hedge is explicitly ignored as door semantics",
+    "open_canopies": "bar, game room and yoga are treated as open canopies with no fake doors",
+    "legacy_rain": "2D rain buffer/door portal/V216 replay is not primary when V222 world rain is active",
+    "occlusion": "samples of each drop are tested against ZBuffer and CeilingDepthBuffer instead of drawing one full 2D line"
+  },
+  "static_checks": {
+    "node_check": "OK (executed on extracted script)",
+    "asset_png_count": 116,
+    "asset_manifest_unique_png_refs": 108,
+    "asset_missing": [],
+    "patch_only_folder": "absent by packaging rule",
+    "report_folder": "present"
+  },
+  "visual_tests_required": [
+    "bath outside hedge: rain must fall normally, no hedge gate as bath door",
+    "bath real building door: no rain from ceiling/architrave",
+    "reception door/inside: no rain born from ceiling",
+    "bar/yoga/game room: open canopy behavior, no fake doors",
+    "general walls: rain hidden by ZBuffer",
+    "general roofs/canopies: rain clipped by CeilingDepthBuffer"
+  ],
+  "known_limits": [
+    "No real browser visual test was executed in container; user visual validation is required.",
+    "Particle density/alpha may need artistic tuning after real test, but the architecture is no longer the V201-V221 overlay/replay model."
+  ]
+}

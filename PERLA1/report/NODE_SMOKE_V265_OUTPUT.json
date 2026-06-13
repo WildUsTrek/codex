@@ -1,0 +1,30 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-12T23:29:08.776Z",
+  "checks": {
+    "buildId": true,
+    "baseBuild": true,
+    "v265Flag": true,
+    "v265PatchMode": true,
+    "ultraBudgetConstants": true,
+    "edgeRailFunctions": true,
+    "depthAwareRail": true,
+    "noOverlayFinal": true,
+    "v264WatchdogPreserved": true,
+    "v265HookRoof": true,
+    "v265HookCanopy": true,
+    "v265HookPergola": true,
+    "v265Finalize": true,
+    "v265Recorder": true,
+    "v265Baseline": true,
+    "v265WindowGlobals": true,
+    "v263Preserved": true,
+    "v262Preserved": true,
+    "v261Preserved": true,
+    "v260Preserved": true,
+    "v259Preserved": true,
+    "rainPreserved": true,
+    "noPatchOnlyMention": true
+  },
+  "missing": []
+}

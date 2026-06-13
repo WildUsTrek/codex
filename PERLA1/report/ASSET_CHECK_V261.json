@@ -1,0 +1,16 @@
+{
+  "baseZip": "/mnt/data/PERLA1_V260_LONG_VIEW_SPRITE_FLOOR_BUDGET_SAFE_LOCAL.zip",
+  "workRoot": "/mnt/data/v261_work/PERLA1_V260_LONG_VIEW_SPRITE_FLOOR_BUDGET_SAFE_LOCAL",
+  "pngCountWork": 116,
+  "pngCountBase": 116,
+  "pngHashChangedCount": 0,
+  "pngMissingFromWorkCount": 0,
+  "pngExtraCount": 0,
+  "pngLiteralRefsInHtml": 108,
+  "pngLiteralRefNames": 108,
+  "missingRefNamesCount": 0,
+  "changed": [],
+  "missingFromWork": [],
+  "extra": [],
+  "missingRefNames": []
+}

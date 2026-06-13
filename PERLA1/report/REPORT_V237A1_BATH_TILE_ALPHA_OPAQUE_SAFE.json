@@ -1,0 +1,84 @@
+{
+  "build": "PERLA1_V237A1_BATH_TILE_ALPHA_OPAQUE_SAFE_LOCAL",
+  "base": "PERLA1_V237A_SAFE_EMERGING_WALL_LAYER_DEBUG_OFF_LOCAL",
+  "type": "asset-only alpha microfix",
+  "visualIntent": "make bath tile wall opaque; no renderer changes",
+  "assetPatched": "01_GIOCO_PRONTO_LOCAL_TEST/assets/raycast/wall_tile_bath.png",
+  "assetBefore": {
+    "sha256": "4d193a041d9916b9a0ec42b6845484f6e9eaea69d19b27a3f09666743343da10",
+    "size": [
+      64,
+      64
+    ],
+    "alphaMin": 210,
+    "alphaMax": 255,
+    "semiTransparentPixels": 1792,
+    "transparentPixels": 0
+  },
+  "assetAfter": {
+    "sha256": "9e22ba71993182bb9586bb6eb6332fec1e18ffa6d347e48de164141e8ced6c28",
+    "size": [
+      64,
+      64
+    ],
+    "alphaMin": 255,
+    "alphaMax": 255,
+    "semiTransparentPixels": 0,
+    "transparentPixels": 0,
+    "rgbPreserved": true
+  },
+  "modifiedSystems": [
+    "wall_tile_bath.png alpha channel",
+    "build/version labels",
+    "report files"
+  ],
+  "preservedSystems": [
+    "V233 rollback overdraw",
+    "V234 rain airspace + car lift",
+    "V235 tower visibility + rain midfield",
+    "V236 roof/support sync",
+    "V237A debug-off prototype",
+    "map/collision/worldgen",
+    "rain/tower/auto/skybox",
+    "renderer/wallcasting/roofVisibleAt"
+  ],
+  "v237Prototype": {
+    "active": false,
+    "mustRemainFalse": true
+  },
+  "expectedChecks": [
+    "node --check OK",
+    "asset missing 0",
+    "PNG modified exactly one: wall_tile_bath.png",
+    "ZIP/TAR integrity OK"
+  ],
+  "actualChecks": {
+    "assetRefs": 108,
+    "assetMissing": 0,
+    "missing": [],
+    "changedPng": [
+      "01_GIOCO_PRONTO_LOCAL_TEST/assets/raycast/wall_tile_bath.png"
+    ],
+    "changedPngCount": 1,
+    "rgbPreserved": true,
+    "alphaMinAfter": 255,
+    "alphaMaxAfter": 255,
+    "semiTransparentAfter": 0,
+    "modifiedFiles": [
+      "AVVIA_GIOCO_SERVER_POWERSHELL.ps1",
+      "AVVIA_GIOCO_WINDOWS_SENZA_PYTHON.bat",
+      "01_GIOCO_PRONTO_LOCAL_TEST/index.html",
+      "report/METODO_LAVORO_ANTI_REGRESSIONE_PERLA1.txt",
+      "report/STATUS_PROGETTO_E_DIPENDENZE_PERLA1.txt",
+      "report/README_REPACK_V237A1.txt",
+      "report/REPORT_V237A1_BATH_TILE_ALPHA_OPAQUE_SAFE.json",
+      "01_GIOCO_PRONTO_LOCAL_TEST/assets/raycast/wall_tile_bath.png"
+    ],
+    "nodeCheck": "OK",
+    "runtimeMock": "OK",
+    "v237Active": false,
+    "v237DrawColumns": 0,
+    "v237DrawPixels": 0,
+    "v236RoofSupport": true
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "build": "PERLA1_V203_AUDIO_RESTORE_PORTAL_MASK_REPAIR_LOCAL",
+  "base": "PERLA1_V202_PORTAL_RAIN_APERTURE_AUDIO_PRESENCE_LOCAL",
+  "node_check_exit": 0,
+  "node_check_stdout": "",
+  "node_check_stderr": "",
+  "png_total": 116,
+  "png_literal_refs": 108,
+  "png_missing": [],
+  "drawWeatherCloudDeckV192_absent": true,
+  "required_strings": {
+    "PERLA1_V203_AUDIO_RESTORE_PORTAL_MASK_REPAIR_LOCAL": true,
+    "PERLA_AUDIO_V203_FOOTSTEP_ORIGINAL_SOUND_ONLY_LOUDER": true,
+    "PERLA_AUDIO_V203_BIRD_ORIGINAL_VARIANT_PRESERVED": true,
+    "PERLA_WEATHER_PORTAL_REAL_MASK_FIX_V203": true,
+    "ranges:needRanges?maskedRanges:null": true,
+    "original_v201_sound_louder_only_v203": true,
+    "originalBirdVariantPreservedV203": true,
+    "weatherPortalRealMaskFixV203": true
+  },
+  "png_modified_intended": false,
+  "scope": [
+    "footstep synthesis restored to V201/V200 shape; louder via gain only",
+    "bird original chirp preserved as variant 0 plus melodic variants",
+    "portal rain maskedRanges returned and Y guard tightened"
+  ]
+}

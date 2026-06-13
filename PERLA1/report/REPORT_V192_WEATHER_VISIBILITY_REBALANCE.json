@@ -1,0 +1,42 @@
+{
+  "build": "PERLA1_V192_WEATHER_VISIBILITY_REBALANCE_LOCAL",
+  "base": "PERLA1_V191_TIME_ACCELERATION_X10_TEST_LOCAL",
+  "goal": "clouds and rain visibility rebalance requested by user",
+  "modified_files": [
+    "01_GIOCO_PRONTO_LOCAL_TEST/index.html",
+    "report/STATUS_PROGETTO_E_DIPENDENZE_PERLA1.txt",
+    "report/METODO_LAVORO_ANTI_REGRESSIONE_PERLA1.txt"
+  ],
+  "created_files": [
+    "report/README_REPACK_V192.txt",
+    "report/REPORT_V192_WEATHER_VISIBILITY_REBALANCE.json"
+  ],
+  "preserved": [
+    "V185 horizon renderer",
+    "V188/V190 day cycle",
+    "V191 time scale",
+    "weather 7-day distribution",
+    "assets PNG",
+    "map/collision/worldgen/roofSegments/sprites/pergola/festoons/lake/floor/decals/launcher"
+  ],
+  "changes": {
+    "weather_profiles": "cloudy/rain/storm darker and more visible",
+    "clouds": "drawWeatherCloudDeckV192 plus multi-pass cloud rendering",
+    "rain": "normal rain heavyRain almost storm intensity without lightning",
+    "storm": "storm still stronger and keeps lightning"
+  },
+  "checks": {
+    "node_check": "OK",
+    "asset_refs_missing": "0",
+    "png_modified": "0",
+    "zip_integrity": "OK",
+    "tar_gz_integrity": "OK",
+    "static_validation": "OK",
+    "asset_refs": 108,
+    "asset_pngs": 116,
+    "asset_missing": 0,
+    "patch_only_folder": "absent"
+  },
+  "browser_test": "not executed in this environment",
+  "hashes_note": "Archive hashes generated after final packaging are reported in assistant response."
+}

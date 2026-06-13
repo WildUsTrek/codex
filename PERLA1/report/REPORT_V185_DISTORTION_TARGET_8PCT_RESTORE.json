@@ -1,0 +1,43 @@
+{
+  "build": "PERLA1_V185_DISTORTION_TARGET_8PCT_RESTORE_LOCAL",
+  "base": "PERLA1_V184_DISTORTION_CONTROLLED_HORIZON_4PCT_LOCAL.zip",
+  "purpose": "Restore distortion-controlled horizon max residual stretch target from 4% to 8%, keeping V184 visible-label fixes.",
+  "files_modified": [
+    "01_GIOCO_PRONTO_LOCAL_TEST/index.html",
+    "report/README_REPACK_V185.txt",
+    "report/REPORT_V185_DISTORTION_TARGET_8PCT_RESTORE.json",
+    "report/STATUS_PROGETTO_E_DIPENDENZE_PERLA1.txt",
+    "report/METODO_LAVORO_ANTI_REGRESSIONE_PERLA1.txt"
+  ],
+  "renderer": {
+    "active": "PERLA_DISTORTION_CONTROLLED_ENV_HORIZON_V185",
+    "architecture": "same distortion-controlled ray-direction environment horizon family as V183/V184",
+    "target_stretch_previous_v184": 1.04,
+    "target_stretch_current_v185": 1.08,
+    "meaning": "max residual lateral stretch target restored to 8% after V184 was judged too aggressive and draw-heavy"
+  },
+  "preserved": [
+    "map",
+    "fMap",
+    "roadMask",
+    "cMap",
+    "objectBlock",
+    "worldgen",
+    "collisioni",
+    "Sloped Sector Casting / tetti",
+    "torre",
+    "roofSegments",
+    "fog globale",
+    "sprites",
+    "ombre",
+    "pergola",
+    "festoni",
+    "lago/barca",
+    "pavimenti",
+    "decal",
+    "asset PNG",
+    "launcher"
+  ],
+  "not_changed": "No architecture reset; no yaw damping; no segmentation/fette; no crop separati; no screen-fixed; no wall/piano prospettico.",
+  "test_limit": "No real browser/gameplay test executed in ChatGPT environment."
+}

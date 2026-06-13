@@ -1,0 +1,62 @@
+{
+  "build": "PERLA1_V223_WORLD_RAIN_NEARFIELD_BATH_AUTHORITY_LOCAL",
+  "base": "PERLA1_V222_WORLD_RAIN_ARCH_PROFILES_LOCAL",
+  "intent": "Consolidate V222 world-space rain: higher/faster rain, near-field spawn near walls, bath_garden weather-outdoor, bath_main real-door authority; bypass legacy portal/shelter visual view for primary rain.",
+  "files_modified": [
+    "01_GIOCO_PRONTO_LOCAL_TEST/index.html",
+    "AVVIA_GIOCO_WINDOWS_SENZA_PYTHON.bat",
+    "AVVIA_GIOCO_SERVER_POWERSHELL.ps1",
+    "report/STATUS_PROGETTO_E_DIPENDENZE_PERLA1.txt",
+    "report/METODO_LAVORO_ANTI_REGRESSIONE_PERLA1.txt",
+    "report/README_REPACK_V223.txt",
+    "report/REPORT_V223_WORLD_RAIN_NEARFIELD_BATH_AUTHORITY_LOCAL.json"
+  ],
+  "systems_touched": [
+    "V222/V223 world rain constants",
+    "rain particle respawn/update/draw",
+    "weather outdoor test for rain",
+    "drawWeatherOverlayV190 primary rain gate",
+    "debug stats/export",
+    "launcher/version text",
+    "report documentation"
+  ],
+  "systems_preserved": [
+    "map/collision/roadMask/objectBlock/worldgen",
+    "asset PNGs and manifest",
+    "skybox/fondale",
+    "roof/canopy geometry and roof budget",
+    "sprites placement and assets",
+    "audio weather system",
+    "pergola/festoons/tower/lake/boat/floors/minimap/mobile controls"
+  ],
+  "critical_changes": {
+    "near_field": "Spawn band 0.28-2.55 tiles with front bias fills visible space before nearby walls/hedges.",
+    "rain_physics": "Rain topZ raised to 6.20, storm topZ 7.55; speed and line length increased to remove feather effect.",
+    "bath_authority": "bath_garden is weather-outdoor; bath_main remains the only closed building authority and real door.",
+    "legacy_bypass": "V223 world-rain bypasses V201 visualView/portal and V218 shelter resolver as primary rain gate. Legacy functions remain as fallback code only."
+  },
+  "debug_flags_expected": [
+    "rainRendererModeV223=world_particles_nearfield",
+    "rainNearFieldEnabledV223=true",
+    "rainTopZV223",
+    "rainNearParticlesV223",
+    "rainNearDrawnV223",
+    "bathGardenWeatherOutdoorV223=true when player is in bath_garden",
+    "bathMainAuthorityV223=true",
+    "bathHedgeDoorIgnoredV223=true",
+    "bathRealDoorOnlyV223=true",
+    "legacyBathDoorResolverDisabledV223=true"
+  ],
+  "visual_tests_required": [
+    "near hedge/wall: rain visible between player and wall, but hidden behind wall",
+    "bath garden: rain falls normally outdoors",
+    "bath hedge gap: not treated as bath door",
+    "bath real door: only real building threshold",
+    "rain/storm: faster, higher, no feather effect",
+    "bar/yoga/game room: open canopies, no fake doors"
+  ],
+  "known_limits": [
+    "No browser visual test was executed in container; user validation required.",
+    "Particle density may still need artistic tuning after real device/browser test."
+  ]
+}

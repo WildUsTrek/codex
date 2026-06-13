@@ -1,0 +1,81 @@
+{
+  "build": "PERLA1_V145_BUSH_SHADOW_TAMARISK_CLEAN_STONES_SAFE_LOCAL",
+  "base": "PERLA1_V144_SHADOW_GROUND_ANCHOR_PERSPECTIVE_TUNE_SAFE_LOCAL",
+  "actions": {
+    "tamarisk_shadow_cleanup": [
+      {
+        "file": "tamarisk_0.png",
+        "changed": true,
+        "removed_shadow_pixels": 16,
+        "kept_opaque_or_colored_pixels": 1575,
+        "before_sha": "2d81f50dd04a147836d44b8b25970e78ffc66727efbccaca9993de6e9edcab65",
+        "after_sha": "0d11bb13d3484156e3c42531b3ff0429743dc889bca83826cfe68ffb49f9a295"
+      },
+      {
+        "file": "tamarisk_1.png",
+        "changed": true,
+        "removed_shadow_pixels": 28,
+        "kept_opaque_or_colored_pixels": 1611,
+        "before_sha": "39711cbf0d82a879623e7e3bc87cef81ec50e0a7b5d66fba19a709fe0c15b2fd",
+        "after_sha": "55beb95460bbb612b0d2a9d208fc818d5ec66add67a8b4129cbe6885470bae56"
+      },
+      {
+        "file": "tamarisk_2.png",
+        "changed": true,
+        "removed_shadow_pixels": 26,
+        "kept_opaque_or_colored_pixels": 1529,
+        "before_sha": "59354d2d6943beaf8679511c5652a8a89f5196cf5003fb685a90883a6280531e",
+        "after_sha": "be2024c63a387f6236e258e5109e03230a744dfe3644f8515c36136c136d0261"
+      }
+    ],
+    "stone_assets": [
+      {
+        "file": "stone_small_0.png",
+        "sha256": "a6b64c3f8df837fe7af35db5599c93646b6802f37bd61bfc8c2953e1da22c6f3"
+      },
+      {
+        "file": "stone_small_1.png",
+        "sha256": "2d0a35de75a0cec2b722bebf82a30c3127888ee142b4d0d044b8e69ec348ec01"
+      },
+      {
+        "file": "stone_small_2.png",
+        "sha256": "bfec776a46aa653e3f586ed73f91737e26eb915dbcabab4a5fb7793cb387f9d7"
+      }
+    ],
+    "html_patch": {
+      "build_id_updated": true,
+      "manifest_added_tex": [
+        95,
+        96,
+        97
+      ],
+      "bush_shadow_profile": "bush_footprint_v145",
+      "stone_count_requested": 33
+    }
+  },
+  "checks": {
+    "node_check": "OK",
+    "runtime_smoke": "OK",
+    "runtime_verify": "OK",
+    "asset_refs": 106,
+    "asset_unique_refs": 106,
+    "asset_missing": [],
+    "runtime_sprites": 1925,
+    "stone_runtime_count": 33,
+    "stone_min_distance": 5.74,
+    "stone_bad_cells": 0,
+    "roofSegments": 2,
+    "bush_shadow_profile_seen_in_probe": true,
+    "png_changed_from_v144": [
+      "tamarisk_0.png",
+      "tamarisk_1.png",
+      "tamarisk_2.png"
+    ],
+    "png_added": [
+      "stone_small_0.png",
+      "stone_small_1.png",
+      "stone_small_2.png"
+    ],
+    "patch_only_folder_present": false
+  }
+}

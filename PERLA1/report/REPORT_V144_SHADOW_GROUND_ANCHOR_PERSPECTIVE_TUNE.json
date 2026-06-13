@@ -1,0 +1,230 @@
+{
+  "build": "PERLA1_V144_SHADOW_GROUND_ANCHOR_PERSPECTIVE_TUNE_SAFE_LOCAL",
+  "base": "PERLA1_V143_GROUND_FOOTPRINT_SHADOW_SAFE_LOCAL",
+  "createdAt": "2026-06-07T23:57:26.811067Z",
+  "scope": "renderer ombre only: ground anchor, perspective flatten, shorter footprint, contact core",
+  "modifiedFiles": [
+    "01_GIOCO_PRONTO_LOCAL_TEST/index.html",
+    "STATUS_PROGETTO_E_DIPENDENZE_PERLA1.txt",
+    "METODO_LAVORO_ANTI_REGRESSIONE_PERLA1.txt",
+    "ISTRUZIONI OBBLIGATORIE DA SEGUIRE PER LEGGERE LE COORDINATE.txt",
+    "README_REPACK_V144.txt",
+    "REPORT_V144_SHADOW_GROUND_ANCHOR_PERSPECTIVE_TUNE.json"
+  ],
+  "assetManifestGroups": 91,
+  "assetRefs": 103,
+  "assetMissing": [],
+  "pngTotal": 111,
+  "pngChangedFromV143": [],
+  "noPatchOnlyDirs": true,
+  "runtimeProbe": [
+    {
+      "name": "pineta2_west",
+      "spriteVisible": 3,
+      "spriteStripes": 21,
+      "shadows": 0,
+      "profiles": {},
+      "skippedFar": 54,
+      "skippedZ": 0,
+      "v142": true,
+      "v143": true,
+      "flatTop": 0,
+      "topAnchored": 0,
+      "clippedBottom": 0,
+      "nearNotShrunk": 0,
+      "roofSegments": 2
+    },
+    {
+      "name": "yoga_room",
+      "spriteVisible": 1222,
+      "spriteStripes": 5760,
+      "shadows": 93,
+      "profiles": {
+        "tree_footprint_v144": 93
+      },
+      "skippedFar": 202,
+      "skippedZ": 7,
+      "v142": true,
+      "v143": true,
+      "flatTop": 93,
+      "topAnchored": 93,
+      "clippedBottom": 1,
+      "nearNotShrunk": 9,
+      "roofSegments": 2
+    },
+    {
+      "name": "bar_reception",
+      "spriteVisible": 9,
+      "spriteStripes": 470,
+      "shadows": 1,
+      "profiles": {
+        "table_footprint_v144": 1
+      },
+      "skippedFar": 0,
+      "skippedZ": 0,
+      "v142": true,
+      "v143": true,
+      "flatTop": 1,
+      "topAnchored": 1,
+      "clippedBottom": 0,
+      "nearNotShrunk": 0,
+      "roofSegments": 2
+    },
+    {
+      "name": "camper_road",
+      "spriteVisible": 805,
+      "spriteStripes": 788,
+      "shadows": 11,
+      "profiles": {
+        "tree_footprint_v144": 10,
+        "tent_footprint_v144": 1
+      },
+      "skippedFar": 162,
+      "skippedZ": 26,
+      "v142": true,
+      "v143": true,
+      "flatTop": 11,
+      "topAnchored": 11,
+      "clippedBottom": 0,
+      "nearNotShrunk": 0,
+      "roofSegments": 2
+    }
+  ],
+  "shadowScaleProbeTree": [
+    {
+      "d": 2,
+      "spSize": 225,
+      "spriteWidth": 225,
+      "w": 134,
+      "h": 63,
+      "rawH": 63,
+      "farT": 0,
+      "flatten": 1,
+      "alpha": 0.345,
+      "skip": false
+    },
+    {
+      "d": 3,
+      "spSize": 150,
+      "spriteWidth": 150,
+      "w": 88,
+      "h": 41,
+      "rawH": 41,
+      "farT": 0,
+      "flatten": 1,
+      "alpha": 0.345,
+      "skip": false
+    },
+    {
+      "d": 4,
+      "spSize": 112,
+      "spriteWidth": 112,
+      "w": 64,
+      "h": 30,
+      "rawH": 30,
+      "farT": 0,
+      "flatten": 1,
+      "alpha": 0.345,
+      "skip": false
+    },
+    {
+      "d": 5,
+      "spSize": 90,
+      "spriteWidth": 90,
+      "w": 51,
+      "h": 24,
+      "rawH": 24,
+      "farT": 0,
+      "flatten": 1,
+      "alpha": 0.345,
+      "skip": false
+    },
+    {
+      "d": 7,
+      "spSize": 64,
+      "spriteWidth": 64,
+      "w": 36,
+      "h": 17,
+      "rawH": 17,
+      "farT": 0.02,
+      "flatten": 0.98,
+      "alpha": 0.345,
+      "skip": false
+    },
+    {
+      "d": 10,
+      "spSize": 45,
+      "spriteWidth": 45,
+      "w": 25,
+      "h": 10,
+      "rawH": 10,
+      "farT": 0.19,
+      "flatten": 0.87,
+      "alpha": 0.345,
+      "skip": false
+    },
+    {
+      "d": 13,
+      "spSize": 34,
+      "spriteWidth": 34,
+      "w": 19,
+      "h": 7,
+      "rawH": 7,
+      "farT": 0.36,
+      "flatten": 0.76,
+      "alpha": 0.34,
+      "skip": false
+    },
+    {
+      "d": 16,
+      "spSize": 28,
+      "spriteWidth": 28,
+      "w": 15,
+      "h": 4,
+      "rawH": 4,
+      "farT": 0.53,
+      "flatten": 0.64,
+      "alpha": 0.26,
+      "skip": false
+    },
+    {
+      "d": 20,
+      "spSize": 22,
+      "spriteWidth": 22,
+      "w": 12,
+      "h": 2,
+      "rawH": 2,
+      "farT": 0.75,
+      "flatten": 0.49,
+      "alpha": 0.154,
+      "skip": true
+    },
+    {
+      "d": 24,
+      "spSize": 18,
+      "spriteWidth": 18,
+      "w": 12,
+      "h": 2,
+      "rawH": 1,
+      "farT": 0.97,
+      "flatten": 0.34,
+      "alpha": 0.048,
+      "skip": true
+    }
+  ],
+  "checks": {
+    "nodeCheck": "OK",
+    "runtimeProbe": "OK",
+    "shadowScaleProbe": "OK",
+    "pngChangedFromV143Count": 0,
+    "assetMissingCount": 0,
+    "roofSegmentsExpected": 2
+  },
+  "notes": [
+    "V144 non modifica ancoraggi sprite: tende restano V141/V142, tamerici restano con lift V142.",
+    "drawSpriteContactShadowV141 ora ignora anchorSink per il punto ombra: usa baseY/groundY.",
+    "La footprint e meno lunga e da lontano si schiaccia verticalmente; se diventerebbe una macchia/riga, viene saltata.",
+    "Aggiunto contact core compatto sotto la base per effetto appoggio 3D.",
+    "Microflora, aghi, pigne, erbe, fiori, cartelli e barca restano senza ombra runtime."
+  ]
+}

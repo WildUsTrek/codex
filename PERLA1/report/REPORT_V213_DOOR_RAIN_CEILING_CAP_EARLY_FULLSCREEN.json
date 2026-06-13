@@ -1,0 +1,32 @@
+{
+  "base_real": "PERLA1_V212_DOOR_RAIN_ASPECT_LOCK_EARLY_FULLSCREEN_LOCAL",
+  "build": "PERLA1_V213_DOOR_RAIN_CEILING_CAP_EARLY_FULLSCREEN_LOCAL",
+  "node_check": "OK",
+  "png_manifest_refs": 108,
+  "png_manifest_unique": 108,
+  "missing_png": [],
+  "png_raycast_total": 116,
+  "png_total_package": 124,
+  "changed_png_vs_v212": 0,
+  "patch_only_folder_present": false,
+  "drawWeatherCloudDeckV192_present": false,
+  "v213_constant_present": true,
+  "v213_ceiling_cap_function_present": true,
+  "v213_ceiling_cap_uses_ceiling_buffer": true,
+  "v213_ceiling_cap_uses_wall_buffer": true,
+  "v213_fallback_declared": true,
+  "v213_authoritative_fullscreen_present": true,
+  "dedicated_door_renderer_preserved": true,
+  "dedicated_renderer_no_ctx_clip": true,
+  "dedicated_renderer_no_drawImage": true,
+  "dedicated_renderer_no_composite_call": true,
+  "legacy_composite_guard_present": true,
+  "ui_version_v213": true,
+  "preserved_systems": [
+    "V204 audio",
+    "V200 roof budget",
+    "V201 global rain buffer/cloud budget",
+    "V185 sky/horizon",
+    "map/collision/worldgen/sprite/pergola/torre/canopy unchanged by file scope"
+  ]
+}

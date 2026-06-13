@@ -1,0 +1,27 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-12T18:59:00.286Z",
+  "checks": {
+    "buildId": true,
+    "baseBuild": true,
+    "coverageSummary": true,
+    "coverageToggle": true,
+    "coverageModeSet": true,
+    "coverageDownload": true,
+    "pergolaSummary": true,
+    "roofDecisionHook": true,
+    "roofPlaneHook": true,
+    "modernCoverHook": true,
+    "canopyHook": true,
+    "pergolaHook": true,
+    "recorderCoverage": true,
+    "debugExports": true,
+    "windowGlobals": true,
+    "v259Preserved": true,
+    "v260Preserved": true,
+    "rainPreserved": true,
+    "longViewPreserved": true,
+    "noPatchOnlyMention": true
+  },
+  "missing": []
+}

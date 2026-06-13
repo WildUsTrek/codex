@@ -1,0 +1,56 @@
+{
+  "build": "PERLA1_V240A_STABLE_SURFACE_FAMILY_DRAW_REFINEMENT_LOCAL",
+  "base": "PERLA1_V240_COLUMN_FRAGMENT_STABLE_SURFACE_DRAW_PROTOTYPE_LOCAL",
+  "intent": "stable surface family draw refinement; stabilize V240 visual draw under camera rotation",
+  "familyRefinement": {
+    "enabled": true,
+    "drawEnabled": true,
+    "killSwitch": false,
+    "groupByWallFamily": true,
+    "winnerPolicy": "stable_wall_family_then_depth_continuity_then_run_then_risk",
+    "lineTolerance": 1,
+    "suppressIsolatedPanels": true,
+    "visualEdgeGuard": true,
+    "angularStabilityGuard": true,
+    "updateZBuffer": false,
+    "updateSpriteOcclusion": false,
+    "updateRainOcclusion": false
+  },
+  "preserved": {
+    "v233Rollback": true,
+    "v234RainAirspaceCarLift": true,
+    "v235TowerRainMidfield": true,
+    "v236RoofSupport": true,
+    "v238V237Closed": true,
+    "v239aSurfaceContinuity": true,
+    "v240StableSurfaceDraw": true
+  },
+  "forbiddenTouched": {
+    "map": false,
+    "collision": false,
+    "assetsPng": false,
+    "objectBlock": false,
+    "roadMask": false,
+    "rainRuntime": false,
+    "car": false,
+    "skybox": false,
+    "roofGeometry": false,
+    "tower": false,
+    "receptionBathRendering": false
+  },
+  "debugCommands": [
+    "window.__PERLA_DEBUG__.getStableWallFamilySummary()",
+    "window.__PERLA_DEBUG__.getStableSurfaceDrawSummary()",
+    "window.__PERLA_DEBUG__.getColumnFragmentSurfaceSummary()",
+    "perlaDownloadColumnFragmentDebugReport()"
+  ],
+  "expectedValidation": [
+    "node --check extracted JS",
+    "debug export presence",
+    "asset refs/missing",
+    "PNG diff vs V240 = 0",
+    "ZIP/TAR.GZ integrity",
+    "patch-only absence"
+  ],
+  "browserInteractiveTest": "not executed in container; must be verified by user by rotating camera near erba and bath_garden points"
+}

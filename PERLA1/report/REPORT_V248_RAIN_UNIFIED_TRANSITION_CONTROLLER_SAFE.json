@@ -1,0 +1,41 @@
+{
+  "buildId": "PERLA1_V248_RAIN_UNIFIED_TRANSITION_CONTROLLER_SAFE_LOCAL",
+  "base": "PERLA1_V247_RAIN_TEMPORAL_ANGULAR_BALANCE_SAFE_LOCAL",
+  "type": "rain-only unified transition controller",
+  "modifiedFiles": [
+    "01_GIOCO_PRONTO_LOCAL_TEST/index.html",
+    "AVVIA_GIOCO_WINDOWS_SENZA_PYTHON.bat",
+    "AVVIA_GIOCO_SERVER_POWERSHELL.ps1",
+    "report/README_REPACK_V248.txt",
+    "report/REPORT_V248_RAIN_UNIFIED_TRANSITION_CONTROLLER_SAFE.json",
+    "report/STATUS_PROGETTO_E_DIPENDENZE_PERLA1.txt",
+    "report/METODO_LAVORO_ANTI_REGRESSIONE_PERLA1.txt"
+  ],
+  "preserved": [
+    "map",
+    "fMap",
+    "cMap",
+    "roadMask",
+    "objectBlock",
+    "rainCoveredMap geometry",
+    "assets PNG",
+    "ASSET_MANIFEST",
+    "roofSegments",
+    "skybox",
+    "sprite placement",
+    "audio",
+    "high-wall runtime off"
+  ],
+  "debugCommands": [
+    "window.__PERLA_DEBUG__.getRainUnifiedControllerSummaryV248()",
+    "window.__PERLA_DEBUG__.downloadRainUnifiedControllerReportV248()",
+    "window.__PERLA_DEBUG__.setRainUnifiedControllerV248(false/true)"
+  ],
+  "checklistExpected": [
+    "frontminDirect=false",
+    "bucketDirect=false",
+    "v235MidfieldDirect=false",
+    "emergencyPrewarmDirect=false",
+    "all refill requests pass rainAuthorizeRefillV248 when active"
+  ]
+}

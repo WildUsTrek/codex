@@ -1,0 +1,36 @@
+{
+  "build": "PERLA1_V198A_AUDIO_LOUDER_STEPS_BIRDS_THUNDER_ECHO_LOCAL",
+  "base": "PERLA1_V198_WEATHER_SKY_PERFORMANCE_RECOVERY_LOCAL",
+  "scope": "procedural audio only",
+  "changes": {
+    "footstepGain": 0.42,
+    "footstepAmpMult": 3.45,
+    "birdTargets": {
+      "clear": 0.19,
+      "cloudy": 0.034,
+      "rain": 0,
+      "storm": 0
+    },
+    "birdChirpGainMult": 3.05,
+    "thunderEcho": "lowpass delay echo, direct thunder level unchanged"
+  },
+  "preserved": [
+    "V198 weather/sky performance recovery",
+    "V185 horizon target 1.08",
+    "weather visual cloud budget/gating",
+    "map",
+    "collisions",
+    "worldgen",
+    "roofs",
+    "tower",
+    "sprite placement",
+    "pergola",
+    "festoons",
+    "lake",
+    "floors",
+    "decals",
+    "PNG assets",
+    "launchers"
+  ],
+  "timestamp": "2026-06-10T09:18:25Z"
+}

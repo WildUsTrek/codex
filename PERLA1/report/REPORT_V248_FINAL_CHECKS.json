@@ -1,0 +1,39 @@
+{
+  "buildId": "PERLA1_V248_RAIN_UNIFIED_TRANSITION_CONTROLLER_SAFE_LOCAL",
+  "base": "PERLA1_V247_RAIN_TEMPORAL_ANGULAR_BALANCE_SAFE_LOCAL",
+  "checks": {
+    "nodeCheck": "OK",
+    "runtimeMockDesktop": "OK",
+    "runtimeMockMobilePortrait": "OK",
+    "runtimeMockMobileLandscape": "OK",
+    "runtimeMockCoveredCell": "OK",
+    "assetMissing": 0,
+    "assetRefsUnique": 108,
+    "pngTotal": 116,
+    "pngModifiedVsV247": 0,
+    "mapRuntime": "150x88 (mock)",
+    "spriteRuntime": "1938 (mock short)",
+    "roofSegmentsRuntime": "2 (mock short)",
+    "highWallRuntimeOff": true,
+    "patchOnlyFolderAbsent": true
+  },
+  "v248DebugContracts": {
+    "frontminDirect": false,
+    "bucketDirect": false,
+    "v235MidfieldDirect": false,
+    "emergencyPrewarmDirect": false,
+    "controllerDebug": "getRainUnifiedControllerSummaryV248"
+  },
+  "modifiedFiles": [
+    "01_GIOCO_PRONTO_LOCAL_TEST/index.html",
+    "AVVIA_GIOCO_WINDOWS_SENZA_PYTHON.bat",
+    "AVVIA_GIOCO_SERVER_POWERSHELL.ps1",
+    "report/STATUS_PROGETTO_E_DIPENDENZE_PERLA1.txt",
+    "report/METODO_LAVORO_ANTI_REGRESSIONE_PERLA1.txt",
+    "report/README_REPACK_V248.txt",
+    "report/REPORT_V248_RAIN_UNIFIED_TRANSITION_CONTROLLER_SAFE.json",
+    "report/REPORT_V248_ASSET_CHECK.json",
+    "report/REPORT_V248_FINAL_CHECKS.json"
+  ],
+  "browserVisualTest": "not executed"
+}

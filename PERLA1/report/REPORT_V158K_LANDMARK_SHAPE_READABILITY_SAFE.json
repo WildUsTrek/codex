@@ -1,0 +1,56 @@
+{
+  "build": "PERLA1_V158K_LANDMARK_SHAPE_READABILITY_SAFE_LOCAL",
+  "base": "PERLA1_V158J_HORIZON_LANDMARK_ANCHOR_FIX_SAFE_LOCAL",
+  "goal": "landmark shape readability without regressions or broad atmospheric curves",
+  "modified": [
+    "01_GIOCO_PRONTO_LOCAL_TEST/index.html",
+    "01_GIOCO_PRONTO_LOCAL_TEST/assets/raycast/sky_panorama_360_v158k.png",
+    "01_GIOCO_PRONTO_LOCAL_TEST/assets/raycast/cloud_layer_soft_v158k.png",
+    "STATUS_PROGETTO_E_DIPENDENZE_PERLA1.txt",
+    "METODO_LAVORO_ANTI_REGRESSIONE_PERLA1.txt",
+    "README_REPACK_V158K.txt"
+  ],
+  "preserved": [
+    "no far wall visibility limit",
+    "no culling/distance cap",
+    "map/fMap/roadMask/cMap/objectBlock/collisions/worldgen unchanged",
+    "roof geometry/gables/self-depth unchanged",
+    "tower unchanged",
+    "sprite placement unchanged",
+    "V158J sky/fog/cloud architecture preserved"
+  ],
+  "asset_stats": {
+    "size": [
+      4096,
+      384
+    ],
+    "full_band_rows_gt10_86pct": 0,
+    "dark_visible_lum_lt120_alpha_gt20": 0,
+    "max_row_alpha_gt15_fraction": 0.441650390625,
+    "max_connected_active_width_px": 312,
+    "max_connected_active_width_fraction": 0.076171875,
+    "crop_active_fraction": {
+      "east": 0.65625,
+      "south": 0.42391304347826086,
+      "west": 0.6032608695652174,
+      "north": 0.8355978260869565,
+      "ne": 0.2866847826086957,
+      "se": 0.26902173913043476,
+      "sw": 0.21875,
+      "nw": 0.35190217391304346
+    },
+    "seam_mean_abs_rgba": 0.0
+  },
+  "notes": "Full runtime browser preview not opened; asset/code/package checks executed offline.",
+  "checks": {
+    "node_check": "OK",
+    "static_vm_smoke": "OK with extended timeout; debug exported",
+    "map": "150x88",
+    "sprites": 1938,
+    "roofSegments": 2,
+    "asset_missing": 0,
+    "patch_only_folder": false,
+    "zip_integrity": "pending",
+    "tar_gz_integrity": "pending"
+  }
+}

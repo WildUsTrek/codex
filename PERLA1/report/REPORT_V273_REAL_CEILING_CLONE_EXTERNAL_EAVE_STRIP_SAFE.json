@@ -1,0 +1,112 @@
+{
+  "buildId": "PERLA1_V273_REAL_CEILING_CLONE_EXTERNAL_EAVE_ANCHOR_SAFE_LOCAL",
+  "date": "2026-06-13",
+  "status": "validated_via_bat_server",
+  "rootCause": {
+    "failedAttempt": "V272 underside/eave geometry drew real filled roof-space faces and produced large red slabs plus extra draw.",
+    "rejectedFallback": "V265 economic edge rail is not used as the primary border fix because it can reintroduce the disappearing-edge failure.",
+    "v271CostSource": "The V271 external clone used the full modern ceiling renderer outside the building; this preserved continuity but could add visible/full-cover draw where only an eave border was needed."
+  },
+  "patch": {
+    "mode": "V273 external ceiling clone eave strip",
+    "filesChanged": [
+      "01_GIOCO_PRONTO_LOCAL_TEST/index.html",
+      "AVVIA_GIOCO_WINDOWS_SENZA_PYTHON.bat",
+      "AVVIA_GIOCO_SERVER_POWERSHELL.ps1"
+    ],
+    "geometryPolicy": [
+      "Keep V272 runtime off.",
+      "Do not reactivate original V106 sample roof fill.",
+      "Do not use V265 economic edge rail as the primary border renderer.",
+      "Keep the V270/V271 external ceiling clone for continuity/depth.",
+      "Suppress the full external clone cover draw and replace it with merged V273 eave strips anchored to roof.eaveZ.",
+      "Preserve real/internal modern ceiling rendering."
+    ],
+    "runtimeFlags": {
+      "PERLA_V273_REAL_CEILING_CLONE_EXTERNAL_EAVE_ANCHOR_SAFE": true,
+      "PERLA_V273_EXTERNAL_STRIP_VISUAL": true,
+      "PERLA_V272_REAL_ROOF_UNDERSIDE_EAVE_NEAR_GEOMETRY_SAFE": false,
+      "PERLA_V273_FORBID_EDGE_RAIL_FALLBACK_AS_PRIMARY": true
+    }
+  },
+  "validation": {
+    "launcher": "AVVIA_GIOCO_WINDOWS_SENZA_PYTHON.bat",
+    "url": "http://127.0.0.1:8000/",
+    "staticParse": "ok",
+    "browserConsoleErrors": 0,
+    "screenshots": {
+      "bathWestRaw": "C:/Users/ASUS/AppData/Local/Temp/perla_v273_strip_canvas_bath_west_800x450.png",
+      "bathWestFarther": "C:/Users/ASUS/AppData/Local/Temp/perla_v273_pose_x88_8_y65_east.png",
+      "receptionOwner1": "C:/Users/ASUS/AppData/Local/Temp/perla_v273_reception_owner1_800x450.png"
+    },
+    "bathWestPrimaryStats": {
+      "floorSegments": 791,
+      "ceilingSegments": 132,
+      "roofMs": 1.4,
+      "roofSamplesV106": 0,
+      "roofVisibleSamplesV106": 0,
+      "v271VirtualCells": 10500,
+      "v272Pixels": 0,
+      "v265RailApplied": 0,
+      "v265RailPixels": 0,
+      "v273DepthWrites": 10500,
+      "v273Segments": 55,
+      "v273ExternalFullCoverSuppressed": 55,
+      "v273StripQueued": 55,
+      "v273StripDrawn": 29,
+      "v273StripPixels": 5226,
+      "roofModernCoverFogPremixPixelsAfterSuppressingExternalClone": 231560
+    },
+    "bathPoseScan": [
+      {
+        "pose": "x88.8 y65 east",
+        "coverPixels": 27496,
+        "stripPixels": 5190,
+        "stripDrawn": 32,
+        "externalFullCoverSuppressed": 36,
+        "v272Pixels": 0,
+        "v265RailPixels": 0
+      },
+      {
+        "pose": "x90.5 y65 east",
+        "coverPixels": 57848,
+        "stripPixels": 5454,
+        "stripDrawn": 33,
+        "externalFullCoverSuppressed": 39,
+        "v272Pixels": 0,
+        "v265RailPixels": 0
+      },
+      {
+        "pose": "x92.0 y65 east",
+        "coverPixels": 133568,
+        "stripPixels": 5346,
+        "stripDrawn": 31,
+        "externalFullCoverSuppressed": 47,
+        "v272Pixels": 0,
+        "v265RailPixels": 0
+      },
+      {
+        "pose": "x92.7 y65 east",
+        "coverPixels": 231560,
+        "stripPixels": 5226,
+        "stripDrawn": 29,
+        "externalFullCoverSuppressed": 55,
+        "v272Pixels": 0,
+        "v265RailPixels": 0
+      }
+    ],
+    "receptionOwner1Stats": {
+      "owner1AnchorHits": 7890,
+      "owner2AnchorHits": 0,
+      "stripPixels": 6126,
+      "stripDrawn": 36,
+      "externalFullCoverSuppressed": 55,
+      "v272Pixels": 0,
+      "v265RailPixels": 0
+    }
+  },
+  "notes": [
+    "The remaining high coverPixels in very close bath poses are from real/internal modern ceiling coverage, not from V272 and not from the V265 edge rail.",
+    "In-app Browser plugin could not be used because its browser bootstrap failed with a Windows CreateProcessAsUserW access error; validation used headless Chrome/Playwright against the BAT-launched local server."
+  ]
+}

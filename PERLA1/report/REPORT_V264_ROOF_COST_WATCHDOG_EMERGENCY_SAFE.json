@@ -1,0 +1,65 @@
+{
+  "buildId": "PERLA1_V264_ROOF_COST_WATCHDOG_EMERGENCY_SAFE_LOCAL",
+  "baseBuild": "PERLA1_V263_ROOF_MID_DISTANCE_BRANCH_LOCK_SAFE_LOCAL",
+  "generatedAt": "2026-06-12T23:09:00.241674Z",
+  "scope": "Roof Cost Watchdog Emergency Safe: path-independent watchdog based on real/predicted roof cost, not owner/path/candidates.",
+  "diagnosisFromUserReports": [
+    "V263 could still reach ~19-20 draw clear because roofBranchLockV263 was false/inapplicable while roof.samples stayed around 30102/30573.",
+    "The failing path had ownerId/pathLabel null or non-owner labels, V259 candidates=0, coverage uncappedRoofSamples huge; therefore V263 branch lock was too narrow.",
+    "V264 moves authority from area/path to cost: predicted samples, roof.ms, roof.samples, visibleSamples and uncappedRoofSamples."
+  ],
+  "implementation": {
+    "newFlags": [
+      "PERLA_V264_ROOF_COST_WATCHDOG_EMERGENCY_SAFE",
+      "PERLA_V264_BASE_BUILD",
+      "PERLA_V264_PATCH_MODE"
+    ],
+    "thresholds": {
+      "warningMs": 10,
+      "pressureMs": 12,
+      "emergencyMs": 14,
+      "warningSamples": 7000,
+      "pressureSamples": 9000,
+      "emergencySamples": 12000,
+      "pressureVisible": 5000,
+      "emergencyVisible": 6000,
+      "globalDrawEmergencyMs": 18,
+      "globalRoofForDrawEmergencyMs": 12
+    },
+    "steps": {
+      "warning": "4x3",
+      "pressure": "6x4",
+      "emergency": "7x5"
+    },
+    "hook": "drawSlopedRoofLayer2_5D before sampling: estimates 2x2 bbox roof samples and raises loopStep/fill size independently of roof owner/path.",
+    "finalize": "perlaRoofCostWatchdogFinalizeFrameV264 after roof timing captures actual roof.ms/samples/visible/uncapped and flags emergencyFailed if mandatory emergency was not applied."
+  },
+  "commands": [
+    "perlaRoofCostWatchdogSummaryV264()",
+    "perlaRoofCostWatchdogToggleV264(false|true)",
+    "perlaRoofCostWatchdogModeV264(\"safe|debug|off\")",
+    "perlaRoofCostWatchdogDownloadV264()"
+  ],
+  "preserved": [
+    "V259/V260/V261/V262/V263 debug",
+    "rain V248-V257",
+    "skybox",
+    "worldgen",
+    "map/fMap/cMap/roadMask/objectBlock",
+    "assets",
+    "global floor/sprite placement",
+    "wall DDA",
+    "collisions",
+    "audio/input/CSS",
+    "minimap",
+    "pergola artistic structure"
+  ],
+  "validationPlanned": [
+    "node --check",
+    "Node smoke",
+    "asset hash/count unchanged",
+    "zip/tar integrity",
+    "no patch-only",
+    "browser real test recommended"
+  ]
+}

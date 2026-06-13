@@ -1,0 +1,57 @@
+{
+  "build": "PERLA1_V216_DOOR_RAIN_EXACT_CEILING_RECT_REPLAY_LOCAL",
+  "base": "PERLA1_V215_DOOR_RAIN_SOLID_CEILING_OCCLUDER_LOCAL",
+  "goal": "Replay identico dei fillRect soffitto/tettoia realmente disegnati dopo la pioggia porta, senza calcolare nuove cover.",
+  "changed_files": [
+    "01_GIOCO_PRONTO_LOCAL_TEST/index.html",
+    "AVVIA_GIOCO_SERVER_POWERSHELL.ps1",
+    "AVVIA_GIOCO_WINDOWS_SENZA_PYTHON.bat",
+    "report/METODO_LAVORO_ANTI_REGRESSIONE_PERLA1.txt",
+    "report/STATUS_PROGETTO_E_DIPENDENZE_PERLA1.txt",
+    "report/README_REPACK_V216.txt",
+    "report/REPORT_V216_DOOR_RAIN_EXACT_CEILING_RECT_REPLAY.json"
+  ],
+  "core_changes": {
+    "new_constant": "PERLA_V216_DOOR_RAIN_EXACT_CEILING_RECT_REPLAY",
+    "new_capture_function": "captureCeilingFillRectV216",
+    "new_replay_function": "drawDoorRainExactCeilingReplayV216",
+    "capture_sources": [
+      "drawModernCoverCeilingSegment",
+      "drawCeilingSegment",
+      "drawCanopySpanV121"
+    ],
+    "draw_order": "drawWeatherOverlayV190 -> drawDoorRainExactCeilingReplayV216",
+    "disabled_active_paths": [
+      "drawDoorRainCeilingCoverReplayV214",
+      "drawDoorRainSolidCeilingCoverV215"
+    ]
+  },
+  "forbidden_mechanisms_removed_from_active_v216_replay": {
+    "new_yTop_or_yBottom_calculation": true,
+    "WallTopBuffer_as_authority": false,
+    "ZBuffer_as_authority": false,
+    "percentiles": false,
+    "fallback_ratio": false,
+    "solid_invented_cover": false,
+    "ctx_clip": false,
+    "drawImage_rainBuffer": false,
+    "perlaCompositeRainBufferV201_for_door": false
+  },
+  "debug_fields_added": [
+    "doorRainExactCeilingReplayV216",
+    "doorRainExactCeilingRectsCapturedV216",
+    "doorRainExactCeilingRectsReplayedV216",
+    "doorRainExactCeilingReplaySourcesV216",
+    "doorRainExactCeilingReplayDrawAfterRainV216",
+    "doorRainExactCeilingReplayUsesIdenticalFillRectsV216",
+    "doorRainExactCeilingReplayNoWallTopBufferV216",
+    "doorRainExactCeilingReplayNoZBufferV216",
+    "doorRainExactCeilingReplayNoPercentilesV216",
+    "doorRainExactCeilingReplayNoFallbackRatioV216",
+    "doorRainExactCeilingReplayNoSolidInventedCoverV216",
+    "doorRainExactCeilingReplayDisabledV215SolidCoverV216",
+    "doorRainExactCeilingReplayDisabledV214ClippedReplayV216",
+    "doorRainExactCeilingReplayReasonV216"
+  ],
+  "browser_visual_test": "not_executed"
+}

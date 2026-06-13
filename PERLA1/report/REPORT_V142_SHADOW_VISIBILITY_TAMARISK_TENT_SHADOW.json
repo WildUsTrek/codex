@@ -1,0 +1,91 @@
+{
+  "build": "PERLA1_V142_SHADOW_VISIBILITY_TAMARISK_TENT_SHADOW_SAFE_LOCAL",
+  "base": "PERLA1_V141_SHADOW_CACHE_TENT_ANCHOR_SAFE_LOCAL",
+  "base_lineage": "V141 based on V138Q blindata",
+  "changes": [
+    "shadow cache visibility/scale tuning",
+    "near-range shadow size no longer shrinks",
+    "stronger but still soft/transparent alpha",
+    "tent anchor unchanged from V141, tent shadow profile boosted",
+    "tamarisk anchor lifted only by multiplier 0.94",
+    "no changes to assets PNG, map, collision, roofs, tower, pergola, festoons, boat"
+  ],
+  "asset_refs": 103,
+  "png_files": 111,
+  "missing": [],
+  "unused_png": [
+    "barbecue_long.png",
+    "fountain.png",
+    "ivy_arch_hanging_high.png",
+    "ivy_arch_overhead_0.png",
+    "ivy_arch_overhead_1.png",
+    "wall_tile_bath_roof_v39.png",
+    "wall_tower_stone_v126.png",
+    "wall_wood_reception_roof_v39.png"
+  ],
+  "node_check": "OK",
+  "runtime_smoke": null,
+  "runtime_probe": [
+    {
+      "name": "pineta2_west",
+      "spriteVisible": 3,
+      "spriteStripes": 21,
+      "shadows": 0,
+      "profiles": {},
+      "skippedFar": 42,
+      "skippedZ": 0,
+      "v142": true,
+      "roofSegments": 2
+    },
+    {
+      "name": "yoga_room",
+      "spriteVisible": 1222,
+      "spriteStripes": 5760,
+      "shadows": 94,
+      "profiles": {
+        "tree_soft_round_v142": 94
+      },
+      "skippedFar": 195,
+      "skippedZ": 30,
+      "v142": true,
+      "roofSegments": 2
+    },
+    {
+      "name": "bar_reception",
+      "spriteVisible": 9,
+      "spriteStripes": 470,
+      "shadows": 1,
+      "profiles": {
+        "table_round_v142": 1
+      },
+      "skippedFar": 0,
+      "skippedZ": 0,
+      "v142": true,
+      "roofSegments": 2
+    },
+    {
+      "name": "camper_road",
+      "spriteVisible": 805,
+      "spriteStripes": 788,
+      "shadows": 11,
+      "profiles": {
+        "tree_soft_round_v142": 10,
+        "tent_round_v142": 1
+      },
+      "skippedFar": 162,
+      "skippedZ": 34,
+      "v142": true,
+      "roofSegments": 2
+    }
+  ],
+  "png_changed_vs_v141": 0,
+  "package_policy": "ZIP completo senza cartella SOLO_FILE_DA_SOSTITUIRE / patch-only",
+  "checks": {
+    "node_check": "OK",
+    "runtime_smoke": "OK",
+    "runtime_probe": "OK",
+    "png_hashes_vs_v141": "OK changed 0",
+    "asset_missing": "OK 0",
+    "roofSegments": "2"
+  }
+}

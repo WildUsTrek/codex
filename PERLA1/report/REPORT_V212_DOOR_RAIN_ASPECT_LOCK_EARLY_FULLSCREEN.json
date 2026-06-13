@@ -1,0 +1,50 @@
+{
+  "build": "PERLA1_V212_DOOR_RAIN_ASPECT_LOCK_EARLY_FULLSCREEN_LOCAL",
+  "base": "PERLA1_V211_DOOR_RAIN_PORTAL_3X1_GEOMETRY_LOCAL",
+  "scope": [
+    "door rain aspect lock 3:1",
+    "bottom anchored to threshold",
+    "early fullscreen threshold",
+    "UI version update",
+    "anti legacy checks preserved"
+  ],
+  "preserved": [
+    "V210 dedicated renderer",
+    "V204 audio",
+    "V200 roof budget",
+    "V201 global rain/cloud budget",
+    "V185 horizon",
+    "map/collision/worldgen/sprites/pergola/tower/canopy"
+  ],
+  "generatedAt": "2026-06-10T14:55:28.794635Z",
+  "validation": {
+    "changed_files": [
+      "AVVIA_GIOCO_SERVER_POWERSHELL.ps1",
+      "AVVIA_GIOCO_WINDOWS_SENZA_PYTHON.bat",
+      "01_GIOCO_PRONTO_LOCAL_TEST/index.html",
+      "report/METODO_LAVORO_ANTI_REGRESSIONE_PERLA1.txt",
+      "report/STATUS_PROGETTO_E_DIPENDENZE_PERLA1.txt"
+    ],
+    "added_files": [
+      "report/README_REPACK_V212.txt",
+      "report/REPORT_V212_DOOR_RAIN_ASPECT_LOCK_EARLY_FULLSCREEN.json"
+    ],
+    "removed_files": [],
+    "png_actual": 116,
+    "png_refs": 108,
+    "png_missing": [],
+    "checks": {
+      "node_check_ok": true,
+      "drawWeatherCloudDeckV192_present": false,
+      "door_renderer_present": true,
+      "door_renderer_no_ctx_clip": true,
+      "door_renderer_no_drawImage_rainBuffer": true,
+      "legacy_composite_forbidden_guard": true,
+      "aspect_lock_present": true,
+      "early_fullscreen_present": true,
+      "ui_v212_title": true,
+      "build_id_v212": true,
+      "patch_only_folder_absent": true
+    }
+  }
+}

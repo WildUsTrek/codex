@@ -1,0 +1,29 @@
+{
+  "build": "PERLA1_V149_ROOF_BOUNDS_SAFETY_FIX_LOCAL",
+  "base": "PERLA1_V148_ROOF_BOUNDS_PINETA_PERFORMANCE_SAFE_LOCAL",
+  "scope": "roof bounds safety only; V148 pineta optimization preserved and untouched",
+  "changed": [
+    "index.html",
+    "STATUS_PROGETTO_E_DIPENDENZE_PERLA1.txt",
+    "METODO_LAVORO_ANTI_REGRESSIONE_PERLA1.txt",
+    "README_REPACK_V149.txt",
+    "REPORT_V149_ROOF_BOUNDS_SAFETY_FIX.json"
+  ],
+  "roofFix": {
+    "keptV148PlaneCache": true,
+    "keptV148GableCache": true,
+    "conservativeNearPlaneFallback": true,
+    "widerMargins": true,
+    "fullRangeGableFallbackWhenUnstable": true
+  },
+  "preserved": [
+    "pineta V148 LOD/broadphase",
+    "pergola V147/V148",
+    "tower integrated V136",
+    "roof visual model V106/V117",
+    "assets PNG",
+    "map/collision/worldgen",
+    "boat",
+    "stones/flowers/statue/shadows"
+  ]
+}

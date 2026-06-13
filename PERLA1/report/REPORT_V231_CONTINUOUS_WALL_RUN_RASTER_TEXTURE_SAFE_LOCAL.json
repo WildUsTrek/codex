@@ -1,0 +1,40 @@
+{
+  "build": "PERLA1_V231_CONTINUOUS_WALL_RUN_RASTER_TEXTURE_SAFE_LOCAL",
+  "base": "PERLA1_V230_CONTINUOUS_WALL_RUN_PROJECTION_CLIP_LOCAL",
+  "goal": "continuous wall-run raster/texture-safe rendering, special renderer exclusion, no isolated columns",
+  "modified_files": [
+    "01_GIOCO_PRONTO_LOCAL_TEST/index.html",
+    "AVVIA_GIOCO_WINDOWS_SENZA_PYTHON.bat",
+    "AVVIA_GIOCO_SERVER_POWERSHELL.ps1",
+    "report/README_REPACK_V231.txt",
+    "report/REPORT_V231_CONTINUOUS_WALL_RUN_RASTER_TEXTURE_SAFE_LOCAL.json"
+  ],
+  "preserved": [
+    "map",
+    "collisioni",
+    "worldgen",
+    "roadMask",
+    "objectBlock",
+    "assets",
+    "sprites placement",
+    "tower dedicated renderer",
+    "roofs/canopy",
+    "audio/weather",
+    "skybox"
+  ],
+  "checks_planned": [
+    "node --check",
+    "zip integrity",
+    "tar.gz integrity",
+    "asset missing count",
+    "png unchanged count"
+  ],
+  "visual_tests_required": [
+    "distant vertical line artifacts",
+    "tower behind low wall distortion",
+    "special wall textures near camera",
+    "V230 wall continuity",
+    "V229 sprite seal"
+  ],
+  "honesty": "No real browser/visual test executed in container."
+}

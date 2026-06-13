@@ -1,0 +1,69 @@
+{
+  "build": "PERLA1_V255_RAIN_RESERVOIR_RELEASE_SMOOTHER_SAFE_LOCAL",
+  "base": "PERLA1_V254_RAIN_NEAR_REENTRY_COORDINATOR_SAFE_LOCAL",
+  "createdAt": "2026-06-12",
+  "scope": "visual/draw-only rain visible reservoir release smoother after V254",
+  "objective": "Eliminare i tre scatti residui distribuendo il rilascio del corpo visibile della pioggia derivato dal reservoir, senza toccare spawn/refill/lifecycle/canKeep/mappa/assets.",
+  "modifiedFiles": [
+    "01_GIOCO_PRONTO_LOCAL_TEST/index.html",
+    "AVVIA_GIOCO_WINDOWS_SENZA_PYTHON.bat",
+    "AVVIA_GIOCO_SERVER_POWERSHELL.ps1",
+    "report/STATUS_PROGETTO_E_DIPENDENZE_PERLA1.txt",
+    "report/METODO_LAVORO_ANTI_REGRESSIONE_PERLA1.txt",
+    "report/README_REPACK_V255.txt",
+    "report/REPORT_V255_RAIN_RESERVOIR_RELEASE_SMOOTHER_SAFE.json"
+  ],
+  "addedReportFiles": [
+    "report/EXTRACTED_INDEX_INLINE_SCRIPT_V255.js",
+    "report/v255_vm_smoke.js",
+    "report/v255_runtime_probe.js"
+  ],
+  "preserved": [
+    "V248 controller core",
+    "V249 envelope",
+    "V250 bucket semantics",
+    "V251 lifecycle diagnostic",
+    "V252 phase gate",
+    "V253 near_blend comb breaker",
+    "V254 near reentry coordinator",
+    "spawn/refill/update lifecycle/canKeep",
+    "map/fMap/cMap/roadMask/objectBlock/rainCoveredMap/rainOpenSkyMap",
+    "roofSegments/CeilingDepthBuffer/tetti/skybox/audio/assets/high-wall runtime off",
+    "launcher smart port logic"
+  ],
+  "newRuntimeElements": [
+    "PERLA_V255_RAIN_RESERVOIR_RELEASE_SMOOTHER",
+    "rainReservoirReleaseSmootherV255",
+    "rainReservoirReleasePhaseV255",
+    "rainApplyReservoirReleaseLodV255",
+    "rainFinalizeReservoirReleaseSummaryV255",
+    "toggleRainUnifiedDebugV255"
+  ],
+  "debugCommands": [
+    "window.__PERLA_DEBUG__.toggleRainUnifiedDebugV255()",
+    "window.__PERLA_DEBUG__.getRainReservoirReleaseSummaryV255()",
+    "window.__PERLA_DEBUG__.downloadRainReservoirReleaseReportV255()",
+    "window.__PERLA_DEBUG__.setRainReservoirReleaseSmootherV255(false/true)"
+  ],
+  "checks": {
+    "node_check": "OK",
+    "vm_smoke": "OK",
+    "runtime_probe": "OK",
+    "asset_refs": 108,
+    "asset_missing": 0,
+    "png_total": 116,
+    "png_changed_vs_v254": 0,
+    "build_id_ok": true,
+    "v254_build_residue": false,
+    "debug_v255_exports": true,
+    "powerShell_bad_var_colon": false,
+    "patch_only_folder_present": false
+  },
+  "assetMissing": [],
+  "pngChanges": [],
+  "notes": [
+    "Non eseguito test visivo browser reale in questo ambiente.",
+    "V255 off deve ripristinare comportamento V254 tramite toggle.",
+    "Il debug unificato V255 include sezioni v251/v252/v253/v254/v255 e corregge il mode name."
+  ]
+}

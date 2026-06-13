@@ -1,0 +1,24 @@
+{
+  "build": "PERLA1_V138N_SOLID_FOOT_FLOWER_SPACING_SAFE",
+  "base": "PERLA1_V138M_PINES_GROUND_LITTER_BAR_ANCHOR_SAFE",
+  "assetManifestEntries": 91,
+  "missingAssets": [],
+  "pngAll64Rgba": true,
+  "changes": [
+    "Removed V138M strong tree anchor multiplier from spriteAnchorSink.",
+    "Disabled V138M modernTreeGroundSink forcing block.",
+    "Reset exact V138M forced pines groundSink to normal 2.0 at placement.",
+    "Added conservative V138N solid-foot correction based on solid-alpha bottom padding; excludes flowers/grass/litter/pinecones/needles/walls/decals.",
+    "Added V138N post-pass to normalize any tree groundSink >2.75 back to 2.0 for true tree texture IDs only.",
+    "Added main-road tower-to-beach flower spacing pass with minDistance 4.05 regardless of flower color.",
+    "Softened historic no-vase flower colors by reducing saturation and contrast without changing shape or adding ground shadow."
+  ],
+  "antiRegression": {
+    "noTreeStringFilter": true,
+    "noKindIncludesPineAnchor": true,
+    "pineconeNeedlesNotTreeAnchored": true,
+    "towerV136Preserved": true,
+    "broadphaseV137Preserved": true,
+    "noAssetModernExtra": true
+  }
+}

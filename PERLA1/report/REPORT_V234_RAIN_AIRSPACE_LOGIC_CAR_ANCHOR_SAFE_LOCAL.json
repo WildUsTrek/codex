@@ -1,0 +1,34 @@
+{
+  "build": "PERLA1_V234_RAIN_AIRSPACE_LOGIC_CAR_ANCHOR_SAFE_LOCAL",
+  "base": "PERLA1_V233_OVERDRAW_ROLLBACK_STABILITY_LOCAL",
+  "createdAtLocal": "2026-06-11T17:07:13",
+  "intent": [
+    "rain airspace logic no wall draw above low outdoor walls",
+    "parked car visual anchor lift render-time only"
+  ],
+  "preserved": {
+    "farWallSpanDrawDisabled": "PERLA_V233_DISABLE_FAR_WALL_SPAN_DRAW remains true",
+    "heightStepFaceDrawDisabled": "PERLA_V233_DISABLE_HEIGHT_STEP_FACE_DRAW remains true",
+    "continuousWallRunDrawDisabled": "PERLA_V233_DISABLE_CONTINUOUS_WALL_RUN_DRAW remains true",
+    "mapCollisionAssetsRoadMaskObjectBlock": "unchanged by design",
+    "pngModifiedCount": 0
+  },
+  "codeChanges": [
+    "projectRainPointV222 carries wx/wy",
+    "isRainOutdoorLowWallAirspaceCellV234",
+    "rainOutdoorLowWallAirspaceVisibleV234",
+    "canSpawnRainAirAtV225 V234 branch",
+    "canKeepRainDropAtV225 V234 branch",
+    "carVisualAnchorLiftV234",
+    "debug constants exported"
+  ],
+  "staticChecks": {
+    "assetManifestPngRefs": 108,
+    "assetManifestPngRefsUnique": 108,
+    "pngFiles": 116,
+    "missingAssets": [],
+    "pngModifiedVsV233": [],
+    "nodeCheck": "OK at packaging time if final command succeeds",
+    "browserVisualTest": "not executed in container"
+  }
+}

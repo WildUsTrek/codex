@@ -1,0 +1,44 @@
+{
+  "build": "PERLA1_V256_RAIN_OPEN_SHELTER_VISIBILITY_RESTORE_SAFE_LOCAL",
+  "base": "PERLA1_V255_RAIN_RESERVOIR_RELEASE_SMOOTHER_SAFE_LOCAL",
+  "date": "2026-06-12",
+  "goal": "Restore rain visibility through doors and open canopies after V255 over-suppressed stable_covered frames.",
+  "modified_files": [
+    "01_GIOCO_PRONTO_LOCAL_TEST/index.html",
+    "AVVIA_GIOCO_WINDOWS_SENZA_PYTHON.bat",
+    "AVVIA_GIOCO_SERVER_POWERSHELL.ps1",
+    "report/STATUS_PROGETTO_E_DIPENDENZE_PERLA1.txt",
+    "report/METODO_LAVORO_ANTI_REGRESSIONE_PERLA1.txt",
+    "report/README_REPACK_V256.txt",
+    "report/REPORT_V256_RAIN_OPEN_SHELTER_VISIBILITY_RESTORE_SAFE.json",
+    "report/EXTRACTED_INDEX_INLINE_SCRIPT_V256.js",
+    "report/v256_vm_smoke.js"
+  ],
+  "preserved": [
+    "V248-V255 rain systems",
+    "spawn/refill/update lifecycle/canKeep",
+    "map/fMap/cMap/roadMask/objectBlock",
+    "rainCoveredMap/rainOpenSkyMap geometry",
+    "roofSegments/CeilingDepthBuffer",
+    "asset PNG/ASSET_MANIFEST",
+    "skybox/audio/high-wall runtime off",
+    "launcher smart port logic"
+  ],
+  "added_debug": [
+    "getRainOpenShelterVisibilitySummaryV256",
+    "downloadRainOpenShelterVisibilityReportV256",
+    "setRainOpenShelterVisibilityRestoreV256",
+    "toggleRainUnifiedDebugV256",
+    "v256_unified_rain_debug_v251_v252_v253_v254_v255_v256"
+  ],
+  "checks": {
+    "node_check": "OK",
+    "vm_smoke_v256": "OK",
+    "asset_refs": 108,
+    "asset_missing": 0,
+    "png_total": 116,
+    "png_changed_vs_v255": 0,
+    "powershell_bad_var_colon": 0,
+    "patch_only_folder": "absent"
+  }
+}

@@ -1,0 +1,1237 @@
+{
+  "build": "PERLA1_V138M_PINES_GROUND_LITTER_BAR_ANCHOR_SAFE",
+  "base": "PERLA1_V138L_BAR_CANOPY_PINETA_POLISH_SAFE",
+  "summary": {
+    "sprites_after_runtime_probe": 2204,
+    "roofSegments": 2,
+    "v138MActive": true
+  },
+  "v138M": {
+    "active": true,
+    "exactPines": [
+      {
+        "placed": true,
+        "tex": 85,
+        "kind": "forced_user_pine_v138m_exact_0",
+        "gameplay": {
+          "x": -7.29,
+          "y": 36.4
+        },
+        "internal": {
+          "x": 22.71,
+          "y": 36.4
+        },
+        "hScale": 1.68,
+        "wScale": 0.9,
+        "groundSink": 3.65,
+        "blocking": true
+      },
+      {
+        "placed": true,
+        "tex": 86,
+        "kind": "forced_user_pine_v138m_exact_1",
+        "gameplay": {
+          "x": -9.38,
+          "y": 37.77
+        },
+        "internal": {
+          "x": 20.62,
+          "y": 37.77
+        },
+        "hScale": 1.78,
+        "wScale": 0.945,
+        "groundSink": 3.65,
+        "blocking": true
+      },
+      {
+        "placed": true,
+        "tex": 87,
+        "kind": "forced_user_pine_v138m_exact_2",
+        "gameplay": {
+          "x": -28.37,
+          "y": 53.91
+        },
+        "internal": {
+          "x": 1.63,
+          "y": 53.91
+        },
+        "hScale": 1.88,
+        "wScale": 0.99,
+        "groundSink": 3.65,
+        "blocking": true
+      },
+      {
+        "placed": true,
+        "tex": 85,
+        "kind": "forced_user_pine_v138m_exact_3",
+        "gameplay": {
+          "x": -28.44,
+          "y": 52.2
+        },
+        "internal": {
+          "x": 1.56,
+          "y": 52.2
+        },
+        "hScale": 1.98,
+        "wScale": 0.9,
+        "groundSink": 3.65,
+        "blocking": true
+      },
+      {
+        "placed": true,
+        "tex": 86,
+        "kind": "forced_user_pine_v138m_exact_4",
+        "gameplay": {
+          "x": -15.82,
+          "y": 50.26
+        },
+        "internal": {
+          "x": 14.18,
+          "y": 50.26
+        },
+        "hScale": 1.68,
+        "wScale": 0.945,
+        "groundSink": 3.65,
+        "blocking": true
+      },
+      {
+        "placed": true,
+        "tex": 87,
+        "kind": "forced_user_pine_v138m_exact_5",
+        "gameplay": {
+          "x": -11.77,
+          "y": 46.91
+        },
+        "internal": {
+          "x": 18.23,
+          "y": 46.91
+        },
+        "hScale": 1.78,
+        "wScale": 0.99,
+        "groundSink": 3.65,
+        "blocking": true
+      },
+      {
+        "placed": true,
+        "tex": 85,
+        "kind": "forced_user_pine_v138m_exact_6",
+        "gameplay": {
+          "x": -13.8,
+          "y": 44.81
+        },
+        "internal": {
+          "x": 16.2,
+          "y": 44.81
+        },
+        "hScale": 1.88,
+        "wScale": 0.9,
+        "groundSink": 3.65,
+        "blocking": true
+      },
+      {
+        "placed": true,
+        "tex": 86,
+        "kind": "forced_user_pine_v138m_exact_7",
+        "gameplay": {
+          "x": -0.47,
+          "y": 29.4
+        },
+        "internal": {
+          "x": 29.53,
+          "y": 29.4
+        },
+        "hScale": 1.98,
+        "wScale": 0.945,
+        "groundSink": 3.65,
+        "blocking": true
+      },
+      {
+        "placed": true,
+        "tex": 87,
+        "kind": "forced_user_pine_v138m_exact_8",
+        "gameplay": {
+          "x": -0.73,
+          "y": 36.33
+        },
+        "internal": {
+          "x": 29.27,
+          "y": 36.33
+        },
+        "hScale": 1.68,
+        "wScale": 0.99,
+        "groundSink": 3.65,
+        "blocking": true
+      },
+      {
+        "placed": true,
+        "tex": 85,
+        "kind": "forced_user_pine_v138m_exact_9",
+        "gameplay": {
+          "x": 32.37,
+          "y": 33.21
+        },
+        "internal": {
+          "x": 62.37,
+          "y": 33.21
+        },
+        "hScale": 1.78,
+        "wScale": 0.9,
+        "groundSink": 3.65,
+        "blocking": true
+      },
+      {
+        "placed": true,
+        "tex": 86,
+        "kind": "forced_user_pine_v138m_exact_10",
+        "gameplay": {
+          "x": 29.71,
+          "y": 24.88
+        },
+        "internal": {
+          "x": 59.71,
+          "y": 24.88
+        },
+        "hScale": 1.88,
+        "wScale": 0.945,
+        "groundSink": 3.65,
+        "blocking": true
+      }
+    ],
+    "pinetaCasaGroundTrim": {
+      "before": 213,
+      "targetRemove": 53,
+      "removed": 53,
+      "after": 160,
+      "removedSample": [
+        {
+          "tex": 90,
+          "kind": "secret_grove_extra_litter_v75",
+          "gameplay": {
+            "x": 113.75,
+            "y": 51.72
+          }
+        },
+        {
+          "tex": 41,
+          "kind": "secret_grove_extra_litter_v75",
+          "gameplay": {
+            "x": 108.77,
+            "y": 51.33
+          }
+        },
+        {
+          "tex": 31,
+          "kind": "secret_grove_extra_litter_v75",
+          "gameplay": {
+            "x": 90.74,
+            "y": 51.24
+          }
+        },
+        {
+          "tex": 41,
+          "kind": "secret_grove_extra_litter_v75",
+          "gameplay": {
+            "x": 89.19,
+            "y": 49.69
+          }
+        },
+        {
+          "tex": 30,
+          "kind": "secret_grove_extra_litter_v75",
+          "gameplay": {
+            "x": 86.83,
+            "y": 49.23
+          }
+        },
+        {
+          "tex": 41,
+          "kind": "secret_grove_extra_litter_v75",
+          "gameplay": {
+            "x": 112.72,
+            "y": 48.53
+          }
+        },
+        {
+          "tex": 40,
+          "kind": "secret_grove_extra_litter_v75",
+          "gameplay": {
+            "x": 85.16,
+            "y": 48.39
+          }
+        },
+        {
+          "tex": 41,
+          "kind": "secret_grove_extra_litter_v75",
+          "gameplay": {
+            "x": 87.52,
+            "y": 47.31
+          }
+        },
+        {
+          "tex": 89,
+          "kind": "secret_grove_extra_litter_v75",
+          "gameplay": {
+            "x": 86.62,
+            "y": 47.72
+          }
+        },
+        {
+          "tex": 12,
+          "kind": "secret_grove_extra_litter_v75",
+          "gameplay": {
+            "x": 85.73,
+            "y": 47.48
+          }
+        },
+        {
+          "tex": 41,
+          "kind": "secret_grove_extra_litter_v75",
+          "gameplay": {
+            "x": 84.65,
+            "y": 47.67
+          }
+        },
+        {
+          "tex": 30,
+          "kind": "secret_grove_extra_litter_v75",
+          "gameplay": {
+            "x": 86.27,
+            "y": 46.46
+          }
+        },
+        {
+          "tex": 89,
+          "kind": "secret_grove_extra_litter_v75",
+          "gameplay": {
+            "x": 83.51,
+            "y": 45.27
+          }
+        },
+        {
+          "tex": 89,
+          "kind": "secret_grove_extra_litter_v75",
+          "gameplay": {
+            "x": 83.78,
+            "y": 41.23
+          }
+        },
+        {
+          "tex": 31,
+          "kind": "secret_grove_extra_litter_v75",
+          "gameplay": {
+            "x": 84.69,
+            "y": 39.24
+          }
+        },
+        {
+          "tex": 40,
+          "kind": "secret_grove_extra_litter_v75",
+          "gameplay": {
+            "x": 83.73,
+            "y": 38.73
+          }
+        },
+        {
+          "tex": 90,
+          "kind": "secret_grove_extra_litter_v75",
+          "gameplay": {
+            "x": 82.78,
+            "y": 38.69
+          }
+        },
+        {
+          "tex": 40,
+          "kind": "secret_grove_extra_litter_v75",
+          "gameplay": {
+            "x": 113.83,
+            "y": 37.41
+          }
+        },
+        {
+          "tex": 41,
+          "kind": "secret_grove_extra_litter_v75",
+          "gameplay": {
+            "x": 112.27,
+            "y": 36.31
+          }
+        },
+        {
+          "tex": 88,
+          "kind": "secret_grove_extra_litter_v75",
+          "gameplay": {
+            "x": 113.45,
+            "y": 35.6
+          }
+        },
+        {
+          "tex": 41,
+          "kind": "secret_grove_extra_litter_v75",
+          "gameplay": {
+            "x": 105.82,
+            "y": 32.35
+          }
+        },
+        {
+          "tex": 31,
+          "kind": "secret_grove_extra_litter_v75",
+          "gameplay": {
+            "x": 86.17,
+            "y": 32.26
+          }
+        },
+        {
+          "tex": 12,
+          "kind": "secret_grove_extra_litter_v75",
+          "gameplay": {
+            "x": 114.73,
+            "y": 31.76
+          }
+        },
+        {
+          "tex": 30,
+          "kind": "secret_grove_extra_litter_v75",
+          "gameplay": {
+            "x": 111.3,
+            "y": 31.18
+          }
+        },
+        {
+          "tex": 41,
+          "kind": "secret_grove_extra_litter_v75",
+          "gameplay": {
+            "x": 106.72,
+            "y": 31.54
+          }
+        },
+        {
+          "tex": 90,
+          "kind": "secret_grove_extra_litter_v75",
+          "gameplay": {
+            "x": 104.36,
+            "y": 31.25
+          }
+        },
+        {
+          "tex": 12,
+          "kind": "secret_grove_extra_litter_v75",
+          "gameplay": {
+            "x": 112.35,
+            "y": 30.4
+          }
+        },
+        {
+          "tex": 30,
+          "kind": "secret_grove_extra_litter_v75",
+          "gameplay": {
+            "x": 106.83,
+            "y": 30.71
+          }
+        },
+        {
+          "tex": 88,
+          "kind": "secret_grove_extra_litter_v75",
+          "gameplay": {
+            "x": 104.68,
+            "y": 30.33
+          }
+        },
+        {
+          "tex": 41,
+          "kind": "secret_grove_floor_litter_v74",
+          "gameplay": {
+            "x": 89.3,
+            "y": 49.64
+          }
+        },
+        {
+          "tex": 90,
+          "kind": "secret_grove_floor_litter_v74",
+          "gameplay": {
+            "x": 87.62,
+            "y": 49.68
+          }
+        },
+        {
+          "tex": 89,
+          "kind": "secret_grove_floor_litter_v74",
+          "gameplay": {
+            "x": 86.26,
+            "y": 49.38
+          }
+        },
+        {
+          "tex": 41,
+          "kind": "secret_grove_floor_litter_v74",
+          "gameplay": {
+            "x": 112.28,
+            "y": 48.8
+          }
+        },
+        {
+          "tex": 88,
+          "kind": "secret_grove_floor_litter_v74",
+          "gameplay": {
+            "x": 86.43,
+            "y": 48.77
+          }
+        },
+        {
+          "tex": 41,
+          "kind": "secret_grove_floor_litter_v74",
+          "gameplay": {
+            "x": 84.77,
+            "y": 48.66
+          }
+        },
+        {
+          "tex": 40,
+          "kind": "secret_grove_floor_litter_v74",
+          "gameplay": {
+            "x": 112.23,
+            "y": 47.2
+          }
+        },
+        {
+          "tex": 31,
+          "kind": "secret_grove_floor_litter_v74",
+          "gameplay": {
+            "x": 112.33,
+            "y": 46.49
+          }
+        },
+        {
+          "tex": 30,
+          "kind": "secret_grove_floor_litter_v74",
+          "gameplay": {
+            "x": 84.45,
+            "y": 46.69
+          }
+        },
+        {
+          "tex": 40,
+          "kind": "secret_grove_floor_litter_v74",
+          "gameplay": {
+            "x": 83.2,
+            "y": 40.59
+          }
+        },
+        {
+          "tex": 40,
+          "kind": "secret_grove_floor_litter_v74",
+          "gameplay": {
+            "x": 84.29,
+            "y": 39.45
+          }
+        }
+      ]
+    },
+    "secretFlowerFieldGrass": {
+      "added": 30,
+      "items": [
+        {
+          "placed": true,
+          "tex": 12,
+          "kind": "secret_flower_field_soft_grass_v138m",
+          "gameplay": {
+            "x": 82.39,
+            "y": 7.31
+          },
+          "internal": {
+            "x": 112.39,
+            "y": 7.31
+          },
+          "hScale": 0.255,
+          "wScale": 0.541,
+          "groundSink": 2.25,
+          "blocking": false
+        },
+        {
+          "placed": true,
+          "tex": 30,
+          "kind": "secret_flower_field_soft_grass_v138m",
+          "gameplay": {
+            "x": 85.66,
+            "y": 7.35
+          },
+          "internal": {
+            "x": 115.66,
+            "y": 7.35
+          },
+          "hScale": 0.234,
+          "wScale": 0.476,
+          "groundSink": 2.25,
+          "blocking": false
+        },
+        {
+          "placed": true,
+          "tex": 31,
+          "kind": "secret_flower_field_soft_grass_v138m",
+          "gameplay": {
+            "x": 89,
+            "y": 7.2
+          },
+          "internal": {
+            "x": 119,
+            "y": 7.2
+          },
+          "hScale": 0.33,
+          "wScale": 0.614,
+          "groundSink": 2.25,
+          "blocking": false
+        },
+        {
+          "placed": true,
+          "tex": 88,
+          "kind": "secret_flower_field_soft_grass_v138m",
+          "gameplay": {
+            "x": 92.17,
+            "y": 7.38
+          },
+          "internal": {
+            "x": 122.17,
+            "y": 7.38
+          },
+          "hScale": 0.246,
+          "wScale": 0.506,
+          "groundSink": 2.25,
+          "blocking": false
+        },
+        {
+          "placed": true,
+          "tex": 89,
+          "kind": "secret_flower_field_soft_grass_v138m",
+          "gameplay": {
+            "x": 95.09,
+            "y": 7.38
+          },
+          "internal": {
+            "x": 125.09,
+            "y": 7.38
+          },
+          "hScale": 0.272,
+          "wScale": 0.529,
+          "groundSink": 2.25,
+          "blocking": false
+        },
+        {
+          "placed": true,
+          "tex": 90,
+          "kind": "secret_flower_field_soft_grass_v138m",
+          "gameplay": {
+            "x": 97.83,
+            "y": 7.29
+          },
+          "internal": {
+            "x": 127.83,
+            "y": 7.29
+          },
+          "hScale": 0.292,
+          "wScale": 0.529,
+          "groundSink": 2.25,
+          "blocking": false
+        },
+        {
+          "placed": true,
+          "tex": 12,
+          "kind": "secret_flower_field_soft_grass_v138m",
+          "gameplay": {
+            "x": 101.39,
+            "y": 7.29
+          },
+          "internal": {
+            "x": 131.39,
+            "y": 7.29
+          },
+          "hScale": 0.302,
+          "wScale": 0.566,
+          "groundSink": 2.25,
+          "blocking": false
+        },
+        {
+          "placed": true,
+          "tex": 30,
+          "kind": "secret_flower_field_soft_grass_v138m",
+          "gameplay": {
+            "x": 104.36,
+            "y": 7.54
+          },
+          "internal": {
+            "x": 134.36,
+            "y": 7.54
+          },
+          "hScale": 0.309,
+          "wScale": 0.479,
+          "groundSink": 2.25,
+          "blocking": false
+        },
+        {
+          "placed": true,
+          "tex": 31,
+          "kind": "secret_flower_field_soft_grass_v138m",
+          "gameplay": {
+            "x": 107.52,
+            "y": 7.66
+          },
+          "internal": {
+            "x": 137.52,
+            "y": 7.66
+          },
+          "hScale": 0.231,
+          "wScale": 0.454,
+          "groundSink": 2.25,
+          "blocking": false
+        },
+        {
+          "placed": true,
+          "tex": 88,
+          "kind": "secret_flower_field_soft_grass_v138m",
+          "gameplay": {
+            "x": 110.53,
+            "y": 7.15
+          },
+          "internal": {
+            "x": 140.53,
+            "y": 7.15
+          },
+          "hScale": 0.312,
+          "wScale": 0.576,
+          "groundSink": 2.25,
+          "blocking": false
+        },
+        {
+          "placed": true,
+          "tex": 89,
+          "kind": "secret_flower_field_soft_grass_v138m",
+          "gameplay": {
+            "x": 113.81,
+            "y": 7.43
+          },
+          "internal": {
+            "x": 143.81,
+            "y": 7.43
+          },
+          "hScale": 0.233,
+          "wScale": 0.628,
+          "groundSink": 2.25,
+          "blocking": false
+        },
+        {
+          "placed": true,
+          "tex": 90,
+          "kind": "secret_flower_field_soft_grass_v138m",
+          "gameplay": {
+            "x": 85.25,
+            "y": 9.84
+          },
+          "internal": {
+            "x": 115.25,
+            "y": 9.84
+          },
+          "hScale": 0.3,
+          "wScale": 0.62,
+          "groundSink": 2.25,
+          "blocking": false
+        },
+        {
+          "placed": true,
+          "tex": 12,
+          "kind": "secret_flower_field_soft_grass_v138m",
+          "gameplay": {
+            "x": 88.56,
+            "y": 9.72
+          },
+          "internal": {
+            "x": 118.56,
+            "y": 9.72
+          },
+          "hScale": 0.289,
+          "wScale": 0.474,
+          "groundSink": 2.25,
+          "blocking": false
+        },
+        {
+          "placed": true,
+          "tex": 30,
+          "kind": "secret_flower_field_soft_grass_v138m",
+          "gameplay": {
+            "x": 110.43,
+            "y": 10.07
+          },
+          "internal": {
+            "x": 140.43,
+            "y": 10.07
+          },
+          "hScale": 0.267,
+          "wScale": 0.583,
+          "groundSink": 2.25,
+          "blocking": false
+        },
+        {
+          "placed": true,
+          "tex": 31,
+          "kind": "secret_flower_field_soft_grass_v138m",
+          "gameplay": {
+            "x": 82.61,
+            "y": 11.97
+          },
+          "internal": {
+            "x": 112.61,
+            "y": 11.97
+          },
+          "hScale": 0.286,
+          "wScale": 0.518,
+          "groundSink": 2.25,
+          "blocking": false
+        },
+        {
+          "placed": true,
+          "tex": 88,
+          "kind": "secret_flower_field_soft_grass_v138m",
+          "gameplay": {
+            "x": 92.08,
+            "y": 12.35
+          },
+          "internal": {
+            "x": 122.08,
+            "y": 12.35
+          },
+          "hScale": 0.321,
+          "wScale": 0.573,
+          "groundSink": 2.25,
+          "blocking": false
+        },
+        {
+          "placed": true,
+          "tex": 89,
+          "kind": "secret_flower_field_soft_grass_v138m",
+          "gameplay": {
+            "x": 95.2,
+            "y": 11.97
+          },
+          "internal": {
+            "x": 125.2,
+            "y": 11.97
+          },
+          "hScale": 0.309,
+          "wScale": 0.459,
+          "groundSink": 2.25,
+          "blocking": false
+        },
+        {
+          "placed": true,
+          "tex": 90,
+          "kind": "secret_flower_field_soft_grass_v138m",
+          "gameplay": {
+            "x": 98.1,
+            "y": 12.25
+          },
+          "internal": {
+            "x": 128.1,
+            "y": 12.25
+          },
+          "hScale": 0.238,
+          "wScale": 0.626,
+          "groundSink": 2.25,
+          "blocking": false
+        },
+        {
+          "placed": true,
+          "tex": 12,
+          "kind": "secret_flower_field_soft_grass_v138m",
+          "gameplay": {
+            "x": 101.36,
+            "y": 11.93
+          },
+          "internal": {
+            "x": 131.36,
+            "y": 11.93
+          },
+          "hScale": 0.269,
+          "wScale": 0.591,
+          "groundSink": 2.25,
+          "blocking": false
+        },
+        {
+          "placed": true,
+          "tex": 30,
+          "kind": "secret_flower_field_soft_grass_v138m",
+          "gameplay": {
+            "x": 104.52,
+            "y": 11.82
+          },
+          "internal": {
+            "x": 134.52,
+            "y": 11.82
+          },
+          "hScale": 0.299,
+          "wScale": 0.515,
+          "groundSink": 2.25,
+          "blocking": false
+        },
+        {
+          "placed": true,
+          "tex": 31,
+          "kind": "secret_flower_field_soft_grass_v138m",
+          "gameplay": {
+            "x": 107.31,
+            "y": 12.06
+          },
+          "internal": {
+            "x": 137.31,
+            "y": 12.06
+          },
+          "hScale": 0.232,
+          "wScale": 0.521,
+          "groundSink": 2.25,
+          "blocking": false
+        },
+        {
+          "placed": true,
+          "tex": 88,
+          "kind": "secret_flower_field_soft_grass_v138m",
+          "gameplay": {
+            "x": 114.04,
+            "y": 12.26
+          },
+          "internal": {
+            "x": 144.04,
+            "y": 12.26
+          },
+          "hScale": 0.317,
+          "wScale": 0.613,
+          "groundSink": 2.25,
+          "blocking": false
+        },
+        {
+          "placed": true,
+          "tex": 89,
+          "kind": "secret_flower_field_soft_grass_v138m",
+          "gameplay": {
+            "x": 85.48,
+            "y": 14.62
+          },
+          "internal": {
+            "x": 115.48,
+            "y": 14.62
+          },
+          "hScale": 0.314,
+          "wScale": 0.548,
+          "groundSink": 2.25,
+          "blocking": false
+        },
+        {
+          "placed": true,
+          "tex": 90,
+          "kind": "secret_flower_field_soft_grass_v138m",
+          "gameplay": {
+            "x": 88.96,
+            "y": 14.4
+          },
+          "internal": {
+            "x": 118.96,
+            "y": 14.4
+          },
+          "hScale": 0.344,
+          "wScale": 0.591,
+          "groundSink": 2.25,
+          "blocking": false
+        },
+        {
+          "placed": true,
+          "tex": 12,
+          "kind": "secret_flower_field_soft_grass_v138m",
+          "gameplay": {
+            "x": 101.33,
+            "y": 14.76
+          },
+          "internal": {
+            "x": 131.33,
+            "y": 14.76
+          },
+          "hScale": 0.263,
+          "wScale": 0.558,
+          "groundSink": 2.25,
+          "blocking": false
+        },
+        {
+          "placed": true,
+          "tex": 30,
+          "kind": "secret_flower_field_soft_grass_v138m",
+          "gameplay": {
+            "x": 104.47,
+            "y": 14.38
+          },
+          "internal": {
+            "x": 134.47,
+            "y": 14.38
+          },
+          "hScale": 0.257,
+          "wScale": 0.484,
+          "groundSink": 2.25,
+          "blocking": false
+        },
+        {
+          "placed": true,
+          "tex": 31,
+          "kind": "secret_flower_field_soft_grass_v138m",
+          "gameplay": {
+            "x": 107.73,
+            "y": 14.65
+          },
+          "internal": {
+            "x": 137.73,
+            "y": 14.65
+          },
+          "hScale": 0.324,
+          "wScale": 0.594,
+          "groundSink": 2.25,
+          "blocking": false
+        },
+        {
+          "placed": true,
+          "tex": 88,
+          "kind": "secret_flower_field_soft_grass_v138m",
+          "gameplay": {
+            "x": 111.01,
+            "y": 14.36
+          },
+          "internal": {
+            "x": 141.01,
+            "y": 14.36
+          },
+          "hScale": 0.347,
+          "wScale": 0.511,
+          "groundSink": 2.25,
+          "blocking": false
+        },
+        {
+          "placed": true,
+          "tex": 89,
+          "kind": "secret_flower_field_soft_grass_v138m",
+          "gameplay": {
+            "x": 82.38,
+            "y": 16.95
+          },
+          "internal": {
+            "x": 112.38,
+            "y": 16.95
+          },
+          "hScale": 0.27,
+          "wScale": 0.454,
+          "groundSink": 2.25,
+          "blocking": false
+        },
+        {
+          "placed": true,
+          "tex": 90,
+          "kind": "secret_flower_field_soft_grass_v138m",
+          "gameplay": {
+            "x": 92.15,
+            "y": 16.59
+          },
+          "internal": {
+            "x": 122.15,
+            "y": 16.59
+          },
+          "hScale": 0.238,
+          "wScale": 0.563,
+          "groundSink": 2.25,
+          "blocking": false
+        }
+      ]
+    },
+    "mainRoadBushDark": {
+      "requestedSeeds": 10,
+      "added": 9,
+      "items": [
+        {
+          "placed": true,
+          "tex": 25,
+          "kind": "mainroad_tower_south_bush_dark_v138m_0",
+          "gameplay": {
+            "x": 36.25,
+            "y": 39.7
+          },
+          "internal": {
+            "x": 66.25,
+            "y": 39.7
+          },
+          "hScale": 0.591,
+          "wScale": 0.734,
+          "groundSink": 2.35,
+          "blocking": false
+        },
+        {
+          "placed": true,
+          "tex": 25,
+          "kind": "mainroad_tower_south_bush_dark_v138m_1",
+          "gameplay": {
+            "x": 47.8,
+            "y": 40.5
+          },
+          "internal": {
+            "x": 77.8,
+            "y": 40.5
+          },
+          "hScale": 0.778,
+          "wScale": 0.895,
+          "groundSink": 2.35,
+          "blocking": false
+        },
+        {
+          "placed": true,
+          "tex": 25,
+          "kind": "mainroad_tower_south_bush_dark_v138m_2",
+          "gameplay": {
+            "x": 36.5,
+            "y": 45.4
+          },
+          "internal": {
+            "x": 66.5,
+            "y": 45.4
+          },
+          "hScale": 0.626,
+          "wScale": 0.862,
+          "groundSink": 2.35,
+          "blocking": false
+        },
+        {
+          "placed": true,
+          "tex": 25,
+          "kind": "mainroad_tower_south_bush_dark_v138m_4",
+          "gameplay": {
+            "x": 38.35,
+            "y": 52.4
+          },
+          "internal": {
+            "x": 68.35,
+            "y": 52.4
+          },
+          "hScale": 0.637,
+          "wScale": 0.71,
+          "groundSink": 2.35,
+          "blocking": false
+        },
+        {
+          "placed": true,
+          "tex": 25,
+          "kind": "mainroad_tower_south_bush_dark_v138m_5",
+          "gameplay": {
+            "x": 47,
+            "y": 55.2
+          },
+          "internal": {
+            "x": 77,
+            "y": 55.2
+          },
+          "hScale": 0.764,
+          "wScale": 0.791,
+          "groundSink": 2.35,
+          "blocking": false
+        },
+        {
+          "placed": true,
+          "tex": 25,
+          "kind": "mainroad_tower_south_bush_dark_v138m_6",
+          "gameplay": {
+            "x": 38.4,
+            "y": 60.6
+          },
+          "internal": {
+            "x": 68.4,
+            "y": 60.6
+          },
+          "hScale": 0.734,
+          "wScale": 0.704,
+          "groundSink": 2.35,
+          "blocking": false
+        },
+        {
+          "placed": true,
+          "tex": 25,
+          "kind": "mainroad_tower_south_bush_dark_v138m_7",
+          "gameplay": {
+            "x": 45.45,
+            "y": 63.3
+          },
+          "internal": {
+            "x": 75.45,
+            "y": 63.3
+          },
+          "hScale": 0.65,
+          "wScale": 0.85,
+          "groundSink": 2.35,
+          "blocking": false
+        },
+        {
+          "placed": true,
+          "tex": 25,
+          "kind": "mainroad_tower_south_bush_dark_v138m_8",
+          "gameplay": {
+            "x": 39.4,
+            "y": 67
+          },
+          "internal": {
+            "x": 69.4,
+            "y": 67
+          },
+          "hScale": 0.644,
+          "wScale": 0.832,
+          "groundSink": 2.35,
+          "blocking": false
+        },
+        {
+          "placed": true,
+          "tex": 25,
+          "kind": "mainroad_tower_south_bush_dark_v138m_9",
+          "gameplay": {
+            "x": 46.45,
+            "y": 69.05
+          },
+          "internal": {
+            "x": 76.45,
+            "y": 69.05
+          },
+          "hScale": 0.644,
+          "wScale": 0.896,
+          "groundSink": 2.35,
+          "blocking": false
+        }
+      ]
+    },
+    "barUnderCanopy": {
+      "removed": [
+        {
+          "tex": 52,
+          "kind": "bar_under_reduced_canopy_table_v138l",
+          "gameplay": {
+            "x": 14.3,
+            "y": 11.35
+          }
+        }
+      ],
+      "smallTable": {
+        "placed": true,
+        "tex": 24,
+        "kind": "bar_under_reduced_canopy_small_table_v138m",
+        "gameplay": {
+          "x": 14.85,
+          "y": 11.55
+        },
+        "internal": {
+          "x": 44.85,
+          "y": 11.55
+        },
+        "hScale": 0.58,
+        "wScale": 0.64,
+        "groundSink": 2.35,
+        "blocking": false
+      }
+    },
+    "modernTreeGroundSink": {
+      "adjusted": 1226,
+      "minPineSink": 3.65,
+      "minPalmSink": 3.85
+    }
+  }
+}

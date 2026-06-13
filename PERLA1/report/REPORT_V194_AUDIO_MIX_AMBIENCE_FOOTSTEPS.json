@@ -1,0 +1,88 @@
+{
+  "build": "PERLA1_V194_AUDIO_MIX_AMBIENCE_FOOTSTEPS_LOCAL",
+  "base": "PERLA1_V193_SKYBOX_CLOUDS_WEATHER_AUDIO_FIX_LOCAL",
+  "date": "2026-06-10",
+  "intent": "Audio-only corrective patch: reduce distorted/loud rain, add clear-day birds, cloudy wind, and procedural footsteps.",
+  "filesModified": [
+    "01_GIOCO_PRONTO_LOCAL_TEST/index.html",
+    "report/STATUS_PROGETTO_E_DIPENDENZE_PERLA1.txt",
+    "report/METODO_LAVORO_ANTI_REGRESSIONE_PERLA1.txt"
+  ],
+  "filesCreated": [
+    "report/README_REPACK_V194.txt",
+    "report/REPORT_V194_AUDIO_MIX_AMBIENCE_FOOTSTEPS.json"
+  ],
+  "preserved": [
+    "V185 distortion-controlled sky/fondale",
+    "V193 skybox-mapped cloud fix",
+    "weather visual layers",
+    "day/night cycle",
+    "weather weekly distribution",
+    "time x10",
+    "map",
+    "fMap",
+    "roadMask",
+    "cMap",
+    "objectBlock",
+    "worldgen",
+    "roofs",
+    "tower",
+    "roofSegments",
+    "sprites",
+    "pergola",
+    "festoons",
+    "lake/boat",
+    "floors",
+    "decals",
+    "PNG assets",
+    "launchers"
+  ],
+  "changes": [
+    "Rain audio target lowered and softened using a smoother procedural noise buffer instead of a loud full-scale white-noise bed.",
+    "Thunder bus and thunder gain preserved from V193 because user reported lightning/thunder volume as correct.",
+    "Clear daytime ambience: light procedural bird chirps, gated by weather clear, daylight, and outdoor factor.",
+    "Cloudy/rain/storm ambience: low-volume wind bed with cautious gain targets.",
+    "Procedural footsteps triggered by real player movement distance, with small floor profile differences for sand/road/grass/ground.",
+    "Console helpers exposed for ambience and footsteps toggles."
+  ],
+  "audioTargets": {
+    "rain": {
+      "rain": 0.075,
+      "storm": 0.105
+    },
+    "wind": {
+      "cloudy": 0.055,
+      "rain": 0.038,
+      "storm": 0.075
+    },
+    "birds": {
+      "clear": 0.055,
+      "cloudy": 0.012
+    },
+    "footstepBusGain": 0.105,
+    "thunderGain": "preserved .78"
+  },
+  "commands": [
+    "perlaWeatherAudioOn()",
+    "perlaWeatherAudioOff()",
+    "perlaAmbientAudioOn()",
+    "perlaAmbientAudioOff()",
+    "perlaFootstepsOn()",
+    "perlaFootstepsOff()",
+    "perlaSetWeather('clear')",
+    "perlaSetWeather('cloudy')",
+    "perlaSetWeather('rain')",
+    "perlaSetWeather('storm')"
+  ],
+  "checks": {
+    "nodeCheck": "OK",
+    "assetPngCount": 116,
+    "pngRefs": 108,
+    "missingAssets": [],
+    "patchOnlyFolder": "absent"
+  },
+  "limitations": [
+    "Browser/audio-device test not executed here; user should test real perceived volumes in game after first click/touch/keypress.",
+    "Procedural audio uses Web Audio and is subject to browser autoplay unlock rules."
+  ]
+}

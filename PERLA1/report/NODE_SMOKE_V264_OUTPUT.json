@@ -1,0 +1,29 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-12T23:09:05.496Z",
+  "checks": {
+    "buildId": true,
+    "baseBuild": true,
+    "v264Flag": true,
+    "thresholds": true,
+    "sampleThresholds": true,
+    "pathIndependent": true,
+    "loopHook": true,
+    "finalizeHook": true,
+    "summary": true,
+    "toggle": true,
+    "mode": true,
+    "download": true,
+    "windowGlobals": true,
+    "recorderMetadata": true,
+    "recorderV264": true,
+    "v263Preserved": true,
+    "v262Preserved": true,
+    "v261Preserved": true,
+    "v260Preserved": true,
+    "v259Preserved": true,
+    "rainPreserved": true,
+    "noPatchOnlyMention": true
+  },
+  "missing": []
+}

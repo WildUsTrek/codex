@@ -1,0 +1,62 @@
+{
+  "build": "PERLA1_V240_COLUMN_FRAGMENT_STABLE_SURFACE_DRAW_PROTOTYPE_LOCAL",
+  "base": "PERLA1_V239A_COLUMN_FRAGMENT_SURFACE_CONTINUITY_DIAGNOSTIC_LOCAL",
+  "intent": "stable surface controlled draw prototype, not final renderer",
+  "draw": {
+    "stableSurfaceDrawPrototype": true,
+    "stableSurfaceDrawEnabled": true,
+    "killSwitch": false,
+    "drawOnlyCandidateStable": true,
+    "drawBorderline": false,
+    "updateZBuffer": false,
+    "updateSpriteOcclusion": false,
+    "updateRainOcclusion": false,
+    "winnerPolicy": "stable_surface_lowest_risk_then_longest_run_then_nearest_depth",
+    "maxRiskScore": 0.22,
+    "minColumns": 48,
+    "maxGap": 2,
+    "minAvgBandHeight": 16,
+    "edgeSkipColumns": 2
+  },
+  "preserved": {
+    "v233Rollback": true,
+    "v234RainAirspaceCarLift": true,
+    "v235TowerRainMidfield": true,
+    "v236RoofSupport": true,
+    "v238V237Closed": true,
+    "v239aSurfaceContinuity": true
+  },
+  "forbiddenTouched": {
+    "map": false,
+    "collision": false,
+    "assetsPng": false,
+    "objectBlock": false,
+    "roadMask": false,
+    "rainRuntime": false,
+    "car": false,
+    "skybox": false,
+    "roofGeometry": false,
+    "tower": false,
+    "receptionBathRendering": false
+  },
+  "checksPlanned": [
+    "node --check extracted JS",
+    "Node VM smoke for debug exports and drawWorld",
+    "asset manifest refs/missing",
+    "PNG hash diff vs V239A",
+    "ZIP/TAR.GZ integrity",
+    "patch-only absence"
+  ],
+  "browserInteractiveTest": "not executed in container; must be verified by user in real browser at erba and bath_garden debug points",
+  "validation": {
+    "nodeCheck": "OK",
+    "nodeSmoke": "OK: debug exports available; drawWorld mock runs; planned stable-surface columns present at uploaded V239A debug coordinates; actual drawnColumns=0 in mock because texture assets are not loaded in VM mock",
+    "assetManifestRefs": 108,
+    "assetMissing": 0,
+    "pngTotal": 116,
+    "pngChangedVsV239A": 0,
+    "patchOnlyFolderAbsent": true,
+    "zipIntegrity": "OK before final report hash injection; re-tested after packaging in outer validation",
+    "browserInteractiveTest": "not executed in container"
+  }
+}

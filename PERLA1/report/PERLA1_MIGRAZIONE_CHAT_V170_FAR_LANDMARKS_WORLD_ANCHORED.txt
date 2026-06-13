@@ -1,0 +1,841 @@
+# PERLA1 — MIGRAZIONE CHAT COMPLETA V170 / PIANO DEFINITIVO FAR-LANDMARKS WORLD-ANCHORED
+
+**Progetto:** PERLA1 — *Camping Sole, Mare & Zanzare*  
+**Motore:** raycasting 2.5D custom, Vanilla JavaScript + HTML/CSS + Canvas 2D  
+**Data migrazione:** 2026-06-09  
+**Scopo:** migrare la chat senza perdere contesto, metodo operativo, scoperte tecniche, errori storici e piano definitivo successivo.  
+**Stato operativo finale della chat:** il cantiere skybox/landmark ha prodotto il miglior compromesso provvisorio in **V169**, la V170 è stata testata e giudicata peggiore, ed è stata scelta definitivamente la **strada B: cielo come skybox semplice + landmark prominenti come layer world-anchored/far-horizon**.
+
+---
+
+# DOCUMENTO 1 — MASTER REPORT TECNICO E OPERATIVO
+
+## 0. Executive Summary — realtà attuale del progetto
+
+PERLA1 è una mini-app di gioco raycasting 2.5D in stile campeggio cartoon, realizzata come applicazione locale HTML/JS/CSS su Canvas 2D. La struttura è volutamente compatta: il motore principale vive quasi tutto in `index.html`, con asset PNG locali in `01_GIOCO_PRONTO_LOCAL_TEST/assets/raycast/` e documenti di metodo/stato nella root del pacchetto.
+
+La base storica blindata precedente era **V157 — `PERLA1_V157_LAKE_SHORE_SEAM_CLEANUP_SAFE_LOCAL`**, approvata dopo cantieri su ombre, sprite, performance, tetti, pavimenti morbidi e laghetto. Da V158 in poi è stato aperto il grande cantiere cielo/skybox/landmark. Il ramo skybox è passato da numerosi tentativi artistici e tecnici fino a una conclusione architetturale chiara:
+
+- Le sagome del paesaggio lontano disegnate dall’utente sono diventate corrette in **V163**.
+- L’alpha atmosferico stile V160/V158M è stato recuperato in **V163**.
+- Il mapping skybox è stato provato in più varianti:
+  - V164: stabilizzazione sampling + west clean, inefficace.
+  - V165: infinite lock + FOV scale, inefficace.
+  - V166: ray-aligned per colonna, peggiore perché trasforma lo sfondo in “muro appiccicato alla faccia”.
+  - V167: matte-scroll infinito puro, peggiore perché lo sfondo scorre come fondale scollegato.
+  - V168: angular-lock edge-safe, quasi identico a V166 perché la linearizzazione scelta coincideva agli estremi.
+  - V169: edge-deprojected lock safe, **molto meglio**, miglior compromesso temporaneo.
+  - V170: strong edge deprojection, peggiore di V169; dimostra che spingere ancora lo stesso parametro è la strada sbagliata.
+
+La decisione finale dell’utente è la **strada B**:
+
+```text
+cielo / atmosfera = skybox semplice, senza landmark prominenti camera-attached
+montagne / isole / landmark = layer separato world-anchored / far-horizon
+```
+
+Questa decisione va trattata come nuovo piano definitivo. Non bisogna più ripetere tuning su V166/V167/V168/V170. V169 resta il migliore compromesso del vecchio paradigma, ma non la soluzione definitiva.
+
+---
+
+## 1. PIANO E METODO DI LAVORO
+
+### 1.1 Metodo operativo “Zero Approssimazione”
+
+Il metodo concordato con l’utente è rigido e va applicato sempre:
+
+1. **Lavorare su base reale, non su memoria.**  
+   Prima di patchare si deve estrarre lo ZIP reale indicato, leggere i file tecnici inclusi e verificare il contenuto. Non basta ricordare versioni o funzioni.
+
+2. **Scansione preliminare.**  
+   Ogni patch deve partire da:
+   - elenco file reali;
+   - identificazione del file principale (`index.html`);
+   - lettura di `METODO_LAVORO_ANTI_REGRESSIONE_PERLA1.txt`;
+   - lettura di `STATUS_PROGETTO_E_DIPENDENZE_PERLA1.txt`;
+   - ricerca delle funzioni coinvolte;
+   - elenco dei sistemi da non toccare.
+
+3. **Interventi chirurgici.**  
+   Ogni build deve modificare solo il sistema richiesto. Se il problema è skybox, non si toccano mappa, collisioni, tetti, sprite, pavimenti, fog globale o asset non coinvolti.
+
+4. **Teoria → pratica → spiegazione tecnica.**  
+   Prima di generare codice bisogna avere una causa tecnica concreta. Dopo la patch bisogna spiegare:
+   - quale problema si risolve;
+   - quale sistema viene modificato;
+   - quali dipendenze restano preservate;
+   - perché non ci sono effetti collaterali attesi.
+
+5. **Nessun fix impulsivo.**  
+   Se una patch fallisce, non si crea subito una nuova build “a sentimento”. Si applica il check:
+   - confronto con versione stabile;
+   - root cause;
+   - variabile sottovalutata;
+   - piano corretto;
+   - approvazione utente prima di procedere.
+
+6. **Una variabile alla volta quando il difetto è ambiguo.**  
+   Nel cantiere skybox è emerso che cambiare codice, asset e alpha insieme crea confusione diagnostica. Da ora evitare patch multivariabile se il sintomo non è isolato.
+
+7. **Packaging completo.**  
+   La consegna standard è:
+   - ZIP completo;
+   - TAR.GZ fallback;
+   - nessuna cartella “patch-only” salvo richiesta esplicita;
+   - documenti aggiornati;
+   - report JSON o TXT tecnico della build.
+
+8. **Controlli finali obbligatori.**  
+   Eseguire almeno:
+   - `node --check` sul JS estratto o sull’HTML/script;
+   - asset refs / missing refs;
+   - integrità ZIP;
+   - integrità TAR.GZ;
+   - verifica che non esistano cartelle patch-only;
+   - verifica che gli asset promessi byte-identici siano davvero byte-identici;
+   - controllo differenze file intenzionali vs effettive.
+
+9. **Onestà sui limiti.**  
+   Se non è stato fatto test browser/gameplay reale, dichiararlo. I check tecnici non sostituiscono il test visivo in game.
+
+### 1.2 Roadmap generale attuale
+
+La roadmap corrente non è più “migliorare lo skybox con parametri”. La roadmap è:
+
+#### Fase V171 — Prototipo architetturale far-horizon
+
+Obiettivo: creare un primo layer `farLandmarks` world-anchored, separato dallo skybox, con un solo landmark nord/montagne dietro la torre come test diagnostico.
+
+Caratteristiche:
+- base reale consigliata: **V169** come migliore compromesso visivo se serve continuità di test, oppure **V163** come base pulita tecnica. Non usare V170.
+- il cielo torna semplice/atmosferico;
+- il landmark nord non è più parte dello skybox camera-attached;
+- il landmark nord ha un `bearing` mondo;
+- viene renderizzato dietro muri/sprite, sopra cielo, senza collisione;
+- il test reale è: fermo davanti alla torre, ruotare camera, controllare se montagne restano coerenti con direzione mondo.
+
+#### Fase V172 — Estensione landmark
+
+Obiettivo: dopo che V171 dimostra stabilità, estendere il sistema a:
+- isola/mare sud;
+- massa ovest;
+- eventuali rilievi/landmark est;
+- armonizzazione fog/alpha.
+
+#### Fase V173+ — Rifinitura artistica
+
+Solo dopo stabilità architetturale:
+- rifinitura crop/asset;
+- separazione cielo puro da silhouette;
+- eventuale ritorno di velature/cloud non mobili;
+- debug visuale dei bearing.
+
+### 1.3 Regole di base/versioning
+
+- Da V160 in poi è stata abbandonata la confusione con lettere tipo V158M/V158N come base futura. Usare numeri progressivi chiari.
+- Per il ramo skybox:
+  - V163 = asset/alpha sagome buono.
+  - V169 = miglior compromesso mapping skybox temporaneo.
+  - V170 = bocciata come tuning troppo forte.
+- Per nuova architettura far-landmarks:
+  - non partire da V170;
+  - evitare di portarsi dietro esperimenti falliti;
+  - se si parte da V169, sostituire comunque il paradigma skybox-landmark.
+
+---
+
+## 2. MAPPATURA E ARCHITETTURA DELL’APP
+
+### 2.1 Stack tecnologico
+
+PERLA1 usa:
+
+- HTML5;
+- CSS integrato;
+- Vanilla JavaScript;
+- Canvas 2D API;
+- PNG locali in `assets/raycast/`;
+- launcher Windows e PowerShell per avvio locale;
+- packaging ZIP/TAR.GZ.
+
+Non usa:
+- WebGL;
+- Three.js;
+- framework esterni;
+- build system moderno;
+- bundler;
+- engine 3D.
+
+### 2.2 Struttura tipica del pacchetto
+
+Struttura reale ricorrente:
+
+```text
+PERLA1_Vxxx_.../
+├─ 01_GIOCO_PRONTO_LOCAL_TEST/
+│  ├─ index.html
+│  └─ assets/
+│     └─ raycast/
+│        ├─ *.png
+│        ├─ sky_panorama_360_vXXX.png
+│        └─ cloud_layer_soft_vXXX.png
+├─ AVVIA_GIOCO_WINDOWS_SENZA_PYTHON.bat
+├─ AVVIA_GIOCO_SERVER_POWERSHELL.ps1
+├─ ISTRUZIONI OBBLIGATORIE DA SEGUIRE PER LEGGERE LE COORDINATE.txt
+├─ METODO_LAVORO_ANTI_REGRESSIONE_PERLA1.txt
+├─ STATUS_PROGETTO_E_DIPENDENZE_PERLA1.txt
+├─ README_REPACK_Vxxx.txt
+└─ REPORT_Vxxx_*.json / REPORT_*.txt
+```
+
+### 2.3 File principale
+
+`01_GIOCO_PRONTO_LOCAL_TEST/index.html` è il file principale. Contiene:
+- HTML UI;
+- CSS;
+- motore JS;
+- definizione mappe;
+- manifest asset PNG;
+- caricamento immagini;
+- loop di rendering;
+- input;
+- debug;
+- minimappa;
+- raycasting.
+
+Regola: quando si modifica `index.html`, non riscrivere pezzi non coinvolti. Cercare funzioni reali, patchare chirurgicamente, poi validare.
+
+### 2.4 Mappe logiche e struttura mondo
+
+Il mondo è tile-based con coordinate interne. Strutture principali:
+
+- `map[y][x]`: muri/solidi principali;
+- `fMap[y][x]`: materiale pavimento;
+- `cMap[y][x]`: soffitti/tettoie/classificazioni verticali;
+- `roadMask[y][x]`: maschera logica strade;
+- `objectBlock[y][x]`: blocchi oggetto/sprite;
+- `zoneMask[y][x]`: zone funzionali/biomi;
+- `wallHeightMap[y][x]`: altezze speciali muri;
+- `wallDecalMap`: decal face-aware sui muri.
+
+Regola: grafica e logica devono restare separate. Per esempio, strade morbide e rive morbide non devono cambiare `roadMask` o collisioni.
+
+### 2.5 Coordinate
+
+Regola emersa più volte:
+
+```text
+internal.x = gameplay.x + 30
+gameplay.x = internal.x - 30
+y spesso coincide
+```
+
+Prima di spostare sprite/oggetti segnalati dall’utente, leggere sempre il file coordinate incluso. Non correggere coordinate a memoria.
+
+### 2.6 Pipeline di rendering semplificata
+
+Pipeline concettuale:
+
+1. clear canvas;
+2. cielo / sky background;
+3. eventuale far-horizon / landmark layer futuro;
+4. floor/ceiling/wallcasting;
+5. tetti/sloped roof / gable caps / soffitti;
+6. overlay speciali in range: pergola, festoni, decal particolari;
+7. sprite sortati e zBuffer-safe;
+8. ombre/contact shadows;
+9. UI/minimappa/debug.
+
+Per il nuovo piano far-landmarks l’ordine consigliato è:
+
+```text
+1. cielo semplice / atmosfera
+2. farLandmarks world-anchored
+3. floor/walls/tetti/sprite
+```
+
+Così i landmark sono lontani e vengono coperti dal mondo reale.
+
+### 2.7 Dipendenze renderer critiche
+
+- `ZBuffer`: profondità muri per colonna, fondamentale per sprite e occlusione.
+- `CeilingDepthBuffer`, `CeilingColumnHasDepth`, `ceilingSpriteClipY()`: occlusione verticale sprite sotto soffitti/tettoie.
+- `WallTopBuffer`: usato nei sistemi tetti/soffitti per evitare sovrapposizioni sbagliate.
+- `slopedRoofPixelVisible()`: visibilità tetti spioventi, preservata in patch successive.
+- `roadMask`: accessibilità strade, da non usare come pura texture.
+- `wallDecalMap`: decal pareti, face-aware.
+- `asset manifest`: PNG runtime; ogni nuova texture deve essere referenziata e verificata.
+
+---
+
+## 3. GESTIONE ASSET E SPRITE
+
+### 3.1 Principi asset
+
+Gli asset PNG devono essere:
+- locali;
+- dimensioni controllate;
+- RGBA coerente;
+- referenziati dal manifest;
+- verificati con asset refs/missing;
+- non duplicati inutilmente se identici.
+
+Quando un asset viene “rinominato” per build, se dichiarato byte-identico bisogna verificare hash.
+
+### 3.2 Regole sprite
+
+Ogni sprite tipicamente include:
+
+```js
+{
+  x, y,
+  tex,
+  kind,
+  wScale,
+  hScale,
+  groundSink,
+  blocking,
+  ...custom
+}
+```
+
+Regole:
+- non piazzare sprite su strada, mare, tetti, pareti o zone vietate;
+- non creare sprite in massa senza broadphase/culling;
+- non usare sprite per risolvere problemi che appartengono al floorcasting;
+- gli sprite importanti devono avere ancoraggio corretto al suolo;
+- evitare microflora davanti a vie strette o accessi;
+- evitare sprite invasivi dentro il FOV che causano clipping.
+
+### 3.3 Margini e clipping
+
+Problemi storici emersi:
+- sprite tagliati sotto tettoie;
+- asset con ombra baked che ricevevano ombre runtime doppie;
+- ancoraggi troppo alti/bassi;
+- oggetti che sembrano fluttuare o sepolti;
+- sprite che da lontano diventano linee o macchie.
+
+Regole:
+- usare `groundSink` solo dopo confronto visivo/logico;
+- non correggere un singolo sprite con una regola globale;
+- rispettare `ceilingSpriteClipY()` e buffer soffitti;
+- se lo sprite non rientra nei limiti, provare spostamento in area libera prima di cancellarlo, ma senza invadere strade/mare/tetti.
+
+### 3.4 Animazioni
+
+Asset animati noti:
+- palme animate;
+- docce gocciolanti;
+- fontana;
+- barbecue animato;
+- eventualmente altri cicli tramite array texture.
+
+Regole:
+- non duplicare frame inutilmente;
+- non sostituire animazione con sprite statico salvo richiesta;
+- non generare animazioni se il costo è sproporzionato;
+- preservare docce/fontana/barbecue se fuori cantiere.
+
+### 3.5 Decal e cartelli
+
+Sistema importante:
+- decal sui muri tramite `wallDecalMap`;
+- face-aware: nord/sud/est/ovest;
+- può richiedere `flip`;
+- non usare sprite billboard quando il risultato deve stare su parete.
+
+Esempi storici:
+- decal BARBECUE V69;
+- decal parcheggio P V76, poi flip corretto V118;
+- cocktail V125 trasformato in decal murale dopo fallimento del cocktail sopra tettoia.
+
+---
+
+## 4. GRANDI SCOPERTE E LOGICHE DI RENDERING
+
+### 4.1 Tetti e tettoie
+
+Storia: i tetti sono stati uno dei cantieri più delicati. Errori storici:
+- tetto moderno a blocco unico che sembrava galleggiare;
+- metà tetto che spariva ruotando camera;
+- grondaia che si muoveva con avvicinamento/allontanamento;
+- tetto scivolato dietro, scoprendo muro di appoggio;
+- fog duplicato sui tetti invece di usare il fog esistente.
+
+Scoperta fondamentale: **i tetti devono rispettare la pipeline e i buffer del raycaster, non essere overlay casuali**.
+
+Sistemi attivi/stabili:
+- Sloped Sector Casting;
+- roofSegments = 2 nella linea moderna;
+- gable caps;
+- `slopedRoofPixelVisible()`;
+- `WallTopBuffer` / depth protection;
+- span rendering V106 per ottimizzare i tetti;
+- fog storico applicato correttamente senza overlay conflittuale.
+
+Regola: non rifare i tetti da zero e non introdurre nuovo fog separato. Se un tetto non rispetta distanza/fog, bisogna collegarlo al sistema esistente.
+
+### 4.2 Ombre
+
+Cantiere V139-V146:
+- V139 bocciata: ombre a righe/fillRect che collassavano da lontano.
+- V140 bocciata: esclusioni ombre troppo aggressive e ancoraggi globali pericolosi.
+- Linea finale: contact shadows runtime appropriate, cached, tonde/ellittiche, morbide, non lineari.
+
+Regole:
+- non disegnare pseudo-ellissi con righe orizzontali;
+- non applicare ombre runtime a sprite con ombre baked non pulite;
+- non toccare globalmente ancoraggi e ombre per correggere un caso singolo;
+- usare profili per famiglie di sprite.
+
+### 4.3 Pavimenti, strade e sentieri morbidi
+
+Scoperta: il problema del pavimento non era logico ma visivo. `roadMask` e `fMap` funzionavano; il difetto era l’effetto “blocchi di colore”.
+
+Soluzione corretta:
+- mantenere mappa logica netta;
+- rendere la visuale morbida con mappe derivate:
+  - `roadSoftEdgeMap`;
+  - `trailSoftEdgeMap`;
+  - `floorNoiseMap`;
+  - `floorDecalMap`;
+  - `floorOutlineMap` dosata.
+
+Non fare:
+- non usare sprite per bordi strada;
+- non modificare `roadMask` per fare sfumature;
+- non introdurre blur runtime pesante;
+- non aumentare troppo `floorSegments`.
+
+### 4.4 Pergola, festoni e overlay speciali
+
+Pergola:
+- V79 ha sostituito gli archetti billboard sbagliati con layer procedurale orizzontale non bloccante.
+- V87 ha protetto la mesh/rete vegetale: buchi solo nel layer foglie, trellis sotto/sopra, nessuna geometria vera.
+- V90 preservata come riferimento stabile.
+
+Festoni camper:
+- V95/V105 hanno introdotto corde luminose decorative come layer Canvas, non sprite, non collisioni.
+- Usano ZBuffer/sloped roof visibility/fog storico.
+
+Regola: questi layer sono speciali, range-based, non devono diventare sprite generici o collisioni.
+
+### 4.5 Laghetto e mare
+
+Il cantiere V150-V157 ha rifinito acqua, riva e seam:
+- specchio acqua;
+- riva sabbia/erba/terra;
+- bordi morbidi;
+- seam cleanup V157.
+
+Regola: acqua/rive sono resa visuale; non alterare collisioni o fMap senza motivo.
+
+### 4.6 Skybox e landmark — grande scoperta finale
+
+Il cantiere V158-V170 ha chiarito una cosa decisiva:
+
+> I landmark prominenti non devono più vivere dentro una texture skybox camera-yaw. Devono diventare elementi world-anchored/far-horizon.
+
+Motivo:
+- se montagne/isole stanno nello skybox, ruotando camera cambiano porzione visibile e sembrano scorrere rispetto a torre/oggetti reali;
+- V166 ha dimostrato che renderizzarle come ray/prospettiva le fa sembrare muri vicini;
+- V167 ha dimostrato che matte-scroll puro le scollega dal mondo;
+- V169 ha prodotto un buon compromesso, ma non elimina la natura camera-attached;
+- V170 ha dimostrato che spingere la de-proiezione peggiora.
+
+Conclusione definitiva:
+
+```text
+skybox = cielo/atmosfera
+farLandmarks = montagne/isole/landmark world-anchored con bearing mondo
+```
+
+---
+
+## 5. ERRORI NOTI E RISOLTI
+
+### 5.1 Errori storici risolti
+
+- Strade trattate come path naturalistici invece di geometria dichiarativa: risolto con V25 engineered road/parking.
+- Auto/parcheggio su corsie sbagliate: risolto con parcheggio architettonico e 9 auto centrate.
+- Sprite su strade/mare/tetti: ripuliti con controlli spriteRoad/spriteSea e relocation.
+- Pergola fatta con archi billboard verticali: bocciata e sostituita con layer procedurale.
+- Cocktail sopra tettoia: bocciato perché minuscolo/galleggiante/visibile da ovunque; trasformato in decal murale V125.
+- Tetti con nuovo fog conflittuale: corretto usando fog esistente e ottimizzazione V106.
+- Rettangoli cielo/fog nel cielo: risolti con guard e segmented ceiling fog V118/V120.
+- Input tasto destro/movimento bloccato: aggiunto reset keyboard su contextmenu/blur/visibilitychange V118.
+- Ombre a righe e ombre baked doppie: risolte con shadow cache/profile e asset cleanup.
+
+### 5.2 Errori skybox V158-V170
+
+- V158B/C/D/E: tentativi artistici troppo smog/banda/blocco, non corretti.
+- V158F: cielo bello ma troppo vuoto.
+- V158G: landmark visibili ma troppo scuri/smog.
+- V158H: cielo/fog belli ma landmark quasi invisibili.
+- V158I/J/K/L/M: iterazioni su silhouette/grounding fino a V158M accettabile.
+- V158N/O/P/Q: confusione e micro-fix asset; V158O/P bocciate per alterazioni sbagliate di alpha/RGB.
+- V160: ripristino V158M approvato con numerazione chiara.
+- V161/V162: tentativi di sculpt isola/base falliti, problema invariato o peggiorato.
+- V163: user mask + alpha atmosferico, sagome giuste e alpha recuperata.
+- V164: sampling/west clean inefficace.
+- V165: FOV scale/lock inefficace.
+- V166: ray-aligned peggiora, sfondo sembra muro vicino.
+- V167: matte-scroll peggiora, tutto scorre come fondale scollegato.
+- V168: quasi uguale a V166, blend matematicamente troppo debole.
+- V169: molto meglio, miglior compromesso temporaneo.
+- V170: peggio di V169, non spingere più de-proiezione.
+
+### 5.3 Errore metodologico emerso
+
+Nel cantiere skybox si è imparato che check tecnici puliti non bastano. Una patch può avere:
+- `node --check OK`;
+- asset missing 0;
+- ZIP integro;
+- hash corretti;
+
+ma fallire visualmente. Per i problemi percettivi bisogna definire un test visivo reale, ad esempio:
+
+```text
+fermo nello stesso punto davanti alla torre
+ruotare camera
+osservare sagome montagne dietro la torre
+verificare se si deformano/scorrono come fondale camera-attached
+```
+
+---
+
+## 6. LA LISTA NERA — COSE DA NON FARE MAI
+
+- Non patchare a memoria senza estrarre lo ZIP reale.
+- Non usare V170 come base per il prossimo cantiere landmark.
+- Non ripetere tuning V166/V167/V168/V170 sullo skybox: la strada è architetturale, non parametrica.
+- Non trattare montagne/isole prominenti come semplice texture skybox camera-yaw se devono restare coerenti con torre/oggetti.
+- Non trattare lo skybox come muro/raycaster vicino: V166 ha dimostrato che peggiora.
+- Non usare matte-scroll puro per landmark riconoscibili davanti a oggetti reali: V167 ha dimostrato che scorre tutto.
+- Non cambiare asset, fog e codice nello stesso tentativo se il difetto non è isolato.
+- Non modificare `map`, `fMap`, `roadMask`, `cMap`, `objectBlock` per una rifinitura solo visuale.
+- Non introdurre nuovo fog parallelo se esiste già fog storico funzionante.
+- Non usare sprite per simulare bordi pavimento/strada quando serve floorcasting morbido.
+- Non creare overlay full-width cielo/fog che possono generare rettangoli nel cielo.
+- Non generare ombre a righe/fillRect.
+- Non ricreare pergola con billboard verticali separati.
+- Non creare cocktail/oggetti sopra tettoie come overlay visibili da ogni angolo.
+- Non includere cartella patch-only nei pacchetti finali salvo richiesta.
+- Non dichiarare “testato in game” se è stato fatto solo check statico.
+- Non confondere asset byte-identici con comportamento visivo identico: il renderer può cambiare tutto.
+- Non perdere i documenti `METODO` e `STATUS`.
+- Non fare build finale quando serve prima una preview diagnostica.
+- Non usare `Math.random()` nel render loop per noise/effetti stabili.
+- Non introdurre drift/parallax/cloud mobili mentre si diagnostica il movimento landmark.
+
+---
+
+## 7. CONOSCENZA COMPLETA, INFO UTILI ED EXTRA
+
+### 7.1 Versioni checkpoint importanti
+
+- **V14**: mappa 80x80, strada a S, pineta/yoga/campeggio, camper room, bagni separati, spiaggia ripulita.
+- **V25**: engineered road/parking; zone umane = geometria deterministica/dichiarativa.
+- **V76**: pineta/casa/parcheggio P decal.
+- **V79**: pergola vegetale layer procedurale; rimossi archetti billboard sbagliati.
+- **V87**: pergola mesh protetta; no geometria vera.
+- **V95**: palma speciale e festoni camper decorative layer.
+- **V106**: roof span premix, performance tetti migliorata senza cambiare matematica Sloped Sector Casting.
+- **V118**: sky guard map input fix, no rettangoli cielo, input tasto destro.
+- **V125**: cocktail da roof overlay bocciato → decal murale.
+- **V157**: base blindata lago/riva/seam.
+- **V160**: restore V158M con numerazione chiara.
+- **V163**: user skybox mask + alpha atmosferico; sagome corrette.
+- **V169**: miglior compromesso temporaneo mapping skybox.
+- **V170**: peggiore di V169; non usare come base.
+
+### 7.2 Base consigliata per il prossimo lavoro
+
+Per **V171 far-landmarks diagnostic prototype**:
+
+- Se serve continuità col pacchetto più recente “accettabile”: partire da **V169**.
+- Se serve pulizia tecnica assoluta: partire da **V163**.
+- In entrambi i casi: non portare avanti V170.
+- Evitare di mantenere landmark nel full skybox come soluzione finale.
+
+Scelta consigliata: **partire da V169 come package di riferimento pratico, ma sostituire il paradigma skybox-landmark con farLandmarks.** V169 è il miglior compromesso testato, ma il nuovo sistema deve superarlo.
+
+### 7.3 Piano V171 in dettaglio
+
+Obiettivo: prototipo minimo e diagnostico, non patch artistica completa.
+
+#### 7.3.1 Separare cielo e landmark
+
+Azioni:
+- non disegnare più il full skybox con montagne come unico fondale principale;
+- disegnare un cielo semplice/atmosferico come background;
+- usare la texture esistente solo come sorgente o riferimento per il landmark nord, se necessario.
+
+Per evitare asset rewrite immediato, V171 può:
+- usare un cielo procedurale/gradiente coerente con V163/V169;
+- estrarre/croppare runtime il landmark nord dalla texture esistente;
+- disegnarlo come layer separato world-anchored.
+
+#### 7.3.2 Creare dati `farLandmarks`
+
+Schema suggerito:
+
+```js
+const farLandmarks = [
+  {
+    id: 'north_mountains_v171',
+    bearing: 0,              // DA CALIBRARE sul sistema reale: non assumere finché non si misura yaw/cardinali
+    angularWidth: 0.95,
+    horizonY: 0.46,
+    height: 0.34,
+    alpha: 0.55,
+    source: {
+      image: skyPanoramaImage,
+      sx: ..., sy: ..., sw: ..., sh: ...
+    },
+    fog: true,
+    debug: true
+  }
+];
+```
+
+Campi chiave:
+- `bearing`: direzione mondo reale del landmark;
+- `angularWidth`: quanto occupa in orizzontale in termini angolari;
+- `horizonY`: posizione verticale relativa;
+- `height`: altezza relativa sullo schermo;
+- `alpha`: opacità atmosferica;
+- `source`: crop dell’asset o immagine separata;
+- `fog`: eventuale trattamento atmosferico leggero.
+
+#### 7.3.3 Render world-anchored
+
+Formula:
+
+```js
+delta = normalizeAngle(landmark.bearing - cameraYaw);
+if (Math.abs(delta) < fov * 0.5 + landmark.angularWidth * 0.5) {
+  screenX = screenCenterX + (delta / fov) * screenW;
+  drawWidth = (landmark.angularWidth / fov) * screenW;
+  drawHeight = landmark.height * screenH;
+  drawY = landmark.horizonY * screenH - drawHeight;
+  drawImage(...);
+}
+```
+
+Questo è ancorato alla direzione mondo, ma non usa prospettiva da muro. È diverso da V166.
+
+#### 7.3.4 Ordine di disegno
+
+```text
+clear canvas
+sky simple / atmospheric background
+farLandmarks world-anchored
+floor/walls/tetti/sprite runtime normale
+UI/debug
+```
+
+Il landmark viene disegnato prima dei muri: la torre lo copre naturalmente.
+
+#### 7.3.5 Debug V171 obbligatorio
+
+Aggiungere debug:
+
+```text
+farLandmarksEnabled
+farLandmarksCount
+cameraYaw
+landmark.id
+landmark.bearing
+landmark.delta
+landmark.screenX
+landmark.drawWidth
+landmark.visible
+```
+
+Test reale:
+- fermo nello stesso punto davanti alla torre;
+- ruotare camera a nord;
+- osservare se il landmark resta coerente con la direzione mondo;
+- controllare che non si deformi ai bordi come V166;
+- controllare che non scorra tutto come V167.
+
+### 7.4 Perché la strada B è corretta
+
+La strada B risolve la root cause vera:
+
+```text
+prima:
+landmark = texture legata alla camera
+quindi ruotando camera sembra scorrere rispetto a torre/oggetti
+
+dopo:
+landmark = elemento lontano con bearing mondo
+quindi ruotando camera si sposta perché cambia l’angolo visivo,
+ma resta coerente con una direzione del mondo
+```
+
+Questa è la differenza architetturale che i parametri skybox non potevano ottenere.
+
+### 7.5 Note sul cielo puro
+
+Il cielo puro può essere:
+- gradiente Canvas con colori V163/V160;
+- texture sky senza landmark;
+- top rows del panorama esistente se privi di landmark;
+- asset nuovo solo se necessario.
+
+Per V171 meglio evitare asset art nuovi. Prima testare architettura.
+
+### 7.6 Numeri e check ricorrenti recenti
+
+Negli ultimi pacchetti skybox:
+- asset refs: 108;
+- asset missing: 0;
+- sky/cloud spesso byte-identici a V163 quando rinominati;
+- ZIP/TAR.GZ integrity OK;
+- cloud/velatura quasi invisibile e spesso non disegnato nei test mapping;
+- `REPORT_Vxxx_*.json` incluso.
+
+### 7.7 Utente: preferenze operative
+
+L’utente preferisce:
+- italiano;
+- concretezza;
+- metodo anti-regressione;
+- zero approssimazione;
+- ammissione degli errori;
+- non ripetere tentativi falliti;
+- ZIP completi pronti;
+- report e migrazione quando chat pesa;
+- patch chirurgiche su base reale;
+- spiegazioni tecniche oneste, non giustificazioni.
+
+L’utente rifiuta:
+- patch “a sentimento”;
+- anteprime inutili se richiesto zip finale;
+- modifiche invisibili dichiarate come fix;
+- asset alterati senza controllo;
+- confusione di versioni;
+- promesse non verificate.
+
+---
+
+# DOCUMENTO 2 — PROMPT DI MIGRAZIONE CHAT / SEED FILE
+
+Copiare il blocco seguente nella nuova chat per ripartire correttamente.
+
+```text
+Agisci come Tech Lead e Architetto Software Senior per il progetto PERLA1 — “Camping Sole, Mare & Zanzare”.
+
+CONTESTO PROGETTO
+PERLA1 è una mini-app gioco in HTML/CSS/Vanilla JS con motore raycasting 2.5D custom su Canvas 2D. Il file principale è `01_GIOCO_PRONTO_LOCAL_TEST/index.html`; gli asset sono PNG locali in `01_GIOCO_PRONTO_LOCAL_TEST/assets/raycast/`. Il pacchetto contiene anche launcher Windows/PowerShell, `METODO_LAVORO_ANTI_REGRESSIONE_PERLA1.txt`, `STATUS_PROGETTO_E_DIPENDENZE_PERLA1.txt`, README e REPORT JSON. Non usare memoria astratta: lavora sempre sullo ZIP reale più recente fornito.
+
+METODO OBBLIGATORIO — ZERO APPROSSIMAZIONE
+1. Estrarre lo ZIP reale.
+2. Leggere `METODO_LAVORO_ANTI_REGRESSIONE_PERLA1.txt` e `STATUS_PROGETTO_E_DIPENDENZE_PERLA1.txt`.
+3. Mappare file/funzioni coinvolte.
+4. Definire cosa NON toccare.
+5. Patch chirurgica su base reale.
+6. Validare tecnicamente: `node --check`, asset refs/missing, diff file, ZIP/TAR.GZ integrity, niente cartella patch-only.
+7. Se non esegui test browser/gameplay reale, dichiararlo.
+8. Non procedere con fix impulsivi se un tentativo fallisce: prima fai confronto, root cause, variabile sottovalutata, piano corretto, poi attendi approvazione.
+
+BASE E VERSIONI IMPORTANTI
+- V157 `PERLA1_V157_LAKE_SHORE_SEAM_CLEANUP_SAFE_LOCAL`: base blindata storica dopo ombre/sprite/performance/tetti/pavimenti/laghetto.
+- V163 `PERLA1_V163_USER_MASK_ATMOSPHERIC_ALPHA_SAFE_LOCAL`: sagome skybox disegnate dall’utente + alpha atmosferico stile V160/V158M; asset e sagome corretti.
+- V169 `PERLA1_V169_SKYBOX_EDGE_DEPROJECTED_LOCK_SAFE_LOCAL`: miglior compromesso temporaneo del vecchio paradigma skybox; utente ha detto “molto meglio”.
+- V170 `PERLA1_V170_SKYBOX_STRONG_EDGE_DEPROJECTION_SAFE_LOCAL`: peggiore di V169; NON usarla come base.
+
+CONCLUSIONE ARCHITETTURALE DEFINITIVA
+Il problema dello sfondo che si muove/deforma ruotando camera non si risolve con altro tuning dello skybox. È stata scelta definitivamente la STRADA B:
+- cielo/atmosfera resta uno skybox semplice;
+- montagne, isole e landmark prominenti diventano layer separato `farLandmarks` / `far-horizon` world-anchored.
+
+NON RIPETERE I TENTATIVI FALLITI
+- Non tornare a V166 ray-aligned: fa sembrare lo sfondo un muro vicino.
+- Non tornare a V167 matte-scroll puro: fa scorrere tutto come fondale scollegato.
+- Non usare V168: quasi identica a V166 per errore matematico del blend ai bordi.
+- Non spingere V170: peggiora V169 e dimostra che più de-proiezione non è la strada.
+- Non toccare asset/fog/mappa/tetti/sprite per risolvere il movimento landmark.
+
+PROSSIMO LAVORO: V171 DIAGNOSTICA FAR-LANDMARKS
+Scopo: prototipo minimo world-anchored, non rifinitura artistica completa.
+Base consigliata: V169 come miglior compromesso pacchetto/visivo, oppure V163 come base tecnica pulita. Non V170.
+Intervento: solo codice, salvo uso/crop di asset esistente come sorgente.
+
+Implementare:
+1. cielo semplice/atmosferico senza landmark prominenti camera-attached;
+2. struttura dati `farLandmarks`;
+3. un solo landmark nord/montagne dietro torre, con `bearing` mondo, `angularWidth`, `horizonY`, `height`, `alpha`, `source crop`;
+4. render ordine: cielo -> farLandmarks -> floor/walls/tetti/sprite;
+5. nessuna collisione, nessun `map/cMap/objectBlock`, nessun `roadMask`, nessuna modifica worldgen;
+6. debug: `farLandmarksEnabled`, `cameraYaw`, `bearing`, `delta`, `screenX`, `drawWidth`, `visible`.
+
+Formula concettuale:
+```
+delta = normalizeAngle(landmark.bearing - cameraYaw);
+screenX = screenW/2 + (delta / fovRad) * screenW;
+drawWidth = (landmark.angularWidth / fovRad) * screenW;
+drawHeight = landmark.height * screenH;
+drawY = landmark.horizonY * screenH - drawHeight;
+```
+Il landmark è ancorato alla direzione mondo ma NON è un muro e NON usa proiezione prospettica da parete. Viene disegnato lontano, dietro i muri, senza parallax/drift.
+
+TEST REALE OBBLIGATORIO
+Fermo nello stesso punto davanti alla torre, ruotare camera verso nord. Le montagne devono restare coerenti con una direzione del mondo: non devono deformarsi come V166 e non devono scorrere tutte come V167. La torre deve coprire il landmark perché il landmark viene disegnato prima del wallcasting.
+
+SISTEMI DA NON TOCCARE
+- `map`, `fMap`, `roadMask`, `cMap`, `objectBlock`, collisioni, worldgen;
+- tetti/Sloped Sector Casting/roofSegments/gable caps;
+- fog storico globale;
+- torre;
+- sprite placement/ombre;
+- pergola/festoni/barca/lago;
+- pavimenti morbidi/rive;
+- decal wallDecalMap.
+
+REGOLE APP E PACKAGING
+- Consegnare ZIP completo + TAR.GZ fallback.
+- Aggiornare `STATUS_PROGETTO_E_DIPENDENZE_PERLA1.txt` e `METODO_LAVORO_ANTI_REGRESSIONE_PERLA1.txt`.
+- Includere `README_REPACK_V171.txt` e `REPORT_V171_FAR_LANDMARKS_DIAGNOSTIC.json` in cartella sotto-cartella dedicata; se ci sono file readme e report nella cartella principale, vanno sempre sistemati/trasportati dentro la sotto-cartella dedicata "Report", che quando assente, va creata.
+- Non includere cartelle patch-only.
+- Se asset dichiarati byte-identici, verificare hash.
+- Dire esplicitamente cosa è stato testato e cosa no.
+
+LINGUAGGIO E STILE
+Rispondere in italiano, concreto, tecnico, senza fumo. L’utente pretende metodo, prudenza, onestà e zero approssimazione. Se sbagli, ammetti il fallimento, analizza root cause e non procedere a tentativi ciechi.
+```
+
+---
+
+# APPENDICE — CHECKLIST DI RIPARTENZA IMMEDIATA
+
+Prima di scrivere la prossima patch:
+
+```text
+[ ] Ho ricevuto/individuato lo ZIP base reale.
+[ ] Ho scelto V169 o V163 con motivazione esplicita.
+[ ] Ho escluso V170 come base.
+[ ] Ho estratto lo ZIP.
+[ ] Ho letto METODO e STATUS.
+[ ] Ho trovato funzioni skybox attuali in index.html.
+[ ] Ho individuato dove inserire `farLandmarks`.
+[ ] Ho deciso come disegnare cielo semplice.
+[ ] Ho deciso sorgente landmark nord senza asset rewrite pesante.
+[ ] Ho definito bearing nord dopo verifica reale del sistema angolare.
+[ ] Ho implementato render dietro muri/sprite.
+[ ] Ho aggiunto debug.
+[ ] Ho eseguito node --check.
+[ ] Ho verificato asset refs/missing.
+[ ] Ho verificato ZIP/TAR.GZ.
+[ ] Ho scritto report.
+[ ] Ho dichiarato assenza/presenza di test browser reale.
+```
+
+---
+
+# NOTA FINALE
+
+Questo file deve essere considerato la nuova base di conoscenza operativa. La priorità non è più perfezionare lo skybox con parametri: la priorità è implementare la separazione architetturale cielo/landmark. V169 resta il miglior compromesso provvisorio del vecchio sistema; il prossimo salto corretto è V171 far-landmarks world-anchored.

@@ -1,0 +1,62 @@
+{
+  "build": "PERLA1_V158L_HORIZON_TONAL_GROUNDING_SAFE_LOCAL",
+  "base": "PERLA1_V158K_LANDMARK_SHAPE_READABILITY_SAFE_LOCAL",
+  "node_check": "OK",
+  "asset_refs": 108,
+  "asset_missing": 0,
+  "missing": [],
+  "skybox_asset": "sky_panorama_360_v158l.png",
+  "cloud_asset": "cloud_layer_soft_v158l.png",
+  "sky_size": [
+    4096,
+    384
+  ],
+  "cloud_size": [
+    2048,
+    256
+  ],
+  "sky_seam_edge_mean_abs_rgba": 0.0,
+  "full_band_rows_gt10_86pct": 0,
+  "full_band_rows_gt20_86pct": 0,
+  "full_band_rows_gt40_86pct": 0,
+  "dark_visible_lum_lt120_alpha_gt20": 0,
+  "max_connected_active_width_alpha20": 317,
+  "max_connected_active_width_pct": 7.739,
+  "visible_lum_mean_alpha20": 164.08622115820972,
+  "html_v158k_refs": false,
+  "html_v158l_refs": true,
+  "horizon_low_rgb_present": true,
+  "far_wall_visibility_limited": false,
+  "patch_only_folder_present": false,
+  "old_sky_assets_present": [],
+  "roofSegments_expected": 2,
+  "sprites_expected": "1938 from V158K static chain; no sprite/worldgen edits in V158L",
+  "modified_scope": [
+    "index.html",
+    "sky_panorama_360_v158l.png",
+    "cloud_layer_soft_v158l.png",
+    "STATUS_PROGETTO_E_DIPENDENZE_PERLA1.txt",
+    "METODO_LAVORO_ANTI_REGRESSIONE_PERLA1.txt",
+    "README_REPACK_V158L.txt",
+    "REPORT_V158L_HORIZON_TONAL_GROUNDING_SAFE.json"
+  ],
+  "preserved": [
+    "map/fMap/roadMask/cMap/objectBlock/collisioni/worldgen",
+    "roof geometry/gable/self-depth/roofSegments",
+    "tower",
+    "sprite placement",
+    "ombre",
+    "pineta/pergola",
+    "laghetto/riva",
+    "barca/festoni"
+  ],
+  "checks": [
+    "node --check OK",
+    "asset refs/missing OK",
+    "sky seam OK",
+    "no full-width bands",
+    "no dark/smog pixels",
+    "no patch-only folder",
+    "zip/tar integrity pending"
+  ]
+}

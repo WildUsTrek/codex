@@ -1,0 +1,55 @@
+{
+  "buildId": "PERLA1_V241A_FACE_REGISTRY_CANONICALIZATION_DIAGNOSTIC_LOCAL",
+  "baseBuild": "PERLA1_V241_WORLD_WALL_REGISTRY_HIERARCHY_DIAGNOSTIC_LOCAL",
+  "purpose": "Face Registry Canonicalization Diagnostic; no visual draw",
+  "directCodeChanges": [
+    "01_GIOCO_PRONTO_LOCAL_TEST/index.html",
+    "AVVIA_GIOCO_WINDOWS_SENZA_PYTHON.bat",
+    "AVVIA_GIOCO_SERVER_POWERSHELL.ps1",
+    "report/README_REPACK_V241A.txt",
+    "report/REPORT_V241A_FACE_REGISTRY_CANONICALIZATION_DIAGNOSTIC.json",
+    "report/REPORT_V241A_VALIDATION_SUMMARY.json",
+    "report/STATUS_PROGETTO_E_DIPENDENZE_PERLA1.txt",
+    "report/METODO_LAVORO_ANTI_REGRESSIONE_PERLA1.txt"
+  ],
+  "flags": {
+    "PERLA_V241A_FACE_REGISTRY_DIAGNOSTIC": true,
+    "PERLA_V241A_FACE_REGISTRY_DRAW_ENABLED": false,
+    "PERLA_V241A_CANONICALIZE_EXPOSED_FACES": true,
+    "PERLA_V241A_HIERARCHY_CONTRACT_CHECK": true,
+    "PERLA_V241A_COMPARE_WITH_V240A": true,
+    "PERLA_V241A_UPDATE_ZBUFFER": false,
+    "PERLA_V241A_UPDATE_SPRITE_OCCLUSION": false,
+    "PERLA_V241A_UPDATE_RAIN_OCCLUSION": false
+  },
+  "newDebugExports": [
+    "getWorldWallFaceRegistrySummary",
+    "getWorldWallFaceRegistrySummaryV241A",
+    "getWorldWallFaceProjectionSummary",
+    "getWorldWallFaceProjectionSummaryV241A",
+    "buildWorldWallFaceRegistryV241A",
+    "projectWorldWallFaceRegistryV241A"
+  ],
+  "downloadReportName": "PERLA1_V241A_FACE_REGISTRY_DEBUG_*.json",
+  "antiRegression": {
+    "v240aDrawDisabled": true,
+    "v241RegistryDrawDisabled": true,
+    "v241aFaceDrawDisabled": true,
+    "zBufferUpdated": false,
+    "spriteOcclusionUpdated": false,
+    "rainOcclusionUpdated": false,
+    "newDDA": false,
+    "overlayRenderer": false,
+    "legacyV227V232DrawReenabled": false,
+    "v237Reopened": false,
+    "mapMutation": false,
+    "assetMutation": false,
+    "collisionMutation": false
+  },
+  "expectedRuntime": {
+    "worldWallFaceRegistry.faceRegistryBuiltOnce": true,
+    "worldWallFaceRegistry.canonicalFacesTotal": "expected > 0 in browser after generateWorld",
+    "faceProjection.drawnColumns": 0,
+    "faceProjection.drawnPixels": 0
+  }
+}

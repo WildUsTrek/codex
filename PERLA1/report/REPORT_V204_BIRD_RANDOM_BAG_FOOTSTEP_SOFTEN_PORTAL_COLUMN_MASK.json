@@ -1,0 +1,49 @@
+{
+  "build": "PERLA1_V204_BIRD_RANDOM_BAG_FOOTSTEP_SOFTEN_PORTAL_COLUMN_MASK_LOCAL",
+  "base": "PERLA1_V203_AUDIO_RESTORE_PORTAL_MASK_REPAIR_LOCAL",
+  "scope": [
+    "in-game UI version update",
+    "bird single original chip + equal-volume melodic variants + no-repeat random bag",
+    "footstep softening with V203 volume preserved",
+    "portal rain micro X+Y mask with immediate geometry clipping"
+  ],
+  "preserved": [
+    "V200 roof outdoor budget",
+    "V201 rain buffer/cloud budget",
+    "V185 horizon/fondale target stretch 1.08",
+    "map/collision/worldgen/sprites/pergola/tower/canopy"
+  ],
+  "checks": {
+    "build_id_ok": true,
+    "title_v204": true,
+    "h2_v204": true,
+    "v204_constants": true,
+    "legacy_bird_family_removed": true,
+    "bird_history_guard": true,
+    "bird_equal_gain": true,
+    "footstep_softened": true,
+    "portal_micro_mask": true,
+    "portal_immediate": true,
+    "weather_cloud_deck_absent": true,
+    "png_total": 124,
+    "png_refs": 108,
+    "png_missing_refs": [],
+    "patch_only_folder_absent": true
+  },
+  "archive_hashes_preliminary_note": "archive hashes are generated after this report is packaged; final hashes communicated in chat response",
+  "final_integrity": {
+    "node_check": "OK",
+    "zip_integrity": "OK",
+    "tar_gz_integrity": "OK",
+    "png_changed_vs_v203": 0,
+    "missing_png_refs": 0,
+    "patch_only_folder_absent": true,
+    "changed_files_vs_v203": [
+      "01_GIOCO_PRONTO_LOCAL_TEST/index.html",
+      "report/METODO_LAVORO_ANTI_REGRESSIONE_PERLA1.txt",
+      "report/README_REPACK_V204.txt",
+      "report/REPORT_V204_BIRD_RANDOM_BAG_FOOTSTEP_SOFTEN_PORTAL_COLUMN_MASK.json",
+      "report/STATUS_PROGETTO_E_DIPENDENZE_PERLA1.txt"
+    ]
+  }
+}

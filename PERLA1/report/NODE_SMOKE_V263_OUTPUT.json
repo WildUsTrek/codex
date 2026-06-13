@@ -1,0 +1,27 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-12T20:10:13.940Z",
+  "checks": {
+    "buildId": true,
+    "baseBuild": true,
+    "v263Flag": true,
+    "branchLockStep": true,
+    "emergencyStep": true,
+    "noNearFullCost": true,
+    "branchLockDecision": true,
+    "summary": true,
+    "toggle": true,
+    "mode": true,
+    "download": true,
+    "windowGlobals": true,
+    "recorderMetadata": true,
+    "recorderV263": true,
+    "v259Preserved": true,
+    "v260Preserved": true,
+    "v261Preserved": true,
+    "v262Preserved": true,
+    "rainPreserved": true,
+    "noPatchOnlyMention": true
+  },
+  "missing": []
+}

@@ -1,0 +1,55 @@
+{
+  "build": "PERLA1_V153_LAKE_EDGE_ROUNDING_BOAT_LIFT_SAFE_LOCAL",
+  "base": "PERLA1_V152_LAKE_SHORE_SOFT_RING_BOAT_LIFT_SAFE_LOCAL",
+  "interventions": [
+    "lake edge rounded by sub-tile analytical ellipse mask",
+    "V152 lake sand/water and sand/grass fade reduced",
+    "lake grass-sand decals narrowed and softened",
+    "rowboat groundSink 3.85 -> 3.15"
+  ],
+  "preserved": [
+    "fMap",
+    "roadMask",
+    "collision maps",
+    "objectBlock",
+    "worldgen",
+    "PNG assets",
+    "roofs",
+    "pineta performance",
+    "pergola",
+    "shadows",
+    "tower",
+    "festoon",
+    "general sea edge"
+  ],
+  "checks": {
+    "nodeCheck": true,
+    "runtimeMock": true,
+    "mock": {
+      "stage": "V153_LAKE_EDGE_ROUNDING_NO_OUTLINE",
+      "v153LakeEdgeRounding": true,
+      "lakeWaterRoundCellsV153": 68,
+      "lakeSandRoundCellsV153": 59,
+      "lakeRings": {
+        "water": 28,
+        "sandInner": 36,
+        "sandOuter": 27,
+        "grassOuter": 39
+      },
+      "subTileCells": 3955,
+      "nearSubTileCells": 3459,
+      "boats": [
+        {
+          "x": 129,
+          "y": 42,
+          "groundSink": 3.15,
+          "kind": "secret_lake_rowboat_v89"
+        }
+      ],
+      "sprites": 1938,
+      "stones": 43,
+      "roofSegments": 2,
+      "pngRefs": 94
+    }
+  }
+}

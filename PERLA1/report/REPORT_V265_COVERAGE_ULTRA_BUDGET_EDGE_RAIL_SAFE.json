@@ -1,0 +1,107 @@
+{
+  "buildId": "PERLA1_V265_COVERAGE_ULTRA_BUDGET_EDGE_RAIL_SAFE_LOCAL",
+  "baseBuild": "PERLA1_V264_ROOF_COST_WATCHDOG_EMERGENCY_SAFE_LOCAL",
+  "patchMode": "coverage_ultra_budget_edge_rail_safe",
+  "scope": {
+    "performance": "tighter interior budget for roof/canopy/pergola, especially rain/storm",
+    "visual": "depth-aware edge rail for roof/pergola silhouettes/gronde/ridge/caps",
+    "hierarchy": "edge rail uses roofVisibleAt/projection, not final overlay",
+    "preserved": [
+      "rain output",
+      "skybox",
+      "worldgen",
+      "map/fMap/cMap/roadMask/objectBlock",
+      "PNG assets",
+      "global floor",
+      "global sprite placement",
+      "wall DDA",
+      "collision",
+      "audio/input/CSS/minimap"
+    ]
+  },
+  "newCommands": [
+    "perlaCoverageEdgeRailSummaryV265",
+    "perlaCoverageEdgeRailToggleV265",
+    "perlaCoverageEdgeRailModeV265",
+    "perlaCoverageEdgeRailDownloadV265"
+  ],
+  "preservedCommands": [
+    "perlaRoofCostWatchdogSummaryV264",
+    "perlaRoofBranchLockSummaryV263",
+    "perlaCoverageStableSummaryV262",
+    "perlaCoverageSurfaceSummaryV261",
+    "perlaLongViewBudgetSummaryV260",
+    "perlaRoofHotspotSummaryV259"
+  ],
+  "validation": {
+    "nodeCheck": "OK",
+    "nodeSmoke": {
+      "ok": true,
+      "generatedAt": "2026-06-12T23:27:41.289Z",
+      "checks": {
+        "buildId": true,
+        "baseBuild": true,
+        "v265Flag": true,
+        "v265PatchMode": true,
+        "ultraBudgetConstants": true,
+        "edgeRailFunctions": true,
+        "depthAwareRail": true,
+        "noOverlayFinal": true,
+        "v264WatchdogPreserved": true,
+        "v265HookRoof": true,
+        "v265HookCanopy": true,
+        "v265HookPergola": true,
+        "v265Finalize": true,
+        "v265Recorder": true,
+        "v265Baseline": true,
+        "v265WindowGlobals": true,
+        "v263Preserved": true,
+        "v262Preserved": true,
+        "v261Preserved": true,
+        "v260Preserved": true,
+        "v259Preserved": true,
+        "rainPreserved": true,
+        "noPatchOnlyMention": true
+      },
+      "missing": []
+    },
+    "assetCheck": {
+      "generatedAt": "2026-06-12T23:27:00Z",
+      "buildId": "PERLA1_V265_COVERAGE_ULTRA_BUDGET_EDGE_RAIL_SAFE_LOCAL",
+      "baseBuild": "PERLA1_V264_ROOF_COST_WATCHDOG_EMERGENCY_SAFE_LOCAL",
+      "pngCountWork": 116,
+      "pngCountBase": 116,
+      "pngHashChangedCount": 0,
+      "pngHashChanged": [],
+      "pngMissingFromWorkCount": 0,
+      "pngExtraCount": 0,
+      "pngLiteralRefsInHtml": 0,
+      "missingRefNamesCount": 0,
+      "missingRefNames": [],
+      "noAssetChange": true,
+      "assetManifestPngRefs": 108,
+      "missingManifestPngRefsCount": 0,
+      "missingManifestPngRefs": []
+    },
+    "browserRealTest": "NOT_EXECUTED_IN_THIS_ENVIRONMENT",
+    "zipIntegrity": "OK",
+    "tarGzIntegrity": "OK"
+  },
+  "notes": [
+    "V264 watchdog preserved and remains authority.",
+    "V265 does not increase global roof quality; it tightens interiors and repairs only depth-aware edges.",
+    "No patch-only folder intended."
+  ],
+  "artifacts": {
+    "zip": {
+      "path": "/mnt/data/PERLA1_V265_COVERAGE_ULTRA_BUDGET_EDGE_RAIL_SAFE_LOCAL.zip",
+      "sha256": "1f266febbc2ad97aadc9d12f9716a08465a3b02613f3839f968f72bdd7f61cc1",
+      "sizeBytes": 7972521
+    },
+    "tar.gz": {
+      "path": "/mnt/data/PERLA1_V265_COVERAGE_ULTRA_BUDGET_EDGE_RAIL_SAFE_LOCAL.tar.gz",
+      "sha256": "34075a9ad3f48b2553b0000d3ac54bc9a85f67954d72415d2451370564e6de1e",
+      "sizeBytes": 7725232
+    }
+  }
+}

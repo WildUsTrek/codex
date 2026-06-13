@@ -1,0 +1,43 @@
+{
+  "buildId": "PERLA1_V241_WORLD_WALL_REGISTRY_HIERARCHY_DIAGNOSTIC_LOCAL",
+  "baseBuild": "PERLA1_V240A_STABLE_SURFACE_FAMILY_DRAW_REFINEMENT_LOCAL",
+  "generatedAt": "2026-06-12T01:13:50Z",
+  "purpose": "World Wall Registry + Hierarchy Diagnostic; V240A unstable draw disabled by default; no visual registry draw.",
+  "technicalChanges": [
+    "Added PERLA_V241_* diagnostic flags.",
+    "Disabled V240A visual family draw by default while preserving V239/V239A/V240/V240A debug summaries.",
+    "Added PERLA_WORLD_WALL_REGISTRY_V241 built once post-generateWorld.",
+    "Added byLine/byCell registry indexes.",
+    "Added dry-run segment projection and hierarchy contract against foreground WallTop/ZBuffer and CeilingDepthBuffer.",
+    "Added V240A-vs-registry comparison section.",
+    "Added getWorldWallRegistrySummary and getWorldWallRegistryProjectionSummary debug exports.",
+    "Download report renamed to PERLA1_V241_WORLD_WALL_REGISTRY_DEBUG_*.json."
+  ],
+  "hardConstraints": {
+    "registryDrawEnabled": false,
+    "v240aUnstableDrawDisabled": true,
+    "zBufferUpdated": false,
+    "spriteOcclusionUpdated": false,
+    "rainOcclusionUpdated": false,
+    "newDDA": false,
+    "postWallOverlay": false,
+    "globalMapScanInsideDrawWorld": false,
+    "assetMutation": false,
+    "mapMutation": false,
+    "collisionMutation": false
+  },
+  "debugCommands": [
+    "window.__PERLA_DEBUG__.getWorldWallRegistrySummary()",
+    "window.__PERLA_DEBUG__.getWorldWallRegistryProjectionSummary()",
+    "perlaDownloadColumnFragmentDebugReport()"
+  ],
+  "expectedReportSections": [
+    "worldWallRegistry",
+    "registryProjection",
+    "hierarchyContract",
+    "v240aComparison",
+    "stableSurfaceDraw",
+    "stableWallFamilyDraw"
+  ],
+  "manualBrowserTest": "Not executed in container; must be validated in real browser by rotating camera and downloading multiple V241 JSON reports."
+}

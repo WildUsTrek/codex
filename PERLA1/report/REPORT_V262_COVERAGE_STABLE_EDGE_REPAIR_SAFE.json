@@ -1,0 +1,101 @@
+{
+  "buildId": "PERLA1_V262_COVERAGE_STABLE_EDGE_REPAIR_SAFE_LOCAL",
+  "baseBuild": "PERLA1_V261_ROOF_PERGOLA_HARD_CAP_SAFE_LOCAL",
+  "generatedAt": "2026-06-12T19:26:18.956091Z",
+  "scope": "Coverage stable edge repair: stable interior budget for roof/canopy/pergola, full-quality edge policy, emergency cap only, uncapped roof path labeling.",
+  "filesChanged": [
+    "01_GIOCO_PRONTO_LOCAL_TEST/index.html",
+    "report/EXTRACTED_INDEX_INLINE_SCRIPT_V262.js",
+    "report/NODE_SMOKE_V262.js",
+    "report/NODE_SMOKE_V262_OUTPUT.json",
+    "report/REPORT_V262_COVERAGE_STABLE_EDGE_REPAIR_SAFE.json",
+    "report/README_REPACK_V262.txt",
+    "report/METODO_LAVORO_ANTI_REGRESSIONE_PERLA1.txt",
+    "report/STATUS_PROGETTO_E_DIPENDENZE_PERLA1.txt",
+    "AVVIA_GIOCO_WINDOWS_SENZA_PYTHON.bat",
+    "AVVIA_GIOCO_SERVER_POWERSHELL.ps1"
+  ],
+  "preserved": [
+    "worldgen",
+    "map/fMap/cMap/roadMask/objectBlock",
+    "PNG assets",
+    "rain V248-V257",
+    "skybox",
+    "wall DDA",
+    "global sprite placement",
+    "global floor renderer",
+    "collision",
+    "audio/input/CSS",
+    "minimap default",
+    "V259/V260/V261 debug exports"
+  ],
+  "implemented": {
+    "stableCoverageMode": true,
+    "edgeFullQualityPolicy": true,
+    "interiorStableBudget": true,
+    "hysteresisClearStorm": true,
+    "emergencyCapOnly": true,
+    "uncappedRoofPathMetric": true,
+    "separatedLabels": [
+      "roof_modern_reception",
+      "roof_modern_bath",
+      "roof_legacy_or_generic_closed",
+      "pergola",
+      "unknown_roof_path"
+    ],
+    "recorderMetadataFixed": true,
+    "commands": [
+      "perlaCoverageStableSummaryV262",
+      "perlaCoverageStableToggleV262",
+      "perlaCoverageStableModeV262",
+      "perlaCoverageStableDownloadV262"
+    ]
+  },
+  "validation": {
+    "nodeCheck": "OK",
+    "nodeSmokeV262": {
+      "ok": true,
+      "generatedAt": "2026-06-12T19:25:58.582Z",
+      "checks": {
+        "buildId": true,
+        "baseBuild": true,
+        "v262Flag": true,
+        "stableSummary": true,
+        "stableToggle": true,
+        "stableMode": true,
+        "stableDownload": true,
+        "edgeBandConst": true,
+        "hysteresis": true,
+        "emergencyOnly": true,
+        "roofPathLabels": true,
+        "uncappedRoofMetric": true,
+        "recorderMetadata": true,
+        "recorderCoverageV262": true,
+        "v259Preserved": true,
+        "v260Preserved": true,
+        "v261Preserved": true,
+        "windowGlobals": true,
+        "rainPreserved": true,
+        "noPatchOnlyMention": true
+      },
+      "missing": []
+    },
+    "assetManifestRefs": 108,
+    "assetMissingCount": 0,
+    "assetMissing": [],
+    "pngCount": 116,
+    "pngHashesChangedVsV261": [],
+    "pngMissingVsV261": [],
+    "pngExtraVsV261": [],
+    "patchOnlyFolderAbsent": true
+  },
+  "browserRealTest": "NOT_EXECUTED_IN_THIS_ENVIRONMENT",
+  "browserTestFocus": [
+    "clear davanti tettoie",
+    "clear sotto/perimetro pergola",
+    "storm davanti tettoie",
+    "storm sotto/perimetro pergola",
+    "erba roof path non cappato",
+    "bath_garden grande tetto"
+  ]
+}

@@ -1,0 +1,1676 @@
+{
+  "build": "PERLA1_V138L_BAR_CANOPY_PINETA_POLISH_SAFE",
+  "base": "PERLA1_V138K_TARGETED_SPRITE_REPAIR_SAFE",
+  "changedAssets": [
+    "bar_counter_barman_v138l.png"
+  ],
+  "manifestMissing": [],
+  "pngCount": 111,
+  "probeNearTargets": {
+    "spriteCount": 2207,
+    "roofSegments": 2,
+    "targets": {
+      "89.63,27.59": [
+        {
+          "i": 2143,
+          "tex": 85,
+          "kind": "forced_user_pine_v138l_exact_0",
+          "x": 119.63,
+          "y": 27.59,
+          "gx": 89.63,
+          "gy": 27.59,
+          "dist": 0,
+          "hScale": 1.62,
+          "wScale": 0.88,
+          "groundSink": 2,
+          "blocking": true
+        },
+        {
+          "i": 1330,
+          "tex": 12,
+          "kind": "secret_grove_extra_litter_v75",
+          "x": 120.74,
+          "y": 27.71,
+          "gx": 90.74,
+          "gy": 27.71,
+          "dist": 1.112,
+          "hScale": 0.26171755109953637,
+          "wScale": 0.6777564986557133,
+          "groundSink": 2,
+          "blocking": false
+        },
+        {
+          "i": 373,
+          "tex": 86,
+          "kind": "secret_grove_border_pine_v73",
+          "x": 118.31,
+          "y": 27.88,
+          "gx": 88.31,
+          "gy": 27.88,
+          "dist": 1.351,
+          "hScale": 1.6300000000000001,
+          "wScale": 0.925,
+          "groundSink": 2,
+          "blocking": true
+        },
+        {
+          "i": 1324,
+          "tex": 89,
+          "kind": "secret_grove_extra_litter_v75",
+          "x": 119.46,
+          "y": 26.19,
+          "gx": 89.46,
+          "gy": 26.19,
+          "dist": 1.408,
+          "hScale": 0.22023773722356133,
+          "wScale": 0.6418034953162548,
+          "groundSink": 2,
+          "blocking": false
+        },
+        {
+          "i": 313,
+          "tex": 86,
+          "kind": "secret_grove_border_pine_v73",
+          "x": 120.45,
+          "y": 26.4,
+          "gx": 90.45,
+          "gy": 26.4,
+          "dist": 1.445,
+          "hScale": 1.52,
+          "wScale": 0.88,
+          "groundSink": 2,
+          "blocking": true
+        },
+        {
+          "i": 312,
+          "tex": 87,
+          "kind": "secret_grove_border_pine_v73",
+          "x": 118.3,
+          "y": 26.4,
+          "gx": 88.3,
+          "gy": 26.4,
+          "dist": 1.785,
+          "hScale": 1.96,
+          "wScale": 0.97,
+          "groundSink": 2,
+          "blocking": true
+        },
+        {
+          "i": 2146,
+          "tex": 85,
+          "kind": "forced_user_pine_v138l_exact_3",
+          "x": 120.61,
+          "y": 29.09,
+          "gx": 90.61,
+          "gy": 29.09,
+          "dist": 1.792,
+          "hScale": 1.86,
+          "wScale": 0.88,
+          "groundSink": 2,
+          "blocking": true
+        },
+        {
+          "i": 959,
+          "tex": 88,
+          "kind": "secret_grove_floor_litter_v74",
+          "x": 121.42,
+          "y": 28.23,
+          "gx": 91.42,
+          "gy": 28.23,
+          "dist": 1.896,
+          "hScale": 0.41582315968950817,
+          "wScale": 0.6675902888056799,
+          "groundSink": 2,
+          "blocking": false
+        }
+      ],
+      "92.14,28.21": [
+        {
+          "i": 2144,
+          "tex": 86,
+          "kind": "forced_user_pine_v138l_exact_1",
+          "x": 122.14,
+          "y": 28.21,
+          "gx": 92.14,
+          "gy": 28.21,
+          "dist": 0,
+          "hScale": 1.7000000000000002,
+          "wScale": 0.92,
+          "groundSink": 2,
+          "blocking": true
+        },
+        {
+          "i": 1336,
+          "tex": 40,
+          "kind": "secret_grove_extra_litter_v75",
+          "x": 121.84,
+          "y": 28.75,
+          "gx": 91.84,
+          "gy": 28.75,
+          "dist": 0.623,
+          "hScale": 0.3892638159192316,
+          "wScale": 0.4723540216037897,
+          "groundSink": 2,
+          "blocking": false
+        },
+        {
+          "i": 959,
+          "tex": 88,
+          "kind": "secret_grove_floor_litter_v74",
+          "x": 121.42,
+          "y": 28.23,
+          "gx": 91.42,
+          "gy": 28.23,
+          "dist": 0.725,
+          "hScale": 0.41582315968950817,
+          "wScale": 0.6675902888056799,
+          "groundSink": 2,
+          "blocking": false
+        },
+        {
+          "i": 1345,
+          "tex": 40,
+          "kind": "secret_grove_extra_litter_v75",
+          "x": 121.48,
+          "y": 29.34,
+          "gx": 91.48,
+          "gy": 29.34,
+          "dist": 1.31,
+          "hScale": 0.3813150549962453,
+          "wScale": 0.647561603423106,
+          "groundSink": 2,
+          "blocking": false
+        },
+        {
+          "i": 1346,
+          "tex": 41,
+          "kind": "secret_grove_extra_litter_v75",
+          "x": 122.47,
+          "y": 29.58,
+          "gx": 92.47,
+          "gy": 29.58,
+          "dist": 1.409,
+          "hScale": 0.3595488602434166,
+          "wScale": 0.6089734815314816,
+          "groundSink": 2,
+          "blocking": false
+        },
+        {
+          "i": 963,
+          "tex": 40,
+          "kind": "secret_grove_floor_litter_v74",
+          "x": 121.66,
+          "y": 29.62,
+          "gx": 91.66,
+          "gy": 29.62,
+          "dist": 1.49,
+          "hScale": 0.4239585683573872,
+          "wScale": 0.6871940124982954,
+          "groundSink": 2,
+          "blocking": false
+        },
+        {
+          "i": 1330,
+          "tex": 12,
+          "kind": "secret_grove_extra_litter_v75",
+          "x": 120.74,
+          "y": 27.71,
+          "gx": 90.74,
+          "gy": 27.71,
+          "dist": 1.491,
+          "hScale": 0.26171755109953637,
+          "wScale": 0.6777564986557133,
+          "groundSink": 2,
+          "blocking": false
+        },
+        {
+          "i": 952,
+          "tex": 41,
+          "kind": "secret_grove_floor_litter_v74",
+          "x": 123.61,
+          "y": 27.5,
+          "gx": 93.61,
+          "gy": 27.5,
+          "dist": 1.629,
+          "hScale": 0.39142238921518957,
+          "wScale": 0.5252784184751284,
+          "groundSink": 2,
+          "blocking": false
+        },
+        {
+          "i": 374,
+          "tex": 87,
+          "kind": "secret_grove_border_pine_v73",
+          "x": 123.76,
+          "y": 27.93,
+          "gx": 93.76,
+          "gy": 27.93,
+          "dist": 1.64,
+          "hScale": 1.74,
+          "wScale": 0.97,
+          "groundSink": 2,
+          "blocking": true
+        },
+        {
+          "i": 2146,
+          "tex": 85,
+          "kind": "forced_user_pine_v138l_exact_3",
+          "x": 120.61,
+          "y": 29.09,
+          "gx": 90.61,
+          "gy": 29.09,
+          "dist": 1.765,
+          "hScale": 1.86,
+          "wScale": 0.88,
+          "groundSink": 2,
+          "blocking": true
+        },
+        {
+          "i": 315,
+          "tex": 41,
+          "kind": "secret_grove_floor_detail_v72",
+          "x": 123.05,
+          "y": 26.58,
+          "gx": 93.05,
+          "gy": 26.58,
+          "dist": 1.867,
+          "hScale": 0.28,
+          "wScale": 0.56,
+          "groundSink": 2,
+          "blocking": false
+        },
+        {
+          "i": 314,
+          "tex": 85,
+          "kind": "secret_grove_border_pine_v73",
+          "x": 122.6,
+          "y": 26.4,
+          "gx": 92.6,
+          "gy": 26.4,
+          "dist": 1.868,
+          "hScale": 1.74,
+          "wScale": 0.97,
+          "groundSink": 2,
+          "blocking": true
+        },
+        {
+          "i": 2145,
+          "tex": 87,
+          "kind": "forced_user_pine_v138l_exact_2",
+          "x": 122.88,
+          "y": 30.06,
+          "gx": 92.88,
+          "gy": 30.06,
+          "dist": 1.993,
+          "hScale": 1.78,
+          "wScale": 0.96,
+          "groundSink": 2,
+          "blocking": true
+        }
+      ],
+      "92.88,30.06": [
+        {
+          "i": 2145,
+          "tex": 87,
+          "kind": "forced_user_pine_v138l_exact_2",
+          "x": 122.88,
+          "y": 30.06,
+          "gx": 92.88,
+          "gy": 30.06,
+          "dist": 0,
+          "hScale": 1.78,
+          "wScale": 0.96,
+          "groundSink": 2,
+          "blocking": true
+        },
+        {
+          "i": 1346,
+          "tex": 41,
+          "kind": "secret_grove_extra_litter_v75",
+          "x": 122.47,
+          "y": 29.58,
+          "gx": 92.47,
+          "gy": 29.58,
+          "dist": 0.631,
+          "hScale": 0.3595488602434166,
+          "wScale": 0.6089734815314816,
+          "groundSink": 2,
+          "blocking": false
+        },
+        {
+          "i": 967,
+          "tex": 41,
+          "kind": "secret_grove_floor_litter_v74",
+          "x": 122.44,
+          "y": 30.62,
+          "gx": 92.44,
+          "gy": 30.62,
+          "dist": 0.71,
+          "hScale": 0.38935360358081605,
+          "wScale": 0.5711886710513356,
+          "groundSink": 2,
+          "blocking": false
+        },
+        {
+          "i": 963,
+          "tex": 40,
+          "kind": "secret_grove_floor_litter_v74",
+          "x": 121.66,
+          "y": 29.62,
+          "gx": 91.66,
+          "gy": 29.62,
+          "dist": 1.301,
+          "hScale": 0.4239585683573872,
+          "wScale": 0.6871940124982954,
+          "groundSink": 2,
+          "blocking": false
+        },
+        {
+          "i": 1356,
+          "tex": 41,
+          "kind": "secret_grove_extra_litter_v75",
+          "x": 121.33,
+          "y": 30.21,
+          "gx": 91.33,
+          "gy": 30.21,
+          "dist": 1.555,
+          "hScale": 0.281053045015096,
+          "wScale": 0.6229375081772305,
+          "groundSink": 2,
+          "blocking": false
+        },
+        {
+          "i": 1345,
+          "tex": 40,
+          "kind": "secret_grove_extra_litter_v75",
+          "x": 121.48,
+          "y": 29.34,
+          "gx": 91.48,
+          "gy": 29.34,
+          "dist": 1.574,
+          "hScale": 0.3813150549962453,
+          "wScale": 0.647561603423106,
+          "groundSink": 2,
+          "blocking": false
+        },
+        {
+          "i": 1336,
+          "tex": 40,
+          "kind": "secret_grove_extra_litter_v75",
+          "x": 121.84,
+          "y": 28.75,
+          "gx": 91.84,
+          "gy": 28.75,
+          "dist": 1.67,
+          "hScale": 0.3892638159192316,
+          "wScale": 0.4723540216037897,
+          "groundSink": 2,
+          "blocking": false
+        },
+        {
+          "i": 377,
+          "tex": 41,
+          "kind": "secret_grove_floor_detail_v72",
+          "x": 121.34,
+          "y": 30.77,
+          "gx": 91.34,
+          "gy": 30.77,
+          "dist": 1.693,
+          "hScale": 0.28,
+          "wScale": 0.56,
+          "groundSink": 2,
+          "blocking": false
+        },
+        {
+          "i": 968,
+          "tex": 40,
+          "kind": "secret_grove_floor_litter_v74",
+          "x": 124.51,
+          "y": 30.67,
+          "gx": 94.51,
+          "gy": 30.67,
+          "dist": 1.743,
+          "hScale": 0.2710813146552726,
+          "wScale": 0.7427675020375213,
+          "groundSink": 2,
+          "blocking": false
+        },
+        {
+          "i": 2147,
+          "tex": 86,
+          "kind": "forced_user_pine_v138l_exact_4",
+          "x": 123.06,
+          "y": 31.86,
+          "gx": 93.06,
+          "gy": 31.86,
+          "dist": 1.809,
+          "hScale": 1.62,
+          "wScale": 0.92,
+          "groundSink": 2,
+          "blocking": true
+        },
+        {
+          "i": 2141,
+          "tex": 85,
+          "kind": "forced_user_pine_v138k_94_42_28_97",
+          "x": 124.42,
+          "y": 28.97,
+          "gx": 94.42,
+          "gy": 28.97,
+          "dist": 1.887,
+          "hScale": 1.78,
+          "wScale": 0.96,
+          "groundSink": 2,
+          "blocking": true
+        },
+        {
+          "i": 2144,
+          "tex": 86,
+          "kind": "forced_user_pine_v138l_exact_1",
+          "x": 122.14,
+          "y": 28.21,
+          "gx": 92.14,
+          "gy": 28.21,
+          "dist": 1.993,
+          "hScale": 1.7000000000000002,
+          "wScale": 0.92,
+          "groundSink": 2,
+          "blocking": true
+        }
+      ],
+      "90.61,29.09": [
+        {
+          "i": 2146,
+          "tex": 85,
+          "kind": "forced_user_pine_v138l_exact_3",
+          "x": 120.61,
+          "y": 29.09,
+          "gx": 90.61,
+          "gy": 29.09,
+          "dist": 0,
+          "hScale": 1.86,
+          "wScale": 0.88,
+          "groundSink": 2,
+          "blocking": true
+        },
+        {
+          "i": 1345,
+          "tex": 40,
+          "kind": "secret_grove_extra_litter_v75",
+          "x": 121.48,
+          "y": 29.34,
+          "gx": 91.48,
+          "gy": 29.34,
+          "dist": 0.905,
+          "hScale": 0.3813150549962453,
+          "wScale": 0.647561603423106,
+          "groundSink": 2,
+          "blocking": false
+        },
+        {
+          "i": 1344,
+          "tex": 89,
+          "kind": "secret_grove_extra_litter_v75",
+          "x": 119.75,
+          "y": 29.69,
+          "gx": 89.75,
+          "gy": 29.69,
+          "dist": 1.053,
+          "hScale": 0.34075860717351514,
+          "wScale": 0.6012784308524054,
+          "groundSink": 2,
+          "blocking": false
+        },
+        {
+          "i": 963,
+          "tex": 40,
+          "kind": "secret_grove_floor_litter_v74",
+          "x": 121.66,
+          "y": 29.62,
+          "gx": 91.66,
+          "gy": 29.62,
+          "dist": 1.172,
+          "hScale": 0.4239585683573872,
+          "wScale": 0.6871940124982954,
+          "groundSink": 2,
+          "blocking": false
+        },
+        {
+          "i": 959,
+          "tex": 88,
+          "kind": "secret_grove_floor_litter_v74",
+          "x": 121.42,
+          "y": 28.23,
+          "gx": 91.42,
+          "gy": 28.23,
+          "dist": 1.179,
+          "hScale": 0.41582315968950817,
+          "wScale": 0.6675902888056799,
+          "groundSink": 2,
+          "blocking": false
+        },
+        {
+          "i": 1336,
+          "tex": 40,
+          "kind": "secret_grove_extra_litter_v75",
+          "x": 121.84,
+          "y": 28.75,
+          "gx": 91.84,
+          "gy": 28.75,
+          "dist": 1.273,
+          "hScale": 0.3892638159192316,
+          "wScale": 0.4723540216037897,
+          "groundSink": 2,
+          "blocking": false
+        },
+        {
+          "i": 1356,
+          "tex": 41,
+          "kind": "secret_grove_extra_litter_v75",
+          "x": 121.33,
+          "y": 30.21,
+          "gx": 91.33,
+          "gy": 30.21,
+          "dist": 1.334,
+          "hScale": 0.281053045015096,
+          "wScale": 0.6229375081772305,
+          "groundSink": 2,
+          "blocking": false
+        },
+        {
+          "i": 1330,
+          "tex": 12,
+          "kind": "secret_grove_extra_litter_v75",
+          "x": 120.74,
+          "y": 27.71,
+          "gx": 90.74,
+          "gy": 27.71,
+          "dist": 1.386,
+          "hScale": 0.26171755109953637,
+          "wScale": 0.6777564986557133,
+          "groundSink": 2,
+          "blocking": false
+        },
+        {
+          "i": 2144,
+          "tex": 86,
+          "kind": "forced_user_pine_v138l_exact_1",
+          "x": 122.14,
+          "y": 28.21,
+          "gx": 92.14,
+          "gy": 28.21,
+          "dist": 1.765,
+          "hScale": 1.7000000000000002,
+          "wScale": 0.92,
+          "groundSink": 2,
+          "blocking": true
+        },
+        {
+          "i": 2143,
+          "tex": 85,
+          "kind": "forced_user_pine_v138l_exact_0",
+          "x": 119.63,
+          "y": 27.59,
+          "gx": 89.63,
+          "gy": 27.59,
+          "dist": 1.792,
+          "hScale": 1.62,
+          "wScale": 0.88,
+          "groundSink": 2,
+          "blocking": true
+        },
+        {
+          "i": 377,
+          "tex": 41,
+          "kind": "secret_grove_floor_detail_v72",
+          "x": 121.34,
+          "y": 30.77,
+          "gx": 91.34,
+          "gy": 30.77,
+          "dist": 1.835,
+          "hScale": 0.28,
+          "wScale": 0.56,
+          "groundSink": 2,
+          "blocking": false
+        },
+        {
+          "i": 1346,
+          "tex": 41,
+          "kind": "secret_grove_extra_litter_v75",
+          "x": 122.47,
+          "y": 29.58,
+          "gx": 92.47,
+          "gy": 29.58,
+          "dist": 1.924,
+          "hScale": 0.3595488602434166,
+          "wScale": 0.6089734815314816,
+          "groundSink": 2,
+          "blocking": false
+        }
+      ],
+      "93.06,31.86": [
+        {
+          "i": 2147,
+          "tex": 86,
+          "kind": "forced_user_pine_v138l_exact_4",
+          "x": 123.06,
+          "y": 31.86,
+          "gx": 93.06,
+          "gy": 31.86,
+          "dist": 0,
+          "hScale": 1.62,
+          "wScale": 0.92,
+          "groundSink": 2,
+          "blocking": true
+        },
+        {
+          "i": 983,
+          "tex": 90,
+          "kind": "secret_grove_floor_litter_v74",
+          "x": 123.79,
+          "y": 32.69,
+          "gx": 93.79,
+          "gy": 32.69,
+          "dist": 1.107,
+          "hScale": 0.38764308630433936,
+          "wScale": 0.5942296423097676,
+          "groundSink": 2,
+          "blocking": false
+        },
+        {
+          "i": 1377,
+          "tex": 40,
+          "kind": "secret_grove_extra_litter_v75",
+          "x": 122.41,
+          "y": 32.79,
+          "gx": 92.41,
+          "gy": 32.79,
+          "dist": 1.138,
+          "hScale": 0.3832697455965145,
+          "wScale": 0.5091021794846985,
+          "groundSink": 2,
+          "blocking": false
+        },
+        {
+          "i": 967,
+          "tex": 41,
+          "kind": "secret_grove_floor_litter_v74",
+          "x": 122.44,
+          "y": 30.62,
+          "gx": 92.44,
+          "gy": 30.62,
+          "dist": 1.389,
+          "hScale": 0.38935360358081605,
+          "wScale": 0.5711886710513356,
+          "groundSink": 2,
+          "blocking": false
+        },
+        {
+          "i": 2142,
+          "tex": 86,
+          "kind": "forced_user_pine_v138k_94_49_31_33",
+          "x": 124.49,
+          "y": 31.33,
+          "gx": 94.49,
+          "gy": 31.33,
+          "dist": 1.525,
+          "hScale": 1.82,
+          "wScale": 0.98,
+          "groundSink": 2,
+          "blocking": true
+        },
+        {
+          "i": 1378,
+          "tex": 40,
+          "kind": "secret_grove_extra_litter_v75",
+          "x": 124.47,
+          "y": 32.52,
+          "gx": 94.47,
+          "gy": 32.52,
+          "dist": 1.556,
+          "hScale": 0.3126448362629499,
+          "wScale": 0.5838432072274953,
+          "groundSink": 2,
+          "blocking": false
+        },
+        {
+          "i": 1364,
+          "tex": 41,
+          "kind": "secret_grove_extra_litter_v75",
+          "x": 121.43,
+          "y": 31.55,
+          "gx": 91.43,
+          "gy": 31.55,
+          "dist": 1.662,
+          "hScale": 0.31847203020436504,
+          "wScale": 0.5123338956530984,
+          "groundSink": 2,
+          "blocking": false
+        },
+        {
+          "i": 1383,
+          "tex": 30,
+          "kind": "secret_grove_extra_litter_v75",
+          "x": 123.26,
+          "y": 33.62,
+          "gx": 93.26,
+          "gy": 33.62,
+          "dist": 1.773,
+          "hScale": 0.37501244276645884,
+          "wScale": 0.5340848598242935,
+          "groundSink": 2,
+          "blocking": false
+        },
+        {
+          "i": 2145,
+          "tex": 87,
+          "kind": "forced_user_pine_v138l_exact_2",
+          "x": 122.88,
+          "y": 30.06,
+          "gx": 92.88,
+          "gy": 30.06,
+          "dist": 1.809,
+          "hScale": 1.78,
+          "wScale": 0.96,
+          "groundSink": 2,
+          "blocking": true
+        },
+        {
+          "i": 968,
+          "tex": 40,
+          "kind": "secret_grove_floor_litter_v74",
+          "x": 124.51,
+          "y": 30.67,
+          "gx": 94.51,
+          "gy": 30.67,
+          "dist": 1.874,
+          "hScale": 0.2710813146552726,
+          "wScale": 0.7427675020375213,
+          "groundSink": 2,
+          "blocking": false
+        }
+      ],
+      "96.21,36.21": [
+        {
+          "i": 2148,
+          "tex": 87,
+          "kind": "forced_user_pine_v138l_exact_5",
+          "x": 126.21,
+          "y": 36.21,
+          "gx": 96.21,
+          "gy": 36.21,
+          "dist": 0,
+          "hScale": 1.7000000000000002,
+          "wScale": 0.96,
+          "groundSink": 2,
+          "blocking": true
+        },
+        {
+          "i": 1391,
+          "tex": 12,
+          "kind": "secret_grove_extra_litter_v75",
+          "x": 126.79,
+          "y": 35.44,
+          "gx": 96.79,
+          "gy": 35.44,
+          "dist": 0.962,
+          "hScale": 0.3114453410756414,
+          "wScale": 0.5720332735269408,
+          "groundSink": 2,
+          "blocking": false
+        },
+        {
+          "i": 1390,
+          "tex": 40,
+          "kind": "secret_grove_extra_litter_v75",
+          "x": 125.47,
+          "y": 35.5,
+          "gx": 95.47,
+          "gy": 35.5,
+          "dist": 1.027,
+          "hScale": 0.37187160939720265,
+          "wScale": 0.5844322713754215,
+          "groundSink": 2,
+          "blocking": false
+        },
+        {
+          "i": 1395,
+          "tex": 12,
+          "kind": "secret_grove_extra_litter_v75",
+          "x": 127.2,
+          "y": 36.63,
+          "gx": 97.2,
+          "gy": 36.63,
+          "dist": 1.079,
+          "hScale": 0.38273031177994105,
+          "wScale": 0.49242674272796766,
+          "groundSink": 2,
+          "blocking": false
+        },
+        {
+          "i": 2102,
+          "tex": 9,
+          "kind": "forced_user_pine_v77",
+          "x": 127.37,
+          "y": 35.51,
+          "gx": 97.37,
+          "gy": 35.51,
+          "dist": 1.355,
+          "hScale": 1.58,
+          "wScale": 0.88,
+          "groundSink": 2,
+          "blocking": true
+        },
+        {
+          "i": 998,
+          "tex": 40,
+          "kind": "secret_grove_floor_litter_v74",
+          "x": 124.74,
+          "y": 36.62,
+          "gx": 94.74,
+          "gy": 36.62,
+          "dist": 1.531,
+          "hScale": 0.32959988128850237,
+          "wScale": 0.6685373536750062,
+          "groundSink": 2,
+          "blocking": false
+        },
+        {
+          "i": 2113,
+          "tex": 87,
+          "kind": "forced_user_pine_v79",
+          "x": 124.72,
+          "y": 37.38,
+          "gx": 94.72,
+          "gy": 37.38,
+          "dist": 1.894,
+          "hScale": 1.58,
+          "wScale": 0.88,
+          "groundSink": 2,
+          "blocking": true
+        }
+      ],
+      "100.55,36.27": [
+        {
+          "i": 2149,
+          "tex": 85,
+          "kind": "forced_user_pine_v138l_exact_6",
+          "x": 130.55,
+          "y": 36.27,
+          "gx": 100.55,
+          "gy": 36.27,
+          "dist": 0,
+          "hScale": 1.78,
+          "wScale": 0.88,
+          "groundSink": 2,
+          "blocking": true
+        },
+        {
+          "i": 1397,
+          "tex": 41,
+          "kind": "secret_grove_extra_litter_v75",
+          "x": 130.81,
+          "y": 36.61,
+          "gx": 100.81,
+          "gy": 36.61,
+          "dist": 0.426,
+          "hScale": 0.36472215295413557,
+          "wScale": 0.5939761413130854,
+          "groundSink": 2,
+          "blocking": false
+        },
+        {
+          "i": 1396,
+          "tex": 40,
+          "kind": "secret_grove_extra_litter_v75",
+          "x": 129.48,
+          "y": 36.3,
+          "gx": 99.48,
+          "gy": 36.3,
+          "dist": 1.075,
+          "hScale": 0.24446333109970747,
+          "wScale": 0.5994350213556167,
+          "groundSink": 2,
+          "blocking": false
+        },
+        {
+          "i": 1000,
+          "tex": 12,
+          "kind": "secret_grove_floor_litter_v74",
+          "x": 131.68,
+          "y": 36.2,
+          "gx": 101.68,
+          "gy": 36.2,
+          "dist": 1.131,
+          "hScale": 0.31871319672295667,
+          "wScale": 0.5356690020802591,
+          "groundSink": 2,
+          "blocking": false
+        }
+      ],
+      "103.36,46.98": [
+        {
+          "i": 2150,
+          "tex": 86,
+          "kind": "forced_user_pine_v138l_exact_7",
+          "x": 133.36,
+          "y": 46.98,
+          "gx": 103.36,
+          "gy": 46.98,
+          "dist": 0,
+          "hScale": 1.86,
+          "wScale": 0.92,
+          "groundSink": 2,
+          "blocking": true
+        },
+        {
+          "i": 1445,
+          "tex": 40,
+          "kind": "secret_grove_extra_litter_v75",
+          "x": 132.81,
+          "y": 47.57,
+          "gx": 102.81,
+          "gy": 47.57,
+          "dist": 0.808,
+          "hScale": 0.4147456475335047,
+          "wScale": 0.6461203249860835,
+          "groundSink": 2,
+          "blocking": false
+        },
+        {
+          "i": 1020,
+          "tex": 89,
+          "kind": "secret_grove_floor_litter_v74",
+          "x": 134.42,
+          "y": 46.44,
+          "gx": 104.42,
+          "gy": 46.44,
+          "dist": 1.189,
+          "hScale": 0.30007659195225606,
+          "wScale": 0.569689723870179,
+          "groundSink": 2,
+          "blocking": false
+        },
+        {
+          "i": 1437,
+          "tex": 41,
+          "kind": "secret_grove_extra_litter_v75",
+          "x": 134.68,
+          "y": 46.3,
+          "gx": 104.68,
+          "gy": 46.3,
+          "dist": 1.485,
+          "hScale": 0.3699975709128188,
+          "wScale": 0.5675003633409507,
+          "groundSink": 2,
+          "blocking": false
+        },
+        {
+          "i": 1450,
+          "tex": 40,
+          "kind": "secret_grove_extra_litter_v75",
+          "x": 132.79,
+          "y": 48.82,
+          "gx": 102.79,
+          "gy": 48.82,
+          "dist": 1.923,
+          "hScale": 0.36104519717885303,
+          "wScale": 0.5402105652005902,
+          "groundSink": 2,
+          "blocking": false
+        }
+      ],
+      "100.8,47.46": [
+        {
+          "i": 2151,
+          "tex": 87,
+          "kind": "forced_user_pine_v138l_exact_8",
+          "x": 130.8,
+          "y": 47.46,
+          "gx": 100.8,
+          "gy": 47.46,
+          "dist": 0,
+          "hScale": 1.62,
+          "wScale": 0.96,
+          "groundSink": 2,
+          "blocking": true
+        }
+      ],
+      "97.93,47.38": [
+        {
+          "i": 2152,
+          "tex": 85,
+          "kind": "forced_user_pine_v138l_exact_9",
+          "x": 127.93,
+          "y": 47.38,
+          "gx": 97.93,
+          "gy": 47.38,
+          "dist": 0,
+          "hScale": 1.7000000000000002,
+          "wScale": 0.88,
+          "groundSink": 2,
+          "blocking": true
+        },
+        {
+          "i": 1444,
+          "tex": 31,
+          "kind": "secret_grove_extra_litter_v75",
+          "x": 126.6,
+          "y": 47.53,
+          "gx": 96.6,
+          "gy": 47.53,
+          "dist": 1.344,
+          "hScale": 0.3369039250158016,
+          "wScale": 0.4665211093766897,
+          "groundSink": 2,
+          "blocking": false
+        }
+      ],
+      "16.1,12.75": [
+        {
+          "i": 2205,
+          "tex": 94,
+          "kind": "bar_counter_barman_integrated_v138l",
+          "x": 46.1,
+          "y": 12.75,
+          "gx": 16.1,
+          "gy": 12.75,
+          "dist": 0,
+          "hScale": 1.04,
+          "wScale": 1,
+          "groundSink": 2.15,
+          "blocking": false
+        }
+      ],
+      "14.3,11.35": [
+        {
+          "i": 2206,
+          "tex": 52,
+          "kind": "bar_under_reduced_canopy_table_v138l",
+          "x": 44.3,
+          "y": 11.35,
+          "gx": 14.3,
+          "gy": 11.35,
+          "dist": 0,
+          "hScale": 0.68,
+          "wScale": 0.72,
+          "groundSink": 2.1,
+          "blocking": false
+        }
+      ],
+      "13.5,9.5": [
+        {
+          "i": 2201,
+          "tex": 18,
+          "kind": "bar_canopy_column_v138l_0",
+          "x": 43.5,
+          "y": 9.5,
+          "gx": 13.5,
+          "gy": 9.5,
+          "dist": 0,
+          "hScale": 1.05,
+          "wScale": 0.98,
+          "groundSink": 2.1,
+          "blocking": true
+        }
+      ],
+      "18.5,13.5": [
+        {
+          "i": 2204,
+          "tex": 18,
+          "kind": "bar_canopy_column_v138l_3",
+          "x": 48.5,
+          "y": 13.5,
+          "gx": 18.5,
+          "gy": 13.5,
+          "dist": 0,
+          "hScale": 1.05,
+          "wScale": 0.98,
+          "groundSink": 2.1,
+          "blocking": true
+        }
+      ],
+      "40.55,34.65": []
+    },
+    "counts": {
+      "8": 17,
+      "9": 242,
+      "10": 4,
+      "11": 17,
+      "12": 80,
+      "13": 35,
+      "14": 13,
+      "16": 4,
+      "18": 12,
+      "19": 10,
+      "20": 3,
+      "21": 2,
+      "22": 2,
+      "23": 1,
+      "24": 9,
+      "25": 30,
+      "26": 29,
+      "27": 27,
+      "28": 29,
+      "29": 28,
+      "30": 75,
+      "31": 67,
+      "32": 7,
+      "33": 5,
+      "34": 11,
+      "35": 12,
+      "36": 2,
+      "37": 1,
+      "38": 1,
+      "40": 174,
+      "41": 213,
+      "43": 2,
+      "44": 2,
+      "45": 2,
+      "47": 1,
+      "48": 1,
+      "49": 2,
+      "50": 1,
+      "51": 1,
+      "52": 4,
+      "53": 1,
+      "54": 25,
+      "55": 21,
+      "56": 24,
+      "61": 1,
+      "62": 1,
+      "63": 1,
+      "64": 1,
+      "65": 1,
+      "66": 1,
+      "67": 1,
+      "68": 1,
+      "69": 1,
+      "70": 1,
+      "71": 1,
+      "76": 1,
+      "77": 1,
+      "78": 1,
+      "84": 1,
+      "85": 247,
+      "86": 253,
+      "87": 235,
+      "88": 68,
+      "89": 69,
+      "90": 70,
+      "94": 1
+    },
+    "kindTop": [
+      [
+        "",
+        373
+      ],
+      [
+        "pineta2_s_blocker_pine_v75",
+        345
+      ],
+      [
+        "secret_grove_extra_litter_v75",
+        206
+      ],
+      [
+        "pine",
+        184
+      ],
+      [
+        "pineta2_dense_wall_pine_v75",
+        171
+      ],
+      [
+        "secret_grove_floor_litter_v74",
+        147
+      ],
+      [
+        "pineta2_floor_litter_v74",
+        108
+      ],
+      [
+        "secret_grove_border_pine_v73",
+        98
+      ],
+      [
+        "pineta2_rich_litter_v75",
+        63
+      ],
+      [
+        "secret_grove_extra_wall_pine_v75",
+        61
+      ],
+      [
+        "historic_pineta_redistributed_litter_v138l",
+        48
+      ],
+      [
+        "secret_grove_wall_pine_v74",
+        46
+      ],
+      [
+        "secret_grove_lake_pine_v75",
+        34
+      ],
+      [
+        "secret_flower_field_bush_v73",
+        24
+      ],
+      [
+        "palm",
+        20
+      ],
+      [
+        "secret_north_field_wall_tamarisk_v91",
+        20
+      ],
+      [
+        "bar_table_low_grass_v74",
+        15
+      ],
+      [
+        "ordered_chokepoint_pot",
+        13
+      ],
+      [
+        "secret_flower_field_flower_v73",
+        12
+      ],
+      [
+        "tamarisk_border_free",
+        11
+      ],
+      [
+        "camper_managed_hedge_as_bush_flower_v138j",
+        10
+      ],
+      [
+        "secret_grove_floor_detail_v72",
+        10
+      ],
+      [
+        "tamarisk_reception_west",
+        10
+      ],
+      [
+        "parked_car",
+        9
+      ],
+      [
+        "tamarisk_parking_field",
+        9
+      ],
+      [
+        "parking_field_grass_v35",
+        9
+      ],
+      [
+        "tamarisk_pineta_wall_road",
+        7
+      ],
+      [
+        "forced_user_pine_v77",
+        7
+      ],
+      [
+        "bar_dehors_grass",
+        6
+      ],
+      [
+        "secret_grove_pine_v72",
+        6
+      ],
+      [
+        "tent",
+        6
+      ],
+      [
+        "secret_home_wall_pine_v76",
+        6
+      ],
+      [
+        "secret_north_field_tamarisk_v76",
+        6
+      ],
+      [
+        "bush_as_bush_dark_v138j",
+        5
+      ],
+      [
+        "barbecue_avenue_tamarisk_v71",
+        5
+      ],
+      [
+        "parking_corner_pot",
+        4
+      ],
+      [
+        "game_room_column",
+        4
+      ],
+      [
+        "bush_as_bush_flower_v138j",
+        4
+      ],
+      [
+        "camper_managed_hedge_as_bush_dark_v138j",
+        4
+      ],
+      [
+        "shower",
+        4
+      ],
+      [
+        "secret_beach_furniture_v72",
+        4
+      ],
+      [
+        "yoga_canopy_column_v75",
+        4
+      ],
+      [
+        "forced_user_pine_v78",
+        4
+      ],
+      [
+        "bar_outdoor_table",
+        3
+      ],
+      [
+        "bar_dehors_pot",
+        3
+      ],
+      [
+        "secret_home_decor_v73",
+        3
+      ],
+      [
+        "camp_stool",
+        3
+      ],
+      [
+        "forced_user_pine_v79",
+        3
+      ],
+      [
+        "bar_distant_bush",
+        2
+      ],
+      [
+        "barbecue_stool",
+        2
+      ],
+      [
+        "barbecue_border_decor",
+        2
+      ],
+      [
+        "tamarisk_scattered",
+        2
+      ],
+      [
+        "camping_imperio_sign",
+        1
+      ],
+      [
+        "bar_distant_bush_as_bush_dark_v138j",
+        1
+      ],
+      [
+        "billiard_table",
+        1
+      ],
+      [
+        "pingpong_table",
+        1
+      ],
+      [
+        "story_barbecue_long_animated",
+        1
+      ],
+      [
+        "story_barbecue_sign",
+        1
+      ],
+      [
+        "fountain",
+        1
+      ],
+      [
+        "secret_home_sign_casa_v73",
+        1
+      ],
+      [
+        "direction_sign_reception",
+        1
+      ],
+      [
+        "direction_sign_bar",
+        1
+      ],
+      [
+        "direction_sign_pineta",
+        1
+      ],
+      [
+        "direction_sign_camper",
+        1
+      ],
+      [
+        "direction_sign_bagni",
+        1
+      ],
+      [
+        "direction_sign_spiaggia",
+        1
+      ],
+      [
+        "direction_sign_parcheggio",
+        1
+      ],
+      [
+        "direction_sign_tende",
+        1
+      ],
+      [
+        "direction_sign_yoga",
+        1
+      ],
+      [
+        "secret_home_animated_campfire_v74",
+        1
+      ],
+      [
+        "pineta2_mossy_boulder_v74",
+        1
+      ],
+      [
+        "secret_lake_rowboat_v89",
+        1
+      ],
+      [
+        "flower_arch_single_v93",
+        1
+      ],
+      [
+        "special_tall_palm_v95",
+        1
+      ],
+      [
+        "marble_statue_second_v118",
+        1
+      ],
+      [
+        "palm_forced_no_grass_v122",
+        1
+      ],
+      [
+        "forced_user_pine_v138k_94_42_28_97",
+        1
+      ],
+      [
+        "forced_user_pine_v138k_94_49_31_33",
+        1
+      ],
+      [
+        "forced_user_pine_v138l_exact_0",
+        1
+      ],
+      [
+        "forced_user_pine_v138l_exact_1",
+        1
+      ]
+    ]
+  },
+  "probeSummary": {
+    "spriteCount": 2207,
+    "roofSegments": 2,
+    "counts": {
+      "8": 17,
+      "9": 242,
+      "10": 4,
+      "11": 17,
+      "12": 80,
+      "13": 35,
+      "14": 13,
+      "16": 4,
+      "18": 12,
+      "19": 10,
+      "20": 3,
+      "21": 2,
+      "22": 2,
+      "23": 1,
+      "24": 9,
+      "25": 30,
+      "26": 29,
+      "27": 27,
+      "28": 29,
+      "29": 28,
+      "30": 75,
+      "31": 67,
+      "32": 7,
+      "33": 5,
+      "34": 11,
+      "35": 12,
+      "36": 2,
+      "37": 1,
+      "38": 1,
+      "40": 174,
+      "41": 213,
+      "43": 2,
+      "44": 2,
+      "45": 2,
+      "47": 1,
+      "48": 1,
+      "49": 2,
+      "50": 1,
+      "51": 1,
+      "52": 4,
+      "53": 1,
+      "54": 25,
+      "55": 21,
+      "56": 24,
+      "61": 1,
+      "62": 1,
+      "63": 1,
+      "64": 1,
+      "65": 1,
+      "66": 1,
+      "67": 1,
+      "68": 1,
+      "69": 1,
+      "70": 1,
+      "71": 1,
+      "76": 1,
+      "77": 1,
+      "78": 1,
+      "84": 1,
+      "85": 247,
+      "86": 253,
+      "87": 235,
+      "88": 68,
+      "89": 69,
+      "90": 70,
+      "94": 1
+    },
+    "exactPineKinds": 10,
+    "bar": [
+      {
+        "tex": 34,
+        "kind": "",
+        "gx": 10,
+        "y": 15.7,
+        "underRoof": false
+      },
+      {
+        "tex": 35,
+        "kind": "",
+        "gx": 21.3,
+        "y": 15.2,
+        "underRoof": false
+      },
+      {
+        "tex": 24,
+        "kind": "",
+        "gx": 18.8,
+        "y": 15.6,
+        "underRoof": false
+      },
+      {
+        "tex": 18,
+        "kind": "bar_canopy_column_v138l_0",
+        "gx": 13.5,
+        "y": 9.5,
+        "underRoof": true
+      },
+      {
+        "tex": 18,
+        "kind": "bar_canopy_column_v138l_1",
+        "gx": 18.5,
+        "y": 9.5,
+        "underRoof": true
+      },
+      {
+        "tex": 18,
+        "kind": "bar_canopy_column_v138l_2",
+        "gx": 13.5,
+        "y": 13.5,
+        "underRoof": true
+      },
+      {
+        "tex": 18,
+        "kind": "bar_canopy_column_v138l_3",
+        "gx": 18.5,
+        "y": 13.5,
+        "underRoof": true
+      },
+      {
+        "tex": 94,
+        "kind": "bar_counter_barman_integrated_v138l",
+        "gx": 16.1,
+        "y": 12.75,
+        "underRoof": true
+      },
+      {
+        "tex": 52,
+        "kind": "bar_under_reduced_canopy_table_v138l",
+        "gx": 14.3,
+        "y": 11.35,
+        "underRoof": true
+      }
+    ],
+    "report": null
+  },
+  "lockedSignsUnchanged": {
+    "sign_bar.png": true,
+    "sign_pineta.png": true
+  },
+  "notes": [
+    "10 exact pines placed without opportunity checks",
+    "Historic/yoga pineta ground litter redistributed: dense clusters trimmed, gaps filled",
+    "Flowers along tower-to-beach main road thinned with spacing rule",
+    "Bar canopy reduced and columns repositioned",
+    "Barman+counter combined into single tex94 sprite"
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "build": "PERLA1_V233_OVERDRAW_ROLLBACK_STABILITY_LOCAL",
+  "base": "PERLA1_V232_SPECIAL_WALL_SUPPORT_TOWER_CAR_SAFE_LOCAL",
+  "strategy": "rollback_overdraw_stability",
+  "interventions": [
+    "Disabled normal draw path for V228 far-wall spans",
+    "Disabled normal draw path for V229 height-step faces",
+    "Disabled normal draw path for V230/V231 continuous wall-runs",
+    "Preserved base WallLayer/WallOcclusionRanges buffers for sprite/rain occlusion",
+    "Disabled fake V232 roof/support pixel clip",
+    "Adjusted tower roof/body sync to avoid roof disappearing before visible body",
+    "Updated HTML title/h2/loading to V233",
+    "Exposed PERLA_BUILD_ID on window and __PERLA_DEBUG__"
+  ],
+  "preserved": [
+    "map",
+    "collisions",
+    "worldgen",
+    "roadMask",
+    "objectBlock",
+    "assets",
+    "sprite placement",
+    "sprite seal V229",
+    "wall distance > sprite V228",
+    "rain camera volume V226",
+    "bath authority",
+    "skybox",
+    "audio"
+  ],
+  "disabled_draw_paths": [
+    "stabilizeAndDrawFarWallSpansV228",
+    "drawHeightStepFacesV229",
+    "drawContinuousWallRunsV230"
+  ],
+  "honest_limitations": [
+    "No browser visual test in container",
+    "May reduce previous continuity improvements for high walls behind low walls, intentionally trading ambition for stability"
+  ],
+  "validation_focus": [
+    "glitch/fasce on hedges and special walls should disappear",
+    "no vertical line regression",
+    "tower roof not through high walls and not disappearing before body",
+    "sprite seal still functional",
+    "versioning visible as V233"
+  ]
+}

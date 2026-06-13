@@ -1,0 +1,1857 @@
+{
+  "build": "PERLA1_V138H_GLOBAL_ANCHOR_TAMARISK_POTS_FIX_SAFE",
+  "base": "PERLA1_V138G_SPRITE_GROUND_ANCHOR_PALETTE_SAFE",
+  "goals": [
+    "global sprite ground anchor audit",
+    "remove/disable tamerisk shadows",
+    "reduce oversized pots",
+    "remove two overlapped sprites near gameplay X23.55/Y2.55"
+  ],
+  "rules": {
+    "noMapGeometryChange": true,
+    "noRoadMaskDesignChange": true,
+    "noModernUnapprovedAssets": true,
+    "noGlobalWhiteRemoval": true,
+    "allSpriteAssetsAudited": true,
+    "lockedSignsUnchanged": true
+  },
+  "spriteFilesAudited": [
+    "bar_counter.png",
+    "barbecue_long_0.png",
+    "barbecue_long_1.png",
+    "barbecue_long_2.png",
+    "barman.png",
+    "billiard_table.png",
+    "bush.png",
+    "bush_flower.png",
+    "cafe_table_chairs.png",
+    "camper.png",
+    "campfire_0.png",
+    "campfire_1.png",
+    "campfire_2.png",
+    "car_blue.png",
+    "car_green.png",
+    "car_red.png",
+    "car_white.png",
+    "car_yellow.png",
+    "deckchair.png",
+    "flower.png",
+    "flower_purple.png",
+    "flower_red.png",
+    "flower_white.png",
+    "fountain_0.png",
+    "fountain_1.png",
+    "fountain_2.png",
+    "gazebo_column.png",
+    "grass.png",
+    "grass_reed.png",
+    "grass_soft.png",
+    "grass_variant_0.png",
+    "grass_variant_1.png",
+    "grass_variant_2.png",
+    "lake_rowboat.png",
+    "marble_statue.png",
+    "moss_rock.png",
+    "palm_0.png",
+    "palm_1.png",
+    "palm_dwarf_0.png",
+    "palm_dwarf_1.png",
+    "palm_tall_0.png",
+    "palm_tall_1.png",
+    "pine.png",
+    "pine_needles.png",
+    "pine_variant_0.png",
+    "pine_variant_1.png",
+    "pine_variant_2.png",
+    "pinecone.png",
+    "pingpong_table.png",
+    "pot.png",
+    "pot_purple.png",
+    "pot_red.png",
+    "shower_0.png",
+    "shower_1.png",
+    "sign_bagni.png",
+    "sign_barbecue.png",
+    "sign_camper.png",
+    "sign_camping_imperio.png",
+    "sign_casa.png",
+    "sign_parcheggio.png",
+    "sign_reception.png",
+    "sign_spiaggia.png",
+    "sign_tende.png",
+    "sign_yoga.png",
+    "sofa.png",
+    "stool.png",
+    "tamarisk_0.png",
+    "tamarisk_1.png",
+    "tamarisk_2.png",
+    "tent_blue.png",
+    "tent_green.png",
+    "tent_orange.png",
+    "umbrella.png",
+    "yoga_mat.png"
+  ],
+  "anchorReport": [
+    {
+      "file": "bar_counter.png",
+      "beforeSolidTopY": 25,
+      "beforeSolidBottomY": 62,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 1,
+      "bboxAlpha8": [
+        4,
+        25,
+        59,
+        62
+      ]
+    },
+    {
+      "file": "barbecue_long_0.png",
+      "beforeSolidTopY": 14,
+      "beforeSolidBottomY": 62,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 1,
+      "bboxAlpha8": [
+        1,
+        7,
+        63,
+        63
+      ]
+    },
+    {
+      "file": "barbecue_long_1.png",
+      "beforeSolidTopY": 9,
+      "beforeSolidBottomY": 62,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 1,
+      "bboxAlpha8": [
+        1,
+        6,
+        63,
+        63
+      ]
+    },
+    {
+      "file": "barbecue_long_2.png",
+      "beforeSolidTopY": 14,
+      "beforeSolidBottomY": 62,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 1,
+      "bboxAlpha8": [
+        1,
+        6,
+        63,
+        63
+      ]
+    },
+    {
+      "file": "barman.png",
+      "beforeSolidTopY": 5,
+      "beforeSolidBottomY": 62,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 1,
+      "bboxAlpha8": [
+        15,
+        5,
+        47,
+        62
+      ]
+    },
+    {
+      "file": "billiard_table.png",
+      "beforeSolidTopY": 19,
+      "beforeSolidBottomY": 59,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 4,
+      "bboxAlpha8": [
+        9,
+        19,
+        56,
+        61
+      ]
+    },
+    {
+      "file": "bush.png",
+      "beforeSolidTopY": 30,
+      "beforeSolidBottomY": 62,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 1,
+      "bboxAlpha8": [
+        5,
+        28,
+        58,
+        63
+      ]
+    },
+    {
+      "file": "bush_flower.png",
+      "beforeSolidTopY": 21,
+      "beforeSolidBottomY": 62,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 1,
+      "bboxAlpha8": [
+        5,
+        19,
+        60,
+        63
+      ]
+    },
+    {
+      "file": "cafe_table_chairs.png",
+      "beforeSolidTopY": 6,
+      "beforeSolidBottomY": 62,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 1,
+      "bboxAlpha8": [
+        3,
+        5,
+        60,
+        63
+      ]
+    },
+    {
+      "file": "camper.png",
+      "beforeSolidTopY": 17,
+      "beforeSolidBottomY": 63,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 0,
+      "bboxAlpha8": [
+        4,
+        17,
+        60,
+        63
+      ]
+    },
+    {
+      "file": "campfire_0.png",
+      "beforeSolidTopY": 16,
+      "beforeSolidBottomY": 57,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 6,
+      "bboxAlpha8": [
+        11,
+        8,
+        52,
+        61
+      ]
+    },
+    {
+      "file": "campfire_1.png",
+      "beforeSolidTopY": 21,
+      "beforeSolidBottomY": 57,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 6,
+      "bboxAlpha8": [
+        11,
+        8,
+        52,
+        62
+      ]
+    },
+    {
+      "file": "campfire_2.png",
+      "beforeSolidTopY": 17,
+      "beforeSolidBottomY": 57,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 6,
+      "bboxAlpha8": [
+        11,
+        8,
+        53,
+        62
+      ]
+    },
+    {
+      "file": "car_blue.png",
+      "beforeSolidTopY": 10,
+      "beforeSolidBottomY": 58,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 5,
+      "bboxAlpha8": [
+        6,
+        10,
+        58,
+        63
+      ]
+    },
+    {
+      "file": "car_green.png",
+      "beforeSolidTopY": 14,
+      "beforeSolidBottomY": 55,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 8,
+      "bboxAlpha8": [
+        8,
+        14,
+        56,
+        60
+      ]
+    },
+    {
+      "file": "car_red.png",
+      "beforeSolidTopY": 10,
+      "beforeSolidBottomY": 58,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 5,
+      "bboxAlpha8": [
+        6,
+        10,
+        58,
+        63
+      ]
+    },
+    {
+      "file": "car_white.png",
+      "beforeSolidTopY": 14,
+      "beforeSolidBottomY": 55,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 8,
+      "bboxAlpha8": [
+        8,
+        14,
+        56,
+        60
+      ]
+    },
+    {
+      "file": "car_yellow.png",
+      "beforeSolidTopY": 10,
+      "beforeSolidBottomY": 58,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 5,
+      "bboxAlpha8": [
+        6,
+        10,
+        58,
+        63
+      ]
+    },
+    {
+      "file": "deckchair.png",
+      "beforeSolidTopY": 21,
+      "beforeSolidBottomY": 61,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 2,
+      "bboxAlpha8": [
+        11,
+        21,
+        55,
+        63
+      ]
+    },
+    {
+      "file": "flower.png",
+      "beforeSolidTopY": 33,
+      "beforeSolidBottomY": 63,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 0,
+      "bboxAlpha8": [
+        23,
+        33,
+        41,
+        63
+      ]
+    },
+    {
+      "file": "flower_purple.png",
+      "beforeSolidTopY": 33,
+      "beforeSolidBottomY": 63,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 0,
+      "bboxAlpha8": [
+        23,
+        33,
+        41,
+        63
+      ]
+    },
+    {
+      "file": "flower_red.png",
+      "beforeSolidTopY": 33,
+      "beforeSolidBottomY": 63,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 0,
+      "bboxAlpha8": [
+        23,
+        33,
+        41,
+        63
+      ]
+    },
+    {
+      "file": "flower_white.png",
+      "beforeSolidTopY": 33,
+      "beforeSolidBottomY": 63,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 0,
+      "bboxAlpha8": [
+        23,
+        33,
+        41,
+        63
+      ]
+    },
+    {
+      "file": "fountain_0.png",
+      "beforeSolidTopY": 18,
+      "beforeSolidBottomY": 63,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 0,
+      "bboxAlpha8": [
+        7,
+        18,
+        57,
+        63
+      ]
+    },
+    {
+      "file": "fountain_1.png",
+      "beforeSolidTopY": 18,
+      "beforeSolidBottomY": 63,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 0,
+      "bboxAlpha8": [
+        7,
+        18,
+        57,
+        63
+      ]
+    },
+    {
+      "file": "fountain_2.png",
+      "beforeSolidTopY": 18,
+      "beforeSolidBottomY": 63,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 0,
+      "bboxAlpha8": [
+        7,
+        18,
+        57,
+        63
+      ]
+    },
+    {
+      "file": "gazebo_column.png",
+      "beforeSolidTopY": 0,
+      "beforeSolidBottomY": 63,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 0,
+      "bboxAlpha8": [
+        22,
+        0,
+        42,
+        63
+      ]
+    },
+    {
+      "file": "grass.png",
+      "beforeSolidTopY": 41,
+      "beforeSolidBottomY": 63,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 0,
+      "bboxAlpha8": [
+        16,
+        41,
+        41,
+        63
+      ]
+    },
+    {
+      "file": "grass_reed.png",
+      "beforeSolidTopY": 41,
+      "beforeSolidBottomY": 63,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 0,
+      "bboxAlpha8": [
+        16,
+        41,
+        41,
+        63
+      ]
+    },
+    {
+      "file": "grass_soft.png",
+      "beforeSolidTopY": 41,
+      "beforeSolidBottomY": 63,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 0,
+      "bboxAlpha8": [
+        16,
+        41,
+        41,
+        63
+      ]
+    },
+    {
+      "file": "grass_variant_0.png",
+      "beforeSolidTopY": 41,
+      "beforeSolidBottomY": 63,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 0,
+      "bboxAlpha8": [
+        14,
+        41,
+        41,
+        63
+      ]
+    },
+    {
+      "file": "grass_variant_1.png",
+      "beforeSolidTopY": 40,
+      "beforeSolidBottomY": 63,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 0,
+      "bboxAlpha8": [
+        17,
+        39,
+        41,
+        63
+      ]
+    },
+    {
+      "file": "grass_variant_2.png",
+      "beforeSolidTopY": 43,
+      "beforeSolidBottomY": 63,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 0,
+      "bboxAlpha8": [
+        14,
+        42,
+        42,
+        63
+      ]
+    },
+    {
+      "file": "lake_rowboat.png",
+      "beforeSolidTopY": 22,
+      "beforeSolidBottomY": 51,
+      "afterSolidBottomY": 59,
+      "anchorShiftDownPx": 8,
+      "bboxAlpha8": [
+        7,
+        22,
+        60,
+        59
+      ]
+    },
+    {
+      "file": "marble_statue.png",
+      "beforeSolidTopY": 3,
+      "beforeSolidBottomY": 59,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 4,
+      "bboxAlpha8": [
+        13,
+        3,
+        52,
+        63
+      ]
+    },
+    {
+      "file": "moss_rock.png",
+      "beforeSolidTopY": 16,
+      "beforeSolidBottomY": 56,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 7,
+      "bboxAlpha8": [
+        6,
+        16,
+        60,
+        62
+      ]
+    },
+    {
+      "file": "palm_0.png",
+      "beforeSolidTopY": 8,
+      "beforeSolidBottomY": 62,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 1,
+      "bboxAlpha8": [
+        3,
+        7,
+        60,
+        63
+      ]
+    },
+    {
+      "file": "palm_1.png",
+      "beforeSolidTopY": 8,
+      "beforeSolidBottomY": 62,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 1,
+      "bboxAlpha8": [
+        3,
+        7,
+        61,
+        63
+      ]
+    },
+    {
+      "file": "palm_dwarf_0.png",
+      "beforeSolidTopY": 5,
+      "beforeSolidBottomY": 62,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 1,
+      "bboxAlpha8": [
+        5,
+        4,
+        58,
+        63
+      ]
+    },
+    {
+      "file": "palm_dwarf_1.png",
+      "beforeSolidTopY": 5,
+      "beforeSolidBottomY": 62,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 1,
+      "bboxAlpha8": [
+        6,
+        4,
+        59,
+        63
+      ]
+    },
+    {
+      "file": "palm_tall_0.png",
+      "beforeSolidTopY": 5,
+      "beforeSolidBottomY": 62,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 1,
+      "bboxAlpha8": [
+        4,
+        4,
+        58,
+        63
+      ]
+    },
+    {
+      "file": "palm_tall_1.png",
+      "beforeSolidTopY": 5,
+      "beforeSolidBottomY": 62,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 1,
+      "bboxAlpha8": [
+        4,
+        4,
+        59,
+        63
+      ]
+    },
+    {
+      "file": "pine.png",
+      "beforeSolidTopY": 3,
+      "beforeSolidBottomY": 62,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 1,
+      "bboxAlpha8": [
+        5,
+        3,
+        57,
+        62
+      ]
+    },
+    {
+      "file": "pine_needles.png",
+      "beforeSolidTopY": 42,
+      "beforeSolidBottomY": 63,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 0,
+      "bboxAlpha8": [
+        12,
+        42,
+        53,
+        63
+      ]
+    },
+    {
+      "file": "pine_variant_0.png",
+      "beforeSolidTopY": 3,
+      "beforeSolidBottomY": 62,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 1,
+      "bboxAlpha8": [
+        8,
+        3,
+        55,
+        62
+      ]
+    },
+    {
+      "file": "pine_variant_1.png",
+      "beforeSolidTopY": 3,
+      "beforeSolidBottomY": 62,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 1,
+      "bboxAlpha8": [
+        11,
+        3,
+        52,
+        62
+      ]
+    },
+    {
+      "file": "pine_variant_2.png",
+      "beforeSolidTopY": 3,
+      "beforeSolidBottomY": 62,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 1,
+      "bboxAlpha8": [
+        8,
+        3,
+        55,
+        62
+      ]
+    },
+    {
+      "file": "pinecone.png",
+      "beforeSolidTopY": 25,
+      "beforeSolidBottomY": 60,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 3,
+      "bboxAlpha8": [
+        18,
+        25,
+        46,
+        63
+      ]
+    },
+    {
+      "file": "pingpong_table.png",
+      "beforeSolidTopY": 22,
+      "beforeSolidBottomY": 59,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 4,
+      "bboxAlpha8": [
+        9,
+        22,
+        56,
+        61
+      ]
+    },
+    {
+      "file": "pot.png",
+      "beforeSolidTopY": 21,
+      "beforeSolidBottomY": 63,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 0,
+      "bboxAlpha8": [
+        17,
+        21,
+        45,
+        63
+      ]
+    },
+    {
+      "file": "pot_purple.png",
+      "beforeSolidTopY": 21,
+      "beforeSolidBottomY": 63,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 0,
+      "bboxAlpha8": [
+        12,
+        20,
+        51,
+        63
+      ]
+    },
+    {
+      "file": "pot_red.png",
+      "beforeSolidTopY": 21,
+      "beforeSolidBottomY": 63,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 0,
+      "bboxAlpha8": [
+        19,
+        20,
+        44,
+        63
+      ]
+    },
+    {
+      "file": "shower_0.png",
+      "beforeSolidTopY": 0,
+      "beforeSolidBottomY": 62,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 1,
+      "bboxAlpha8": [
+        19,
+        0,
+        45,
+        63
+      ]
+    },
+    {
+      "file": "shower_1.png",
+      "beforeSolidTopY": 0,
+      "beforeSolidBottomY": 62,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 1,
+      "bboxAlpha8": [
+        19,
+        0,
+        45,
+        63
+      ]
+    },
+    {
+      "file": "sign_bagni.png",
+      "beforeSolidTopY": 10,
+      "beforeSolidBottomY": 59,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 4,
+      "bboxAlpha8": [
+        6,
+        10,
+        58,
+        62
+      ]
+    },
+    {
+      "file": "sign_barbecue.png",
+      "beforeSolidTopY": 11,
+      "beforeSolidBottomY": 52,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 11,
+      "bboxAlpha8": [
+        9,
+        11,
+        55,
+        58
+      ]
+    },
+    {
+      "file": "sign_camper.png",
+      "beforeSolidTopY": 10,
+      "beforeSolidBottomY": 59,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 4,
+      "bboxAlpha8": [
+        6,
+        10,
+        58,
+        62
+      ]
+    },
+    {
+      "file": "sign_camping_imperio.png",
+      "beforeSolidTopY": 3,
+      "beforeSolidBottomY": 62,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 1,
+      "bboxAlpha8": [
+        3,
+        3,
+        61,
+        63
+      ]
+    },
+    {
+      "file": "sign_casa.png",
+      "beforeSolidTopY": 14,
+      "beforeSolidBottomY": 63,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 0,
+      "bboxAlpha8": [
+        6,
+        14,
+        58,
+        63
+      ]
+    },
+    {
+      "file": "sign_parcheggio.png",
+      "beforeSolidTopY": 10,
+      "beforeSolidBottomY": 59,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 4,
+      "bboxAlpha8": [
+        6,
+        10,
+        58,
+        62
+      ]
+    },
+    {
+      "file": "sign_reception.png",
+      "beforeSolidTopY": 10,
+      "beforeSolidBottomY": 59,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 4,
+      "bboxAlpha8": [
+        6,
+        10,
+        58,
+        62
+      ]
+    },
+    {
+      "file": "sign_spiaggia.png",
+      "beforeSolidTopY": 10,
+      "beforeSolidBottomY": 59,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 4,
+      "bboxAlpha8": [
+        6,
+        10,
+        58,
+        62
+      ]
+    },
+    {
+      "file": "sign_tende.png",
+      "beforeSolidTopY": 10,
+      "beforeSolidBottomY": 59,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 4,
+      "bboxAlpha8": [
+        6,
+        10,
+        58,
+        62
+      ]
+    },
+    {
+      "file": "sign_yoga.png",
+      "beforeSolidTopY": 10,
+      "beforeSolidBottomY": 59,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 4,
+      "bboxAlpha8": [
+        6,
+        10,
+        58,
+        62
+      ]
+    },
+    {
+      "file": "sofa.png",
+      "beforeSolidTopY": 30,
+      "beforeSolidBottomY": 58,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 5,
+      "bboxAlpha8": [
+        10,
+        30,
+        54,
+        63
+      ]
+    },
+    {
+      "file": "stool.png",
+      "beforeSolidTopY": 9,
+      "beforeSolidBottomY": 62,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 1,
+      "bboxAlpha8": [
+        14,
+        9,
+        48,
+        62
+      ]
+    },
+    {
+      "file": "tamarisk_0.png",
+      "beforeSolidTopY": 8,
+      "beforeSolidBottomY": 63,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 0,
+      "bboxAlpha8": [
+        0,
+        8,
+        59,
+        63
+      ]
+    },
+    {
+      "file": "tamarisk_1.png",
+      "beforeSolidTopY": 12,
+      "beforeSolidBottomY": 63,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 0,
+      "bboxAlpha8": [
+        0,
+        12,
+        61,
+        63
+      ]
+    },
+    {
+      "file": "tamarisk_2.png",
+      "beforeSolidTopY": 8,
+      "beforeSolidBottomY": 63,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 0,
+      "bboxAlpha8": [
+        0,
+        8,
+        63,
+        63
+      ]
+    },
+    {
+      "file": "tent_blue.png",
+      "beforeSolidTopY": 16,
+      "beforeSolidBottomY": 58,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 5,
+      "bboxAlpha8": [
+        5,
+        16,
+        59,
+        63
+      ]
+    },
+    {
+      "file": "tent_green.png",
+      "beforeSolidTopY": 16,
+      "beforeSolidBottomY": 58,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 5,
+      "bboxAlpha8": [
+        5,
+        16,
+        59,
+        63
+      ]
+    },
+    {
+      "file": "tent_orange.png",
+      "beforeSolidTopY": 16,
+      "beforeSolidBottomY": 58,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 5,
+      "bboxAlpha8": [
+        5,
+        16,
+        59,
+        63
+      ]
+    },
+    {
+      "file": "umbrella.png",
+      "beforeSolidTopY": 11,
+      "beforeSolidBottomY": 62,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 1,
+      "bboxAlpha8": [
+        3,
+        10,
+        60,
+        63
+      ]
+    },
+    {
+      "file": "yoga_mat.png",
+      "beforeSolidTopY": 51,
+      "beforeSolidBottomY": 62,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 1,
+      "bboxAlpha8": [
+        12,
+        51,
+        52,
+        63
+      ]
+    }
+  ],
+  "changes": [
+    {
+      "file": "pot.png",
+      "action": "resize_considerably_and_ground",
+      "beforeSolidBottomY": 62,
+      "afterSolidBottomY": 63,
+      "meta": {
+        "scale": 0.74,
+        "oldBBox": [
+          12,
+          5,
+          50,
+          62
+        ],
+        "newSize": [
+          29,
+          43
+        ],
+        "pos": [
+          17,
+          21
+        ]
+      }
+    },
+    {
+      "file": "pot_purple.png",
+      "action": "resize_considerably_and_ground",
+      "beforeSolidBottomY": 62,
+      "afterSolidBottomY": 63,
+      "meta": {
+        "scale": 0.74,
+        "oldBBox": [
+          4,
+          4,
+          57,
+          62
+        ],
+        "newSize": [
+          40,
+          44
+        ],
+        "pos": [
+          12,
+          20
+        ]
+      }
+    },
+    {
+      "file": "pot_red.png",
+      "action": "resize_considerably_and_ground",
+      "beforeSolidBottomY": 62,
+      "afterSolidBottomY": 63,
+      "meta": {
+        "scale": 0.74,
+        "oldBBox": [
+          14,
+          4,
+          48,
+          62
+        ],
+        "newSize": [
+          26,
+          44
+        ],
+        "pos": [
+          19,
+          20
+        ]
+      }
+    },
+    {
+      "file": "tamarisk_0.png",
+      "action": "tamarisk_shadow_cleanup_palette_anchor",
+      "beforeSolidBottomY": 62,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 1
+    },
+    {
+      "file": "tamarisk_1.png",
+      "action": "tamarisk_shadow_cleanup_palette_anchor",
+      "beforeSolidBottomY": 62,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 1
+    },
+    {
+      "file": "tamarisk_2.png",
+      "action": "tamarisk_shadow_cleanup_palette_anchor",
+      "beforeSolidBottomY": 62,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 1
+    },
+    {
+      "file": "bar_counter.png",
+      "action": "global_anchor_solid_bottom_to_ground",
+      "beforeSolidBottomY": 62,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 1
+    },
+    {
+      "file": "barbecue_long_0.png",
+      "action": "global_anchor_solid_bottom_to_ground",
+      "beforeSolidBottomY": 62,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 1
+    },
+    {
+      "file": "barbecue_long_1.png",
+      "action": "global_anchor_solid_bottom_to_ground",
+      "beforeSolidBottomY": 62,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 1
+    },
+    {
+      "file": "barbecue_long_2.png",
+      "action": "global_anchor_solid_bottom_to_ground",
+      "beforeSolidBottomY": 62,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 1
+    },
+    {
+      "file": "barman.png",
+      "action": "global_anchor_solid_bottom_to_ground",
+      "beforeSolidBottomY": 62,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 1
+    },
+    {
+      "file": "billiard_table.png",
+      "action": "global_anchor_solid_bottom_to_ground",
+      "beforeSolidBottomY": 59,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 4
+    },
+    {
+      "file": "bush.png",
+      "action": "global_anchor_solid_bottom_to_ground",
+      "beforeSolidBottomY": 62,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 1
+    },
+    {
+      "file": "bush_flower.png",
+      "action": "global_anchor_solid_bottom_to_ground",
+      "beforeSolidBottomY": 62,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 1
+    },
+    {
+      "file": "cafe_table_chairs.png",
+      "action": "global_anchor_solid_bottom_to_ground",
+      "beforeSolidBottomY": 62,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 1
+    },
+    {
+      "file": "campfire_0.png",
+      "action": "global_anchor_solid_bottom_to_ground",
+      "beforeSolidBottomY": 57,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 6
+    },
+    {
+      "file": "campfire_1.png",
+      "action": "global_anchor_solid_bottom_to_ground",
+      "beforeSolidBottomY": 57,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 6
+    },
+    {
+      "file": "campfire_2.png",
+      "action": "global_anchor_solid_bottom_to_ground",
+      "beforeSolidBottomY": 57,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 6
+    },
+    {
+      "file": "car_blue.png",
+      "action": "global_anchor_solid_bottom_to_ground",
+      "beforeSolidBottomY": 58,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 5
+    },
+    {
+      "file": "car_green.png",
+      "action": "global_anchor_solid_bottom_to_ground",
+      "beforeSolidBottomY": 55,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 8
+    },
+    {
+      "file": "car_red.png",
+      "action": "global_anchor_solid_bottom_to_ground",
+      "beforeSolidBottomY": 58,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 5
+    },
+    {
+      "file": "car_white.png",
+      "action": "global_anchor_solid_bottom_to_ground",
+      "beforeSolidBottomY": 55,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 8
+    },
+    {
+      "file": "car_yellow.png",
+      "action": "global_anchor_solid_bottom_to_ground",
+      "beforeSolidBottomY": 58,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 5
+    },
+    {
+      "file": "deckchair.png",
+      "action": "global_anchor_solid_bottom_to_ground",
+      "beforeSolidBottomY": 61,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 2
+    },
+    {
+      "file": "lake_rowboat.png",
+      "action": "global_anchor_solid_bottom_to_ground",
+      "beforeSolidBottomY": 51,
+      "afterSolidBottomY": 59,
+      "anchorShiftDownPx": 8
+    },
+    {
+      "file": "marble_statue.png",
+      "action": "global_anchor_solid_bottom_to_ground",
+      "beforeSolidBottomY": 59,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 4
+    },
+    {
+      "file": "moss_rock.png",
+      "action": "global_anchor_solid_bottom_to_ground",
+      "beforeSolidBottomY": 56,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 7
+    },
+    {
+      "file": "palm_0.png",
+      "action": "global_anchor_solid_bottom_to_ground",
+      "beforeSolidBottomY": 62,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 1
+    },
+    {
+      "file": "palm_1.png",
+      "action": "global_anchor_solid_bottom_to_ground",
+      "beforeSolidBottomY": 62,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 1
+    },
+    {
+      "file": "palm_dwarf_0.png",
+      "action": "global_anchor_solid_bottom_to_ground",
+      "beforeSolidBottomY": 62,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 1
+    },
+    {
+      "file": "palm_dwarf_1.png",
+      "action": "global_anchor_solid_bottom_to_ground",
+      "beforeSolidBottomY": 62,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 1
+    },
+    {
+      "file": "palm_tall_0.png",
+      "action": "global_anchor_solid_bottom_to_ground",
+      "beforeSolidBottomY": 62,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 1
+    },
+    {
+      "file": "palm_tall_1.png",
+      "action": "global_anchor_solid_bottom_to_ground",
+      "beforeSolidBottomY": 62,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 1
+    },
+    {
+      "file": "pine.png",
+      "action": "global_anchor_solid_bottom_to_ground",
+      "beforeSolidBottomY": 62,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 1
+    },
+    {
+      "file": "pine_variant_0.png",
+      "action": "global_anchor_solid_bottom_to_ground",
+      "beforeSolidBottomY": 62,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 1
+    },
+    {
+      "file": "pine_variant_1.png",
+      "action": "global_anchor_solid_bottom_to_ground",
+      "beforeSolidBottomY": 62,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 1
+    },
+    {
+      "file": "pine_variant_2.png",
+      "action": "global_anchor_solid_bottom_to_ground",
+      "beforeSolidBottomY": 62,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 1
+    },
+    {
+      "file": "pinecone.png",
+      "action": "global_anchor_solid_bottom_to_ground",
+      "beforeSolidBottomY": 60,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 3
+    },
+    {
+      "file": "pingpong_table.png",
+      "action": "global_anchor_solid_bottom_to_ground",
+      "beforeSolidBottomY": 59,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 4
+    },
+    {
+      "file": "shower_0.png",
+      "action": "global_anchor_solid_bottom_to_ground",
+      "beforeSolidBottomY": 62,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 1
+    },
+    {
+      "file": "shower_1.png",
+      "action": "global_anchor_solid_bottom_to_ground",
+      "beforeSolidBottomY": 62,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 1
+    },
+    {
+      "file": "sign_bagni.png",
+      "action": "global_anchor_solid_bottom_to_ground",
+      "beforeSolidBottomY": 59,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 4
+    },
+    {
+      "file": "sign_barbecue.png",
+      "action": "global_anchor_solid_bottom_to_ground",
+      "beforeSolidBottomY": 52,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 11
+    },
+    {
+      "file": "sign_camper.png",
+      "action": "global_anchor_solid_bottom_to_ground",
+      "beforeSolidBottomY": 59,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 4
+    },
+    {
+      "file": "sign_camping_imperio.png",
+      "action": "global_anchor_solid_bottom_to_ground",
+      "beforeSolidBottomY": 62,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 1
+    },
+    {
+      "file": "sign_parcheggio.png",
+      "action": "global_anchor_solid_bottom_to_ground",
+      "beforeSolidBottomY": 59,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 4
+    },
+    {
+      "file": "sign_reception.png",
+      "action": "global_anchor_solid_bottom_to_ground",
+      "beforeSolidBottomY": 59,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 4
+    },
+    {
+      "file": "sign_spiaggia.png",
+      "action": "global_anchor_solid_bottom_to_ground",
+      "beforeSolidBottomY": 59,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 4
+    },
+    {
+      "file": "sign_tende.png",
+      "action": "global_anchor_solid_bottom_to_ground",
+      "beforeSolidBottomY": 59,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 4
+    },
+    {
+      "file": "sign_yoga.png",
+      "action": "global_anchor_solid_bottom_to_ground",
+      "beforeSolidBottomY": 59,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 4
+    },
+    {
+      "file": "sofa.png",
+      "action": "global_anchor_solid_bottom_to_ground",
+      "beforeSolidBottomY": 58,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 5
+    },
+    {
+      "file": "stool.png",
+      "action": "global_anchor_solid_bottom_to_ground",
+      "beforeSolidBottomY": 62,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 1
+    },
+    {
+      "file": "tent_blue.png",
+      "action": "global_anchor_solid_bottom_to_ground",
+      "beforeSolidBottomY": 58,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 5
+    },
+    {
+      "file": "tent_green.png",
+      "action": "global_anchor_solid_bottom_to_ground",
+      "beforeSolidBottomY": 58,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 5
+    },
+    {
+      "file": "tent_orange.png",
+      "action": "global_anchor_solid_bottom_to_ground",
+      "beforeSolidBottomY": 58,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 5
+    },
+    {
+      "file": "umbrella.png",
+      "action": "global_anchor_solid_bottom_to_ground",
+      "beforeSolidBottomY": 62,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 1
+    },
+    {
+      "file": "yoga_mat.png",
+      "action": "global_anchor_solid_bottom_to_ground",
+      "beforeSolidBottomY": 62,
+      "afterSolidBottomY": 63,
+      "anchorShiftDownPx": 1
+    }
+  ],
+  "changedAssets": [
+    "bar_counter.png",
+    "barbecue_long_0.png",
+    "barbecue_long_1.png",
+    "barbecue_long_2.png",
+    "barman.png",
+    "billiard_table.png",
+    "bush.png",
+    "bush_flower.png",
+    "cafe_table_chairs.png",
+    "campfire_0.png",
+    "campfire_1.png",
+    "campfire_2.png",
+    "car_blue.png",
+    "car_green.png",
+    "car_red.png",
+    "car_white.png",
+    "car_yellow.png",
+    "deckchair.png",
+    "lake_rowboat.png",
+    "marble_statue.png",
+    "moss_rock.png",
+    "palm_0.png",
+    "palm_1.png",
+    "palm_dwarf_0.png",
+    "palm_dwarf_1.png",
+    "palm_tall_0.png",
+    "palm_tall_1.png",
+    "pine.png",
+    "pine_variant_0.png",
+    "pine_variant_1.png",
+    "pine_variant_2.png",
+    "pinecone.png",
+    "pingpong_table.png",
+    "pot.png",
+    "pot_purple.png",
+    "pot_red.png",
+    "shower_0.png",
+    "shower_1.png",
+    "sign_bagni.png",
+    "sign_barbecue.png",
+    "sign_camper.png",
+    "sign_camping_imperio.png",
+    "sign_parcheggio.png",
+    "sign_reception.png",
+    "sign_spiaggia.png",
+    "sign_tende.png",
+    "sign_yoga.png",
+    "sofa.png",
+    "stool.png",
+    "tamarisk_0.png",
+    "tamarisk_1.png",
+    "tamarisk_2.png",
+    "tent_blue.png",
+    "tent_green.png",
+    "tent_orange.png",
+    "umbrella.png",
+    "yoga_mat.png"
+  ],
+  "nearTargetProbeAfterTop20": [
+    {
+      "i": 33,
+      "tex": 26,
+      "kind": "bar_distant_bush",
+      "x": 53.8,
+      "y": 2.35,
+      "gx": 23.799999999999997,
+      "gy": 2.35,
+      "dist": 0.3201562118716423,
+      "blocking": false,
+      "hScale": 0.56,
+      "wScale": 0.82,
+      "groundSink": 2.2
+    },
+    {
+      "i": 473,
+      "tex": 54,
+      "kind": "tamarisk_reception_west",
+      "x": 54.7,
+      "y": 4.9,
+      "gx": 24.700000000000003,
+      "gy": 4.9,
+      "dist": 2.6162950903902287,
+      "blocking": true,
+      "hScale": 1.22,
+      "wScale": 0.96,
+      "groundSink": 2.25
+    },
+    {
+      "i": 474,
+      "tex": 55,
+      "kind": "tamarisk_reception_west",
+      "x": 57.1,
+      "y": 4.2,
+      "gx": 27.1,
+      "gy": 4.2,
+      "dist": 3.9147158262126807,
+      "blocking": true,
+      "hScale": 1.34,
+      "wScale": 1.02,
+      "groundSink": 2.25
+    },
+    {
+      "i": 1283,
+      "tex": 90,
+      "kind": "bar_table_low_grass_v74",
+      "x": 49.52865179096317,
+      "y": 3.0857108064032417,
+      "gx": 19.528651790963167,
+      "gy": 3.0857108064032417,
+      "dist": 4.056874102855662,
+      "blocking": false,
+      "hScale": 0.3798856978723513,
+      "wScale": 0.52,
+      "groundSink": 2
+    },
+    {
+      "i": 1281,
+      "tex": 89,
+      "kind": "bar_table_low_grass_v74",
+      "x": 49.894949518308266,
+      "y": 4.53819539246573,
+      "gx": 19.894949518308266,
+      "gy": 4.53819539246573,
+      "dist": 4.1608070061391835,
+      "blocking": false,
+      "hScale": 0.3367975976264099,
+      "wScale": 0.52,
+      "groundSink": 2
+    },
+    {
+      "i": 21,
+      "tex": 52,
+      "kind": "bar_outdoor_table",
+      "x": 49,
+      "y": 3.8,
+      "gx": 19,
+      "gy": 3.8,
+      "dist": 4.718580294961607,
+      "blocking": true,
+      "hScale": 1.08,
+      "wScale": 1.04,
+      "groundSink": 2.75
+    },
+    {
+      "i": 1282,
+      "tex": 88,
+      "kind": "bar_table_low_grass_v74",
+      "x": 48.528741942180496,
+      "y": 3.1947818313294047,
+      "gx": 18.528741942180496,
+      "gy": 3.1947818313294047,
+      "dist": 5.062487144994027,
+      "blocking": false,
+      "hScale": 0.3684598748219339,
+      "wScale": 0.52,
+      "groundSink": 2
+    },
+    {
+      "i": 1284,
+      "tex": 90,
+      "kind": "bar_table_low_grass_v74",
+      "x": 49.082244053374104,
+      "y": 4.934835645718229,
+      "gx": 19.082244053374104,
+      "gy": 4.934835645718229,
+      "dist": 5.0644135154723795,
+      "blocking": false,
+      "hScale": 0.38569862972611996,
+      "wScale": 0.52,
+      "groundSink": 2
+    },
+    {
+      "i": 477,
+      "tex": 56,
+      "kind": "tamarisk_reception_west",
+      "x": 55.8,
+      "y": 7.8,
+      "gx": 25.799999999999997,
+      "gy": 7.8,
+      "dist": 5.7118298293979315,
+      "blocking": true,
+      "hScale": 1.26,
+      "wScale": 1.08,
+      "groundSink": 2.25
+    },
+    {
+      "i": 1280,
+      "tex": 31,
+      "kind": "bar_table_low_grass_v74",
+      "x": 48.104863134945006,
+      "y": 4.487656426536304,
+      "gx": 18.104863134945006,
+      "gy": 4.487656426536304,
+      "dist": 5.7796217788431745,
+      "blocking": false,
+      "hScale": 0.33430916058232757,
+      "wScale": 0.52,
+      "groundSink": 2
+    },
+    {
+      "i": 4,
+      "tex": 18,
+      "kind": "",
+      "x": 50.5,
+      "y": 8.5,
+      "gx": 20.5,
+      "gy": 8.5,
+      "dist": 6.686179776224984,
+      "blocking": true,
+      "hScale": 1.18,
+      "wScale": 1.06,
+      "groundSink": 2
+    },
+    {
+      "i": 475,
+      "tex": 56,
+      "kind": "tamarisk_reception_west",
+      "x": 60,
+      "y": 4.8,
+      "gx": 30,
+      "gy": 4.8,
+      "dist": 6.831178522041423,
+      "blocking": true,
+      "hScale": 1.28,
+      "wScale": 1.08,
+      "groundSink": 2.25
+    },
+    {
+      "i": 478,
+      "tex": 54,
+      "kind": "tamarisk_reception_west",
+      "x": 58.7,
+      "y": 7.1,
+      "gx": 28.700000000000003,
+      "gy": 7.1,
+      "dist": 6.872044819411473,
+      "blocking": true,
+      "hScale": 1.42,
+      "wScale": 0.96,
+      "groundSink": 2.25
+    },
+    {
+      "i": 1276,
+      "tex": 30,
+      "kind": "bar_table_low_grass_v74",
+      "x": 46.284167919590644,
+      "y": 4.483000029074727,
+      "gx": 16.284167919590644,
+      "gy": 4.483000029074727,
+      "dist": 7.518564020682979,
+      "blocking": false,
+      "hScale": 0.3610381431321237,
+      "wScale": 0.52,
+      "groundSink": 2
+    },
+    {
+      "i": 1278,
+      "tex": 90,
+      "kind": "bar_table_low_grass_v74",
+      "x": 46.036157790088595,
+      "y": 3.123234895694357,
+      "gx": 16.036157790088595,
+      "gy": 3.123234895694357,
+      "dist": 7.535676678380515,
+      "blocking": false,
+      "hScale": 0.370429550933286,
+      "wScale": 0.52,
+      "groundSink": 2
+    },
+    {
+      "i": 20,
+      "tex": 52,
+      "kind": "bar_outdoor_table",
+      "x": 45.4,
+      "y": 3.8,
+      "gx": 15.399999999999999,
+      "gy": 3.8,
+      "dist": 8.245301692479178,
+      "blocking": true,
+      "hScale": 1.08,
+      "wScale": 1.04,
+      "groundSink": 2.75
+    },
+    {
+      "i": 523,
+      "tex": 62,
+      "kind": "direction_sign_bar",
+      "x": 54,
+      "y": 10.8,
+      "gx": 24,
+      "gy": 10.8,
+      "dist": 8.262263612352246,
+      "blocking": false,
+      "hScale": 0.92,
+      "wScale": 0.72,
+      "groundSink": 2.45
+    },
+    {
+      "i": 1279,
+      "tex": 90,
+      "kind": "bar_table_low_grass_v74",
+      "x": 45.32482284901077,
+      "y": 4.784492433039586,
+      "gx": 15.324822849010772,
+      "gy": 4.784492433039586,
+      "dist": 8.523291359472958,
+      "blocking": false,
+      "hScale": 0.30421622063597115,
+      "wScale": 0.52,
+      "groundSink": 2
+    },
+    {
+      "i": 1277,
+      "tex": 89,
+      "kind": "bar_table_low_grass_v74",
+      "x": 44.802221258334406,
+      "y": 3.199955568355498,
+      "gx": 14.802221258334406,
+      "gy": 3.199955568355498,
+      "dist": 8.771891195972096,
+      "blocking": false,
+      "hScale": 0.3709036801035758,
+      "wScale": 0.52,
+      "groundSink": 2
+    },
+    {
+      "i": 1275,
+      "tex": 90,
+      "kind": "bar_table_low_grass_v74",
+      "x": 44.522235693187035,
+      "y": 4.540454641517822,
+      "gx": 14.522235693187035,
+      "gy": 4.540454641517822,
+      "dist": 9.244589664193104,
+      "blocking": false,
+      "hScale": 0.32453636143462183,
+      "wScale": 0.52,
+      "groundSink": 2
+    }
+  ],
+  "assetRefs": 102,
+  "assetMissing": [],
+  "pngCount": 110,
+  "criticalChecks": {
+    "nodeCheckOk": true,
+    "png64RgbaOk": true,
+    "sign_bar_unchanged": true,
+    "sign_pineta_unchanged": true
+  }
+}

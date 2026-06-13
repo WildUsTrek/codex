@@ -1,0 +1,25 @@
+{
+  "ok": true,
+  "nodeCheckReturnCode": 0,
+  "checks": {
+    "build_id": true,
+    "base_build": true,
+    "v266_const": true,
+    "summary_cmd": true,
+    "toggle_cmd": true,
+    "mode_cmd": true,
+    "download_cmd": true,
+    "mask_pass_hook": true,
+    "canopy_hierarchy_hook": true,
+    "finalize_hook": true,
+    "v265_preserved": true,
+    "v264_preserved": true,
+    "v263_preserved": true,
+    "v262_preserved": true,
+    "v261_preserved": true,
+    "v260_preserved": true,
+    "v259_preserved": true,
+    "rain_preserved": true,
+    "no_patch_only_text": true
+  }
+}

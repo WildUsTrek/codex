@@ -1,0 +1,174 @@
+{
+  "build": "PERLA1_V158J_HORIZON_LANDMARK_ANCHOR_FIX_SAFE_LOCAL",
+  "base": "PERLA1_V158I_BALANCED_GEOGRAPHIC_VISIBILITY_SAFE_LOCAL",
+  "goal": "Fix horizon anchoring of geographic landmarks, especially south island, without limiting far wall visibility.",
+  "assets": {
+    "panorama": "sky_panorama_360_v158j.png",
+    "clouds": "cloud_layer_soft_v158j.png"
+  },
+  "logic_preserved": [
+    "map",
+    "fMap",
+    "roadMask",
+    "cMap",
+    "objectBlock",
+    "collisioni",
+    "worldgen",
+    "roof geometry",
+    "sprite placement"
+  ],
+  "no_far_wall_visibility_limit": true,
+  "asset_stats": {
+    "size": [
+      4096,
+      384
+    ],
+    "alpha_bbox": [
+      0,
+      4095,
+      133,
+      362
+    ],
+    "nonzero_alpha": 335744,
+    "seam_edge_mean_abs_rgba": 0.0,
+    "sectors": {
+      "east1": {
+        "bbox_y": [
+          262,
+          332
+        ],
+        "max_alpha": 47,
+        "mean_alpha_visible": 21.406723603784645,
+        "visible_pixels": 23886
+      },
+      "south": {
+        "bbox_y": [
+          238,
+          362
+        ],
+        "max_alpha": 87,
+        "mean_alpha_visible": 33.41739396411093,
+        "visible_pixels": 49040
+      },
+      "west": {
+        "bbox_y": [
+          236,
+          333
+        ],
+        "max_alpha": 60,
+        "mean_alpha_visible": 25.337151797435574,
+        "visible_pixels": 55607
+      },
+      "north": {
+        "bbox_y": [
+          133,
+          325
+        ],
+        "max_alpha": 75,
+        "mean_alpha_visible": 27.92589565569074,
+        "visible_pixels": 118684
+      },
+      "east2": {
+        "bbox_y": [
+          260,
+          332
+        ],
+        "max_alpha": 47,
+        "mean_alpha_visible": 21.383654184075912,
+        "visible_pixels": 25609
+      }
+    },
+    "full_band_rows_gt5_86pct": 0,
+    "full_band_rows_gt10_86pct": 0,
+    "full_band_rows_gt20_86pct": 0,
+    "dark_visible_lum_lt120_alpha_gt20": 25,
+    "dark_visible_lum_lt110_alpha_gt10": 1590,
+    "landmarkProjectedYRange": {
+      "south_screenH_352": [
+        121.8,
+        174.3,
+        {
+          "skyH": 194,
+          "pngY": [
+            241,
+            345
+          ]
+        }
+      ],
+      "south_screenH_450": [
+        152.5,
+        218.3,
+        {
+          "skyH": 243,
+          "pngY": [
+            241,
+            345
+          ]
+        }
+      ],
+      "south_screenH_720": [
+        237.2,
+        339.6,
+        {
+          "skyH": 378,
+          "pngY": [
+            241,
+            345
+          ]
+        }
+      ]
+    }
+  },
+  "checks_planned": [
+    "node --check",
+    "runtime smoke Node",
+    "asset manifest/missing",
+    "zip/tar integrity"
+  ],
+  "checks_executed": {
+    "node_check_extracted_js": "OK",
+    "static_vm_smoke_constants_manifest": "OK",
+    "full_worldgen_runtime_smoke": "not_run_in_final_check; static smoke used because full browser IIFE is not safely executable in Node mock here",
+    "asset_refs": 108,
+    "asset_missing": 0,
+    "png_total": 116,
+    "patch_only_folder": false,
+    "sky_seam_edge_mean_abs_rgba": 0.0,
+    "full_band_rows_gt20_86pct": 0,
+    "projected_south_ranges": {
+      "south_screenH_352": [
+        121.8,
+        174.3,
+        {
+          "skyH": 194,
+          "pngY": [
+            241,
+            345
+          ]
+        }
+      ],
+      "south_screenH_450": [
+        152.5,
+        218.3,
+        {
+          "skyH": 243,
+          "pngY": [
+            241,
+            345
+          ]
+        }
+      ],
+      "south_screenH_720": [
+        237.2,
+        339.6,
+        {
+          "skyH": 378,
+          "pngY": [
+            241,
+            345
+          ]
+        }
+      ]
+    }
+  }
+}

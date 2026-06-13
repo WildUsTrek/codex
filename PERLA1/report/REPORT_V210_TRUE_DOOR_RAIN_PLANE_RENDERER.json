@@ -1,0 +1,41 @@
+{
+  "build": "PERLA1_V210_TRUE_DOOR_RAIN_PLANE_RENDERER_LOCAL",
+  "base": "PERLA1_V209_DOOR_RAIN_PLANE_WORLDSPACE_LOCAL",
+  "createdAt": "2026-06-10T14:26:17.634007Z",
+  "goal": "True door rain renderer: no legacy rainBuffer+ctx.clip/drawImage for door rain; direct world-space plane renderer with depth sampling and open-screen fullscreen override.",
+  "scope": [
+    "index.html weather door rain path",
+    "in-game UI version/title/header/loading/debug",
+    "local launchers",
+    "reports only"
+  ],
+  "preserved": [
+    "V204 audio",
+    "V200 roof budget",
+    "V201 global rain buffer/cloud budget for normal outdoor rain",
+    "V185 horizon",
+    "map/collision/worldgen/sprites/pergola/tower/canopy",
+    "PNG assets byte-identical"
+  ],
+  "architectureChecks": {
+    "check1_door_rain_not_composited_by_perlaCompositeRainBufferV201": true,
+    "check2_dedicated_renderer_has_no_ctx_clip_or_drawImage": true,
+    "check3_dedicated_world_space_renderer_exists": true,
+    "check4_open_screen_fullscreen_override_exists": true,
+    "check5_debug_exposes_required_fields": true
+  },
+  "assetRefs": 108,
+  "raycastPngAssets": 116,
+  "missingRefs": [],
+  "nodeCheck": "OK",
+  "browserVisualTest": "NOT_EXECUTED_IN_CONTAINER",
+  "changedFilesExpected": [
+    "01_GIOCO_PRONTO_LOCAL_TEST/index.html",
+    "AVVIA_GIOCO_SERVER_POWERSHELL.ps1",
+    "AVVIA_GIOCO_WINDOWS_SENZA_PYTHON.bat",
+    "report/METODO_LAVORO_ANTI_REGRESSIONE_PERLA1.txt",
+    "report/STATUS_PROGETTO_E_DIPENDENZE_PERLA1.txt",
+    "report/README_REPACK_V210.txt",
+    "report/REPORT_V210_TRUE_DOOR_RAIN_PLANE_RENDERER.json"
+  ]
+}

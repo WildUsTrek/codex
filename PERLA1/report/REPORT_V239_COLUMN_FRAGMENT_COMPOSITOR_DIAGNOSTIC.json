@@ -1,0 +1,37 @@
+{
+  "build": "PERLA1_V239_COLUMN_FRAGMENT_COMPOSITOR_DIAGNOSTIC_LOCAL",
+  "base": "PERLA1_V238_CLEAN_DISABLE_SAFE_EMERGING_WALL_EXPERIMENTS_LOCAL",
+  "type": "diagnostic-first architecture patch; Column Fragment / Vertical Span Compositor dry-run; draw disabled by default",
+  "scope": {
+    "drawEnabled": false,
+    "dryRun": true,
+    "allowedInitialScope": "tex 1 / owner 0 / simple outdoor walls only for emerging wall classification",
+    "excluded": "tower, modern roofs, reception, bath, canopy/pergola/festoons draw, map/collision/assets/rain/auto/skybox/tetti changes"
+  },
+  "checks": {
+    "nodeCheck": "OK",
+    "assetRefs": 108,
+    "assetMissing": 0,
+    "pngChangedVsV238": 0,
+    "patchOnlyFolder": "absent by construction pending package",
+    "browserInteractive": "not executed in container; Playwright/Chromium navigation blocked by environment policy",
+    "assetRefsUnique": 108
+  },
+  "debugCommands": [
+    "perlaDownloadColumnFragmentDebugReport()",
+    "window.__PERLA_DEBUG__.downloadColumnFragmentDebugReport()",
+    "window.__PERLA_DEBUG__.getColumnFragmentDebugSnapshot()"
+  ],
+  "antiRegression": {
+    "v233FarWallSpanDraw": "must remain disabled",
+    "v233HeightStepFaceDraw": "must remain disabled",
+    "v233ContinuousWallRunDraw": "must remain disabled",
+    "v237Branch": "remains closed by V238 flags",
+    "newDDA": "not added; V239 uses already collected V227 wall layers as data source only"
+  },
+  "notes": [
+    "V239 does not claim to fix the wall-high-behind-low problem visually.",
+    "With draw flag false, expected visual result is V238-identical.",
+    "Purpose is to collect fragments, resolve vertical bands in dry-run, and export actionable JSON for the next architectural decision."
+  ]
+}

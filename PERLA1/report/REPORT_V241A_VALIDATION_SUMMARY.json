@@ -1,0 +1,15 @@
+{
+  "buildId": "PERLA1_V241A_FACE_REGISTRY_CANONICALIZATION_DIAGNOSTIC_LOCAL",
+  "baseBuild": "PERLA1_V241_WORLD_WALL_REGISTRY_HIERARCHY_DIAGNOSTIC_LOCAL",
+  "checks": {
+    "nodeCheck": "OK",
+    "assetRefs": 108,
+    "assetMissing": 0,
+    "pngModifiedVsV241": 0,
+    "patchOnlyFolderAbsent": true,
+    "zipIntegrity": "OK",
+    "tarGzIntegrity": "OK",
+    "browserInteractiveTest": "not executed in container",
+    "packageHashNote": "Final archive hashes are external to this report to avoid self-referential repack changes."
+  }
+}

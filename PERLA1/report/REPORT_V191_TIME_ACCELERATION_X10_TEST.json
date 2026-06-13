@@ -1,0 +1,55 @@
+{
+  "build": "PERLA1_V191_TIME_ACCELERATION_X10_TEST_LOCAL",
+  "base": "PERLA1_V190_SMOOTH_CLOCK_FULL_WEATHER_LOCAL",
+  "date": "2026-06-10",
+  "goal": "Add safe x10 environment time acceleration command for rapid cycle/weather testing.",
+  "changed_files": [
+    "01_GIOCO_PRONTO_LOCAL_TEST/index.html",
+    "report/STATUS_PROGETTO_E_DIPENDENZE_PERLA1.txt",
+    "report/METODO_LAVORO_ANTI_REGRESSIONE_PERLA1.txt",
+    "report/README_REPACK_V191.txt",
+    "report/REPORT_V191_TIME_ACCELERATION_X10_TEST.json"
+  ],
+  "commands": [
+    "perlaTimeX10()",
+    "perlaTimeNormal()",
+    "perlaSetTimeScale(10)",
+    "perlaTimeScale(10)",
+    "perlaCommand(\"x10\")",
+    "perlaCommand(\"tempo\",10)",
+    "perlaCommand(\"x1\")",
+    "perlaCommand(\"normale\")",
+    "perlaEnv()"
+  ],
+  "preserved": [
+    "V185 distortion-controlled skybox/horizon",
+    "V190 smooth transitions and full weather",
+    "asset PNG",
+    "map",
+    "collisions",
+    "worldgen",
+    "roofs",
+    "tower",
+    "roofSegments",
+    "sprite placement",
+    "pergola",
+    "festoons",
+    "lake/boat",
+    "floors",
+    "decals",
+    "launcher"
+  ],
+  "notes": [
+    "Default time scale remains 1x.",
+    "10x makes the 45-minute real day effectively 4.5 minutes.",
+    "Only Environment time advances faster; gameplay/player movement/animations are not sped up.",
+    "timeScale=0 can freeze environment cycle for screenshots."
+  ],
+  "checks_planned": [
+    "node --check",
+    "asset refs/missing",
+    "PNG unchanged vs V190",
+    "zip integrity",
+    "tar.gz integrity"
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "build": "PERLA1_V271_REAL_CEILING_CLONE_SIDE_AWARE_CONTINUITY_SAFE_LOCAL",
+  "base": "PERLA1_V270_REAL_CEILING_CLONE_EAVE_SAFE_LOCAL",
+  "checks": {
+    "build_id_present": true,
+    "v271_functions_present": true,
+    "v270_preserved": true,
+    "v269_fake_band_absent": true,
+    "v268_logic_absent": true,
+    "old_roof_fill_still_off_constant": true,
+    "edge_rail_normal_off_v270_v271": true,
+    "png_count_base": 124,
+    "png_count_work": 124,
+    "png_changed": 0,
+    "png_added": 0,
+    "png_removed": 0,
+    "asset_refs": 108,
+    "asset_missing": 0,
+    "manifest_entries": 27,
+    "node_check_ok": true,
+    "node_smoke_static_ok": true,
+    "zip_integrity_ok": true,
+    "zip_file_count": 496,
+    "tar_gz_integrity_ok": true,
+    "tar_gz_file_count": 496,
+    "patch_only_absent": true
+  },
+  "changed_png": [],
+  "added_png": [],
+  "removed_png": [],
+  "missing_refs": [],
+  "notes": [
+    "V271 usa V270 come base reale e preserva il clone dal path drawModernCoverCeilingSegment.",
+    "Aggiunti side-aware outset con southOutset maggiorato, inner continuity band e guard ceiling-wins-over-roof quando il player e dentro/sotto il ModernCover.",
+    "V268/V269 non importate; la falsa fascia esterna V269 resta assente.",
+    "Browser reale non eseguito in questo ambiente."
+  ]
+}

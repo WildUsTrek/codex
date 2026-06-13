@@ -1,0 +1,49 @@
+{
+  "build": "PERLA1_V184_DISTORTION_CONTROLLED_HORIZON_4PCT_LOCAL",
+  "base": "PERLA1_V183_DISTORTION_CONTROLLED_HORIZON_LOCAL.zip",
+  "purpose": "Reduce distortion-controlled horizon target residual stretch from 8% to 4% and fix visible in-game V169/V125 labels.",
+  "files_modified": [
+    "01_GIOCO_PRONTO_LOCAL_TEST/index.html",
+    "report/README_REPACK_V184.txt",
+    "report/REPORT_V184_DISTORTION_CONTROLLED_HORIZON_4PCT.json",
+    "report/STATUS_PROGETTO_E_DIPENDENZE_PERLA1.txt",
+    "report/METODO_LAVORO_ANTI_REGRESSIONE_PERLA1.txt"
+  ],
+  "systems_preserved": [
+    "map",
+    "fMap",
+    "roadMask",
+    "cMap",
+    "objectBlock",
+    "worldgen",
+    "collisioni",
+    "Sloped Sector Casting / tetti",
+    "torre",
+    "roofSegments",
+    "fog globale",
+    "sprites",
+    "ombre",
+    "pergola",
+    "festoni",
+    "lago/barca",
+    "pavimenti",
+    "decal",
+    "asset PNG",
+    "launcher"
+  ],
+  "renderer": {
+    "active": "PERLA_DISTORTION_CONTROLLED_ENV_HORIZON_V184",
+    "architecture": "same as V183: center ray-direction, mathematically capped edge deprojection from FOV/cameraPlane",
+    "target_stretch_previous": 1.08,
+    "target_stretch_current": 1.04,
+    "meaning": "max residual lateral stretch target is 4% instead of 8%"
+  },
+  "ui_fix": {
+    "title": "updated from V169 to V184",
+    "h2": "updated from V125 to V184",
+    "loading": "updated from V125 to V184",
+    "alert": "updated from V169 skybox message to V184 horizon message"
+  },
+  "expected_tradeoff": "less horizontal stretch at the borders; correction starts closer to the center than V183, so user should verify it does not become too detached like V170.",
+  "test_limit": "No real browser/gameplay test executed in ChatGPT environment."
+}

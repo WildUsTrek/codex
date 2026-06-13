@@ -1,0 +1,28 @@
+{
+  "build_id": "PERLA1_V236_ROOF_SUPPORT_SYNC_REAL_SAFE_LOCAL",
+  "title_ok": true,
+  "h2_ok": true,
+  "loading_ok": true,
+  "png_total": 116,
+  "asset_png_string_refs": 108,
+  "asset_missing": [],
+  "png_modified": [],
+  "png_added": [],
+  "png_removed": [],
+  "patch_only_dirs": [],
+  "report_dir": true,
+  "flags": {
+    "PERLA_V233_DISABLE_FAR_WALL_SPAN_DRAW": true,
+    "PERLA_V233_DISABLE_HEIGHT_STEP_FACE_DRAW": true,
+    "PERLA_V233_DISABLE_CONTINUOUS_WALL_RUN_DRAW": true,
+    "PERLA_V233_DISABLE_FAKE_ROOF_SUPPORT_PIXEL_CLIP": true,
+    "PERLA_V234_RAIN_AIRSPACE_LOGIC_CAR_ANCHOR_SAFE": true,
+    "PERLA_V234_CAR_VISUAL_ANCHOR_LIFT": true,
+    "PERLA_V235_TOWER_VISIBILITY_STABILIZER": true,
+    "PERLA_V235_RAIN_MIDFIELD_OUTDOOR_VOLUME": true,
+    "PERLA_V236_ROOF_SUPPORT_SYNC_REAL_SAFE": true,
+    "PERLA_V236_MODERN_ROOF_SUPPORT_SYNC": true
+  },
+  "contains_v236_helpers": true,
+  "contains_forbidden_reenable": false
+}

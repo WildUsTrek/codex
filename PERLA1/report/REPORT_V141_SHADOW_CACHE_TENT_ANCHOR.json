@@ -1,0 +1,152 @@
+{
+  "build": "PERLA1_V141_SHADOW_CACHE_TENT_ANCHOR_SAFE_LOCAL",
+  "base": "PERLA1_V138Q_MICROFLORA_DIRECTIONAL_RELOCATION_SAFE",
+  "approach": "restore original V138Q anchoring except tents; replace failed line/gradient shadows with cached soft round contact shadows",
+  "modified_files": [
+    "01_GIOCO_PRONTO_LOCAL_TEST/index.html",
+    "STATUS_PROGETTO_E_DIPENDENZE_PERLA1.txt",
+    "METODO_LAVORO_ANTI_REGRESSIONE_PERLA1.txt",
+    "ISTRUZIONI OBBLIGATORIE DA SEGUIRE PER LEGGERE LE COORDINATE.txt",
+    "README_REPACK_V141.txt",
+    "REPORT_V141_SHADOW_CACHE_TENT_ANCHOR.json"
+  ],
+  "anchor": {
+    "restored_v138q_for_all_except_tents": true,
+    "tent_multiplier": 0.92,
+    "tent_groundSink_generation_left_original": 2.8,
+    "boat_anchor_untouched": true
+  },
+  "shadows": {
+    "legacy_fillRect_rows_removed": true,
+    "cached_soft_canvas": true,
+    "no_runtime_shadow_tex": [
+      12,
+      13,
+      27,
+      28,
+      29,
+      30,
+      31,
+      40,
+      41,
+      46,
+      47,
+      61,
+      62,
+      63,
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      71,
+      76,
+      80,
+      81,
+      82,
+      83,
+      88,
+      89,
+      90
+    ],
+    "profiles_expected": [
+      "tree_soft_round",
+      "palm_soft_round",
+      "umbrella_round",
+      "table_round",
+      "tent_round",
+      "car_round",
+      "camper_round",
+      "tiny_pot_round",
+      "object_soft_round"
+    ]
+  },
+  "assets": {
+    "png_count": 111,
+    "changed_png": [],
+    "manifest_refs": 103,
+    "missing_refs": []
+  },
+  "structure": {
+    "patch_only_dirs": []
+  },
+  "runtime_smoke": {
+    "build": "PERLA1_V138Q_MICROFLORA_DIRECTIONAL_RELOCATION_SAFE",
+    "sprites": 1892,
+    "roofSegments": 2,
+    "probes": {
+      "default": {
+        "soft": 0,
+        "noProfile": 518,
+        "far": 203,
+        "z": 12,
+        "profiles": {},
+        "shadowRects": 0,
+        "spriteVisible": 674,
+        "stripes": 0
+      },
+      "secret_grove": {
+        "soft": 69,
+        "noProfile": 156,
+        "far": 0,
+        "z": 11,
+        "profiles": {
+          "tree_soft_round": 67,
+          "object_soft_round": 1,
+          "tiny_pot_round": 1
+        },
+        "shadowRects": 0,
+        "spriteVisible": 147,
+        "stripes": 3076
+      },
+      "bar_tables": {
+        "soft": 1,
+        "noProfile": 20,
+        "far": 0,
+        "z": 0,
+        "profiles": {
+          "table_round": 1
+        },
+        "shadowRects": 0,
+        "spriteVisible": 7,
+        "stripes": 630
+      },
+      "beach": {
+        "soft": 7,
+        "noProfile": 474,
+        "far": 212,
+        "z": 0,
+        "profiles": {
+          "umbrella_round": 4,
+          "object_soft_round": 2,
+          "palm_soft_round": 1
+        },
+        "shadowRects": 0,
+        "spriteVisible": 518,
+        "stripes": 571
+      },
+      "pineta_tents": {
+        "soft": 57,
+        "noProfile": 832,
+        "far": 101,
+        "z": 8,
+        "profiles": {
+          "tree_soft_round": 56,
+          "tent_round": 1
+        },
+        "shadowRects": 0,
+        "spriteVisible": 867,
+        "stripes": 3856
+      }
+    }
+  },
+  "checks": {
+    "node_check_js": "OK",
+    "runtime_smoke": "OK",
+    "roofSegments": 2,
+    "sprites": 1892,
+    "zip_integrity": "OK",
+    "unzip_test": "OK"
+  }
+}

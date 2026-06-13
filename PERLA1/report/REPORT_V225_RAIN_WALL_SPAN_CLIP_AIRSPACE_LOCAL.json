@@ -1,0 +1,72 @@
+{
+  "build": "PERLA1_V225_RAIN_WALL_SPAN_CLIP_AIRSPACE_LOCAL",
+  "base": "PERLA1_V224_RAIN_VFX_LOD_FRUSTUM_REFILL_LOCAL",
+  "date": "2026-06-11",
+  "intent": "Rain wall-span clipping + airspace sopra muri bassi + screen/top partial clipping + emergency refill no-cooldown.",
+  "files_modified": [
+    "01_GIOCO_PRONTO_LOCAL_TEST/index.html",
+    "AVVIA_GIOCO_WINDOWS_SENZA_PYTHON.bat",
+    "AVVIA_GIOCO_SERVER_POWERSHELL.ps1",
+    "report/STATUS_PROGETTO_E_DIPENDENZE_PERLA1.txt",
+    "report/METODO_LAVORO_ANTI_REGRESSIONE_PERLA1.txt",
+    "report/README_REPACK_V225.txt",
+    "report/REPORT_V225_RAIN_WALL_SPAN_CLIP_AIRSPACE_LOCAL.json"
+  ],
+  "new_functions": [
+    "rainEstimatedWallHeightAtV225",
+    "canSpawnRainAirAtV225",
+    "canKeepRainDropAtV225",
+    "rainPointHiddenByWallSpanV225",
+    "rainLerpPointV225",
+    "clipRainSegmentPartialV225"
+  ],
+  "modified_functions": [
+    "rainPointVisibleV222",
+    "respawnRainDropV222",
+    "updateRainParticlesV222",
+    "drawWorldRainParticlesV222",
+    "rainApplyVolumeManagerV224",
+    "collectPerlaDebugSnapshot"
+  ],
+  "debug_keys": [
+    "rainRendererModeV225",
+    "rainWallSpanClipActiveV225",
+    "rainWallSpanTestsV225",
+    "rainSamplesAboveWallVisibleV225",
+    "rainSamplesHiddenByWallSpanV225",
+    "rainSegmentsClippedByWallTopV225",
+    "rainSpawnOverWallAirAllowedV225",
+    "rainSpawnInsideWallRejectedV225",
+    "rainSegmentsClippedToScreenTopV225",
+    "rainEmergencyRefillNoCooldownV225",
+    "rainLegacyFullColumnZBufferWallOcclusionV225"
+  ],
+  "preserved": [
+    "map",
+    "collisioni",
+    "worldgen",
+    "roadMask",
+    "objectBlock",
+    "sprites",
+    "assets",
+    "roof/tetti",
+    "skybox/fondale",
+    "audio meteo",
+    "bath authority V223",
+    "LOD/refill V224"
+  ],
+  "checks_static_planned": [
+    "node --check",
+    "asset missing 0",
+    "zip integrity",
+    "tar.gz integrity",
+    "no patch-only"
+  ],
+  "visual_tests_required": [
+    "muri cespugliosi da vicino",
+    "tettoia yoga guardando fuori",
+    "corridoi fra siepi",
+    "corsa e rotazione brusca",
+    "bagni/reception/tettoie anti-regressione"
+  ]
+}

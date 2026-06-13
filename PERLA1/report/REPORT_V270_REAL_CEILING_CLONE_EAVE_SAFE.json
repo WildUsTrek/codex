@@ -1,0 +1,64 @@
+{
+  "buildId": "PERLA1_V270_REAL_CEILING_CLONE_EAVE_SAFE_LOCAL",
+  "baseBuild": "PERLA1_V267_ROOF_SILHOUETTE_MAIN_WALL_CLIP_SAFE_LOCAL",
+  "patch": "V270 real ceiling clone eave safe",
+  "createdAt": "2026-06-13T01:04:40.090885+00:00",
+  "status": "static_validated_browser_not_executed_here",
+  "reason": "Rimedia a V269: la falsa fascia/riga perimetrale esterna non era un clone reale del soffitto. V270 riparte da V267 e introduce un clone virtuale nel floor/ceiling casting, disegnato dallo stesso drawModernCoverCeilingSegment del soffitto interno.",
+  "explicitlyNotUsed": [
+    "PERLA1_V268_ROOF_EAVE_ANGLE_CLIP_REFINEMENT_SAFE_LOCAL",
+    "PERLA1_V269_ROOF_EXTERNAL_SOFFIT_EAVE_CONTINUITY_SAFE_LOCAL"
+  ],
+  "technicalChanges": [
+    "PERLA_BUILD_ID aggiornato a V270",
+    "aggiunte costanti PERLA_V270_REAL_CEILING_CLONE_EAVE_SAFE e guardie anti-falsa-banda",
+    "aggiunta funzione perlaRealCeilingCloneResolveV270(): virtualizza typeC/owner appena fuori dal footprint dei roof moderni durante il floor/ceiling casting",
+    "il clone viene disegnato da drawModernCoverCeilingSegment(), quindi usa stesso materiale/fog/proiezione del soffitto interno",
+    "nessun disegno di fasce perimetrali dedicate; V270_FORBID_FAKE_PERIMETER_BANDS=true",
+    "vecchio roof fill sample-based V267 resta OFF nel runtime normale",
+    "edge rail V265 spento come disegno normale, ma budget V265 preservato",
+    "muri/wallcasting disegnano dopo il clone, quindi lo coprono naturalmente: nessun overlay finale",
+    "aggiunti debug perlaRealCeilingCloneSummary/Toggle/Mode/DownloadV270"
+  ],
+  "preserved": [
+    "rain",
+    "skybox",
+    "worldgen",
+    "map/fMap/cMap/roadMask/objectBlock",
+    "asset PNG/ASSET_MANIFEST",
+    "floor globale",
+    "wall DDA",
+    "sprite placement",
+    "collisioni",
+    "audio/input/CSS/minimappa",
+    "debug V259-V267",
+    "V264/V265 budget/watchdog",
+    "V267 roof silhouette main"
+  ],
+  "checks": {
+    "nodeCheck": "OK",
+    "staticSmoke": "OK",
+    "pngCount": 116,
+    "pngHashChangedVsV267": 0,
+    "assetManifestRefs": 108,
+    "assetMissing": 0,
+    "v268Imported": false,
+    "v269FakeBandImported": false,
+    "browserRealTest": "NOT_EXECUTED_HERE"
+  },
+  "debugCommands": [
+    "perlaRealCeilingCloneSummaryV270()",
+    "perlaRealCeilingCloneToggleV270(false/true)",
+    "perlaRealCeilingCloneModeV270(\"safe\"|\"debug\"|\"off\")",
+    "perlaRealCeilingCloneDownloadV270()"
+  ],
+  "expectedValidation": [
+    "entrata/uscita sotto tetto",
+    "gronda da fuori vicino al muro",
+    "verifica che non appaiano righe/fasce perimetrali false",
+    "bar->reception con alberi davanti",
+    "tettoie dietro muri cespugliosi",
+    "rain/storm/pergola",
+    "performance roof/drawWorld"
+  ]
+}

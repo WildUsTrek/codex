@@ -1,0 +1,34 @@
+{
+  "build": "PERLA1_V225B_RAIN_CLIP_NULL_GUARD_LOCAL",
+  "base": "PERLA1_V225_RAIN_WALL_SPAN_CLIP_AIRSPACE_LOCAL",
+  "type": "hotfix_runtime_crash",
+  "reported_error": "Uncaught TypeError: can't access property \"x\", b is null at rainLerpPointV225 -> clipRainSegmentPartialV225 -> drawWorldRainParticlesV222",
+  "root_cause": "clipRainSegmentPartialV225 could pass a null projected endpoint to rainLerpPointV225 when a rain sample was outside/behind the camera and projectRainPointV222 returned null.",
+  "changes": [
+    "Added rainPointFiniteV225 endpoint validator.",
+    "Added null guards to rainLerpPointV225.",
+    "clipRainSegmentPartialV225 now rejects invalid endpoint pairs instead of interpolating null.",
+    "drawWorldRainParticlesV222 now skips invalid segments after clipping/clamping.",
+    "clampRainSegmentPixelLengthV224 now safely handles invalid endpoints.",
+    "Added V225B debug counters for invalid endpoint rejection."
+  ],
+  "preserved": [
+    "V225 wall-span clipping and airspace rain logic",
+    "V224 distance LOD, frustum refill and motion compensation",
+    "V223 bath authority / bath_garden outdoor",
+    "map/collision/worldgen/roadMask/objectBlock",
+    "roof/ceiling systems",
+    "sprites/assets/audio/skybox"
+  ],
+  "checks": {
+    "node_check": "OK",
+    "png_modified": 0,
+    "patch_only_folder": "absent_by_packaging_plan",
+    "browser_visual_test": "not_run_in_container"
+  },
+  "next_validation": [
+    "Reproduce the V225 crash location; confirm no TypeError in console.",
+    "Test rain near hedge walls, yoga canopy looking outward, corridor between hedges, and fast movement/rotation.",
+    "If no crash, continue visual assessment of wall-span rain behavior."
+  ]
+}

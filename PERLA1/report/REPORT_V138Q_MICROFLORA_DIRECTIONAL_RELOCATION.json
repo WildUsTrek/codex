@@ -1,0 +1,140 @@
+{
+  "build": {
+    "id": "PERLA1_V138Q_MICROFLORA_DIRECTIONAL_RELOCATION_SAFE",
+    "base": "PERLA1_V138P_MICROFLORA_VISUAL_MASK_BUSH_DECKCHAIR_SAFE",
+    "patch": "PERLA1_V138Q_MICROFLORA_DIRECTIONAL_RELOCATION_SAFE",
+    "debugEnabled": true,
+    "reason": "mock",
+    "generatedAt": "2026-06-07T21:46:52.736Z",
+    "uptimeSec": 4.4
+  },
+  "world": {
+    "sprites": 1892,
+    "roofSegments": 2,
+    "manifest": 91
+  },
+  "microflora": {
+    "checked": 880,
+    "alreadySafe": 251,
+    "moved": 350,
+    "removed": 279,
+    "directionalMoved": 248,
+    "fallbackMoved": 102,
+    "removedAfterDirectionalFail": 279,
+    "bushRemoval": {
+      "removed": true,
+      "tex": 25,
+      "kind": "mainroad_tower_south_bush_dark_v138m_7",
+      "distance": 0.46,
+      "gameplay": {
+        "x": 45.45,
+        "y": 63.3
+      },
+      "target": {
+        "x": 45.47,
+        "y": 62.84,
+        "internalX": 75.47
+      }
+    },
+    "byTex": {
+      "tex_27": {
+        "checked": 25,
+        "safe": 8,
+        "moved": 8,
+        "removed": 9
+      },
+      "tex_13": {
+        "checked": 28,
+        "safe": 10,
+        "moved": 7,
+        "removed": 11
+      },
+      "tex_88": {
+        "checked": 69,
+        "safe": 14,
+        "moved": 27,
+        "removed": 28
+      },
+      "tex_29": {
+        "checked": 23,
+        "safe": 8,
+        "moved": 12,
+        "removed": 3
+      },
+      "tex_12": {
+        "checked": 76,
+        "safe": 15,
+        "moved": 29,
+        "removed": 32
+      },
+      "tex_90": {
+        "checked": 69,
+        "safe": 21,
+        "moved": 18,
+        "removed": 30
+      },
+      "tex_31": {
+        "checked": 67,
+        "safe": 12,
+        "moved": 27,
+        "removed": 28
+      },
+      "tex_28": {
+        "checked": 26,
+        "safe": 8,
+        "moved": 11,
+        "removed": 7
+      },
+      "tex_89": {
+        "checked": 66,
+        "safe": 12,
+        "moved": 24,
+        "removed": 30
+      },
+      "tex_30": {
+        "checked": 72,
+        "safe": 13,
+        "moved": 24,
+        "removed": 35
+      },
+      "tex_41": {
+        "checked": 196,
+        "safe": 71,
+        "moved": 85,
+        "removed": 40
+      },
+      "tex_40": {
+        "checked": 163,
+        "safe": 59,
+        "moved": 78,
+        "removed": 26
+      }
+    }
+  },
+  "checks": {
+    "roofFogCache": "absent",
+    "roofFoggedColor": "absent",
+    "slopedRoofCasting": true,
+    "ceilingSpriteClipY": true,
+    "wallDecalMap": true,
+    "getWallDecalTexX": true,
+    "barbecueWallDecal": true,
+    "parkingPDecal": true,
+    "towerV126": true,
+    "towerMetaMapV126": true,
+    "towerArtV127": true,
+    "towerRoofGuardV128": true,
+    "towerRoofV129": false,
+    "towerRoofLockV130": true,
+    "towerRoofBodyMaskV131": true,
+    "towerRoofFasciaV132": true,
+    "towerRoofFasciaDepthLockV133": true,
+    "towerRoofUndersideEaveV134": true,
+    "towerRoofSideThicknessV135": true,
+    "towerIntegratedRoofCapV136": true,
+    "towerRoofSegmentDisabledV136": true
+  },
+  "warnings": [
+    "Nessun warning automatico grave rilevato nel momento del debug."
+  ]
+}

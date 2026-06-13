@@ -1,0 +1,25 @@
+{
+  "build": "PERLA1_V229B_HEIGHT_STEP_CONST_GUARD_LOCAL",
+  "base": "PERLA1_V229_HEIGHT_STEP_WALL_FACES_SPRITE_SEAL_LOCAL",
+  "type": "hotfix",
+  "issue": "Uncaught TypeError: invalid assignment to const y1 in sampleHeightStepFaceColumnV229",
+  "root_cause": "y1 was declared const but reassigned during clipping against front-wall coverTop.",
+  "changes": [
+    "Changed y1 declaration from const to let in sampleHeightStepFaceColumnV229."
+  ],
+  "preserved": [
+    "map",
+    "collision",
+    "worldgen",
+    "roadMask",
+    "objectBlock",
+    "assets",
+    "roofs",
+    "sprites placement",
+    "audio",
+    "skybox",
+    "V229 height-step logic",
+    "V229 sprite seal"
+  ],
+  "visual_test": "not executed in container"
+}

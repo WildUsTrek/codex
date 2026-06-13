@@ -1,0 +1,59 @@
+{
+  "build": "PERLA1_V238_CLEAN_DISABLE_SAFE_EMERGING_WALL_EXPERIMENTS_LOCAL",
+  "base": "PERLA1_V237A1_BATH_TILE_ALPHA_OPAQUE_SAFE_LOCAL",
+  "type": "cleanup_disable_experimental_branch",
+  "generatedAtUtc": "2026-06-11T23:37:08.152196+00:00",
+  "goals": [
+    "chiudere il ramo sperimentale V237B/C/D/E",
+    "tornare a base pulita V237A1 senza render/calcoli safe emerging wall attivi",
+    "documentare il fallimento utile del ramo V237 e preservare sistemi stabili"
+  ],
+  "disabled": {
+    "safeEmergingWallPrototype": true,
+    "v237eBestCandidateSelection": true,
+    "v237dAngularHistoryAndDownloadReport": true,
+    "newDDA": true,
+    "columnWallHitStack": true,
+    "spanRenderer": true,
+    "holeFill": true
+  },
+  "preserved": {
+    "v233Rollback": true,
+    "v234RainAirspaceAndCarLift": true,
+    "v235TowerAndRainMidfield": true,
+    "v236RoofSupportSync": true,
+    "v237A1BathTileAlphaOpaque": true,
+    "mapCollisionWorldgenAssets": true
+  },
+  "expectedRuntime": {
+    "v237PrototypeActive": false,
+    "v237Columns": 0,
+    "v237Pixels": 0,
+    "v237CandidateScans": 0,
+    "v237BestCandidateDrawn": 0
+  },
+  "manualBrowserTest": "not_executed_in_container",
+  "validation": {
+    "nodeCheck": "OK",
+    "nodeVmSmoke": "OK",
+    "nodeVmSmokeStatus": {
+      "v237PrototypeActive": false,
+      "v237SafeEmergingLayerColumns": 0,
+      "v237SafeEmergingLayerPixels": 0,
+      "v237CandidatesScanned": 0,
+      "v237BestCandidateDrawn": 0,
+      "v237BranchClosed": true,
+      "v233RollbackPreserved": true,
+      "v236RoofSupportPreserved": true,
+      "v237A1BathAlphaPreserved": true,
+      "roofSegments": 2
+    },
+    "assetPngRefs": 108,
+    "assetMissing": 0,
+    "pngFiles": 116,
+    "pngChangedVsV237A1": 0,
+    "patchOnlyFolder": false,
+    "manualBrowserTest": "not_executed_in_container"
+  },
+  "validationUpdatedAtUtc": "2026-06-11T23:38:53.676288+00:00"
+}

@@ -1,0 +1,46 @@
+{
+  "build": "PERLA1_V229_HEIGHT_STEP_WALL_FACES_SPRITE_SEAL_LOCAL",
+  "base": "PERLA1_V228_FAR_WALL_SPAN_AND_SPRITE_OCCLUSION_DISTANCE_LOCAL",
+  "date": "2026-06-11",
+  "intent": [
+    "height-step wall faces from map+wallHeightMap",
+    "sprite occlusion ground seal without moving sprites"
+  ],
+  "modified_files": [
+    "01_GIOCO_PRONTO_LOCAL_TEST/index.html",
+    "AVVIA_GIOCO_WINDOWS_SENZA_PYTHON.bat",
+    "AVVIA_GIOCO_SERVER_POWERSHELL.ps1",
+    "report/STATUS_PROGETTO_E_DIPENDENZE_PERLA1.txt",
+    "report/METODO_LAVORO_ANTI_REGRESSIONE_PERLA1.txt",
+    "report/README_REPACK_V229.txt",
+    "report/REPORT_V229_HEIGHT_STEP_WALL_FACES_SPRITE_SEAL_LOCAL.json"
+  ],
+  "preserved": [
+    "map",
+    "collisioni",
+    "worldgen",
+    "roadMask",
+    "objectBlock",
+    "PNG assets",
+    "sprite position/anchor/groundSink/scale",
+    "roof/canopy",
+    "skybox",
+    "audio",
+    "weather commands",
+    "bath authority V223",
+    "camera rain V226",
+    "wall distance > sprite distance V228"
+  ],
+  "checks_planned": [
+    "node --check",
+    "zip integrity",
+    "tar.gz integrity",
+    "asset missing = 0",
+    "png modified = 0 vs base"
+  ],
+  "asset_refs_count": 108,
+  "png_assets_count": 116,
+  "missing_assets": [],
+  "visual_tested_in_container": false,
+  "notes": "V229 non modifica asset o posizioni sprite; il ground seal agisce solo sulla maschera di occlusione sprite dietro muri."
+}

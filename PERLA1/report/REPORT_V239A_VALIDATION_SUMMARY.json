@@ -1,0 +1,26 @@
+{
+  "build": "PERLA1_V239A_COLUMN_FRAGMENT_SURFACE_CONTINUITY_DIAGNOSTIC_LOCAL",
+  "base": "PERLA1_V239_COLUMN_FRAGMENT_COMPOSITOR_DIAGNOSTIC_LOCAL",
+  "validatedAtUtc": "2026-06-12T00:14:32.458629+00:00",
+  "checks": {
+    "nodeCheck": "OK; extracted script passed node --check",
+    "zipIntegrity": "OK after final packaging",
+    "tarGzIntegrity": "OK after final packaging",
+    "pngRefs": 108,
+    "assetMissing": 0,
+    "pngChangedVsV239": 0,
+    "patchOnlyFolderPresent": false,
+    "drawEnabledFalse": true,
+    "v237Closed": true,
+    "legacyDrawDisabled": true
+  },
+  "manualBrowserTest": "NOT RUN in container; user must validate visually and upload V239A JSON report.",
+  "debugCommands": [
+    "perlaDownloadColumnFragmentDebugReport()",
+    "window.__PERLA_DEBUG__.getColumnFragmentSurfaceSummary()"
+  ],
+  "notes": [
+    "No asset/map/collision mutation was intentionally performed.",
+    "V239A is diagnostic-only; no high-wall visual draw."
+  ]
+}
