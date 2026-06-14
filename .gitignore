@@ -1,5 +1,8 @@
 ﻿# PERLA1 local/runtime noise
 AVVIO_GIOCO_POWERSHELL_LOG.txt
+PERLA1/AVVIO_GIOCO_CODEX_HEADLESS_LOG.txt
+PERLA1/AVVIO_GIOCO_CODEX_HEADLESS_PID.txt
+PERLA1/AVVIO_GIOCO_CODEX_HEADLESS_READY.txt
 *.tmp
 *.temp
 *.log
@@ -8,6 +11,14 @@ AVVIO_GIOCO_POWERSHELL_LOG.txt
 screenshots/
 *.zip
 *.tar.gz
+
+# Generated PERLA1 structure/CI reports
+PERLA1/report/RUNTIME_STRUCTURE_CURRENT.json
+PERLA1/report/RUNTIME_STRUCTURE_CI_*.json
+PERLA1/report/WORKFLOW_CHECK_*.json
+PERLA1/report/WORKFLOW_CHECK_*.jsonl
+PERLA1/report/CODEX_EXEC_*.jsonl
+PERLA1/report/HOOK_*.log
 
 # OS/editor noise
 Thumbs.db

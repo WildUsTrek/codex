@@ -11,13 +11,15 @@ param(
 
 $ErrorActionPreference = "Stop"
 $Root = Split-Path -Parent $MyInvocation.MyCommand.Path
-$Launcher = Join-Path $Root "AVVIA_GIOCO_WINDOWS_SENZA_PYTHON.bat"
+$HeadlessLauncher = Join-Path $Root "AVVIA_GIOCO_CODEX_HEADLESS.ps1"
 $Url = "http://127.0.0.1:8000/?v=headless_runtime_$([DateTimeOffset]::Now.ToUnixTimeMilliseconds())"
+$StartedHeadlessServer = $false
+$HeadlessServerProcess = $null
 
 function Test-PerlaServer {
   try {
     $r = Invoke-WebRequest -Uri "http://127.0.0.1:8000/?health_codex=1" -UseBasicParsing -TimeoutSec 2
-    return ($r.StatusCode -ge 200 -and $r.StatusCode -lt 500)
+    return ($r.StatusCode -ge 200 -and $r.StatusCode -lt 500 -and $r.Content -match "PERLA_BUILD_ID|__PERLA_DEBUG__|PERLA1")
   } catch {
     return $false
   }
@@ -25,16 +27,24 @@ function Test-PerlaServer {
 
 if (!(Test-PerlaServer)) {
   if ($StartLauncher) {
-    if (!(Test-Path -LiteralPath $Launcher)) { throw "Launcher not found: $Launcher" }
-    Start-Process -FilePath "cmd.exe" -ArgumentList "/c `"$Launcher`"" -WorkingDirectory $Root -WindowStyle Hidden
+    if (!(Test-Path -LiteralPath $HeadlessLauncher)) { throw "Codex headless launcher not found: $HeadlessLauncher" }
+    Remove-Item -LiteralPath (Join-Path $Root "AVVIO_GIOCO_CODEX_HEADLESS_READY.txt") -Force -ErrorAction SilentlyContinue
+    $HeadlessServerProcess = Start-Process -FilePath "powershell.exe" -ArgumentList @(
+      "-NoProfile",
+      "-ExecutionPolicy", "Bypass",
+      "-File", "`"$HeadlessLauncher`"",
+      "-Serve",
+      "-Port", "8000"
+    ) -WorkingDirectory $Root -WindowStyle Hidden -PassThru
+    $StartedHeadlessServer = $true
     $ready = $false
     for ($i = 0; $i -lt 24; $i++) {
       Start-Sleep -Milliseconds 500
       if (Test-PerlaServer) { $ready = $true; break }
     }
-    if (!$ready) { throw "PERLA1 server did not respond after launching $Launcher" }
+    if (!$ready) { throw "PERLA1 server did not respond after launching $HeadlessLauncher -Serve" }
   } else {
-    throw "PERLA1 server is not responding. Start AVVIA_GIOCO_WINDOWS_SENZA_PYTHON.bat first, or rerun with -StartLauncher."
+    throw "PERLA1 server is not responding. Start AVVIA_GIOCO_WINDOWS_SENZA_PYTHON.bat manually, or rerun with -StartLauncher to use AVVIA_GIOCO_CODEX_HEADLESS.ps1."
   }
 }
 
@@ -136,4 +146,18 @@ const { chromium } = require("playwright");
 });
 '@ | Set-Content -LiteralPath $JsPath -Encoding UTF8
 
-& $Node $JsPath
+$nodeExit = 0
+try {
+  & $Node $JsPath
+  $nodeExit = $LASTEXITCODE
+} finally {
+  if ($StartedHeadlessServer -and $HeadlessServerProcess) {
+    Stop-Process -Id $HeadlessServerProcess.Id -Force -ErrorAction SilentlyContinue
+    Remove-Item -LiteralPath (Join-Path $Root "AVVIO_GIOCO_CODEX_HEADLESS_READY.txt") -Force -ErrorAction SilentlyContinue
+    Remove-Item -LiteralPath (Join-Path $Root "AVVIO_GIOCO_CODEX_HEADLESS_PID.txt") -Force -ErrorAction SilentlyContinue
+  }
+}
+
+if ($nodeExit -ne 0) {
+  exit $nodeExit
+}

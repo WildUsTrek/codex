@@ -1,0 +1,54 @@
+{
+  "name": "PERLA1 local structural regression suite",
+  "requiredBuildId": "PERLA1_V278_MODERN_INTEGRATED_ROOF_CAP_SAFE_LOCAL",
+  "minimumFunctionCount": 180,
+  "warnFunctionLines": 450,
+  "requiredSymbols": [
+    "PERLA_BUILD_ID",
+    "window.__PERLA_DEBUG__",
+    "perlaLastDrawStats",
+    "setPlayerForDebug",
+    "drawWorld",
+    "drawRoofLayer2_5D",
+    "drawSlopedRoofLayer2_5D",
+    "drawSlopedRoofGableCaps2_5D",
+    "drawWorldRainParticlesV222",
+    "drawMiniMap",
+    "getSpriteRenderCandidates",
+    "ModernSupportOwnerBufferV236",
+    "drawModernIntegratedRoofCapV278",
+    "const PERLA_V266_ROOF_SILHOUETTE_MASK_BUDGET_HIERARCHY_SAFE = false;",
+    "const PERLA_V267_ROOF_SILHOUETTE_MAIN_WALL_CLIP_SAFE = false;",
+    "const PERLA_V272_REAL_ROOF_UNDERSIDE_EAVE_NEAR_GEOMETRY_SAFE = false;",
+    "const PERLA_V273_REAL_CEILING_CLONE_EXTERNAL_EAVE_ANCHOR_SAFE = false;",
+    "const PERLA_V274_REAL_ROOF_GEOMETRIC_EAVE_EDGE_SAFE = false;",
+    "const PERLA_V275_REAL_EAVE_HANDOFF_SAFE = false;"
+  ],
+  "requiredFunctions": [
+    "drawWorld",
+    "drawRoofLayer2_5D",
+    "drawSlopedRoofLayer2_5D",
+    "drawSlopedRoofGableCaps2_5D",
+    "drawWorldRainParticlesV222",
+    "drawMiniMap",
+    "gameLoop",
+    "getSpriteRenderCandidates"
+  ],
+  "forbiddenSymbols": [],
+  "focusSymbols": [
+    "drawWorld",
+    "drawRoofLayer2_5D",
+    "drawSlopedRoofLayer2_5D",
+    "drawSlopedRoofGableCaps2_5D",
+    "drawWorldRainParticlesV222",
+    "drawMiniMap",
+    "gameLoop",
+    "getSpriteRenderCandidates",
+    "drawModernIntegratedRoofCapV278"
+  ],
+  "runtimeSmokePoses": [
+    { "name": "reception_west_south_edge", "x": 64.99, "y": 8.44, "dx": 1, "dy": 0 },
+    { "name": "reception_diagonal_ne", "x": 64.99, "y": 8.44, "dx": 0.7071, "dy": -0.7071 },
+    { "name": "bath_south_side", "x": 99, "y": 71, "dx": 0, "dy": -1 }
+  ]
+}

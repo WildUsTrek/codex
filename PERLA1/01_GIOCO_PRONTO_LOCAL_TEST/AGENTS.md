@@ -12,28 +12,39 @@ Scope: this file applies to `01_GIOCO_PRONTO_LOCAL_TEST/`.
 
 - Modern roof owner `1` is reception.
 - Modern roof owner `2` is bath.
-- `roofSegments` are the authoritative geometry source for modern roof visual edges.
+- V278 current visual authority for wall-visible modern exterior roofs is the owner-aware integrated cap path: `drawModernIntegratedRoofCapV278`, anchored to `ModernSupport*BufferV236` columns. V265/V276/V277 sloped roof paths remain fallback/support when no same-owner modern support columns are visible.
+- `roofSegments` remain the authoritative geometry data source, but V274/V275 are no longer the active primary renderer after the V275 visual failure.
 - Do not use floorcasting/ceiling-clone samples as the primary visible source for external roof borders. In grazing views those samples become sparse and create dotted or disappearing borders.
-- The V270/V271/V273 real ceiling clone path may be used for ceiling continuity/depth anchoring, not as the final visible external eave edge when V274 owns the edge.
+- The V270/V271/V273 real ceiling clone path is runtime-off in V276 for external roof visuals.
 - V272 real underside/eave pass is runtime-off rollback by default; do not turn it back on as a quick fix.
-- V265 edge rail must not become the primary roof border replacement for reception/bath eaves.
+- Do not re-enable V266/V267 silhouette, V270/V271 external clone, V273 external strip, V274 geometric edge, or V275 handoff as a quick fix without a new explicit plan and validation.
+- Preserve `drawModernCoverCeilingSegment`: this is the internal ceiling/soffit path the user wants to keep.
 - Keep roof fixes geometry-aware, owner-aware, and draw-budgeted.
 
 ## Current Roof Patch Contract
 
-For V275 and successors:
+For V278 and successors:
 
-- Primary visible external eave/border must come from real `roofSegments` projection through the V274 geometric eave path.
-- V275 may add a thin depth-aware fallback only for external clone columns not already covered by V274.
-- V273 external strip visual should stay bypassed where V274/V275 handle the visible edge.
-- Expected V275 debug pattern in affected roof views:
-  - `realCeilingCloneEaveStripQueuedV273` is `0`.
-  - `realCeilingCloneEaveStripDrawnV273` is `0`.
-  - `realCeilingCloneEaveStripPixelsV273` is `0`.
-  - `realRoofGeometricEavePixelsV274` or `realEaveHandoffPixelsV275` is greater than `0` when a modern eave is visible.
-  - `realEaveHandoffPixelBudgetHitV275` is not `true`.
+- Primary wall-visible modern exterior roof fill comes from `drawModernIntegratedRoofCapV278`.
+- V278 may conditionally skip owner `1`/`2` sloped roof/gable visuals only when same-owner `ModernSupport*BufferV236` columns are visible in the current frame.
+- When no same-owner support columns are visible, V278 must not suppress the old sloped roof fallback.
+- V277 `perlaRoofContinuityFillLocalV277` remains a support path only; it must not become the current roof authority again without a new explicit plan.
+- V267 must not skip the original/sloped roof fill in normal runtime.
+- V266/V267/V270/V271/V273/V274/V275 are retained for diagnostics but runtime-off as visual authority.
+- Expected V278 debug pattern in affected roof views:
+  - `window.PERLA_BUILD_ID` is `PERLA1_V278_MODERN_INTEGRATED_ROOF_CAP_SAFE_LOCAL`.
+  - `roofV276` is `true`.
+  - `roofV277` is `true`.
+  - `roofV278` is `true`.
+  - `v278ModernIntegratedRoofCapSafe` is `true`.
+  - `v278RoofVisualAuthority` is `wall_anchored_integrated_cap`.
+  - `modernIntegratedRoofCapBudgetHitV278` is `false`.
+  - `modernIntegratedRoofCapPixelsV278 <= 5000` and `modernIntegratedRoofCapFillRectsV278 <= 1400`.
+  - `modernIntegratedRoofSkippedSlopedSegmentsV278 > 0` only in support-visible modern roof poses.
+  - `roofV266`, `roofV267`, `roofV273`, `roofV274`, and `roofV275` are `false`.
+  - `roofSilhouetteMainOriginalRoofFillSkippedV267` is absent or `0`.
+  - `realRoofGeometricEavePixelsV274` and `realEaveHandoffPixelsV275` are absent or `0`.
   - `realRoofUndersideEaveEnabledV272` is `false`.
-  - `realCeilingCloneExternalVisualHandledV274` is greater than `0` when external clone cells are present.
 
 ## Visual QA Poses
 

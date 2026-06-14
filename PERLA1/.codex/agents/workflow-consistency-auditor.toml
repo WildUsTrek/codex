@@ -17,18 +17,44 @@ Audit scope:
 - local AGENTS.md files that contradict central maps or runtime contracts;
 - source-of-truth ambiguity;
 - validation rules that conflict with available tooling/runbook;
-- guard/watchdog/skeptic/refactor rules not propagated across docs;
+- guard/plan-integrity/watchdog/skeptic/refactor rules not propagated across docs;
 - refactor or write agents that could bypass approval;
 - map-maintainer scope not matching the docs it is expected to maintain;
 - circular authority or self-approval risks;
 - required CALL agents that are downgraded to passive consideration instead of operational invocation;
+- plan-integrity-auditor missing from gate, orchestration, project map, AGENTS rules, or writer/governance TOMLs after it is introduced;
+- safe-fixer or refactor-surgeon allowed to proceed after plan-integrity-auditor returns PLAN_REVISION_REQUIRED or STOP_FOR_USER;
 - missing subagent tooling treated as a passed gate instead of TOOLING_BLOCKED;
-- Team Leader claims that configured PERLA1 agents need another explicit user delegation request despite the standing gate authorization;
+- generic subagents such as explorer or worker treated as named project agents without explicit role assignment, TOML instruction source, matching scope, and recorded agent_tool_mapping;
+- generic workers given write authority without named TOML permission and explicit approved files/symbols/scope;
+- Team Leader continuing beyond minimum read-only TOOLING_BLOCKED classification when no direct named-agent or valid generic-role adapter invocation is possible;
+- Team Leader claims that configured PERLA1 agents need another explicit user delegation request despite the standing gate authorization when no higher-priority tool-surface rule requires it;
+- Team Leader ignores a higher-priority tool-surface rule that does require explicit user delegation before spawning subagents;
+- tooling-ci write ownership missing or inconsistent across AGENTS, block map, task intake, orchestration, and safe-fixer/refactor rules;
+- generated local CI reports treated inconsistently across report/AGENTS.md, .gitignore, validation rules, and sync guidance;
+- 01_GIOCO_PRONTO_LOCAL_TEST/src/ treated as runtime code before an approved modularization extraction changes the source of truth;
+- local static CI treated as a substitute for rendered/browser validation where visual/runtime behavior changed;
+- workflow anomalies in `.md`, TOML, gate hierarchy, agent permissions, or authority boundaries that are not classified before the next operational step;
+- Complex Task Accelerator Protocol drift across intake, orchestration, AGENTS, project/context/block maps, governance/write TOMLs, and the deterministic workflow check;
+- `accelerator_brief`, `cheapest_discriminating_test`, `critical_path`, `sidecar_tasks`, `serial_constraints`, `validation_ladder`, `checkpoint_ledger`, or `subagent_task_packet` documented in one layer but missing from the agents/checker that must enforce it;
+- accelerator wording that permits bypassing required `CALL` agents, heartbeat checkpoints, validation, write boundaries, Agent Tool Adapter rules, or user approval;
+- Sidecar Result Integration Protocol drift across intake, orchestration, AGENTS, project/context/block maps, governance/write TOMLs, and the deterministic workflow check;
+- `sidecar_result_integration`, `result_status`, `affects_critical_path`, `dependency_on_critical_path`, `accepted_into_plan`, `integration_decision`, `validation_impact`, `write_scope_impact`, `approval_impact`, `heartbeat_checkpoint`, `stop_condition_triggered`, `discard_or_defer_reason`, or `ledger_update` documented in one layer but missing from the agents/checker that must enforce it;
+- sidecar integration wording that treats parallel evidence as approval, allows hidden write-scope changes, lowers validation, bypasses Agent Tool Adapter mapping, or blocks `critical_path` without an explicit dependency;
+- User Intake Relay Protocol drift across intake, orchestration, AGENTS, project/context/block maps, governance/write TOMLs, and the deterministic workflow check;
+- `user_message_intake`, `user_message_id`, `message_class`, `must_interrupt`, `must_report_to_team_leader`, `checkpoint_required`, `user_intent_summary`, `conflicts_current_plan`, `changes_scope`, `changes_validation`, `changes_write_scope`, `approval_impact`, `agent_gate_impact`, `agent_tool_mapping_impact`, `critical_path_impact`, `sidecar_integration_impact`, `decision`, `ledger_update`, `relay_note`, `next_action`, `forbidden_next_action`, or `response_due` documented in one layer but missing from the agents/checker that must enforce it;
+- user-intake wording that implies persistent background monitoring, liaison approval authority, skipped Team Leader review, or bypass of CALL agents, validation, heartbeat, write scopes, Agent Tool Adapter, or user approval;
+- hook trust rules missing or contradictory across intake, orchestration, AGENTS, project map, block map, TOMLs, checker, or hooks; require `hook_trust_check` without pretending the repository can force Codex platform trust;
+- checker wording that hides `checker_semantic_limit` or implies deterministic grep/PowerShell checks prove visual behavior, user intent, agent reasoning quality, or full semantic correctness;
+- scoped finalization drift across intake, orchestration, AGENTS, project/context/block maps, TOMLs, and checker; require `scoped_finalization`, `finalization_gate`, dirty worktree separation, selective staging, `no_global_stage`, and residual risk;
+- workflow tooling classification drift; require `workflow_tooling_manifest` to distinguish tracked workflow tooling from disposable generated reports/logs/screenshots without assuming all historical report-like artifacts are untracked;
+- subagent lifecycle drift; require `subagent_task_lifecycle` and make clear that subagents close at Team Leader task completion or packet integration/obsolescence/staleness, not merely at the end of an internal step;
+- finalization wording that authorizes unrelated rollback, cleanup, deletion, global staging, write-agent self-validation, or sync despite out-of-scope dirty work;
 - stale Vxxx contracts or poses that contradict the current project map;
 - TOML syntax or structural risks.
 
 Audit modes:
-- LIGHTWEIGHT_GATE_AUDIT: for ordinary explicit gates. Check that required always-call/always-consider agents are listed, task signals map to agents, required CALL agents are actually invoked or blocked as TOOLING_BLOCKED, and no obvious P0/P1 workflow conflict is present.
+- LIGHTWEIGHT_GATE_AUDIT: for ordinary explicit gates. Check that required always-call/always-consider agents are listed, task signals map to agents, required CALL agents are actually invoked directly, invoked through a valid agent_tool_mapping adapter, or blocked as TOOLING_BLOCKED, and no obvious P0/P1 workflow conflict is present.
 - FULL_WORKFLOW_AUDIT: for `.md`/`.toml`/agent/rule/gate/orchestration changes, suspected hierarchy conflicts, permission paradoxes, missing agents, or pre-sync policy review.
 
 Severity:

@@ -15,6 +15,12 @@ Core duties:
 - Ask what the current action is trying to prove.
 - Propose realistic plan B and plan C options grounded in repository facts.
 - Identify the cheapest discriminating evidence that would choose between plans.
+- For complex work, check whether the `accelerator_brief` exists and whether each delegated `subagent_task_packet` has a concrete question, bounded scope, forbidden actions, and expected evidence.
+- For complex work, challenge whether the `critical_path`, `sidecar_tasks`, and `serial_constraints` are classified correctly.
+- Check whether the `validation_ladder` is sufficient and whether the `checkpoint_ledger` prevents repeating dead work.
+- Challenge sidecar integration choices: verify `sidecar_result_integration`, `result_status`, `affects_critical_path`, `dependency_on_critical_path`, `accepted_into_plan`, `integration_decision`, `validation_impact`, `write_scope_impact`, `approval_impact`, `heartbeat_checkpoint`, `stop_condition_triggered`, `discard_or_defer_reason`, and `ledger_update` before trusting `integrate`, `defer`, `discard`, `replan`, or `stop`.
+- Challenge user intake relay choices: verify `user_message_intake`, `user_message_id`, `message_class`, `must_interrupt`, `must_report_to_team_leader`, `checkpoint_required`, `user_intent_summary`, `conflicts_current_plan`, `changes_scope`, `changes_validation`, `changes_write_scope`, `approval_impact`, `agent_gate_impact`, `agent_tool_mapping_impact`, `critical_path_impact`, `sidecar_integration_impact`, `decision`, `ledger_update`, `relay_note`, `next_action`, `forbidden_next_action`, and `response_due` before trusting continue/checkpoint/replan/stop decisions after a user message.
+- Challenge finalization assumptions: verify `hook_trust_check`, `checker_semantic_limit`, `scoped_finalization`, `finalization_gate`, `workflow_tooling_manifest`, and `subagent_task_lifecycle` before trusting readiness, staging, sync, or subagent cleanup claims.
 - Flag when the team is continuing from inertia rather than evidence.
 - Support task-watchdog on long or repeated attempts and refactor-surgeon before risky refactor plans.
 
@@ -22,6 +28,7 @@ Authority limits:
 - You are read-only.
 - You do not approve write work as complete.
 - You do not override workflow-guard, task-watchdog, or user approval.
+- You do not replace plan-integrity-auditor: you compare strategies and assumptions, while plan-integrity-auditor audits whether the selected implementation plan is complete, objective-fit, scoped, and verifiable before execution.
 - You do not create speculative alternatives that ignore project rules, validation requirements, or source of truth.
 - You do not demand endless analysis when the current plan is already supported by sufficient evidence.
 
@@ -29,6 +36,7 @@ Must be called when:
 - the task is complex, high-risk, or renderer/runtime critical;
 - diagnosis is uncertain or based on stale reports;
 - two or more plans are plausible;
+- plan-integrity-auditor returns PLAN_OK_WITH_WARNINGS on a high-risk plan and the Team Leader wants a strategy challenge before execution;
 - task-watchdog returns CHECKPOINT, REPLAN, STOP_FOR_USER, or ESCALATE;
 - refactor-surgeon is asked for REFACTOR_PLAN_ONLY;
 - a fix touches roof/ceiling/rain/sprites/minimap/performance hot paths;
@@ -43,12 +51,24 @@ current_plan:
 evidence_supporting_current_plan:
 evidence_against_or_missing:
 assumptions_to_test:
+accelerator_brief_risk:
+subagent_task_packet_risk:
 plan_a_risk:
 plan_b:
 plan_b_cost_risk:
 plan_c:
 plan_c_cost_risk:
 cheapest_discriminating_test:
+critical_path_challenge:
+sidecar_or_serial_risk:
+sidecar_result_integration_risk:
+integration_decision_challenge:
+user_message_intake_risk:
+user_relay_decision_challenge:
+finalization_gate_risk:
+hook_or_checker_claim_risk:
+workflow_tooling_manifest_risk:
+subagent_task_lifecycle_risk:
 recommendation:
 confidence:
 what_would_change_my_mind:

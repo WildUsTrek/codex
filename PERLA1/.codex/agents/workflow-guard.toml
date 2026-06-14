@@ -16,6 +16,7 @@ STOP
 Use STOP when any of these are true:
 - the plan violates project rules or write-scope boundaries;
 - the plan skips required validation for a rendered/runtime change;
+- the plan retries after a deterministic tool failure without first changing method or checkpointing;
 - the plan repeats a known failed method without new evidence;
 - the plan is stuck in a tool/configuration loop;
 - the plan changes documentation/contracts silently to justify unsafe work;
@@ -38,9 +39,48 @@ Use STOP when any of these are true:
 - the plan asks refactor-surgeon to apply changes without explicit approved scope;
 - the plan uses a refactor to silently bypass source-of-truth, validation, user approval, or write-boundary rules;
 - the plan ignores a workflow-consistency-auditor P0/P1 finding before the next operational patch, validation, sync, or refactor application;
+- the plan skips plan-integrity-auditor when the intake gate marks it CALL for an explicit multi-step, delicate, rollback/refactor, workflow-policy, failed-patch, or alternatives-based plan;
+- the plan proceeds after plan-integrity-auditor returns PLAN_REVISION_REQUIRED or STOP_FOR_USER without a corrected plan or required user approval;
 - the plan marks a required CALL agent as merely considered, reviewed mentally, or skipped without a gate update;
-- the plan claims project subagents cannot be used because the user did not explicitly request delegation, despite PERLA1 standing gate authorization;
-- the plan proceeds after required subagent tooling is unavailable without recording TOOLING_BLOCKED and stopping before patching, runtime validation, sync, or refactor application;
+- the plan uses a generic subagent such as explorer or worker to satisfy a named CALL agent without explicit role assignment, matching TOML instruction source, and recorded agent_tool_mapping;
+- the plan gives a generic worker write authority without named TOML permission and explicit approved files/symbols/scope;
+- the plan proceeds beyond minimum read-only TOOLING_BLOCKED classification when neither direct named-agent invocation nor valid generic-role adapter invocation is possible;
+- the plan claims project subagents cannot be used only because the user did not explicitly repeat delegation, despite PERLA1 standing gate authorization and no higher-priority tool-surface rule requiring fresh delegation;
+- the plan ignores a higher-priority Codex tool-surface rule that requires explicit user delegation before spawning subagents;
+- the plan proceeds after required direct subagent tooling is unavailable without first trying tool discovery and valid generic-role adapter invocation, or without recording TOOLING_BLOCKED and stopping when both are unavailable or materially unsafe;
+- the plan treats local static CI or the runtime analyzer as rendered/browser validation for a visual/runtime behavior change;
+- the plan stages or promotes generated local CI structure reports without explicit user approval;
+- the plan patches tooling-ci files without explicit non-runtime file scope or explicit tooling-ci block scope;
+- the plan waits silently past the heartbeat checkpoint: 12 minutes for simple tasks or 21 minutes for complex runtime/workflow/subagent/browser tasks;
+- the plan starts a new operational step after the task_id has reached 5h elapsed wall-clock time without explicit user approval and a new budget;
+- the plan continues only to finish the current operation after the 5h task cap instead of stopping at the last completed checkpoint;
+- the plan fails to call task-watchdog at 4h30m elapsed task time or at the 5h task cap;
+- the plan starts another wait on a subagent, browser, runtime server, shell command, or comparison without new expected evidence;
+- the session was interrupted or received a new user question but the workflow did not checkpoint before continuing;
+- a simple file comparison or small audit is being done manually in the Team Leader context instead of using deterministic diff/search/tool output;
+- broad rg, diff, or search output from index.html or another large file is being treated as progress instead of narrowing to functions, block ids, or actionable evidence;
+- a complex, high-risk, delicate, multi-agent, runtime, workflow, refactor, failed-patch recovery, or long task proceeds to expensive work without a Complex Task Execution Brief containing `accelerator_brief`, `cheapest_discriminating_test`, `critical_path`, `sidecar_tasks`, `serial_constraints`, `validation_ladder`, `checkpoint_ledger`, and delegated `subagent_task_packet` entries;
+- the plan skips the `cheapest_discriminating_test` before choosing between multiple plausible expensive routes;
+- the plan uses `sidecar_tasks` to block the critical path without an explicit dependency;
+- the plan parallelizes work marked by `serial_constraints`, especially same-file, same-block, or same-write-scope work;
+- the plan treats an early cheap test as a replacement for the required final validation ladder;
+- the plan continues broad rg, diff, or search beyond 1-2 passes without narrowing to named symbols, blocks, line windows, analyzer focus, or deterministic comparison;
+- the plan accepts sidecar output without a `sidecar_result_integration` record covering `result_status`, `affects_critical_path`, `dependency_on_critical_path`, `accepted_into_plan`, `integration_decision`, `validation_impact`, `write_scope_impact`, `approval_impact`, `heartbeat_checkpoint`, `stop_condition_triggered`, `discard_or_defer_reason`, and `ledger_update`;
+- the plan lets a sidecar result block `critical_path` without an explicit dependency or reclassified checkpoint;
+- the plan treats sidecar evidence as approval for writes, lower validation, missing CALL agents, source-of-truth changes, Agent Tool Adapter bypass, or user approval bypass;
+- the plan fails to use `stop` when a sidecar result is `blocking`, or fails to define a cheapest discriminating test when a sidecar result is `conflicting`;
+- the plan creates a new loop from a sidecar result that should have been `defer` or `discard`;
+- the plan continues after a user message during active work without `user_message_intake` when that message may affect objective, critical path, scope, validation, write authority, approval, agent gate, Agent Tool Adapter state, or stop conditions;
+- the plan ignores `must_interrupt`, `must_report_to_team_leader`, `checkpoint_required`, `conflicts_current_plan`, `changes_scope`, `changes_validation`, `changes_write_scope`, `approval_impact`, `agent_gate_impact`, `agent_tool_mapping_impact`, `critical_path_impact`, `sidecar_integration_impact`, `decision`, `ledger_update`, `relay_note`, `next_action`, `forbidden_next_action`, or `response_due`;
+- the plan treats `message_class: approval` as relay approval instead of verified original user intent;
+- the plan claims the User Intake Relay Protocol creates persistent background monitoring, a call-center daemon, or authority to bypass Team Leader, CALL agents, validation, heartbeat, write scopes, Agent Tool Adapter, or user approval;
+- the plan relies on hooks as enforcement evidence without `hook_trust_check`, including local manual run and trust status/fallback when trust is unknown;
+- the plan treats a passing deterministic checker as semantic proof despite `checker_semantic_limit`;
+- the plan finalizes, stages, syncs, or claims readiness after meaningful work without `scoped_finalization` and `finalization_gate`;
+- the plan uses global staging, unrelated cleanup, rollback, deletion, or broad dirty-worktree handling instead of selective approved scope;
+- the plan fails to classify `workflow_tooling_manifest` when `PERLA1/tools/`, `.codex/`, tests, generated reports, JSON/JSONL, hook logs, or screenshots are dirty/untracked;
+- the plan finishes a Team Leader task with open no-longer-needed subagents and no `subagent_task_lifecycle`, or closes a useful subagent only because one internal step finished;
+- repeated tool fallback, missing subagent tooling, stale validation route, skipped checkpoint, silent CALL-to-CONSIDER downgrade, or inconsistent authority is present and unclassified before the next operational step;
 
 Loop detection rules:
 - STOP after two failed attempts using the same method and same evidence.
@@ -53,8 +93,10 @@ Loop detection rules:
 - For emergency refactor plans, allow REFACTOR_PLAN_ONLY after documented blockage. STOP if APPLY_APPROVED_REFACTOR lacks explicit approved files/symbols/scope.
 
 Known reliable paths:
-- Runtime validation should use AVVIA_GIOCO_WINDOWS_SENZA_PYTHON.bat or an already responding launcher-started http://127.0.0.1:8000/ server.
-- On this Windows setup, screenshot validation should prefer powershell -NoProfile -ExecutionPolicy Bypass -File .\\PERLA1\\VALIDA_RUNTIME_SCREENSHOT_HEADLESS.ps1 ... or equivalent Playwright/system Chrome flow.
+- Runtime validation for Codex/agents should use powershell -NoProfile -ExecutionPolicy Bypass -File .\\PERLA1\\VALIDA_RUNTIME_SCREENSHOT_HEADLESS.ps1 -StartLauncher ... or an already responding PERLA1 http://127.0.0.1:8000/ server.
+- Static CI should use tools/perla_local_ci.ps1, preferably with -ReportPath outside the repo for disposable generated structure evidence.
+- Manual user play should use AVVIA_GIOCO_WINDOWS_SENZA_PYTHON.bat.
+- On this Windows setup, screenshot validation should prefer the -StartLauncher path above or equivalent Playwright/system Chrome flow.
 - Git sync should try where git, then GitHub Desktop bundled Git under %LOCALAPPDATA%\\GitHubDesktop\\app-*\\resources\\app\\git\\cmd\\git.exe via PowerShell enumeration.
 
 Output format for STOP:

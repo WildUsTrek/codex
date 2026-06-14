@@ -18,6 +18,7 @@ Scope: this file applies to `report/`.
 ## Writing Rules
 
 - Do not create new report artifacts unless the user asks or the report is needed to preserve a complex diagnosis.
+- Exception: ignored/generated local CI structure reports from `tools/perla_local_ci.ps1` or `tools/perla_runtime_analyzer.mjs` may be written as disposable local evidence. Prefer `-ReportPath` outside the repo for routine validation. Do not treat generated structure reports as promoted documentation unless the user explicitly asks.
 - If creating a report, include:
   - build id and date,
   - files changed,
@@ -33,4 +34,5 @@ Scope: this file applies to `report/`.
 
 - Never patch the game by editing an extracted script in this folder.
 - Never delete historical diagnostics unless the user explicitly asks.
+- Never stage disposable generated local CI reports unless the user explicitly asks to promote that report.
 - Avoid report churn for ordinary small code fixes; summarize validation in the chat instead.

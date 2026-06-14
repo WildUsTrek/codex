@@ -1,0 +1,43 @@
+{
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell -NoProfile -ExecutionPolicy Bypass -Command '$dir=Get-Item -LiteralPath (Get-Location).ProviderPath; while($null -ne $dir -and -not (Test-Path (Join-Path $dir.FullName \"PERLA1/tools/perla_codex_workflow_check.ps1\"))){$dir=$dir.Parent}; if($null -eq $dir){Write-Error \"PERLA1 workflow check not found\"; exit 2}; & (Join-Path $dir.FullName \"PERLA1/tools/perla_codex_workflow_check.ps1\") -Mode StopHook -Json'",
+            "commandWindows": "powershell -NoProfile -ExecutionPolicy Bypass -Command '$dir=Get-Item -LiteralPath (Get-Location).ProviderPath; while($null -ne $dir -and -not (Test-Path (Join-Path $dir.FullName \"PERLA1/tools/perla_codex_workflow_check.ps1\"))){$dir=$dir.Parent}; if($null -eq $dir){Write-Error \"PERLA1 workflow check not found\"; exit 2}; & (Join-Path $dir.FullName \"PERLA1/tools/perla_codex_workflow_check.ps1\") -Mode StopHook -Json'",
+            "timeout": 30,
+            "statusMessage": "PERLA1 workflow contract check"
+          }
+        ]
+      }
+    ],
+    "SubagentStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell -NoProfile -ExecutionPolicy Bypass -Command '$dir=Get-Item -LiteralPath (Get-Location).ProviderPath; while($null -ne $dir -and -not (Test-Path (Join-Path $dir.FullName \"PERLA1/tools/perla_codex_workflow_check.ps1\"))){$dir=$dir.Parent}; if($null -eq $dir){Write-Error \"PERLA1 workflow check not found\"; exit 2}; & (Join-Path $dir.FullName \"PERLA1/tools/perla_codex_workflow_check.ps1\") -Mode SubagentStartHook -Json'",
+            "commandWindows": "powershell -NoProfile -ExecutionPolicy Bypass -Command '$dir=Get-Item -LiteralPath (Get-Location).ProviderPath; while($null -ne $dir -and -not (Test-Path (Join-Path $dir.FullName \"PERLA1/tools/perla_codex_workflow_check.ps1\"))){$dir=$dir.Parent}; if($null -eq $dir){Write-Error \"PERLA1 workflow check not found\"; exit 2}; & (Join-Path $dir.FullName \"PERLA1/tools/perla_codex_workflow_check.ps1\") -Mode SubagentStartHook -Json'",
+            "timeout": 30,
+            "statusMessage": "PERLA1 subagent guard check"
+          }
+        ]
+      }
+    ],
+    "SubagentStop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell -NoProfile -ExecutionPolicy Bypass -Command '$dir=Get-Item -LiteralPath (Get-Location).ProviderPath; while($null -ne $dir -and -not (Test-Path (Join-Path $dir.FullName \"PERLA1/tools/perla_codex_workflow_check.ps1\"))){$dir=$dir.Parent}; if($null -eq $dir){Write-Error \"PERLA1 workflow check not found\"; exit 2}; & (Join-Path $dir.FullName \"PERLA1/tools/perla_codex_workflow_check.ps1\") -Mode SubagentStopHook -Json'",
+            "commandWindows": "powershell -NoProfile -ExecutionPolicy Bypass -Command '$dir=Get-Item -LiteralPath (Get-Location).ProviderPath; while($null -ne $dir -and -not (Test-Path (Join-Path $dir.FullName \"PERLA1/tools/perla_codex_workflow_check.ps1\"))){$dir=$dir.Parent}; if($null -eq $dir){Write-Error \"PERLA1 workflow check not found\"; exit 2}; & (Join-Path $dir.FullName \"PERLA1/tools/perla_codex_workflow_check.ps1\") -Mode SubagentStopHook -Json'",
+            "timeout": 30,
+            "statusMessage": "PERLA1 subagent completion check"
+          }
+        ]
+      }
+    ]
+  }
+}

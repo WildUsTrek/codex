@@ -1,6 +1,6 @@
-# PERLA1 V274 - geometric eave edge safe + launcher porta 8000 smart
-# Build gioco: PERLA1_V274_REAL_ROOF_GEOMETRIC_EAVE_EDGE_SAFE_LOCAL
-# Repack/launcher: PERLA1_V274_REAL_ROOF_GEOMETRIC_EAVE_EDGE_SAFE_LOCAL
+# PERLA1 V278 - modern integrated roof cap + launcher porta 8000 robusto
+# Build gioco: PERLA1_V278_MODERN_INTEGRATED_ROOF_CAP_SAFE_LOCAL
+# Repack/launcher: PERLA1_V278_MODERN_INTEGRATED_ROOF_CAP_SAFE_LOCAL
 param(
   [int]$Port = 8000,
   [switch]$KillExisting
@@ -30,24 +30,82 @@ function Is-BenignTransportAbort($ex) {
   )
 }
 
+function Get-PortListenersSafe([int]$Port) {
+  $job = $null
+  try {
+    $job = Start-Job -ScriptBlock {
+      param([int]$P)
+      Get-NetTCPConnection -LocalPort $P -State Listen -ErrorAction SilentlyContinue |
+        Select-Object LocalPort,OwningProcess
+    } -ArgumentList $Port
+    if (Wait-Job -Job $job -Timeout 4) {
+      $items = @(Receive-Job -Job $job -ErrorAction SilentlyContinue)
+      if ($items.Count -gt 0) { return $items }
+    } else {
+      Write-Log "WARN: controllo Get-NetTCPConnection oltre 4s; uso fallback netstat."
+    }
+  } catch {
+    Write-Log "WARN: Get-NetTCPConnection non disponibile: $($_.Exception.Message)"
+  } finally {
+    if ($job) { Remove-Job -Job $job -Force -ErrorAction SilentlyContinue }
+  }
+
+  $fallback = @()
+  try {
+    $lines = @(netstat -ano -p tcp | Select-String -Pattern "LISTENING")
+    foreach ($line in $lines) {
+      $text = [string]$line
+      if ($text -notmatch "[:\.]$Port\s+") { continue }
+      $parts = @($text -split "\s+" | Where-Object { $_ })
+      if ($parts.Count -lt 5) { continue }
+      $pidText = $parts[$parts.Count - 1]
+      $owner = 0
+      if ([int]::TryParse($pidText, [ref]$owner)) {
+        $fallback += [pscustomobject]@{ LocalPort = $Port; OwningProcess = $owner }
+      }
+    }
+  } catch {
+    Write-Log "WARN: fallback netstat fallito: $($_.Exception.Message)"
+  }
+  return $fallback
+}
+
+function Get-ProcessCommandLineSafe([int]$ProcessId) {
+  $job = $null
+  try {
+    $job = Start-Job -ScriptBlock {
+      param([int]$PidToCheck)
+      try {
+        (Get-CimInstance Win32_Process -Filter "ProcessId=$PidToCheck" -ErrorAction Stop).CommandLine
+      } catch {
+        ""
+      }
+    } -ArgumentList $ProcessId
+    if (Wait-Job -Job $job -Timeout 3) {
+      return [string](Receive-Job -Job $job -ErrorAction SilentlyContinue)
+    }
+    Write-Log "WARN: lettura command line PID $ProcessId oltre 3s; non lo considero sicuro da chiudere."
+  } catch {
+    Write-Log "WARN: lettura command line PID $ProcessId fallita: $($_.Exception.Message)"
+  } finally {
+    if ($job) { Remove-Job -Job $job -Force -ErrorAction SilentlyContinue }
+  }
+  return ""
+}
 
 function Stop-ExistingPerlaServerOnPort([int]$Port) {
   if (-not $KillExisting) { return }
   Write-Log "Controllo vecchi server sulla porta $Port..."
   $currentPid = $PID
-  $connections = @()
-  try {
-    $connections = Get-NetTCPConnection -LocalPort $Port -State Listen -ErrorAction SilentlyContinue
-  } catch {
-    $connections = @()
-  }
+  $connections = @(Get-PortListenersSafe $Port)
+  Write-Log "Controllo porta completato: $($connections.Count) listener trovati."
   foreach ($c in $connections) {
     $owner = $c.OwningProcess
     if (-not $owner -or $owner -eq $currentPid) { continue }
     $proc = $null
     $cmd = ""
     try { $proc = Get-Process -Id $owner -ErrorAction SilentlyContinue } catch { $proc = $null }
-    try { $cmd = (Get-CimInstance Win32_Process -Filter "ProcessId=$owner" -ErrorAction SilentlyContinue).CommandLine } catch { $cmd = "" }
+    $cmd = Get-ProcessCommandLineSafe $owner
     $safeMatch = $false
     if ($cmd -and ($cmd -like "*AVVIA_GIOCO_SERVER_POWERSHELL.ps1*" -or $cmd -like "*$Root*" -or $cmd -like "*PERLA1*")) { $safeMatch = $true }
     if ($proc -and ($proc.ProcessName -match "powershell|pwsh|cmd")) { if ($cmd -like "*$Root*" -or $cmd -like "*PERLA1*") { $safeMatch = $true } }
@@ -106,7 +164,7 @@ function Get-ContentType($path) {
 }
 
 Clear-Content -Path $Log -ErrorAction SilentlyContinue
-Write-Log "PERLA1 V274 - Geometric Eave Edge PowerShell static server robusto"
+Write-Log "PERLA1 V278 - Modern Integrated Roof Cap PowerShell static server robusto"
 Write-Log "Root: $Root"
 Write-Log "Game: $Game"
 Write-Log "Port: $Port"
@@ -121,13 +179,12 @@ if (!(Test-Path (Join-Path $Game "index.html"))) {
   exit 1
 }
 
-Stop-ExistingPerlaServerOnPort $Port
-
 $listener = [System.Net.Sockets.TcpListener]::new([System.Net.IPAddress]::Parse("127.0.0.1"), $Port)
 
 try {
   $listener.Start()
 } catch {
+  Write-Log "Porta $Port non disponibile al primo bind: $($_.Exception.Message)"
   Stop-ExistingPerlaServerOnPort $Port
   Start-Sleep -Milliseconds 500
   try { $listener.Start() } catch {
@@ -145,7 +202,7 @@ $url = "http://127.0.0.1:$Port/"
 Write-Log "Server avviato su $url"
 Write-Host ""
 Write-Host "============================================================"
-Write-Host " PERLA1 V274 - SERVER POWERSHELL ROBUSTO"
+Write-Host " PERLA1 V278 - SERVER POWERSHELL ROBUSTO"
 Write-Host "============================================================"
 Write-Host ""
 Write-Host "Apro il browser su $url"

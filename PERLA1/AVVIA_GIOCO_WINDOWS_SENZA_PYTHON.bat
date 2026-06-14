@@ -1,10 +1,10 @@
 @echo off
 setlocal
-title PERLA1 V274 - Geometric Eave Edge Server
+title PERLA1 V278 - Modern Integrated Roof Cap Server
 cd /d "%~dp0"
 
 echo ============================================================
-echo  PERLA1 V274 - GEOMETRIC EAVE EDGE SAFE - AVVIO
+echo  PERLA1 V278 - MODERN INTEGRATED ROOF CAP SAFE - AVVIO
 echo ============================================================
 echo.
 echo Uso PowerShell integrato in Windows.

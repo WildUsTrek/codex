@@ -8,17 +8,32 @@ This is the practical runtime validation path that worked on the Windows Codex d
 
 For rendered runtime validation, the reliable sequence is:
 
-1. Start or confirm the PERLA1 server.
-2. Load `http://127.0.0.1:8000/` with a cache-busting query string.
-3. Use the debug API to set deterministic player poses.
-4. Capture the `#screen` canvas.
-5. Inspect the screenshot visually and read relevant counters.
+1. Run local static CI when code changed: `powershell -NoProfile -ExecutionPolicy Bypass -File .\PERLA1\tools\perla_local_ci.ps1`.
+2. Start or confirm the PERLA1 server.
+3. Load `http://127.0.0.1:8000/` with a cache-busting query string.
+4. Use the debug API to set deterministic player poses.
+5. Capture the `#screen` canvas.
+6. Inspect the screenshot visually and read relevant counters.
 
 The runtime is not validly tested through `file://` or by opening `index.html` directly.
 
 ## Server Startup
 
-Normal startup entry point:
+Codex/agent startup entry point:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File .\PERLA1\VALIDA_RUNTIME_SCREENSHOT_HEADLESS.ps1 -StartLauncher -X 44.5 -Y 74.5 -Dx 0 -Dy 1
+```
+
+`-StartLauncher` starts:
+
+```text
+AVVIA_GIOCO_CODEX_HEADLESS.ps1
+```
+
+in internal `-Serve` mode. It does not open a browser window, writes `AVVIO_GIOCO_CODEX_HEADLESS_LOG.txt`, `AVVIO_GIOCO_CODEX_HEADLESS_PID.txt`, and `AVVIO_GIOCO_CODEX_HEADLESS_READY.txt`, and the validator stops the PID it created after validation.
+
+Manual user startup entry point:
 
 ```text
 AVVIA_GIOCO_WINDOWS_SENZA_PYTHON.bat
@@ -42,7 +57,9 @@ Before browser validation, confirm the server:
 Invoke-WebRequest -Uri 'http://127.0.0.1:8000/?health_codex=1' -UseBasicParsing -TimeoutSec 2
 ```
 
-If the server is not responding and the agent cannot launch the Windows launcher, stop and hand off: ask the user to run `AVVIA_GIOCO_WINDOWS_SENZA_PYTHON.bat`.
+If the server is not responding and the agent cannot launch the Codex headless path with `-StartLauncher`, stop and hand off: ask the user to run `AVVIA_GIOCO_WINDOWS_SENZA_PYTHON.bat` for manual validation.
+
+Agents should not launch the user `.bat` hidden for automated validation. Use `VALIDA_RUNTIME_SCREENSHOT_HEADLESS.ps1 -StartLauncher` first. Use the user `.bat` only for manual handoff or when the headless launcher fails.
 
 ## Known Reliable Screenshot Method
 
@@ -50,6 +67,12 @@ Use the helper script:
 
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File .\VALIDA_RUNTIME_SCREENSHOT_HEADLESS.ps1 -X 44.5 -Y 74.5 -Dx 0 -Dy 1
+```
+
+If no server is already responding, add `-StartLauncher`:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File .\VALIDA_RUNTIME_SCREENSHOT_HEADLESS.ps1 -StartLauncher -X 44.5 -Y 74.5 -Dx 0 -Dy 1
 ```
 
 Default output goes to:
@@ -80,7 +103,7 @@ Use `powershell -NoProfile -ExecutionPolicy Bypass -File ...`, matching the laun
 
 This method uses:
 
-- the PERLA1 launcher/server on `127.0.0.1:8000`,
+- the PERLA1 Codex headless launcher/server on `127.0.0.1:8000` when `-StartLauncher` is used,
 - bundled Codex Node.js,
 - bundled Playwright packages with explicit `NODE_PATH`,
 - installed system Chrome at `C:\Program Files\Google\Chrome\Application\chrome.exe`, with Edge fallback.
@@ -101,6 +124,7 @@ Do not spend repeated attempts on these before using the reliable method above:
 | Opening `index.html` directly | Invalid for final validation; bypasses the launcher/server route. |
 | `file://` | Invalid for final validation and can hide server/cache/runtime issues. |
 | Browser before server startup | Fails before testing the game. Start or confirm the launcher/server first. |
+| Launching the user `.bat` hidden from Codex | Fragile: it is interactive and may open a browser or block before useful logs. Use `AVVIA_GIOCO_CODEX_HEADLESS.ps1` through `-StartLauncher`. |
 | Codex in-app Browser on this Windows setup | Known failure: `CreateProcessAsUserW failed: 5`. Treat as tooling failure, not runtime failure. |
 | Playwright without explicit `NODE_PATH` | Can fail with `Cannot find module 'playwright'`. |
 | Playwright bundled browser without system Chrome | Can fail because the Playwright browser executable is not installed. |
@@ -120,7 +144,7 @@ Stop immediately instead of retrying when the failure is already known and deter
 - Windows execution policy blocking direct `.ps1` execution;
 - `http://127.0.0.1:8000/` not responding because the launcher/server is not running.
 
-The next attempt must materially change the method: start the server, use the runbook script, fix `NODE_PATH`, switch browser executable, use `ExecutionPolicy Bypass`, or hand off manual validation. Do not keep retrying the same command.
+The next attempt must materially change the method: use `-StartLauncher`, start the Codex headless server, fix `NODE_PATH`, switch browser executable, use `ExecutionPolicy Bypass`, or hand off manual validation. Do not keep retrying the same command.
 
 ## Required Evidence
 
@@ -135,3 +159,21 @@ For a rendered fix to be called validated, collect:
 - visual inspection result.
 
 Do not claim full rendered validation from a successful page load alone.
+
+## Local Static CI
+
+Before screenshot validation after meaningful runtime edits, run:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File .\PERLA1\tools\perla_local_ci.ps1
+```
+
+This performs inline JavaScript parse validation, required build/symbol/function checks, static block classification, and focused dependency graph generation through `tools/perla_runtime_analyzer.mjs`.
+
+To include the smoke poses declared in `tests/perla_regression_suite.json`, run:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File .\PERLA1\tools\perla_local_ci.ps1 -RuntimeScreenshots
+```
+
+Static CI is not a substitute for rendered visual proof when the renderer, roof, rain, sprites, minimap, launcher, or performance-sensitive paths change.
