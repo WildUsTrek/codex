@@ -33,6 +33,13 @@ Core duties:
 - Check that the `cheapest_discriminating_test` happens before an expensive patch or broad validation when multiple hypotheses are plausible.
 - Check that broad `rg`, diff, or search output is limited to 1-2 passes before narrowing to symbols, block ids, line windows, analyzer focus, or deterministic comparison.
 - Check that the validation ladder preserves required rendered/browser validation for visual runtime behavior and does not treat an early cheap test as final proof.
+- Check screenshot/pose validation quality for PERLA1 rendered work: require `hud_contamination_check` for screenshots used as visual proof and `coordinate_offset_check` when there is certainty or legitimate doubt that the target is PERLA1 and the plan depends on coordinates, map location, deterministic poses, or screenshot placement.
+- For roof/eave/wall-occlusion/visibility work or rotation-sensitive visual plans, require `visual_pose_matrix_check` and `roof_visual_matrix_hard_gate` before execution/readiness: `roof_matrix_declared_before_patch`, accepted base coordinates from current runtime/internal `roofSegments`/debug evidence, HUD/display X recorded separately, `fixed_coordinate_groups`, `same_coordinate_distance_rotation_grid`, center/left/right same-coordinate rotations plus distance/lateral/interior-or-portal/user-repro groups as applicable, screenshot paths, contact sheet or indexed matrix, canvas/HUD proof, coordinate checks, counters per rotation, and `same_coordinate_rotation_consistency`.
+- For V281/V282 roof plans, flag as P1/P0 any plan where an accepted roof can lose top faces, colmo/ridge/front gable, interior slab/ceiling authority, change face count materially, hit budget/warn in only some rotations, draw forced seam/black lines, or rely on `modernStableRoofPrimitiveSkippedTopFacesNearDoorV281` as success without a documented near-plane exception accepted by `visual-qa-auditor`. If the matrix is missing or partial, require `matrix_failed_replan_not_ready` and return PLAN_REVISION_REQUIRED or STOP_FOR_USER.
+- For the current reception owner 1 roof/portal/ceiling problem, require `reception_roof_real_objective_gate` before any patch, validation, or readiness claim. Flag P0 if the plan treats clean coordinates, clean HUD, counters, console health, contact sheets, removed black seam, or one improved screenshot as sufficient success without proving the real visual objective: high pointed exterior volume, stable front colmo/ridge/gable/top faces under same-coordinate rotation, flat monocolor portal/interior ceiling/underside where expected, no exterior roof/gable fragments inside the portal, no fake seams/bands/color-family switches, and no bath owner 2 claim from reception-only evidence.
+- For a near-success reception roof candidate, require `user_review_pause_required` and a concrete `user_review_package` before readiness. Return STOP_FOR_USER if the next step would call the result complete, continue broad iteration, or expand scope without giving the user decisive screenshots and a per-objective self-verdict.
+- Flag plans that might confuse HUD/clock/minimap/controls/status_text/debug_overlay/browser UI with renderer geometry, or that ignore UI/viewport layout risk when HUD overlaps the target visual area.
+- Flag plans that use requested coordinates as proof without comparing requested_pose, effective_pose, direction_requested, direction_effective, expected_zone, observed_zone, expected_tile_or_owner, observed_tile_or_owner, known_offset_applied, offset_delta, coordinate_confidence, suspicious_coordinates, and false_coordinate_suspicion when PERLA1 pose correctness matters.
 - Check sidecar result integration before execution when parallel evidence returned: require `sidecar_result_integration`, `result_status`, `affects_critical_path`, `dependency_on_critical_path`, `accepted_into_plan`, `integration_decision`, `validation_impact`, `write_scope_impact`, `approval_impact`, `heartbeat_checkpoint`, `stop_condition_triggered`, `discard_or_defer_reason`, and `ledger_update`. Sidecar outputs are evidence inputs, not approvals.
 - Flag any plan that accepts sidecar evidence into scope, validation, write authority, or user approval state without checking Agent Tool Adapter mapping and without a resolved `integrate`, `defer`, `discard`, `replan`, or `stop` decision.
 - Check user intake relay before execution when the user sent a message during active work: require `user_message_intake`, `user_message_id`, `message_class`, `must_interrupt`, `must_report_to_team_leader`, `checkpoint_required`, `user_intent_summary`, `conflicts_current_plan`, `changes_scope`, `changes_validation`, `changes_write_scope`, `approval_impact`, `agent_gate_impact`, `agent_tool_mapping_impact`, `critical_path_impact`, `sidecar_integration_impact`, `decision`, `ledger_update`, `relay_note`, `next_action`, `forbidden_next_action`, and `response_due`.
@@ -88,6 +95,15 @@ checker_semantic_limit_check:
 workflow_tooling_manifest_check:
 subagent_task_lifecycle_check:
 validation_check:
+hud_contamination_check:
+coordinate_offset_check:
+visual_pose_matrix_check:
+roof_visual_matrix_hard_gate:
+reception_roof_real_objective_gate:
+roof_matrix_declared_before_patch:
+same_coordinate_distance_rotation_grid:
+matrix_failed_replan_not_ready:
+user_review_pause_required:
 success_criteria_check:
 stop_and_fallback_check:
 known_failure_reuse_check:

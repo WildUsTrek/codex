@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Camping Sole, Mare & Zanzare - PERLA1 V278 Modern Integrated Roof Cap</title>
+    <title>Camping Sole, Mare & Zanzare - PERLA1 V281R Reception Roof Base</title>
     <style>
         :root { --panel: rgba(20,16,12,.88); --gold:#f1c40f; --sand:#f5d99e; --perla-vv-left:0px; --perla-vv-top:0px; --perla-vv-width:100vw; --perla-vv-height:100dvh; }
         body { margin:0; min-height:100vh; background:radial-gradient(circle at 50% 0%,#183b4a 0%,#07090d 55%,#000 100%); color:white; font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; display:flex; flex-direction:column; align-items:center; overflow-x:hidden; }
@@ -99,12 +99,12 @@
     </style>
 </head>
 <body>
-            <h2>Camping Sole, Mare & Zanzare - PERLA1 V278</h2>
+            <h2>Camping Sole, Mare & Zanzare - PERLA1 V281R</h2>
     <div id="game-container">
         <canvas id="screen" width="800" height="450"></canvas>
         <canvas id="mini-map" width="128" height="128"></canvas>
         <div id="perlaClockHud" data-weather="clear" aria-label="Orologio e meteo PERLA1"><span class="perla-clock-time">14:00</span><span class="perla-clock-meta">☀️ Giorno</span></div>
-        <div id="loading"><div><strong>Caricamento asset PERLA1 V278 modern integrated roof cap...</strong><br><span class="muted">Usa un server locale per evitare problemi da file://.</span></div></div>
+        <div id="loading"><div><strong>Caricamento asset PERLA1 V281R reception roof base...</strong><br><span class="muted">Usa un server locale per evitare problemi da file://.</span></div></div>
     </div>
     <div id="mobile-controls" aria-label="Controlli touch PERLA1">
         <div class="touch-cluster touch-cluster-left">
@@ -192,7 +192,7 @@ const loading = document.getElementById('loading');
 const debugLine = document.getElementById('debugLine');
 const perlaClockHud = document.getElementById('perlaClockHud');
 
-const PERLA_BUILD_ID = 'PERLA1_V278_MODERN_INTEGRATED_ROOF_CAP_SAFE_LOCAL';
+const PERLA_BUILD_ID = 'PERLA1_V281R_RECEPTION_ROOF_BASE_ROLLBACK_LOCAL';
 const PERLA_V258_PERFORMANCE_BASELINE_DEBUG_OVERHEAD_SAFE = true;
 const PERLA_V258A_PHASE1_REAL_QUICK_WINS_COMPLETE_SAFE = true;
 const PERLA_V258_BASE_BUILD = 'PERLA1_V257_RAIN_SKYBOX_DEPTH_ANCHOR_FIX_SAFE_LOCAL';
@@ -499,19 +499,119 @@ const PERLA_V277_EDGE_RAIL_MAX_RUN_GAP_PX = 2;
 const PERLA_V278_MODERN_INTEGRATED_ROOF_CAP_SAFE = true;
 const PERLA_V278_BASE_BUILD = 'PERLA1_V277_ROOF_CONTINUITY_FILL_SAFE_LOCAL';
 const PERLA_V278_PATCH_MODE = 'modern_wall_anchored_integrated_roof_cap_owner_1_2';
-const PERLA_V278_REPLACE_MODERN_SLOPED_ROOF_VISUAL = true;
+const PERLA_V278_REPLACE_MODERN_SLOPED_ROOF_VISUAL = false;
 const PERLA_V278_INTEGRATED_CAP_MAX_PIXELS_PER_FRAME = 5000;
-const PERLA_V278_INTEGRATED_CAP_WARN_PIXELS = 3500;
+const PERLA_V278_INTEGRATED_CAP_WARN_PIXELS = 4000;
 const PERLA_V278_INTEGRATED_CAP_MAX_FILL_RECTS = 1400;
-const PERLA_V278_INTEGRATED_CAP_MIN_OVERHANG_PX = 3;
-const PERLA_V278_INTEGRATED_CAP_MAX_OVERHANG_PX = 18;
-const PERLA_V278_INTEGRATED_CAP_MIN_HEIGHT_PX = 5;
-const PERLA_V278_INTEGRATED_CAP_MAX_HEIGHT_PX = 9;
-const PERLA_V278_INTEGRATED_CAP_MIN_UNDER_PX = 1;
-const PERLA_V278_INTEGRATED_CAP_MAX_UNDER_PX = 2;
+const PERLA_V278_INTEGRATED_CAP_MIN_OVERHANG_PX = 4;
+const PERLA_V278_INTEGRATED_CAP_MAX_OVERHANG_PX = 16;
+const PERLA_V278_INTEGRATED_CAP_MIN_HEIGHT_PX = 7;
+const PERLA_V278_INTEGRATED_CAP_MAX_HEIGHT_PX = 13;
+const PERLA_V278_INTEGRATED_CAP_MIN_UNDER_PX = 2;
+const PERLA_V278_INTEGRATED_CAP_MAX_UNDER_PX = 3;
 const PERLA_V278_INTEGRATED_CAP_BODY_OVERLAP_PX = 2;
 const PERLA_V278_INTEGRATED_CAP_GROUP_GAP_PX = 1;
 const PERLA_V278_INTEGRATED_CAP_OWNER_IDS = {1:true,2:true};
+const PERLA_V279_MODERN_ROOF_CAP_PROFILE_SAFE = true;
+const PERLA_V279_BASE_BUILD = 'PERLA1_V278_MODERN_INTEGRATED_ROOF_CAP_SAFE_LOCAL';
+const PERLA_V279_PATCH_MODE = 'modern_roof_cap_profile_tower_principle_safe';
+const PERLA_V279_MIN_SUPPORT_SPAN_SCREEN_RATIO = .018;
+const PERLA_V279_MIN_SUPPORT_SPAN_PX = 8;
+const PERLA_V279_MAX_SUPPORT_SPAN_GATE_PX = 28;
+const PERLA_V279_CAP_BODY_WIDTH_FACTOR = .08;
+const PERLA_V279_CAP_PROJECTED_LIFT_FACTOR = .50;
+const PERLA_V279_CAP_PROJECTED_LIFT_BONUS_PX = 2;
+const PERLA_V279_CAP_UNDERSIDE_FACTOR = .28;
+const PERLA_V279_CAP_OVERHANG_BODY_FACTOR = .08;
+const PERLA_V279_CAP_EDGE_LIFT_FACTOR = .14;
+const PERLA_V279_CAP_CROWN_LIFT_FACTOR = .86;
+const PERLA_V279_CAP_LOCAL_BAY_PROFILE_SAFE = false;
+const PERLA_V279_CAP_LOCAL_BAY_OWNER1_SCREEN_RATIO = .050;
+const PERLA_V279_CAP_LOCAL_BAY_OWNER2_SCREEN_RATIO = .045;
+const PERLA_V279_CAP_LOCAL_BAY_MIN_SUPPORT_MULTIPLIER = 2.4;
+const PERLA_V279_CAP_LOCAL_BAY_MIN_PX = 22;
+const PERLA_V279_CAP_LOCAL_BAY_MAX_PX = 42;
+const PERLA_V280_CLEAN_MODERN_ROOF_CAP_SAFE = true;
+const PERLA_V280_BASE_BUILD = 'PERLA1_V279_MODERN_ROOF_CAP_PROFILE_SAFE_LOCAL';
+const PERLA_V280_PATCH_MODE = 'clean_modern_roof_cap_replaces_legacy_sloped_owner_1_2_when_supported';
+const PERLA_V280_DOOR_GAP_BRIDGE_SAFE = true;
+const PERLA_V280_DOOR_GAP_BRIDGE_MAX_PX = 96;
+const PERLA_V280_DOOR_GAP_BRIDGE_MAX_TOP_DELTA_PX = 24;
+const PERLA_V280_DOOR_GAP_BRIDGE_MAX_DEPTH_REL = .38;
+const PERLA_V280_DOOR_GAP_BRIDGE_PAD_PX = 4;
+const PERLA_V280_TOWER_PROFILE_NEAR_DIST = 8.0;
+const PERLA_V280_TOWER_PROFILE_MID_DIST = 12.0;
+const PERLA_V280_TOWER_PROFILE_HEIGHT_NEAR_PX = 5;
+const PERLA_V280_TOWER_PROFILE_HEIGHT_MID_PX = 6;
+const PERLA_V280_TOWER_PROFILE_HEIGHT_FAR_PX = 8;
+const PERLA_V280_TOWER_PROFILE_HEIGHT_OWNER2_FAR_PX = 8;
+const PERLA_V280_TOWER_PROFILE_BODY_WIDTH_FACTOR = .08;
+const PERLA_V280_TOWER_PROFILE_PROJECTED_LIFT_FACTOR = .62;
+const PERLA_V280_TOWER_PROFILE_PROJECTED_LIFT_BONUS_PX = 2;
+const PERLA_V280_TOWER_PROFILE_EDGE_LIFT_FACTOR = .03;
+const PERLA_V280_TOWER_PROFILE_CROWN_LIFT_FACTOR = .97;
+const PERLA_V280_TOWER_PROFILE_CROWN_POWER = 3.6;
+const PERLA_V281_MODERN_ROOF_PRIMITIVE_AUTHORITY_SAFE = true;
+const PERLA_V281_BASE_BUILD = 'PERLA1_V280_CLEAN_MODERN_ROOF_CAP_SAFE_LOCAL';
+const PERLA_V281_PATCH_MODE = 'modern_owner_1_2_single_worldspace_roof_primitive_authority';
+const PERLA_V281_OWNER_IDS = {1:true,2:true};
+const PERLA_V281_MAX_DIST = 46;
+const PERLA_V281_MAX_FACES_PER_FRAME = 32;
+const PERLA_V281_MAX_PIXELS_PER_FRAME = 48000;
+const PERLA_V281_WARN_PIXELS = 46000;
+const PERLA_V281_MAX_FILL_RECTS = 3200;
+const PERLA_V281_OWNER1_FULL_SURFACE_SAFE = true;
+const PERLA_V281_OWNER1_FAST_SPAN_STEP = 1;
+const PERLA_V281_OWNER1_FULL_SURFACE_MAX_COVERAGE_PIXELS = 320000;
+const PERLA_V281_OWNER1_FULL_SURFACE_MAX_FILL_RECTS = 4200;
+const PERLA_V282_OWNER2_FULL_SURFACE_QUALITY_SAFE = false;
+const PERLA_V282_OWNER2_FULL_SURFACE_MAX_COVERAGE_PIXELS = 220000;
+const PERLA_V282_OWNER2_FULL_SURFACE_MAX_FILL_RECTS = 3600;
+const PERLA_V281_MAX_COLUMNS_PER_FACE = 900;
+const PERLA_V281_FAR_STEP_DIST = 18;
+const PERLA_V281_FAR_COLUMN_STEP = 2;
+const PERLA_V281_EDGE_ALPHA = .78;
+const PERLA_V281_EDGE_WIDTH = 1;
+const PERLA_V281_PREFLIGHT_MAX_AREA_RATIO = .62;
+const PERLA_V281_PREFLIGHT_MAX_SCREEN_RATIO = .74;
+const PERLA_V281_DISABLE_V278_CAP_WHEN_ENABLED = true;
+const PERLA_V281_QA_DISABLE_OWNER12_LEGACY_FALLBACK = true;
+const PERLA_V281_NEAR_FACE_REJECT_AREA_RATIO = .16;
+const PERLA_V281_NEAR_FACE_REJECT_HEIGHT_RATIO = .30;
+const PERLA_V281_NEAR_FACE_REJECT_MAXY_RATIO = .38;
+const PERLA_V281_NEAR_TOP_FACE_MAX_ROWS = 20;
+const PERLA_V281_FRONT_GABLE_MAX_ROWS = 28;
+const PERLA_V281_NEAR_FASCIA_MAX_ROWS = 12;
+const PERLA_V281_SAME_OWNER_WALL_BODY_EPS = .025;
+const PERLA_V281_SAME_OWNER_WALL_TOP_ALLOW_PX = 1;
+const PERLA_V281_WALL_TOP_ROOF_JOIN_ALLOW_PX = 5;
+const PERLA_V281_WALL_TOP_ROOF_JOIN_Z_EPS = .10;
+const PERLA_V281_OWNER1_FRONT_GABLE_KEEP_DIRY_MAX = .35;
+const PERLA_V281_OWNER1_FRONT_GABLE_KEEP_FRONT_PAD = .75;
+const PERLA_V281_OWNER1_FRONT_GABLE_KEEP_LATERAL_PAD = 2.25;
+const PERLA_V281_OWNER1_LATERAL_ROOF_JOIN_ALLOW_PX = 7;
+const PERLA_V281_OWNER1_LATERAL_ROOF_JOIN_DIRX_MIN = .55;
+const PERLA_V281_RECEPTION_RIDGE_RISE = .96;
+const PERLA_V281_BATH_RIDGE_RISE = .88;
+const PERLA_V281_RECEPTION_RIDGE_RISE_GEOMETRIC = .96;
+const PERLA_V281_BATH_RIDGE_RISE_GEOMETRIC = .88;
+const PERLA_V281_RECEPTION_FASCIA_THICKNESS = .26;
+const PERLA_V281_BATH_FASCIA_THICKNESS = .23;
+const PERLA_V281_RECEPTION_ENTRY_CEILING_BRIDGE_SAFE = true;
+// V281R rollback: V282 slab/portal experiments stay in file for diagnostics, but must not affect runtime.
+const PERLA_V282_MODERN_INTERIOR_ROOF_SLAB_SAFE = false;
+const PERLA_V282_OWNER1_VIRTUAL_CEIL_TYPE = 7;
+const PERLA_V282_OWNER2_VIRTUAL_CEIL_TYPE = 3;
+const PERLA_V282_INTERIOR_ROOF_SLAB_EDGE_PAD = 1.15;
+const PERLA_V282_OUTSIDE_DOOR_LOOK_UNDER_ROOF_SAFE = false;
+const PERLA_V282_OUTSIDE_DOOR_FRONT_DIST = 2.35;
+const PERLA_V282_OWNER1_PORTAL_UNDERSIDE_FRONT_DIST = 3.35;
+const PERLA_V282_OUTSIDE_DOOR_LATERAL_PAD = .75;
+const PERLA_V282_OUTSIDE_DOOR_LOOK_DOT_MAX = .35;
+const PERLA_V282_OWNER1_PORTAL_FRONT_GABLE_FLAT_COLOR_SAFE = false;
+const PERLA_V282_OWNER1_PORTAL_UNDERSIDE_SAFE = false;
+const PERLA_V282_OWNER2_PORTAL_UNDERSIDE_SAFE = false;
+const PERLA_V282_OWNER1_PORTAL_UNDERSIDE_PAD_PX = 18;
 
 const PERLA_V244_ROLLBACK_BASE_BUILD = 'PERLA1_V241C_FACE_DRAWABILITY_ELIGIBILITY_DIAGNOSTIC_LOCAL';
 const PERLA_V244_HIGH_WALL_DRAW_ROLLBACK_DEBUG_ONLY = true;
@@ -9700,6 +9800,189 @@ function getModernCoverForOwner(owner){
     for(let i=0;i<roofSegments.length;i++) if(roofSegments[i].ownerId===owner) return roofSegments[i];
     return null;
 }
+function perlaModernInteriorRoofSlabTypeForOwnerV282(owner){
+    if(owner===1) return PERLA_V282_OWNER1_VIRTUAL_CEIL_TYPE;
+    if(owner===2) return PERLA_V282_OWNER2_VIRTUAL_CEIL_TYPE;
+    return 0;
+}
+function perlaModernInteriorRoofSlabOutsideDoorContextForRoofV282(r){
+    if(!PERLA_V282_OUTSIDE_DOOR_LOOK_UNDER_ROOF_SAFE || !r || !isModernCoverOwner(r.ownerId) || !r.modernSolid) return null;
+    if(playerInsideRoof(r)) return null;
+    if(r.ownerId===1 && r.axis==='x'){
+        const frontDist=posY-r.y3;
+        const lateralOk=posX>=r.x0-PERLA_V282_OUTSIDE_DOOR_LATERAL_PAD && posX<=r.x3+PERLA_V282_OUTSIDE_DOOR_LATERAL_PAD;
+        const lookingUnder=dirY<PERLA_V282_OUTSIDE_DOOR_LOOK_DOT_MAX;
+        if(frontDist>=0 && frontDist<=PERLA_V282_OWNER1_PORTAL_UNDERSIDE_FRONT_DIST && lateralOk && lookingUnder) return {owner:r.ownerId, source:'outside_door_look_under_roof', roof:r};
+    }
+    if(PERLA_V282_OWNER2_PORTAL_UNDERSIDE_SAFE && r.ownerId===2 && r.axis==='y'){
+        const frontDist=posX-r.x3;
+        const lateralOk=posY>=r.y0-PERLA_V282_OUTSIDE_DOOR_LATERAL_PAD && posY<=r.y3+PERLA_V282_OUTSIDE_DOOR_LATERAL_PAD;
+        const lookingUnder=dirX<PERLA_V282_OUTSIDE_DOOR_LOOK_DOT_MAX;
+        if(frontDist>=0 && frontDist<=PERLA_V282_OUTSIDE_DOOR_FRONT_DIST && lateralOk && lookingUnder) return {owner:r.ownerId, source:'outside_door_look_under_roof', roof:r};
+    }
+    return null;
+}
+function perlaModernInteriorRoofSlabWorldInsideRoofV282(r, worldX, worldY){
+    if(!r || !Number.isFinite(worldX) || !Number.isFinite(worldY)) return false;
+    const edgePad=PERLA_V282_INTERIOR_ROOF_SLAB_EDGE_PAD||0;
+    if(r.ownerId===1){
+        const xMin=Number.isFinite(r.x1) ? r.x1 : r.x0;
+        const xMax=Number.isFinite(r.x2) ? r.x2+1 : r.x3;
+        return worldX>=xMin && worldX<xMax && worldY>=r.y0 && worldY<r.y3;
+    }
+    return worldX>=r.x0-edgePad && worldX<r.x3+edgePad && worldY>=r.y0-edgePad && worldY<r.y3+edgePad;
+}
+function perlaModernInteriorRoofSlabCameraContextV282(){
+    if(!PERLA_V282_MODERN_INTERIOR_ROOF_SLAB_SAFE) return 0;
+    const px=clamp(Math.floor(posX),0,mapW-1), py=clamp(Math.floor(posY),0,mapH-1);
+    if(cMap && cMap[py] && cMap[py][px]>0 && ceilingOwnerMap && ceilingOwnerMap[py] && isModernCoverOwner(ceilingOwnerMap[py][px])){
+        const cameraOwner=ceilingOwnerMap[py][px];
+        const roof=getModernCoverForOwner(cameraOwner);
+        if(cameraOwner===1 && roof && posY>roof.y2+.65 && posY<roof.y3+1.25 && Math.abs(dirX)>.45 && !perlaModernInteriorRoofSlabWorldInsideRoofV282(roof,posX,posY)) return 0;
+        return {owner:cameraOwner, source:'cMap_camera_cell'};
+    }
+    for(let i=0;i<roofSegments.length;i++){
+        const r=roofSegments[i];
+        if(!r || !isModernCoverOwner(r.ownerId) || !r.modernSolid) continue;
+        if(!(posX>=r.x0 && posX<r.x3 && posY>=r.y0 && posY<r.y3)) continue;
+        const ix0=clamp(px-1,0,mapW-1), ix1=clamp(px+1,0,mapW-1);
+        const iy0=clamp(py-1,0,mapH-1), iy1=clamp(py+1,0,mapH-1);
+        for(let yy=iy0; yy<=iy1; yy++){
+            for(let xx=ix0; xx<=ix1; xx++){
+                if(cMap && cMap[yy] && cMap[yy][xx]>0 && ceilingOwnerMap && ceilingOwnerMap[yy] && ceilingOwnerMap[yy][xx]===r.ownerId) return {owner:r.ownerId, source:'near_cMap_under_roof'};
+            }
+        }
+    }
+    return 0;
+}
+function perlaModernInteriorRoofSlabVisualCameraContextV282(){
+    const cameraContext=perlaModernInteriorRoofSlabCameraContextV282();
+    if(cameraContext) return cameraContext;
+    for(let i=0;i<roofSegments.length;i++){
+        const outside=perlaModernInteriorRoofSlabOutsideDoorContextForRoofV282(roofSegments[i]);
+        if(outside) return outside;
+    }
+    return 0;
+}
+function perlaModernInteriorRoofSlabCameraOwnerV282(){
+    const ctxV282=perlaModernInteriorRoofSlabCameraContextV282();
+    return (ctxV282 && ctxV282.owner) || 0;
+}
+function perlaModernInteriorRoofSlabVisualOwnerV282(){
+    const ctxV282=perlaModernInteriorRoofSlabVisualCameraContextV282();
+    return (ctxV282 && ctxV282.owner) || 0;
+}
+function perlaModernInteriorRoofSlabVisualContextV282(worldX, worldY, cellX, cellY, typeC, ceilOwner){
+    const cameraContext=perlaModernInteriorRoofSlabCameraContextV282();
+    if(cameraContext) return cameraContext;
+    const visualCamera=perlaModernInteriorRoofSlabVisualCameraContextV282();
+    if(!visualCamera || !isModernCoverOwner(visualCamera.owner)) return null;
+    const roof=visualCamera.roof || getModernCoverForOwner(visualCamera.owner);
+    if(!roof || !perlaModernInteriorRoofSlabWorldInsideRoofV282(roof,worldX,worldY)) return null;
+    return visualCamera;
+}
+function perlaModernInteriorRoofSlabResolveV282(worldX, worldY, cellX, cellY, typeC, ceilOwner, cloneMeta, drawStats){
+    if(!PERLA_V282_MODERN_INTERIOR_ROOF_SLAB_SAFE || cloneMeta || typeC>0) return null;
+    const cameraContext=perlaModernInteriorRoofSlabVisualContextV282(worldX,worldY,cellX,cellY,typeC,ceilOwner);
+    const cameraOwner=(cameraContext && cameraContext.owner) || 0;
+    if(!isModernCoverOwner(cameraOwner)) return null;
+    const roof=getModernCoverForOwner(cameraOwner);
+    if(!roof || !roof.modernSolid) return null;
+    if(!perlaModernInteriorRoofSlabWorldInsideRoofV282(roof,worldX,worldY)) return null;
+    const virtualType=perlaModernInteriorRoofSlabTypeForOwnerV282(cameraOwner);
+    if(!virtualType) return null;
+    if(drawStats){
+        drawStats.modernInteriorRoofSlabVirtualCellsV282=(drawStats.modernInteriorRoofSlabVirtualCellsV282||0)+1;
+        if(cameraOwner===1) drawStats.modernInteriorRoofSlabOwner1CellsV282=(drawStats.modernInteriorRoofSlabOwner1CellsV282||0)+1;
+        if(cameraOwner===2) drawStats.modernInteriorRoofSlabOwner2CellsV282=(drawStats.modernInteriorRoofSlabOwner2CellsV282||0)+1;
+        if(cameraContext.source==='near_cMap_under_roof') drawStats.modernInteriorRoofSlabNearCMapCameraV282=(drawStats.modernInteriorRoofSlabNearCMapCameraV282||0)+1;
+        if(cameraContext.source==='outside_door_look_under_roof') drawStats.modernInteriorRoofSlabOutsideDoorCellsV282=(drawStats.modernInteriorRoofSlabOutsideDoorCellsV282||0)+1;
+    }
+    return {typeC:virtualType, owner:cameraOwner, roof, source:cameraContext.source==='outside_door_look_under_roof'?'v282_external_portal_interior_roof_slab':'roofSegments_overhang_virtual_frame_v282', v282InteriorRoofSlab:true, externalClone:false, innerContinuity:true};
+}
+function perlaModernInteriorRoofSlabCameraOwnsRoofV282(roof, drawStats){
+    if(!PERLA_V282_MODERN_INTERIOR_ROOF_SLAB_SAFE || !roof || !isModernCoverOwner(roof.ownerId)) return false;
+    const ctxV282=perlaModernInteriorRoofSlabCameraContextV282();
+    const ok=!!(ctxV282 && ctxV282.owner===roof.ownerId && ctxV282.source!=='outside_door_look_under_roof');
+    if(ok && drawStats) drawStats.modernInteriorRoofSlabCameraOwnsRoofV282=(drawStats.modernInteriorRoofSlabCameraOwnsRoofV282||0)+1;
+    return ok;
+}
+function perlaModernInteriorRoofSlabUsesCeilingVisualV282(owner,typeC,cloneKey){
+    if(!PERLA_V282_MODERN_INTERIOR_ROOF_SLAB_SAFE || !isModernCoverOwner(owner)) return false;
+    if(String(cloneKey||'').indexOf('v282_virtual_interior_roof_slab_')!==0) return false;
+    return perlaModernInteriorRoofSlabVisualOwnerV282()===owner && perlaModernInteriorRoofSlabTypeForOwnerV282(owner)===typeC;
+}
+function perlaModernInteriorRoofSlabFlattensOwnerCeilingV282(owner,typeC,cloneKey){
+    if(!PERLA_V282_MODERN_INTERIOR_ROOF_SLAB_SAFE || !isModernCoverOwner(owner)) return false;
+    if(perlaModernInteriorRoofSlabVisualOwnerV282()!==owner || perlaModernInteriorRoofSlabTypeForOwnerV282(owner)!==typeC) return false;
+    return true;
+}
+function perlaModernInteriorRoofSlabFlatCeilingColorV282(owner,typeC){
+    const roof=getModernCoverForOwner(owner);
+    const p=roof && roof.palette ? roof.palette : null;
+    if(p){
+        const soffitColor=roofInteriorCeilingColorV200(roof,p,typeC,0);
+        if(soffitColor) return soffitColor;
+    }
+    if(owner===1) return (p && (p.gable||p.fascia||p.soffit)) || '#7b2f1f';
+    if(owner===2) return (p && (p.gable||p.fascia||p.soffit)) || '#7f302c';
+    return floorColors[typeC] || '#7b2f1f';
+}
+function drawModernInteriorRoofSlabCeilingV282(x0,y,w,owner,typeC,rowDist,bandH){
+    if(w<=0) return;
+    const drawY=Math.max(0,y|0);
+    const drawH=Math.max(1,Math.min(screenH-drawY,bandH||2));
+    ctx.fillStyle=perlaModernInteriorRoofSlabFlatCeilingColorV282(owner,typeC);
+    ctx.fillRect(x0,drawY,w,drawH);
+    captureCeilingFillRectV216('drawModernInteriorRoofSlabCeilingV282',x0,drawY,w,drawH,ctx.fillStyle,owner,typeC,rowDist,'flat_ceiling');
+    const ds=perlaCurrentDrawStatsV236;
+    if(ds){
+        ds.modernInteriorRoofSlabModernCoverVisualSegmentsV282=(ds.modernInteriorRoofSlabModernCoverVisualSegmentsV282||0)+1;
+        ds.modernInteriorRoofSlabModernCoverVisualPixelsV282=(ds.modernInteriorRoofSlabModernCoverVisualPixelsV282||0)+Math.max(0,w)*drawH;
+        ds.modernInteriorRoofSlabFlatCeilingVisualSegmentsV282=(ds.modernInteriorRoofSlabFlatCeilingVisualSegmentsV282||0)+1;
+    }
+}
+function perlaModernInteriorRoofSlabReplayOutsideDoorV282(rects,drawStats){
+    if(!PERLA_V282_MODERN_INTERIOR_ROOF_SLAB_SAFE || !PERLA_V282_OUTSIDE_DOOR_LOOK_UNDER_ROOF_SAFE || !rects || !rects.length) return 0;
+    const ctxV282=perlaModernInteriorRoofSlabVisualCameraContextV282();
+    if(!ctxV282 || ctxV282.source!=='outside_door_look_under_roof' || !isModernCoverOwner(ctxV282.owner)) return 0;
+    const list=rects.filter(r=>r && r.owner===ctxV282.owner && r.source==='drawModernInteriorRoofSlabCeilingV282' && r.pass==='flat_ceiling' && r.w>0 && r.h>0);
+    if(!list.length) return 0;
+    let replayed=0,pixels=0;
+    doorRainExactCeilingReplayGuardV216=true;
+    ctx.save();
+    for(const r of list){
+        const x0=clamp(r.x|0,0,screenW), x1=clamp((r.x+r.w)|0,0,screenW);
+        const y0=clamp(r.y|0,0,screenH), yRect1=clamp((r.y+r.h)|0,0,screenH);
+        if(x1<=x0 || yRect1<=y0) continue;
+        ctx.globalAlpha=Number.isFinite(r.alpha)?r.alpha:1;
+        ctx.fillStyle=r.fillStyle;
+        let runX=-1, runY1=-1;
+        for(let sx=x0; sx<=x1; sx++){
+            const y1=(sx<x1) ? Math.min(yRect1, clamp(((WallTopBuffer && Number.isFinite(WallTopBuffer[sx])) ? WallTopBuffer[sx]+1 : yRect1),0,screenH)) : -1;
+            if(sx<x1 && y1>y0 && y1===runY1){
+                if(runX<0) runX=sx;
+            } else {
+                if(runX>=0 && runY1>y0){
+                    ctx.fillRect(runX,y0,sx-runX,runY1-y0);
+                    pixels+=(sx-runX)*(runY1-y0);
+                    replayed++;
+                }
+                runX=(sx<x1 && y1>y0) ? sx : -1;
+                runY1=(sx<x1 && y1>y0) ? y1 : -1;
+            }
+        }
+    }
+    ctx.restore();
+    doorRainExactCeilingReplayGuardV216=false;
+    if(drawStats){
+        drawStats.modernInteriorRoofSlabOutsideDoorReplayV282=replayed>0;
+        drawStats.modernInteriorRoofSlabOutsideDoorReplayRectsV282=replayed;
+        drawStats.modernInteriorRoofSlabOutsideDoorReplayPixelsV282=pixels;
+        drawStats.modernInteriorRoofSlabOutsideDoorReplayOwnerV282=ctxV282.owner;
+    }
+    return replayed;
+}
 let roofSoffitSegmentsV109=0;
 let roofSoffitRedSuppressedV109=0;
 let roofSoffitResidualLineSuppressedV110=0;
@@ -9805,6 +10088,18 @@ function drawModernCoverCeilingSegment(x0, y, w, owner, typeC, rowDist, bandH){
     roofSoffitSegmentsV109++;
     roofModernCoverFogPremixSegmentsV115++;
     roofModernCoverFogPremixPixelsV115 += Math.max(0,w)*Math.max(0,drawH);
+    if(PERLA_V282_MODERN_INTERIOR_ROOF_SLAB_SAFE && isModernCoverOwner(owner)){
+        const slabOwner=perlaModernInteriorRoofSlabCameraOwnerV282();
+        if(slabOwner===owner && perlaModernInteriorRoofSlabTypeForOwnerV282(owner)===typeC){
+            const ds=perlaCurrentDrawStatsV236;
+            if(ds){
+                ds.modernInteriorRoofSlabSegmentsV282=(ds.modernInteriorRoofSlabSegmentsV282||0)+1;
+                ds.modernInteriorRoofSlabPixelsV282=(ds.modernInteriorRoofSlabPixelsV282||0)+Math.max(0,w)*Math.max(0,drawH);
+                if(owner===1) ds.modernInteriorRoofSlabOwner1SegmentsV282=(ds.modernInteriorRoofSlabOwner1SegmentsV282||0)+1;
+                if(owner===2) ds.modernInteriorRoofSlabOwner2SegmentsV282=(ds.modernInteriorRoofSlabOwner2SegmentsV282||0)+1;
+            }
+        }
+    }
     roofModernCoverRawFogBypassPreventedV115++;
     roofSoffitWallOverlapSegmentsV116 += overlap>0 ? 1 : 0;
     roofSoffitWallOverlapPixelsV116 += Math.max(0,w)*Math.max(0,overlap);
@@ -10259,7 +10554,7 @@ function registerClosedBuildingRoof(x1,y1,x2,y2,wallTex,ceilType,doors){
     const isReception = wallTex===2;
     const kind = isReception ? 'reception' : 'bath';
     const wallTopZ = buildingWallHeightForTex(wallTex);
-    const thickness = isReception ? .22 : .20;
+    const thickness = PERLA_V281_MODERN_ROOF_PRIMITIVE_AUTHORITY_SAFE ? (isReception ? PERLA_V281_RECEPTION_FASCIA_THICKNESS : PERLA_V281_BATH_FASCIA_THICKNESS) : (isReception ? .22 : .20);
     const overhang = isReception ? .30 : .24;
     const palette = isReception ?
         {
@@ -10281,7 +10576,7 @@ function registerClosedBuildingRoof(x1,y1,x2,y2,wallTex,ceilType,doors){
         wallTopZ:wallTopZ,
         thickness:thickness,
         eaveZ:wallTopZ,
-        ridgeZ:wallTopZ + (isReception ? .74 : .64),
+        ridgeZ:wallTopZ + (PERLA_V281_MODERN_ROOF_PRIMITIVE_AUTHORITY_SAFE ? (isReception ? PERLA_V281_RECEPTION_RIDGE_RISE_GEOMETRIC : PERLA_V281_BATH_RIDGE_RISE_GEOMETRIC) : (isReception ? .74 : .64)),
         fasciaLowZ:wallTopZ - thickness,
         overhang:overhang,
         undersideZ:wallTopZ - thickness*.70,
@@ -11108,6 +11403,7 @@ function roofCameraDistance(r){
     return Math.hypot(cx-posX, cy-posY);
 }
 const ROOF_NEAR_PLANE = 0.045;
+const PERLA_V281_CAMERA_POLY_CLIP_PLANE = ROOF_NEAR_PLANE + .001;
 function roofWorldToCamera(wx,wy,wz){
     const relX=wx-posX, relY=wy-posY;
     const invDet=1.0/(planeX*dirY-dirX*planeY);
@@ -11123,19 +11419,19 @@ function projectRoofPoint(wx,wy,wz){
 }
 function clipRoofCameraPoly(cam){
     if(!cam || cam.length<2) return [];
+    const near=(typeof PERLA_V281_CAMERA_POLY_CLIP_PLANE==='number') ? PERLA_V281_CAMERA_POLY_CLIP_PLANE : ROOF_NEAR_PLANE+.001;
     const out=[];
     for(let i=0;i<cam.length;i++){
         const a=cam[i], b=cam[(i+1)%cam.length];
-        const aIn=a.ty>=ROOF_NEAR_PLANE, bIn=b.ty>=ROOF_NEAR_PLANE;
+        const aIn=a.ty>=near, bIn=b.ty>=near;
         if(aIn && bIn){
             out.push(b);
-        } else if(aIn && !bIn){
-            const t=(ROOF_NEAR_PLANE-a.ty)/Math.max(.00001,b.ty-a.ty);
-            out.push({tx:a.tx+(b.tx-a.tx)*t, ty:ROOF_NEAR_PLANE, wz:a.wz+(b.wz-a.wz)*t});
-        } else if(!aIn && bIn){
-            const t=(ROOF_NEAR_PLANE-a.ty)/Math.max(.00001,b.ty-a.ty);
-            out.push({tx:a.tx+(b.tx-a.tx)*t, ty:ROOF_NEAR_PLANE, wz:a.wz+(b.wz-a.wz)*t});
-            out.push(b);
+        } else if(aIn !== bIn){
+            const denom=b.ty-a.ty;
+            if(Math.abs(denom)<.00001){ if(bIn) out.push(b); continue; }
+            const t=(near-a.ty)/denom;
+            out.push({tx:a.tx+(b.tx-a.tx)*t, ty:near, wz:a.wz+(b.wz-a.wz)*t});
+            if(bIn) out.push(b);
         }
     }
     return out;
@@ -11214,8 +11510,48 @@ function perlaModernSupportHasOwnerV278(ownerId){
     for(let x=0;x<screenW;x++) if((ModernSupportOwnerBufferV236[x]||0)===ownerId) return true;
     return false;
 }
+function perlaModernSupportSpanPxV279(ownerId){
+    if(!PERLA_V279_MODERN_ROOF_CAP_PROFILE_SAFE || !ModernSupportOwnerBufferV236 || !ModernSupportDepthBufferV236 || !PERLA_V278_INTEGRATED_CAP_OWNER_IDS[ownerId]) return 0;
+    let best=0, run=0;
+    for(let x=0;x<screenW;x++){
+        if((ModernSupportOwnerBufferV236[x]||0)===ownerId && ModernSupportDepthBufferV236[x]>0) run++;
+        else { best=Math.max(best,run); run=0; }
+    }
+    return Math.max(best,run);
+}
+function perlaModernSupportMinSpanPxV279(){
+    return Math.max(PERLA_V279_MIN_SUPPORT_SPAN_PX, Math.min(PERLA_V279_MAX_SUPPORT_SPAN_GATE_PX, Math.round(screenW*PERLA_V279_MIN_SUPPORT_SPAN_SCREEN_RATIO)));
+}
+function perlaModernIntegratedCapMaxHeightV280(dist, ownerId){
+    if(!PERLA_V280_CLEAN_MODERN_ROOF_CAP_SAFE) return PERLA_V278_INTEGRATED_CAP_MAX_HEIGHT_PX;
+    if(!(dist>0) || !isFinite(dist)) return PERLA_V280_TOWER_PROFILE_HEIGHT_MID_PX;
+    if(dist<PERLA_V280_TOWER_PROFILE_NEAR_DIST) return PERLA_V280_TOWER_PROFILE_HEIGHT_NEAR_PX;
+    if(dist<PERLA_V280_TOWER_PROFILE_MID_DIST) return PERLA_V280_TOWER_PROFILE_HEIGHT_MID_PX;
+    if(ownerId===2) return PERLA_V280_TOWER_PROFILE_HEIGHT_OWNER2_FAR_PX;
+    return PERLA_V280_TOWER_PROFILE_HEIGHT_FAR_PX;
+}
 function perlaModernIntegratedRoofReplacesSegmentV278(r){
-    return !!(perlaModernIntegratedRoofEnabledV278() && PERLA_V278_REPLACE_MODERN_SLOPED_ROOF_VISUAL && r && r.modernSolid && PERLA_V278_INTEGRATED_CAP_OWNER_IDS[r.ownerId] && perlaModernSupportHasOwnerV278(r.ownerId));
+    if(!(perlaModernIntegratedRoofEnabledV278() && PERLA_V278_REPLACE_MODERN_SLOPED_ROOF_VISUAL && r && r.modernSolid && PERLA_V278_INTEGRATED_CAP_OWNER_IDS[r.ownerId])) return false;
+    if(!PERLA_V279_MODERN_ROOF_CAP_PROFILE_SAFE) return perlaModernSupportHasOwnerV278(r.ownerId);
+    return perlaModernSupportSpanPxV279(r.ownerId) >= perlaModernSupportMinSpanPxV279();
+}
+function perlaModernRoofNearDoorSuppressTopPlanesV280(r, drawStats){
+    if(!PERLA_V280_CLEAN_MODERN_ROOF_CAP_SAFE || !r || !r.modernSolid || !PERLA_V278_INTEGRATED_CAP_OWNER_IDS[r.ownerId]) return false;
+    if(!Array.isArray(r.doors) || !r.doors.length) return false;
+    const outside=!playerInsideRoof(r);
+    if(!outside) return false;
+    const edgeDist=Math.max(0,Math.min(Math.abs(posX-r.x0),Math.abs(posX-r.x3),Math.abs(posY-r.y0),Math.abs(posY-r.y3)));
+    if(edgeDist>2.35) return false;
+    let nearDoor=false;
+    for(let i=0;i<r.doors.length;i++){
+        const d=r.doors[i];
+        const cx=d.x+((d.dir==='h' ? Math.max(1,d.w||1) : 1)*.5);
+        const cy=d.y+((d.dir==='v' ? Math.max(1,d.w||1) : 1)*.5);
+        if(Math.hypot(posX-cx,posY-cy)<4.15){ nearDoor=true; break; }
+    }
+    if(!nearDoor) return false;
+    if(drawStats) drawStats.modernRoofTopPlanesSuppressedNearDoorV280=(drawStats.modernRoofTopPlanesSuppressedNearDoorV280||0)+1;
+    return true;
 }
 function perlaNearestModernSupportColumnV278(px, ownerId, maxRadius){
     if(!ModernSupportOwnerBufferV236 || !ModernSupportDepthBufferV236) return -1;
@@ -11227,6 +11563,103 @@ function perlaNearestModernSupportColumnV278(px, ownerId, maxRadius){
         if(b<screenW && (ModernSupportOwnerBufferV236[b]||0)===ownerId && ModernSupportDepthBufferV236[b]>0) return b;
     }
     return -1;
+}
+function projectModernRoofDoorSpanV280(roof, door){
+    if(!PERLA_V280_DOOR_GAP_BRIDGE_SAFE || !roof || !door || !isFinite(door.x) || !isFinite(door.y)) return null;
+    const w=Math.max(1,door.w|0);
+    const z=roof.eaveZ || roof.wallTopZ || 1.1;
+    let minX=1e9, maxX=-1e9, valid=0;
+    for(let i=0;i<w;i++){
+        const cx=door.x+(door.dir==='h'?i:0);
+        const cy=door.y+(door.dir==='v'?i:0);
+        const pts=[[cx,cy,z],[cx+1,cy,z],[cx,cy+1,z],[cx+1,cy+1,z]];
+        for(let j=0;j<pts.length;j++){
+            const p=projectRoofPoint(pts[j][0],pts[j][1],pts[j][2]);
+            if(!p || !isFinite(p.x)) continue;
+            minX=Math.min(minX,p.x);
+            maxX=Math.max(maxX,p.x);
+            valid++;
+        }
+    }
+    if(valid<2 || maxX<minX) return null;
+    const pad=PERLA_V280_DOOR_GAP_BRIDGE_PAD_PX;
+    return {x0:Math.max(0,Math.floor(minX-pad)), x1:Math.min(screenW-1,Math.ceil(maxX+pad))};
+}
+function perlaModernRoofDoorBridgeSpansV280(roof, drawStats){
+    if(!PERLA_V280_DOOR_GAP_BRIDGE_SAFE || !roof || !Array.isArray(roof.doors) || !roof.doors.length) return [];
+    const spans=[];
+    for(let i=0;i<roof.doors.length;i++){
+        const span=projectModernRoofDoorSpanV280(roof,roof.doors[i]);
+        if(!span || span.x1<span.x0) continue;
+        spans.push(span);
+    }
+    if(drawStats && spans.length){
+        drawStats.modernIntegratedRoofDoorSpanProjectedV280=(drawStats.modernIntegratedRoofDoorSpanProjectedV280||0)+spans.length;
+    }
+    return spans;
+}
+function perlaDoorSpanOverlapsGapV280(gapStart, gapEnd, doorSpans){
+    if(!doorSpans || !doorSpans.length) return false;
+    for(let i=0;i<doorSpans.length;i++){
+        const s=doorSpans[i];
+        if(gapEnd>=s.x0 && gapStart<=s.x1) return true;
+    }
+    return false;
+}
+function perlaDoorSpanContainsColumnV280(px, doorSpans){
+    if(!doorSpans || !doorSpans.length) return false;
+    for(let i=0;i<doorSpans.length;i++){
+        const s=doorSpans[i];
+        if(px>=s.x0 && px<=s.x1) return true;
+    }
+    return false;
+}
+function perlaModernSupportColumnOnSideV280(px, ownerId, dir, maxRadius){
+    if(!ModernSupportOwnerBufferV236 || !ModernSupportDepthBufferV236) return -1;
+    for(let r=1;r<=maxRadius;r++){
+        const c=px+r*dir;
+        if(c<0 || c>=screenW) break;
+        if((ModernSupportOwnerBufferV236[c]||0)===ownerId && ModernSupportDepthBufferV236[c]>0) return c;
+    }
+    return -1;
+}
+function perlaModernSupportBridgeEdgesValidV280(left, right, ownerId){
+    if(left<0 || right>=screenW || left>=right || !ModernSupportOwnerBufferV236 || !ModernSupportTopBufferV236 || !ModernSupportDepthBufferV236) return false;
+    if((ModernSupportOwnerBufferV236[left]||0)!==ownerId || (ModernSupportOwnerBufferV236[right]||0)!==ownerId) return false;
+    const lt=ModernSupportTopBufferV236[left], rt=ModernSupportTopBufferV236[right];
+    const ld=ModernSupportDepthBufferV236[left]||0, rd=ModernSupportDepthBufferV236[right]||0;
+    if(!(ld>0 && rd>0)) return false;
+    if(Math.abs(lt-rt)>PERLA_V280_DOOR_GAP_BRIDGE_MAX_TOP_DELTA_PX) return false;
+    const dRel=Math.abs(ld-rd)/Math.max(.001,Math.min(ld,rd));
+    return dRel<=PERLA_V280_DOOR_GAP_BRIDGE_MAX_DEPTH_REL;
+}
+function perlaModernSupportBridgeGapAllowsV280(gapStart, gapEnd, ownerId, doorSpans, drawStats){
+    if(!PERLA_V280_DOOR_GAP_BRIDGE_SAFE || !ModernSupportOwnerBufferV236 || !ModernSupportTopBufferV236 || !ModernSupportDepthBufferV236) return false;
+    const gapW=gapEnd-gapStart+1;
+    if(gapW<=0 || gapW>PERLA_V280_DOOR_GAP_BRIDGE_MAX_PX) return false;
+    if(!perlaDoorSpanOverlapsGapV280(gapStart,gapEnd,doorSpans)){
+        if(drawStats) drawStats.modernIntegratedRoofDoorGapBridgeRejectedNoDoorV280=(drawStats.modernIntegratedRoofDoorGapBridgeRejectedNoDoorV280||0)+1;
+        return false;
+    }
+    const left=gapStart-1, right=gapEnd+1;
+    if(left<0 || right>=screenW) return false;
+    if(!perlaModernSupportBridgeEdgesValidV280(left,right,ownerId)) return false;
+    if(drawStats) drawStats.modernIntegratedRoofDoorGapBridgeAcceptedV280=(drawStats.modernIntegratedRoofDoorGapBridgeAcceptedV280||0)+1;
+    return true;
+}
+function perlaModernSupportSampleV280(px, ownerId, baseRadius, doorSpans, drawStats){
+    const direct=perlaNearestModernSupportColumnV278(px,ownerId,baseRadius);
+    if(direct>=0) return {src:direct, topY:ModernSupportTopBufferV236[direct], dist:ModernSupportDepthBufferV236[direct]||0};
+    if(!PERLA_V280_DOOR_GAP_BRIDGE_SAFE || !perlaDoorSpanContainsColumnV280(px,doorSpans)) return null;
+    const left=perlaModernSupportColumnOnSideV280(px,ownerId,-1,PERLA_V280_DOOR_GAP_BRIDGE_MAX_PX);
+    const right=perlaModernSupportColumnOnSideV280(px,ownerId,1,PERLA_V280_DOOR_GAP_BRIDGE_MAX_PX);
+    if(!perlaModernSupportBridgeEdgesValidV280(left,right,ownerId)) return null;
+    const t=clamp((px-left)/Math.max(1,right-left),0,1);
+    const topY=Math.round(ModernSupportTopBufferV236[left]*(1-t)+ModernSupportTopBufferV236[right]*t);
+    const dist=(ModernSupportDepthBufferV236[left]||0)*(1-t)+(ModernSupportDepthBufferV236[right]||0)*t;
+    const src=t<.5 ? left : right;
+    if(drawStats) drawStats.modernIntegratedRoofDoorVirtualSupportSamplesV280=(drawStats.modernIntegratedRoofDoorVirtualSupportSamplesV280||0)+1;
+    return {src, topY, dist};
 }
 function perlaModernIntegratedRoofPixelVisibleV278(px, sy, dist, ownerId, srcCol, topY, drawStats){
     if(px<0 || px>=screenW || sy<0 || sy>=screenH || !(dist>0) || !isFinite(dist)) return false;
@@ -11273,55 +11706,110 @@ function perlaModernIntegratedRoofColorV278(roof, kind, dist, groupX01){
 }
 function drawModernIntegratedRoofCapV278(time, drawStats){
     if(!perlaModernIntegratedRoofEnabledV278() || !ModernSupportOwnerBufferV236 || !ModernSupportTopBufferV236 || !ModernSupportDepthBufferV236) return 0;
+    if(PERLA_V281_MODERN_ROOF_PRIMITIVE_AUTHORITY_SAFE && PERLA_V281_DISABLE_V278_CAP_WHEN_ENABLED){
+        if(drawStats){
+            drawStats.modernStableRoofPrimitiveSkippedIntegratedCapV281=(drawStats.modernStableRoofPrimitiveSkippedIntegratedCapV281||0)+1;
+            drawStats.modernIntegratedRoofCapPixelsV278=0;
+            drawStats.modernIntegratedRoofCapFillRectsV278=0;
+            drawStats.modernIntegratedRoofCapBudgetHitV278=false;
+            drawStats.modernIntegratedRoofCapWarnPixelsV278=false;
+        }
+        return 0;
+    }
     let groups=0, columns=0, pixels=0, fillRects=0, budgetHit=false, owner1Pixels=0, owner2Pixels=0, skippedGroups=0;
+    let owner1Groups=0, owner2Groups=0, owner1Columns=0, owner2Columns=0, maxGroupWidth=0, maxOverhang=0, maxCapH=0, maxUnderH=0, supportGateFallbacks=0;
+    let localBayProfileColumns=0, localBayProfileGroups=0, maxLocalBayW=0;
     let x=0;
     while(x<screenW){
         while(x<screenW && !PERLA_V278_INTEGRATED_CAP_OWNER_IDS[ModernSupportOwnerBufferV236[x]||0]) x++;
         if(x>=screenW) break;
         const ownerId=ModernSupportOwnerBufferV236[x]||0;
+        const roof=(typeof getModernCoverForOwner==='function') ? getModernCoverForOwner(ownerId) : null;
+        const doorSpans=perlaModernRoofDoorBridgeSpansV280(roof,drawStats);
         const left=x;
         let gap=0;
         x++;
         while(x<screenW){
             const o=ModernSupportOwnerBufferV236[x]||0;
             if(o===ownerId){ gap=0; x++; continue; }
+            if(PERLA_V280_DOOR_GAP_BRIDGE_SAFE){
+                const gapStart=x;
+                let probe=x;
+                while(probe<screenW && (ModernSupportOwnerBufferV236[probe]||0)!==ownerId && (probe-gapStart+1)<=PERLA_V280_DOOR_GAP_BRIDGE_MAX_PX) probe++;
+                if(probe<screenW && (ModernSupportOwnerBufferV236[probe]||0)===ownerId && perlaModernSupportBridgeGapAllowsV280(gapStart,probe-1,ownerId,doorSpans,drawStats)){
+                    gap=0;
+                    x=probe+1;
+                    continue;
+                }
+            }
             if(gap<PERLA_V278_INTEGRATED_CAP_GROUP_GAP_PX){ gap++; x++; continue; }
             break;
         }
         const right=Math.max(left,x-gap-1);
-        const roof=(typeof getModernCoverForOwner==='function') ? getModernCoverForOwner(ownerId) : null;
         if(!roof || !roof.modernSolid || !shouldDrawModernExteriorRoof(roof)){ skippedGroups++; continue; }
         const bodyW=Math.max(1,right-left+1);
-        const overhang=clamp(Math.round(bodyW*.025),PERLA_V278_INTEGRATED_CAP_MIN_OVERHANG_PX,PERLA_V278_INTEGRATED_CAP_MAX_OVERHANG_PX);
+        if(PERLA_V279_MODERN_ROOF_CAP_PROFILE_SAFE && bodyW<perlaModernSupportMinSpanPxV279()) supportGateFallbacks++;
+        const overhang=clamp(Math.round(bodyW*(PERLA_V279_MODERN_ROOF_CAP_PROFILE_SAFE?PERLA_V279_CAP_OVERHANG_BODY_FACTOR:.025)),PERLA_V278_INTEGRATED_CAP_MIN_OVERHANG_PX,PERLA_V278_INTEGRATED_CAP_MAX_OVERHANG_PX);
         const gLeft=Math.max(0,left-overhang), gRight=Math.min(screenW-1,right+overhang);
         const center=(left+right)*.5, half=Math.max(1,(right-left+1)*.5+overhang);
+        const supportMinSpan=perlaModernSupportMinSpanPxV279();
+        const localBayRatio=ownerId===1 ? PERLA_V279_CAP_LOCAL_BAY_OWNER1_SCREEN_RATIO : PERLA_V279_CAP_LOCAL_BAY_OWNER2_SCREEN_RATIO;
+        const localBayW=clamp(Math.round(Math.max(supportMinSpan*PERLA_V279_CAP_LOCAL_BAY_MIN_SUPPORT_MULTIPLIER, screenW*localBayRatio)),PERLA_V279_CAP_LOCAL_BAY_MIN_PX,PERLA_V279_CAP_LOCAL_BAY_MAX_PX);
+        const useLocalBayProfile=!!(PERLA_V279_MODERN_ROOF_CAP_PROFILE_SAFE && PERLA_V279_CAP_LOCAL_BAY_PROFILE_SAFE && bodyW>localBayW*1.35);
         groups++;
+        if(useLocalBayProfile) localBayProfileGroups++;
+        if(ownerId===1) owner1Groups++; else if(ownerId===2) owner2Groups++;
+        maxGroupWidth=Math.max(maxGroupWidth,bodyW);
+        maxOverhang=Math.max(maxOverhang,overhang);
+        maxLocalBayW=Math.max(maxLocalBayW,useLocalBayProfile?localBayW:0);
         for(let px=gLeft; px<=gRight; px++){
             if(pixels>=PERLA_V278_INTEGRATED_CAP_MAX_PIXELS_PER_FRAME || fillRects>=PERLA_V278_INTEGRATED_CAP_MAX_FILL_RECTS){ budgetHit=true; break; }
-            const src=perlaNearestModernSupportColumnV278(px,ownerId,overhang+2);
-            if(src<0) continue;
-            const topY=ModernSupportTopBufferV236[src];
-            const dist=ModernSupportDepthBufferV236[src] || 0;
+            const sample=perlaModernSupportSampleV280(px,ownerId,overhang+2,doorSpans,drawStats);
+            if(!sample) continue;
+            const src=sample.src;
+            const topY=sample.topY;
+            const dist=sample.dist || 0;
             if(!(dist>0 && dist<1e8)) continue;
             const liftPx=Math.abs(projectRoofSliceY(roof.ridgeZ||((roof.eaveZ||roof.wallTopZ||1.1)+.6),dist)-projectRoofSliceY(roof.eaveZ||roof.wallTopZ||1.1,dist));
             const underPx=Math.abs(projectRoofSliceY(roof.eaveZ||roof.wallTopZ||1.1,dist)-projectRoofSliceY(roof.undersideZ||((roof.wallTopZ||1.1)-.16),dist));
-            const capH=clamp(Math.round(liftPx*.42)+1,PERLA_V278_INTEGRATED_CAP_MIN_HEIGHT_PX,PERLA_V278_INTEGRATED_CAP_MAX_HEIGHT_PX);
-            const underH=clamp(Math.round(underPx*.22),PERLA_V278_INTEGRATED_CAP_MIN_UNDER_PX,PERLA_V278_INTEGRATED_CAP_MAX_UNDER_PX);
+            const capMaxH=perlaModernIntegratedCapMaxHeightV280(dist,ownerId);
+            const capBodyFactor=PERLA_V280_CLEAN_MODERN_ROOF_CAP_SAFE ? PERLA_V280_TOWER_PROFILE_BODY_WIDTH_FACTOR : (PERLA_V279_MODERN_ROOF_CAP_PROFILE_SAFE?PERLA_V279_CAP_BODY_WIDTH_FACTOR:0);
+            const capLiftFactor=PERLA_V280_CLEAN_MODERN_ROOF_CAP_SAFE ? PERLA_V280_TOWER_PROFILE_PROJECTED_LIFT_FACTOR : (PERLA_V279_MODERN_ROOF_CAP_PROFILE_SAFE?PERLA_V279_CAP_PROJECTED_LIFT_FACTOR:.42);
+            const capLiftBonus=PERLA_V280_CLEAN_MODERN_ROOF_CAP_SAFE ? PERLA_V280_TOWER_PROFILE_PROJECTED_LIFT_BONUS_PX : (PERLA_V279_MODERN_ROOF_CAP_PROFILE_SAFE?PERLA_V279_CAP_PROJECTED_LIFT_BONUS_PX:1);
+            const bodyCapH=clamp(Math.round(bodyW*capBodyFactor),PERLA_V278_INTEGRATED_CAP_MIN_HEIGHT_PX,capMaxH);
+            const projCapH=clamp(Math.round(liftPx*capLiftFactor)+capLiftBonus,PERLA_V278_INTEGRATED_CAP_MIN_HEIGHT_PX,capMaxH);
+            const capH=PERLA_V279_MODERN_ROOF_CAP_PROFILE_SAFE ? Math.max(bodyCapH,projCapH) : projCapH;
+            const underH=clamp(Math.round(underPx*(PERLA_V279_MODERN_ROOF_CAP_PROFILE_SAFE?PERLA_V279_CAP_UNDERSIDE_FACTOR:.22))+(PERLA_V279_MODERN_ROOF_CAP_PROFILE_SAFE?1:0),PERLA_V278_INTEGRATED_CAP_MIN_UNDER_PX,PERLA_V278_INTEGRATED_CAP_MAX_UNDER_PX);
             if(topY>screenH+capH || topY<-capH-underH-4) continue;
             const u=clamp(Math.abs((px-center)/half),0,1);
             const eaveY=topY+1.0;
             const edgeT=overhang>0 ? Math.min(1, Math.max(0,(px-gLeft+1)/(overhang+1)), Math.max(0,(gRight-px+1)/(overhang+1))) : 1;
-            const roofTop=eaveY - capH*(0.46 + 0.30*edgeT);
+            let profileU=u;
+            if(useLocalBayProfile){
+                const localX=px-left+overhang;
+                const bayIndex=Math.floor(localX/localBayW);
+                const bayCenter=left-overhang+bayIndex*localBayW+localBayW*.5;
+                profileU=clamp(Math.abs((px-bayCenter)/Math.max(6,localBayW*.5)),0,1);
+                localBayProfileColumns++;
+            }
+            const crownT=1-profileU;
+            const pointLift=PERLA_V280_CLEAN_MODERN_ROOF_CAP_SAFE ? Math.pow(clamp(crownT,0,1),PERLA_V280_TOWER_PROFILE_CROWN_POWER) : crownT;
+            const roofTop=PERLA_V280_CLEAN_MODERN_ROOF_CAP_SAFE ? eaveY - capH*(PERLA_V280_TOWER_PROFILE_EDGE_LIFT_FACTOR + PERLA_V280_TOWER_PROFILE_CROWN_LIFT_FACTOR*pointLift) : (PERLA_V279_MODERN_ROOF_CAP_PROFILE_SAFE ? eaveY - capH*(PERLA_V279_CAP_EDGE_LIFT_FACTOR + PERLA_V279_CAP_CROWN_LIFT_FACTOR*crownT) : eaveY - capH*(0.46 + 0.30*edgeT));
             const y0=Math.max(0,Math.floor(roofTop));
             const y1=Math.min(screenH-1,Math.ceil(eaveY+underH));
             if(y1<y0) continue;
             columns++;
+            if(ownerId===1) owner1Columns++; else if(ownerId===2) owner2Columns++;
+            maxCapH=Math.max(maxCapH,capH);
+            maxUnderH=Math.max(maxUnderH,underH);
+            const compactNearCap=!!(PERLA_V280_CLEAN_MODERN_ROOF_CAP_SAFE && dist<PERLA_V280_TOWER_PROFILE_MID_DIST);
             let runStart=-1, runColor=null;
             for(let sy=y0; sy<=y1; sy++){
                 if(pixels>=PERLA_V278_INTEGRATED_CAP_MAX_PIXELS_PER_FRAME || fillRects>=PERLA_V278_INTEGRATED_CAP_MAX_FILL_RECTS){ budgetHit=true; break; }
                 let kind = sy <= Math.round(eaveY)-1 ? 'roof' : 'under';
                 if(Math.abs(sy-Math.round(eaveY))<=1) kind='edge';
-                if(sy<=Math.floor(roofTop)+1 && u<.36) kind='ridge';
+                if(sy<=Math.floor(roofTop)+1 && profileU<.36) kind='ridge';
+                if(compactNearCap) kind='roof';
                 if(!perlaModernIntegratedRoofPixelVisibleV278(px,sy,dist,ownerId,src,topY,drawStats)){
                     if(runStart>=0){
                         ctx.fillStyle=runColor; ctx.fillRect(px,runStart,1,sy-runStart);
@@ -11349,8 +11837,15 @@ function drawModernIntegratedRoofCapV278(time, drawStats){
     }
     if(drawStats){
         drawStats.roofV278=!!PERLA_V278_MODERN_INTEGRATED_ROOF_CAP_SAFE;
+        drawStats.roofV279=!!PERLA_V279_MODERN_ROOF_CAP_PROFILE_SAFE;
         drawStats.v278ModernIntegratedRoofCapSafe=!!PERLA_V278_MODERN_INTEGRATED_ROOF_CAP_SAFE;
         drawStats.v278RoofVisualAuthority='wall_anchored_integrated_cap';
+        drawStats.v279ModernRoofCapProfileSafe=!!PERLA_V279_MODERN_ROOF_CAP_PROFILE_SAFE;
+        drawStats.v279RoofVisualAuthority=PERLA_V280_CLEAN_MODERN_ROOF_CAP_SAFE ? 'clean_wall_anchored_cap_replaces_v265_v277_when_supported' : 'v265_v277_sloped_roof_with_wall_anchored_integrated_cap';
+        drawStats.roofV280=!!PERLA_V280_CLEAN_MODERN_ROOF_CAP_SAFE;
+        drawStats.v280CleanModernRoofCapSafe=!!PERLA_V280_CLEAN_MODERN_ROOF_CAP_SAFE;
+        drawStats.v280TowerLikePointProfileSafe=!!PERLA_V280_CLEAN_MODERN_ROOF_CAP_SAFE;
+        drawStats.v280TowerLikePointProfileMaxHeightPx=PERLA_V280_TOWER_PROFILE_HEIGHT_FAR_PX;
         drawStats.v278UsesModernSupportBuffersV236=true;
         drawStats.v278NoFullRoofRaster=true;
         drawStats.v278ReplacesModernSlopedRoofVisual=!!PERLA_V278_REPLACE_MODERN_SLOPED_ROOF_VISUAL;
@@ -11360,6 +11855,22 @@ function drawModernIntegratedRoofCapV278(time, drawStats){
         drawStats.modernIntegratedRoofCapOwner1PixelsV278=owner1Pixels;
         drawStats.modernIntegratedRoofCapOwner2PixelsV278=owner2Pixels;
         drawStats.modernIntegratedRoofCapFillRectsV278=fillRects;
+        drawStats.modernIntegratedRoofCapGroupsOwner1V279=owner1Groups;
+        drawStats.modernIntegratedRoofCapGroupsOwner2V279=owner2Groups;
+        drawStats.modernIntegratedRoofCapColumnsOwner1V279=owner1Columns;
+        drawStats.modernIntegratedRoofCapColumnsOwner2V279=owner2Columns;
+        drawStats.modernIntegratedRoofCapMaxGroupWidthV279=maxGroupWidth;
+        drawStats.modernIntegratedRoofCapMaxOverhangPxV279=maxOverhang;
+        drawStats.modernIntegratedRoofCapMaxHeightPxV279=maxCapH;
+        drawStats.modernIntegratedRoofCapMaxUnderPxV279=maxUnderH;
+        drawStats.modernIntegratedRoofLocalBayProfileSafeV279=!!PERLA_V279_CAP_LOCAL_BAY_PROFILE_SAFE;
+        drawStats.modernIntegratedRoofLocalBayProfileGroupsV279=localBayProfileGroups;
+        drawStats.modernIntegratedRoofLocalBayProfileColumnsV279=localBayProfileColumns;
+        drawStats.modernIntegratedRoofLocalBayMaxWidthPxV279=maxLocalBayW;
+        drawStats.modernIntegratedRoofMinSupportSpanPxV279=perlaModernSupportMinSpanPxV279();
+        drawStats.modernIntegratedRoofSupportSpanOwner1V279=perlaModernSupportSpanPxV279(1);
+        drawStats.modernIntegratedRoofSupportSpanOwner2V279=perlaModernSupportSpanPxV279(2);
+        drawStats.modernIntegratedRoofSupportGateFallbacksV279=supportGateFallbacks;
         drawStats.modernIntegratedRoofCapBudgetHitV278=!!budgetHit;
         drawStats.modernIntegratedRoofCapPixelBudgetHitV278=!!budgetHit;
         drawStats.modernIntegratedRoofCapWarnPixelsV278=pixels>PERLA_V278_INTEGRATED_CAP_WARN_PIXELS;
@@ -11594,23 +12105,762 @@ function collectModernRoofFaces(r){
         faces.push({kind:'roof', layer:'roof_top', color:p.far, edge:null, pts:[[x0,y0,ez],ridgeA,ridgeB,[x0,y1,ez]]});
         faces.push({kind:'roof', layer:'roof_top', color:p.near, edge:null, pts:[ridgeA,[x1,y0,ez],[x1,y1,ez],ridgeB]});
         // V52: testate triangolari chiuse. Prima si vedeva il cielo attraverso il lato del tetto.
-        faces.push({kind:'gable', layer:'roof_cap', color:gableColor, edge:null, pts:[[x1,y0,ez],[x0,y0,ez],ridgeA]});
-        faces.push({kind:'gable', layer:'roof_cap', color:gableColor, edge:null, pts:[[x0,y1,ez],[x1,y1,ez],ridgeB]});
+        faces.push({kind:'gable', layer:'roof_cap', side:'back_y0', color:gableColor, edge:null, pts:[[x1,y0,ez],[x0,y0,ez],ridgeA]});
+        faces.push({kind:'gable', layer:'roof_cap', side:'front_y1', color:gableColor, edge:null, pts:[[x0,y1,ez],[x1,y1,ez],ridgeB]});
     } else {
         const cy=(y0+y1)*.5;
         ridgeA=[x0,cy,rz]; ridgeB=[x1,cy,rz];
         faces.push({kind:'roof', layer:'roof_top', color:p.far, edge:null, pts:[[x0,y0,ez],[x1,y0,ez],ridgeB,ridgeA]});
         faces.push({kind:'roof', layer:'roof_top', color:p.near, edge:null, pts:[ridgeA,ridgeB,[x1,y1,ez],[x0,y1,ez]]});
         // V52: testate triangolari chiuse per tetti con colmo sull'asse Y.
-        faces.push({kind:'gable', layer:'roof_cap', color:gableColor, edge:null, pts:[[x0,y0,ez],[x0,y1,ez],ridgeA]});
-        faces.push({kind:'gable', layer:'roof_cap', color:gableColor, edge:null, pts:[[x1,y1,ez],[x1,y0,ez],ridgeB]});
+        faces.push({kind:'gable', layer:'roof_cap', side:'back_x0', color:gableColor, edge:null, pts:[[x0,y0,ez],[x0,y1,ez],ridgeA]});
+        faces.push({kind:'gable', layer:'roof_cap', side:'front_x1', color:gableColor, edge:null, pts:[[x1,y1,ez],[x1,y0,ez],ridgeB]});
     }
     // Fasce laterali verticali continue: parte del blocco unico, non linee decorative indipendenti.
-    faces.push({kind:'fascia', layer:'roof_fascia', color:p.fascia, edge:null, pts:[[x0,y1,fz],[x1,y1,fz],[x1,y1,ez],[x0,y1,ez]]});
-    faces.push({kind:'fascia', layer:'roof_fascia', color:p.fascia, edge:null, pts:[[x1,y0,fz],[x0,y0,fz],[x0,y0,ez],[x1,y0,ez]]});
-    faces.push({kind:'fascia', layer:'roof_fascia', color:p.shadow, edge:null, pts:[[x0,y0,fz],[x0,y1,fz],[x0,y1,ez],[x0,y0,ez]]});
-    faces.push({kind:'fascia', layer:'roof_fascia', color:p.shadow, edge:null, pts:[[x1,y1,fz],[x1,y0,fz],[x1,y0,ez],[x1,y1,ez]]});
+    faces.push({kind:'fascia', layer:'roof_fascia', side:'front_y1', color:p.fascia, edge:null, pts:[[x0,y1,fz],[x1,y1,fz],[x1,y1,ez],[x0,y1,ez]]});
+    faces.push({kind:'fascia', layer:'roof_fascia', side:'back_y0', color:p.fascia, edge:null, pts:[[x1,y0,fz],[x0,y0,fz],[x0,y0,ez],[x1,y0,ez]]});
+    faces.push({kind:'fascia', layer:'roof_fascia', side:'left_x0', color:p.shadow, edge:null, pts:[[x0,y0,fz],[x0,y1,fz],[x0,y1,ez],[x0,y0,ez]]});
+    faces.push({kind:'fascia', layer:'roof_fascia', side:'right_x1', color:p.shadow, edge:null, pts:[[x1,y1,fz],[x1,y0,fz],[x1,y0,ez],[x1,y1,ez]]});
     return faces;
+}
+function perlaStableModernRoofPrimitiveEnabledV281(){
+    return !!PERLA_V281_MODERN_ROOF_PRIMITIVE_AUTHORITY_SAFE;
+}
+function perlaStableModernRoofPrimitiveOwnerV281(r){
+    return !!(r && r.modernSolid && PERLA_V281_OWNER_IDS[r.ownerId]);
+}
+function perlaStableModernRoofPrimitiveProjectedBoundsV281(faces){
+    let minX=9999,maxX=-9999,minY=9999,maxY=-9999, projectedFaces=0, maxAreaRatio=0, maxScreenRatio=0;
+    for(let i=0;i<faces.length;i++){
+        const projected=projectRoofPolyPoints(faces[i].pts);
+        if(!projected) continue;
+        let fx0=9999,fx1=-9999,fy0=9999,fy1=-9999;
+        for(let j=0;j<projected.length;j++){
+            fx0=Math.min(fx0,projected[j].x); fx1=Math.max(fx1,projected[j].x);
+            fy0=Math.min(fy0,projected[j].y); fy1=Math.max(fy1,projected[j].y);
+        }
+        if(fx1<-.5 || fx0>screenW+.5 || fy1<-.5 || fy0>screenH+.5) continue;
+        projectedFaces++;
+        minX=Math.min(minX,fx0); maxX=Math.max(maxX,fx1); minY=Math.min(minY,fy0); maxY=Math.max(maxY,fy1);
+        const w=Math.max(0,Math.min(screenW,fx1)-Math.max(0,fx0));
+        const h=Math.max(0,Math.min(screenH,fy1)-Math.max(0,fy0));
+        maxAreaRatio=Math.max(maxAreaRatio,(w*h)/Math.max(1,screenW*screenH));
+        maxScreenRatio=Math.max(maxScreenRatio,Math.max(w/Math.max(1,screenW),h/Math.max(1,screenH)));
+    }
+    return projectedFaces ? {projectedFaces,minX,maxX,minY,maxY,maxAreaRatio,maxScreenRatio} : null;
+}
+function perlaStableModernRoofPrimitiveFaceBoundsV281(face){
+    const projected=projectRoofPolyPoints(face.pts);
+    if(!projected) return null;
+    let minX=9999,maxX=-9999,minY=9999,maxY=-9999;
+    for(let i=0;i<projected.length;i++){
+        minX=Math.min(minX,projected[i].x); maxX=Math.max(maxX,projected[i].x);
+        minY=Math.min(minY,projected[i].y); maxY=Math.max(maxY,projected[i].y);
+    }
+    if(maxX<-.5 || minX>screenW+.5 || maxY<-.5 || minY>screenH+.5) return null;
+    const w=Math.max(0,Math.min(screenW,maxX)-Math.max(0,minX));
+    const h=Math.max(0,Math.min(screenH,maxY)-Math.max(0,minY));
+    return {minX,maxX,minY,maxY,w,h,areaRatio:(w*h)/Math.max(1,screenW*screenH),heightRatio:h/Math.max(1,screenH)};
+}
+function perlaStableModernRoofPrimitiveFrontGableFacesCameraV281(face, roof){
+    if(!face || !roof || face.kind!=='gable') return false;
+    if(roof.ownerId===1 && roof.axis==='x' && face.side==='front_y1'){
+        if(playerInsideRoof(roof)) return false;
+        const centerX=(roof.x0+roof.x3)*.5;
+        const halfW=Math.max(.5,(roof.x3-roof.x0)*.5);
+        const nearFront=posY>=roof.y3-PERLA_V281_OWNER1_FRONT_GABLE_KEEP_FRONT_PAD;
+        const lateralOk=Math.abs(posX-centerX)<=halfW+PERLA_V281_OWNER1_FRONT_GABLE_KEEP_LATERAL_PAD;
+        return nearFront && lateralOk && dirY<PERLA_V281_OWNER1_FRONT_GABLE_KEEP_DIRY_MAX;
+    }
+    if(roof.ownerId===2 && roof.axis==='y' && face.side==='front_x1') return posX>roof.x3 && dirX<-.10;
+    return false;
+}
+function perlaStableModernRoofPrimitiveInteriorFasciaRejectV281(face, roof){
+    return !!(face && roof && face.kind==='fascia' && playerInsideRoof(roof));
+}
+function perlaStableModernRoofPrimitiveSuppressOwner1ExteriorFasciaV281(face, roof){
+    return !!(face && roof && roof.ownerId===1 && face.kind==='fascia' && !playerInsideRoof(roof));
+}
+function perlaStableModernRoofPrimitiveSuppressOwner1ExteriorEaveEdgesV281(line, roof){
+    return !!(line && roof && roof.ownerId===1 && line.kind==='eave' && !playerInsideRoof(roof));
+}
+function perlaStableModernRoofPrimitiveSuppressOwner1ExteriorDecorativeEdgesV281(line, roof){
+    return !!(line && roof && roof.ownerId===1 && !playerInsideRoof(roof));
+}
+function perlaStableModernRoofPrimitiveOwner1ExteriorFlushWallJoinV281(roof){
+    return !!(roof && roof.ownerId===1 && !playerInsideRoof(roof));
+}
+function perlaStableModernRoofPrimitiveOwner1PortalFrontGableFlatColorV282(face, roof){
+    if(!PERLA_V282_OWNER1_PORTAL_FRONT_GABLE_FLAT_COLOR_SAFE || !face || !roof) return false;
+    if(!(roof.ownerId===1 && roof.axis==='x' && face.kind==='gable' && face.side==='front_y1')) return false;
+    if(playerInsideRoof(roof)) return false;
+    const nearFront=posY>=roof.y3-PERLA_V281_OWNER1_FRONT_GABLE_KEEP_FRONT_PAD && posY<=roof.y3+PERLA_V282_OUTSIDE_DOOR_FRONT_DIST;
+    const lateralOk=posX>=roof.x0-PERLA_V282_OUTSIDE_DOOR_LATERAL_PAD && posX<=roof.x3+PERLA_V282_OUTSIDE_DOOR_LATERAL_PAD;
+    const lookingUnder=dirY<PERLA_V282_OUTSIDE_DOOR_LOOK_DOT_MAX;
+    return nearFront && lateralOk && lookingUnder;
+}
+function perlaStableModernRoofPrimitiveFullSurfaceOwnerV282(roof){
+    return !!(PERLA_V281_OWNER1_FULL_SURFACE_SAFE && roof && roof.ownerId===1) || !!(PERLA_V282_OWNER2_FULL_SURFACE_QUALITY_SAFE && roof && roof.ownerId===2);
+}
+function perlaStableModernRoofPrimitiveOwner1PortalDoorV282(roof){
+    if(!roof || !Array.isArray(roof.doors)) return null;
+    for(let i=0;i<roof.doors.length;i++){
+        const d=roof.doors[i];
+        if(d && d.dir==='h' && Number.isFinite(d.x) && Number.isFinite(d.y)) return d;
+    }
+    return null;
+}
+function perlaStableModernRoofPrimitiveOwner1PortalClipV282(roof){
+    if(!PERLA_V282_OWNER1_PORTAL_UNDERSIDE_SAFE || !roof || roof.ownerId!==1 || roof.axis!=='x' || playerInsideRoof(roof)) return null;
+    const frontDist=posY-roof.y3;
+    if(frontDist<-.15 || frontDist>PERLA_V282_OWNER1_PORTAL_UNDERSIDE_FRONT_DIST) return null;
+    const lateralOk=posX>=roof.x0-PERLA_V282_OUTSIDE_DOOR_LATERAL_PAD && posX<=roof.x3+PERLA_V282_OUTSIDE_DOOR_LATERAL_PAD;
+    if(!lateralOk || dirY>=PERLA_V282_OUTSIDE_DOOR_LOOK_DOT_MAX) return null;
+    const door=perlaStableModernRoofPrimitiveOwner1PortalDoorV282(roof);
+    if(!door) return null;
+    const w=Math.max(1,door.w||1);
+    const x0=Number.isFinite(roof.x1) ? roof.x1 : door.x;
+    const x1=Number.isFinite(roof.x2) ? roof.x2+1 : door.x+w;
+    const y=Math.min(roof.y3-.02, Math.max(roof.y1+.02, door.y+1));
+    const z0=0, z1=roof.wallTopZ || roof.eaveZ || 1.1;
+    const pts=[
+        projectRoofPoint(x0,y,z0), projectRoofPoint(x1,y,z0),
+        projectRoofPoint(x0,y,z1), projectRoofPoint(x1,y,z1)
+    ].filter(Boolean);
+    if(pts.length<2) return null;
+    let minX=9999,maxX=-9999;
+    for(let i=0;i<pts.length;i++){ minX=Math.min(minX,pts[i].x); maxX=Math.max(maxX,pts[i].x); }
+    const pad=Math.max(0,PERLA_V282_OWNER1_PORTAL_UNDERSIDE_PAD_PX||0);
+    const sx0=clamp(Math.floor(minX-pad),0,screenW-1);
+    const sx1=clamp(Math.ceil(maxX+pad),0,screenW-1);
+    if(sx1<=sx0+4) return null;
+    return {x0:sx0,x1:sx1,door,frontY:y};
+}
+function perlaStableModernRoofPrimitiveDrawOwner1PortalUndersideV282(roof,budget,drawStats){
+    const clip=perlaStableModernRoofPrimitiveOwner1PortalClipV282(roof);
+    if(!clip) return false;
+    const z=Math.max(.84, Math.min((roof.wallTopZ||roof.eaveZ||1.1)-.035, (roof.undersideZ!=null?roof.undersideZ:((roof.wallTopZ||1.1)-.14))+.035));
+    const yFront=clip.frontY;
+    const yBack=Math.max(roof.y0+.04, Math.min(yFront-.05,roof.y3-.08));
+    const xLeft=Number.isFinite(roof.x1) ? roof.x1 : roof.x0;
+    const xRight=Number.isFinite(roof.x2) ? roof.x2+1 : roof.x3;
+    const face={
+        kind:'portal_underside',
+        layer:'interior_ceiling',
+        color:perlaModernInteriorRoofSlabFlatCeilingColorV282(roof.ownerId,perlaModernInteriorRoofSlabTypeForOwnerV282(roof.ownerId)),
+        pts:[[xLeft,yFront,z],[xRight,yFront,z],[xRight,yBack,z],[xLeft,yBack,z]]
+    };
+    const beforePixels=budget.pixels, beforeRects=budget.fillRects;
+    const drew=perlaStableModernRoofPrimitiveDrawPolyV281(face,roof,budget,drawStats,{portalClip:clip});
+    if(drawStats){
+        drawStats.modernInteriorRoofPortalUndersideV282=!!(drawStats.modernInteriorRoofPortalUndersideV282||drew);
+        drawStats.modernInteriorRoofPortalUndersideFacesV282=(drawStats.modernInteriorRoofPortalUndersideFacesV282||0)+(drew?1:0);
+        drawStats.modernInteriorRoofPortalUndersidePixelsV282=(drawStats.modernInteriorRoofPortalUndersidePixelsV282||0)+Math.max(0,budget.pixels-beforePixels);
+        drawStats.modernInteriorRoofPortalUndersideFillRectsV282=(drawStats.modernInteriorRoofPortalUndersideFillRectsV282||0)+Math.max(0,budget.fillRects-beforeRects);
+        drawStats.modernInteriorRoofPortalUndersideClipX0V282=clip.x0;
+        drawStats.modernInteriorRoofPortalUndersideClipX1V282=clip.x1;
+    }
+    return drew;
+}
+function perlaStableModernRoofPrimitiveOwner2PortalDoorV282(roof){
+    if(!roof || !Array.isArray(roof.doors)) return null;
+    for(let i=0;i<roof.doors.length;i++){
+        const d=roof.doors[i];
+        if(d && d.dir==='v' && Number.isFinite(d.x) && Number.isFinite(d.y)) return d;
+    }
+    return null;
+}
+function perlaStableModernRoofPrimitiveOwner2PortalClipV282(roof){
+    if(!PERLA_V282_OWNER2_PORTAL_UNDERSIDE_SAFE || !roof || roof.ownerId!==2 || roof.axis!=='y' || playerInsideRoof(roof)) return null;
+    const frontDist=roof.x0-posX;
+    if(frontDist<-.15 || frontDist>PERLA_V282_OUTSIDE_DOOR_FRONT_DIST) return null;
+    const lateralOk=posY>=roof.y0-PERLA_V282_OUTSIDE_DOOR_LATERAL_PAD && posY<=roof.y3+PERLA_V282_OUTSIDE_DOOR_LATERAL_PAD;
+    if(!lateralOk || dirX<=-PERLA_V282_OUTSIDE_DOOR_LOOK_DOT_MAX) return null;
+    const door=perlaStableModernRoofPrimitiveOwner2PortalDoorV282(roof);
+    if(!door) return null;
+    const w=Math.max(1,door.w||1);
+    const x=Math.max(roof.x0+.02, Math.min(roof.x3-.02, door.x));
+    const y0=door.y, y1=door.y+w;
+    const z0=0, z1=roof.wallTopZ || roof.eaveZ || 1.1;
+    const pts=[
+        projectRoofPoint(x,y0,z0), projectRoofPoint(x,y1,z0),
+        projectRoofPoint(x,y0,z1), projectRoofPoint(x,y1,z1)
+    ].filter(Boolean);
+    if(pts.length<2) return null;
+    let minX=9999,maxX=-9999;
+    for(let i=0;i<pts.length;i++){ minX=Math.min(minX,pts[i].x); maxX=Math.max(maxX,pts[i].x); }
+    const pad=Math.max(0,PERLA_V282_OWNER1_PORTAL_UNDERSIDE_PAD_PX||0);
+    const sx0=clamp(Math.floor(minX-pad),0,screenW-1);
+    const sx1=clamp(Math.ceil(maxX+pad),0,screenW-1);
+    if(sx1<=sx0+4) return null;
+    return {x0:sx0,x1:sx1,door,frontX:x};
+}
+function perlaStableModernRoofPrimitiveDrawOwner2PortalUndersideV282(roof,budget,drawStats){
+    const clip=perlaStableModernRoofPrimitiveOwner2PortalClipV282(roof);
+    if(!clip) return false;
+    const z=Math.max(.84, Math.min((roof.wallTopZ||roof.eaveZ||1.1)-.035, (roof.undersideZ!=null?roof.undersideZ:((roof.wallTopZ||1.1)-.14))+.035));
+    const xFront=clip.frontX;
+    const xBack=Math.min(roof.x3-.04, Math.max(roof.x2+.96,xFront+.05));
+    const face={
+        kind:'portal_underside',
+        layer:'interior_ceiling',
+        color:perlaModernInteriorRoofSlabFlatCeilingColorV282(roof.ownerId,perlaModernInteriorRoofSlabTypeForOwnerV282(roof.ownerId)),
+        pts:[[xFront,roof.y0,z],[xFront,roof.y3,z],[xBack,roof.y3,z],[xBack,roof.y0,z]]
+    };
+    const beforePixels=budget.pixels, beforeRects=budget.fillRects;
+    const drew=perlaStableModernRoofPrimitiveDrawPolyV281(face,roof,budget,drawStats,{portalClip:clip});
+    if(drawStats){
+        drawStats.modernInteriorRoofPortalUndersideOwner2V282=!!(drawStats.modernInteriorRoofPortalUndersideOwner2V282||drew);
+        drawStats.modernInteriorRoofPortalUndersideOwner2FacesV282=(drawStats.modernInteriorRoofPortalUndersideOwner2FacesV282||0)+(drew?1:0);
+        drawStats.modernInteriorRoofPortalUndersideOwner2PixelsV282=(drawStats.modernInteriorRoofPortalUndersideOwner2PixelsV282||0)+Math.max(0,budget.pixels-beforePixels);
+        drawStats.modernInteriorRoofPortalUndersideOwner2FillRectsV282=(drawStats.modernInteriorRoofPortalUndersideOwner2FillRectsV282||0)+Math.max(0,budget.fillRects-beforeRects);
+        drawStats.modernInteriorRoofPortalUndersideOwner2ClipX0V282=clip.x0;
+        drawStats.modernInteriorRoofPortalUndersideOwner2ClipX1V282=clip.x1;
+    }
+    return drew;
+}
+function perlaStableModernRoofPrimitiveOwner1WallJoinAllowV281(face, roof, roofPlaneAtEave, baseAllow){
+    if(!perlaStableModernRoofPrimitiveOwner1ExteriorFlushWallJoinV281(roof)) return baseAllow;
+    let allow=PERLA_V281_SAME_OWNER_WALL_TOP_ALLOW_PX;
+    if(face && (face.kind==='roof' || face.kind==='gable' || roofPlaneAtEave)){
+        const nearFront=posY>=roof.y3-PERLA_V281_OWNER1_FRONT_GABLE_KEEP_FRONT_PAD;
+        const lateralView=Math.abs(dirX)>=PERLA_V281_OWNER1_LATERAL_ROOF_JOIN_DIRX_MIN && dirY<PERLA_V281_OWNER1_FRONT_GABLE_KEEP_DIRY_MAX;
+        if(nearFront && lateralView) allow=Math.max(allow,PERLA_V281_OWNER1_LATERAL_ROOF_JOIN_ALLOW_PX);
+    }
+    return Math.max(allow, baseAllow||0);
+}
+function perlaStableModernRoofPrimitiveCeilingOwnsCameraCellV281(roof){
+    if(!roof) return false;
+    const px=clamp(Math.floor(posX),0,mapW-1), py=clamp(Math.floor(posY),0,mapH-1);
+    if(cMap && cMap[py] && cMap[py][px]>0 && ceilingOwnerMap && ceilingOwnerMap[py] && ceilingOwnerMap[py][px]===roof.ownerId) return true;
+    return perlaModernInteriorRoofSlabCameraOwnsRoofV282(roof, null);
+}
+function perlaStableModernRoofPrimitiveSuppressExteriorCeilingVisualV281(owner, meta){
+    if(!PERLA_V281_MODERN_ROOF_PRIMITIVE_AUTHORITY_SAFE || !owner || owner!==1) return false;
+    if(meta && meta.v282InteriorRoofSlab) return false;
+    const roof=(typeof getModernCoverForOwner==='function') ? getModernCoverForOwner(owner) : null;
+    if(!roof || playerInsideRoof(roof)) return false;
+    const px=clamp(Math.floor(posX),0,mapW-1), py=clamp(Math.floor(posY),0,mapH-1);
+    if(cMap && cMap[py] && cMap[py][px]>0 && ceilingOwnerMap && ceilingOwnerMap[py] && ceilingOwnerMap[py][px]===owner) return false;
+    if(!meta) return true;
+    return !!(meta.externalClone && !meta.innerContinuity);
+}
+function perlaStableModernRoofPrimitiveRejectNearFaceV281(face, suppressLargeTop, roof){
+    if(!suppressLargeTop || !face) return false;
+    const b=perlaStableModernRoofPrimitiveFaceBoundsV281(face);
+    if(!b) return false;
+    if(face.kind==='roof') return b.minY<=1 && (b.areaRatio>PERLA_V281_NEAR_FACE_REJECT_AREA_RATIO || b.heightRatio>PERLA_V281_NEAR_FACE_REJECT_HEIGHT_RATIO);
+    if(perlaStableModernRoofPrimitiveFrontGableFacesCameraV281(face,roof) && b.maxY>=0) return false;
+    if(face.kind==='gable' && b.maxY>=screenH*.20 && b.heightRatio<=.45) return false;
+    if(face.kind==='fascia' && b.minY>1 && b.maxY>=screenH*.22 && b.heightRatio<=.40 && b.w<screenW*.72) return false;
+    if(b.maxY<screenH*PERLA_V281_NEAR_FACE_REJECT_MAXY_RATIO) return true;
+    return b.minY<=1 && (b.areaRatio>PERLA_V281_NEAR_FACE_REJECT_AREA_RATIO || b.heightRatio>PERLA_V281_NEAR_FACE_REJECT_HEIGHT_RATIO);
+}
+function perlaStableModernRoofPrimitiveNearRowsV281(face, roof, nearDoorTopRisk, suppressLargeTop, drawStats){
+    if(!face || !(nearDoorTopRisk || suppressLargeTop)) return 0;
+    if(roof && roof.ownerId===1){
+        if(drawStats) drawStats.modernStableRoofPrimitiveOwner1FullSurfaceV281=(drawStats.modernStableRoofPrimitiveOwner1FullSurfaceV281||0)+1;
+        return 0;
+    }
+    const b=perlaStableModernRoofPrimitiveFaceBoundsV281(face);
+    if(!b) return 0;
+    const nearFrame=b.minY<=1 || b.maxY<screenH*PERLA_V281_NEAR_FACE_REJECT_MAXY_RATIO;
+    const largeProjected=b.areaRatio>PERLA_V281_NEAR_FACE_REJECT_AREA_RATIO || b.heightRatio>PERLA_V281_NEAR_FACE_REJECT_HEIGHT_RATIO;
+    if(face.kind==='roof'){
+        if(nearDoorTopRisk || suppressLargeTop || nearFrame || largeProjected){
+            let maxRows=b.w>screenW*.72 ? Math.max(14,PERLA_V281_NEAR_TOP_FACE_MAX_ROWS-4) : PERLA_V281_NEAR_TOP_FACE_MAX_ROWS;
+            if(roof && roof.ownerId===2) maxRows=Math.max(12,maxRows-4);
+            if(drawStats){
+                drawStats.modernStableRoofPrimitiveClippedTopFacesV281=(drawStats.modernStableRoofPrimitiveClippedTopFacesV281||0)+1;
+                drawStats.modernStableRoofPrimitiveBoundedClippedTopFacesV281=(drawStats.modernStableRoofPrimitiveBoundedClippedTopFacesV281||0)+1;
+                drawStats.modernStableRoofPrimitiveBoundedClipRowsV281=(drawStats.modernStableRoofPrimitiveBoundedClipRowsV281||0)+maxRows;
+                drawStats.modernStableRoofPrimitiveBoundedClipMaxRowsV281=Math.max(drawStats.modernStableRoofPrimitiveBoundedClipMaxRowsV281||0,maxRows);
+                drawStats.modernStableRoofPrimitiveBoundedClipPixelsSavedV281=(drawStats.modernStableRoofPrimitiveBoundedClipPixelsSavedV281||0)+Math.max(0,Math.floor(b.w*Math.max(0,b.h-maxRows)));
+            }
+            return maxRows;
+        }
+        return 0;
+    }
+    if(face.kind==='gable' && (nearDoorTopRisk || suppressLargeTop) && nearFrame && largeProjected){
+        if(perlaStableModernRoofPrimitiveFrontGableFacesCameraV281(face,roof)){
+            if(drawStats) drawStats.modernStableRoofPrimitiveFullFrontGableV281=(drawStats.modernStableRoofPrimitiveFullFrontGableV281||0)+1;
+            return 0;
+        }
+        let maxRows=b.w>screenW*.72 ? Math.max(20,PERLA_V281_FRONT_GABLE_MAX_ROWS-6) : PERLA_V281_FRONT_GABLE_MAX_ROWS;
+        if(roof && roof.ownerId===2) maxRows=Math.max(18,maxRows-4);
+        if(drawStats){
+            drawStats.modernStableRoofPrimitiveBoundedClippedFrontGableV281=(drawStats.modernStableRoofPrimitiveBoundedClippedFrontGableV281||0)+1;
+            drawStats.modernStableRoofPrimitiveBoundedFrontGableRowsV281=(drawStats.modernStableRoofPrimitiveBoundedFrontGableRowsV281||0)+maxRows;
+        }
+        return maxRows;
+    }
+    if(face.kind==='fascia' && (nearDoorTopRisk || suppressLargeTop) && (nearFrame || largeProjected)){
+        const maxRows=roof && roof.ownerId===2 ? 8 : PERLA_V281_NEAR_FASCIA_MAX_ROWS;
+        if(drawStats){
+            drawStats.modernStableRoofPrimitiveBoundedClippedFasciaV281=(drawStats.modernStableRoofPrimitiveBoundedClippedFasciaV281||0)+1;
+            drawStats.modernStableRoofPrimitiveBoundedFasciaRowsV281=(drawStats.modernStableRoofPrimitiveBoundedFasciaRowsV281||0)+maxRows;
+        }
+        return maxRows;
+    }
+    return 0;
+}
+function perlaStableModernRoofPrimitivePreflightV281(r, drawStats){
+    if(!perlaStableModernRoofPrimitiveEnabledV281() || !perlaStableModernRoofPrimitiveOwnerV281(r)) return false;
+    if(perlaStableModernRoofPrimitiveCeilingOwnsCameraCellV281(r)){
+        if(drawStats) drawStats.modernStableRoofPrimitiveSuppressedByCeilingOwnerCellV281=(drawStats.modernStableRoofPrimitiveSuppressedByCeilingOwnerCellV281||0)+1;
+        return false;
+    }
+    if(!shouldConsiderRoofSegmentV130(r) || !shouldDrawModernExteriorRoof(r)) return false;
+    const dist=(typeof roofCameraDistance==='function') ? roofCameraDistance(r) : 0;
+    if(!(dist>0) || dist>PERLA_V281_MAX_DIST){
+        if(drawStats) drawStats.modernStableRoofPrimitiveProjectionRejectedV281=(drawStats.modernStableRoofPrimitiveProjectionRejectedV281||0)+1;
+        return false;
+    }
+    const faces=collectModernRoofFaces(r);
+    const bounds=perlaStableModernRoofPrimitiveProjectedBoundsV281(faces);
+    if(!bounds){
+        if(drawStats) drawStats.modernStableRoofPrimitiveProjectionRejectedV281=(drawStats.modernStableRoofPrimitiveProjectionRejectedV281||0)+1;
+        return false;
+    }
+    if((bounds.maxAreaRatio>PERLA_V281_PREFLIGHT_MAX_AREA_RATIO || bounds.maxScreenRatio>PERLA_V281_PREFLIGHT_MAX_SCREEN_RATIO) && drawStats){
+        drawStats.modernStableRoofPrimitivePreflightLargeTopSuppressionV281=(drawStats.modernStableRoofPrimitivePreflightLargeTopSuppressionV281||0)+1;
+    }
+    return true;
+}
+function perlaStableModernRoofPrimitiveReplacesSegmentV281(r, drawStats){
+    const ok=perlaStableModernRoofPrimitivePreflightV281(r, drawStats);
+    if(ok && drawStats){
+        drawStats.modernStableRoofPrimitiveEligibleV281=(drawStats.modernStableRoofPrimitiveEligibleV281||0)+1;
+        if(r.ownerId===1) drawStats.modernStableRoofPrimitiveEligibleOwner1V281=(drawStats.modernStableRoofPrimitiveEligibleOwner1V281||0)+1;
+        if(r.ownerId===2) drawStats.modernStableRoofPrimitiveEligibleOwner2V281=(drawStats.modernStableRoofPrimitiveEligibleOwner2V281||0)+1;
+    }
+    return ok;
+}
+function perlaStableModernRoofPrimitiveBlocksLegacyFallbackV281(r, drawStats){
+    if(perlaStableModernRoofPrimitiveOwnerV281(r) && perlaStableModernRoofPrimitiveCeilingOwnsCameraCellV281(r)){
+        if(drawStats) drawStats.modernStableRoofPrimitiveLegacyFallbackBlockedByInteriorSlabV282=(drawStats.modernStableRoofPrimitiveLegacyFallbackBlockedByInteriorSlabV282||0)+1;
+        return true;
+    }
+    if(perlaStableModernRoofPrimitiveReplacesSegmentV281(r,null)) return true;
+    if(!(PERLA_V281_QA_DISABLE_OWNER12_LEGACY_FALLBACK && perlaStableModernRoofPrimitiveEnabledV281() && perlaStableModernRoofPrimitiveOwnerV281(r) && shouldConsiderRoofSegmentV130(r) && shouldDrawModernExteriorRoof(r))) return false;
+    if(drawStats) drawStats.modernStableRoofPrimitiveQaBlockedLegacyFallbackV281=(drawStats.modernStableRoofPrimitiveQaBlockedLegacyFallbackV281||0)+1;
+    return true;
+}
+function perlaStableModernRoofPrimitiveColorV281(face, roof, depth){
+    const p=(roof&&roof.palette)||{};
+    let base=face.color || p.near || '#b84b2e';
+    if(face.kind==='fascia') base=face.color || p.fascia || p.shadow || '#6b2a1b';
+    if(face.kind==='gable') base=face.color || p.gable || p.fascia || '#7f302c';
+    if(perlaStableModernRoofPrimitiveOwner1PortalFrontGableFlatColorV282(face,roof)) return perlaModernInteriorRoofSlabFlatCeilingColorV282(roof.ownerId,perlaModernInteriorRoofSlabTypeForOwnerV282(roof.ownerId));
+    if(face.kind==='portal_underside') return base;
+    return roofPremixedFogColorV106(base,depth||0);
+}
+function perlaStableModernRoofPrimitiveVisibleAtV281(sx, sy, depth, roof, face, wz, drawStats){
+    if(!roofVisibleAt(sx,sy,depth,roof,face.layer,wz)) return false;
+    const wallD=ZBuffer && ZBuffer[sx] || 1000;
+    const wallOwner=WallOwnerBuffer ? (WallOwnerBuffer[sx]||0) : 0;
+    if(roof && roof.ownerId && wallOwner===roof.ownerId && wallD>0 && wallD<999 && depth>wallD+PERLA_V281_SAME_OWNER_WALL_BODY_EPS){
+        const wt=WallTopBuffer && WallTopBuffer[sx]!=null ? WallTopBuffer[sx] : screenH;
+        const wb=WallBottomBuffer && WallBottomBuffer[sx]!=null ? WallBottomBuffer[sx] : -1;
+        const roofPlaneAtEave=!!(face && face.kind==='roof' && typeof wz==='number' && roof.eaveZ!=null && wz<=roof.eaveZ+PERLA_V281_WALL_TOP_ROOF_JOIN_Z_EPS);
+        let joinAllow=(face && (face.kind==='fascia' || face.kind==='gable' || roofPlaneAtEave)) ? PERLA_V281_WALL_TOP_ROOF_JOIN_ALLOW_PX : PERLA_V281_SAME_OWNER_WALL_TOP_ALLOW_PX;
+        if(perlaStableModernRoofPrimitiveOwner1ExteriorFlushWallJoinV281(roof)) joinAllow=perlaStableModernRoofPrimitiveOwner1WallJoinAllowV281(face,roof,roofPlaneAtEave,joinAllow);
+        if(roofPlaneAtEave && sy<wt+joinAllow && drawStats) drawStats.modernStableRoofPrimitiveWallTopRoofPlaneJoinAllowedV281=(drawStats.modernStableRoofPrimitiveWallTopRoofPlaneJoinAllowedV281||0)+1;
+        if(sy>=wt+joinAllow && sy<=Math.max(wt,wb)){
+            if(drawStats) drawStats.modernStableRoofPrimitiveSameOwnerWallBodyRejectedV281=(drawStats.modernStableRoofPrimitiveSameOwnerWallBodyRejectedV281||0)+1;
+            return false;
+        }
+    }
+    return true;
+}
+function perlaStableModernRoofPrimitiveFastSpanV281(sx, y0, y1, top, bot, roof, face, drawStats){
+    if(!perlaStableModernRoofPrimitiveFullSurfaceOwnerV282(roof) || !face) return null;
+    if(y1<y0) return null;
+    const denom=Math.max(.001,bot.y-top.y);
+    const sampleAt=(sy)=>{
+        const v=(sy+.5-top.y)/denom;
+        return {
+            d:top.d+(bot.d-top.d)*v,
+            z:top.z+(bot.z-top.z)*v
+        };
+    };
+    const midY=clamp(((y0+y1)>>1),0,screenH-1);
+    const mid=sampleAt(midY);
+    const wallD=ZBuffer && ZBuffer[sx] || 1000;
+    const wallOwner=WallOwnerBuffer ? (WallOwnerBuffer[sx]||0) : 0;
+    if(wallOwner===roof.ownerId && wallD>0 && wallD<999 && (mid.d>wallD+PERLA_V281_SAME_OWNER_WALL_BODY_EPS || face.kind==='fascia')){
+        const wt=WallTopBuffer && WallTopBuffer[sx]!=null ? WallTopBuffer[sx] : screenH;
+        const roofPlaneAtEave=!!(face.kind==='roof' && roof.eaveZ!=null && Math.min(top.z||0,bot.z||0)<=roof.eaveZ+PERLA_V281_WALL_TOP_ROOF_JOIN_Z_EPS);
+        let joinAllow=(face.kind==='fascia' || face.kind==='gable' || roofPlaneAtEave) ? PERLA_V281_WALL_TOP_ROOF_JOIN_ALLOW_PX : PERLA_V281_SAME_OWNER_WALL_TOP_ALLOW_PX;
+        if(perlaStableModernRoofPrimitiveOwner1ExteriorFlushWallJoinV281(roof)) joinAllow=perlaStableModernRoofPrimitiveOwner1WallJoinAllowV281(face,roof,roofPlaneAtEave,joinAllow);
+        y1=Math.min(y1,Math.max(0,(wt+joinAllow-1)|0));
+        if(y1<y0){
+            if(drawStats) drawStats.modernStableRoofPrimitiveFastSpanWallRejectedV281=(drawStats.modernStableRoofPrimitiveFastSpanWallRejectedV281||0)+1;
+            return null;
+        }
+    }
+    const topSample=sampleAt(y0);
+    const botSample=sampleAt(y1);
+    const testY=clamp(((y0+y1)>>1),0,screenH-1);
+    const testSample=sampleAt(testY);
+    if(!roofVisibleAt(sx,testY,testSample.d,roof,face.layer,testSample.z)) return null;
+    return {y0,y1,depth:Math.min(topSample.d,botSample.d,testSample.d), z:testSample.z};
+}
+function perlaStableModernRoofPrimitiveDrawPolyV281(face, roof, budget, drawStats, opts){
+    opts=opts||{};
+    const projected=projectRoofPolyPoints(face.pts);
+    if(!projected){
+        if(drawStats) drawStats.modernStableRoofPrimitiveProjectionRejectedV281=(drawStats.modernStableRoofPrimitiveProjectionRejectedV281||0)+1;
+        return false;
+    }
+    let minX=9999,maxX=-9999,minY=9999,maxY=-9999,avgD=0;
+    for(let i=0;i<projected.length;i++){
+        minX=Math.min(minX,projected[i].x); maxX=Math.max(maxX,projected[i].x);
+        minY=Math.min(minY,projected[i].y); maxY=Math.max(maxY,projected[i].y);
+        avgD+=projected[i].d||0;
+    }
+    avgD/=Math.max(1,projected.length);
+    if(maxX<-.5 || minX>screenW+.5 || maxY<-.5 || minY>screenH+.5 || avgD>PERLA_V281_MAX_DIST){
+        if(drawStats) drawStats.modernStableRoofPrimitiveProjectionRejectedV281=(drawStats.modernStableRoofPrimitiveProjectionRejectedV281||0)+1;
+        return false;
+    }
+    const xA=clamp(Math.floor(minX),0,screenW-1), xB=clamp(Math.ceil(maxX),0,screenW-1);
+    const step=perlaStableModernRoofPrimitiveFullSurfaceOwnerV282(roof) ? PERLA_V281_OWNER1_FAST_SPAN_STEP : (avgD>PERLA_V281_FAR_STEP_DIST ? PERLA_V281_FAR_COLUMN_STEP : 1);
+    const fillW=Math.max(1,step|0);
+    const color=perlaStableModernRoofPrimitiveColorV281(face,roof,avgD);
+    const portalClip=opts.portalClip||null;
+    let drew=false, columns=0, pixels=0, fillRects=0, hierarchyRejected=0;
+    ctx.save();
+    ctx.globalAlpha=1;
+    ctx.fillStyle=color;
+    const maxPixels=(PERLA_V281_OWNER1_FULL_SURFACE_SAFE && roof && roof.ownerId===1) ? PERLA_V281_OWNER1_FULL_SURFACE_MAX_COVERAGE_PIXELS : ((PERLA_V282_OWNER2_FULL_SURFACE_QUALITY_SAFE && roof && roof.ownerId===2) ? PERLA_V282_OWNER2_FULL_SURFACE_MAX_COVERAGE_PIXELS : PERLA_V281_MAX_PIXELS_PER_FRAME);
+    const maxFillRects=(PERLA_V281_OWNER1_FULL_SURFACE_SAFE && roof && roof.ownerId===1) ? PERLA_V281_OWNER1_FULL_SURFACE_MAX_FILL_RECTS : ((PERLA_V282_OWNER2_FULL_SURFACE_QUALITY_SAFE && roof && roof.ownerId===2) ? PERLA_V282_OWNER2_FULL_SURFACE_MAX_FILL_RECTS : PERLA_V281_MAX_FILL_RECTS);
+    for(let sx=xA; sx<=xB; sx+=step){
+        if(columns>=PERLA_V281_MAX_COLUMNS_PER_FACE || budget.pixels>=maxPixels || budget.fillRects>=maxFillRects){
+            budget.hit=true;
+            break;
+        }
+        const sampleX=sx+.5, hits=[];
+        if(portalClip && (sampleX<portalClip.x0 || sampleX>portalClip.x1)){
+            if(drawStats) drawStats.modernStableRoofPrimitivePortalClipColumnsSkippedV282=(drawStats.modernStableRoofPrimitivePortalClipColumnsSkippedV282||0)+1;
+            continue;
+        }
+        for(let i=0;i<projected.length;i++){
+            const a=projected[i], b=projected[(i+1)%projected.length];
+            if(Math.abs(a.x-b.x)<.0001) continue;
+            if((a.x<=sampleX && b.x>sampleX) || (b.x<=sampleX && a.x>sampleX)){
+                const u=(sampleX-a.x)/(b.x-a.x);
+                hits.push({y:a.y+(b.y-a.y)*u, d:a.d+(b.d-a.d)*u, z:(a.z||0)+((b.z||0)-(a.z||0))*u});
+            }
+        }
+        if(hits.length<2) continue;
+        hits.sort((a,b)=>a.y-b.y);
+        columns++;
+        for(let h=0; h<hits.length-1; h+=2){
+            const top=hits[h], bot=hits[h+1];
+            let y0=clamp(Math.ceil(top.y),0,screenH-1), y1=clamp(Math.floor(bot.y),0,screenH-1);
+            if(y1<y0) continue;
+            if(opts.nearTopMaxRows && y1-y0+1>opts.nearTopMaxRows){
+                if(opts.nearClipMode==='front_gable_top'){
+                    y1=clamp(y0+opts.nearTopMaxRows-1,0,screenH-1);
+                } else {
+                    y0=clamp(y1-opts.nearTopMaxRows+1,0,screenH-1);
+                }
+            }
+            const fastSpan=perlaStableModernRoofPrimitiveFastSpanV281(sx,y0,y1,top,bot,roof,face,drawStats);
+            if(fastSpan){
+                const hRun=fastSpan.y1-fastSpan.y0+1;
+                const remainingPixels=Math.max(0,maxPixels-budget.pixels);
+                const allowedH=Math.min(hRun,Math.floor(remainingPixels/fillW));
+                if(allowedH>0){
+                    ctx.fillRect(sx,fastSpan.y0,fillW,allowedH);
+                    roofSelfDepthWriteBudgetBlockV200(sx,fastSpan.y0,fillW,allowedH,fastSpan.depth);
+                    pixels+=fillW*allowedH; budget.pixels+=fillW*allowedH; fillRects++; budget.fillRects++; drew=true;
+                    if(drawStats) drawStats.modernStableRoofPrimitiveFastSpanColumnsV281=(drawStats.modernStableRoofPrimitiveFastSpanColumnsV281||0)+1;
+                }
+                if(allowedH<hRun) budget.hit=true;
+                if(budget.hit) break;
+                continue;
+            }
+            let runStart=-1, runDepth=0;
+            const denom=Math.max(.001,bot.y-top.y);
+            for(let sy=y0; sy<=y1; sy++){
+                if(budget.pixels>=maxPixels || budget.fillRects>=maxFillRects){ budget.hit=true; break; }
+                const v=(sy+.5-top.y)/denom;
+                const d=top.d+(bot.d-top.d)*v;
+                const z=top.z+(bot.z-top.z)*v;
+                if(perlaStableModernRoofPrimitiveVisibleAtV281(sx,sy,d,roof,face,z,drawStats)){
+                    if(runStart<0){ runStart=sy; runDepth=d; }
+                } else {
+                    hierarchyRejected++;
+                    if(runStart>=0){
+                        const hRun=sy-runStart;
+                        const remainingPixels=Math.max(0,maxPixels-budget.pixels);
+                        const allowedH=Math.min(hRun,Math.floor(remainingPixels/fillW));
+                        if(allowedH>0){
+                            ctx.fillRect(sx,runStart,fillW,allowedH);
+                            roofSelfDepthWriteBudgetBlockV200(sx,runStart,fillW,allowedH,runDepth);
+                            pixels+=fillW*allowedH; budget.pixels+=fillW*allowedH; fillRects++; budget.fillRects++; drew=true;
+                        }
+                        if(allowedH<hRun) budget.hit=true;
+                        runStart=-1;
+                    }
+                }
+            }
+            if(runStart>=0 && !budget.hit){
+                const hRun=y1-runStart+1;
+                const remainingPixels=Math.max(0,maxPixels-budget.pixels);
+                const allowedH=Math.min(hRun,Math.floor(remainingPixels/fillW));
+                if(allowedH>0){
+                    ctx.fillRect(sx,runStart,fillW,allowedH);
+                    roofSelfDepthWriteBudgetBlockV200(sx,runStart,fillW,allowedH,runDepth);
+                    pixels+=fillW*allowedH; budget.pixels+=fillW*allowedH; fillRects++; budget.fillRects++; drew=true;
+                }
+                if(allowedH<hRun) budget.hit=true;
+            }
+            if(budget.hit) break;
+        }
+    }
+    ctx.restore();
+    if(drawStats){
+        drawStats.modernStableRoofPrimitiveColumnsV281=(drawStats.modernStableRoofPrimitiveColumnsV281||0)+columns;
+        drawStats.modernStableRoofPrimitivePixelsV281=(drawStats.modernStableRoofPrimitivePixelsV281||0)+pixels;
+        drawStats.modernStableRoofPrimitiveFillRectsV281=(drawStats.modernStableRoofPrimitiveFillRectsV281||0)+fillRects;
+        drawStats.modernStableRoofPrimitiveHierarchyRejectedV281=(drawStats.modernStableRoofPrimitiveHierarchyRejectedV281||0)+hierarchyRejected;
+        if(pixels>0){
+            drawStats.modernStableRoofPrimitiveFacesDrawnV281=(drawStats.modernStableRoofPrimitiveFacesDrawnV281||0)+1;
+            if(roof&&roof.ownerId===1) drawStats.modernStableRoofPrimitiveOwner1PixelsV281=(drawStats.modernStableRoofPrimitiveOwner1PixelsV281||0)+pixels;
+            if(roof&&roof.ownerId===2) drawStats.modernStableRoofPrimitiveOwner2PixelsV281=(drawStats.modernStableRoofPrimitiveOwner2PixelsV281||0)+pixels;
+        }
+    }
+    return drew;
+}
+function perlaStableModernRoofPrimitiveDrawEdgesV281(roof, drawStats, suppressTopEdges){
+    const p=roof.palette||{}, ez=roof.eaveZ, rz=roof.ridgeZ, x0=roof.x0, x1=roof.x3, y0=roof.y0, y1=roof.y3;
+    const edge=roofPremixedFogColorV106(p.ridge||p.fascia||'#6b2a1b',roofCameraDistance(roof));
+    let lines=[];
+    if(roof.axis==='x'){
+        const cx=(x0+x1)*.5;
+        lines=[
+            {kind:'ridge', a:[cx,y0,rz], b:[cx,y1,rz]},
+            {kind:'eave', a:[x0,y0,ez], b:[x0,y1,ez]},
+            {kind:'eave', a:[x1,y0,ez], b:[x1,y1,ez]},
+            {kind:'diagonal', side:'back_y0', a:[x0,y0,ez], b:[cx,y0,rz]},
+            {kind:'diagonal', side:'back_y0', a:[cx,y0,rz], b:[x1,y0,ez]},
+            {kind:'diagonal', side:'front_y1', a:[x0,y1,ez], b:[cx,y1,rz]},
+            {kind:'diagonal', side:'front_y1', a:[cx,y1,rz], b:[x1,y1,ez]}
+        ];
+    } else {
+        const cy=(y0+y1)*.5;
+        lines=[
+            {kind:'ridge', a:[x0,cy,rz], b:[x1,cy,rz]},
+            {kind:'eave', a:[x0,y0,ez], b:[x1,y0,ez]},
+            {kind:'eave', a:[x0,y1,ez], b:[x1,y1,ez]},
+            {kind:'diagonal', side:'back_x0', a:[x0,y0,ez], b:[x0,cy,rz]},
+            {kind:'diagonal', side:'back_x0', a:[x0,cy,rz], b:[x0,y1,ez]},
+            {kind:'diagonal', side:'front_x1', a:[x1,y0,ez], b:[x1,cy,rz]},
+            {kind:'diagonal', side:'front_x1', a:[x1,cy,rz], b:[x1,y1,ez]}
+        ];
+    }
+    let drew=0, frontGableDrew=0;
+    for(let i=0;i<lines.length;i++){
+        const frontGableDiagonal=lines[i].kind==='diagonal' && (lines[i].side==='front_y1' || lines[i].side==='front_x1');
+        if(perlaStableModernRoofPrimitiveSuppressOwner1ExteriorDecorativeEdgesV281(lines[i],roof)){
+            if(drawStats) drawStats.modernStableRoofPrimitiveSuppressedOwner1ExteriorDecorativeEdgesV281=(drawStats.modernStableRoofPrimitiveSuppressedOwner1ExteriorDecorativeEdgesV281||0)+1;
+            if(lines[i].kind==='eave' && drawStats) drawStats.modernStableRoofPrimitiveSuppressedOwner1ExteriorEaveEdgesV281=(drawStats.modernStableRoofPrimitiveSuppressedOwner1ExteriorEaveEdgesV281||0)+1;
+            continue;
+        }
+        if(suppressTopEdges && lines[i].kind!=='eave' && !frontGableDiagonal){
+            if(drawStats) drawStats.modernStableRoofPrimitiveSuppressedTopEdgeLinesV281=(drawStats.modernStableRoofPrimitiveSuppressedTopEdgeLinesV281||0)+1;
+            if(drawStats) drawStats.modernStableRoofPrimitiveRidgeEdgeLinesSuppressedV281=(drawStats.modernStableRoofPrimitiveRidgeEdgeLinesSuppressedV281||0)+1;
+            continue;
+        }
+        const lineFace=frontGableDiagonal ? {kind:'gable', layer:'roof_cap'} : {kind:'roof', layer:'roof_top'};
+        if(perlaStableModernRoofPrimitiveDrawLineV281(lines[i].a,lines[i].b,edge,PERLA_V281_EDGE_WIDTH,PERLA_V281_EDGE_ALPHA,roof,lineFace,drawStats)){
+            drew++;
+            if(lines[i].kind==='eave' && drawStats) drawStats.modernStableRoofPrimitiveEaveEdgeLinesV281=(drawStats.modernStableRoofPrimitiveEaveEdgeLinesV281||0)+1;
+            if(frontGableDiagonal){
+                frontGableDrew++;
+                if(drawStats) drawStats.modernStableRoofPrimitiveFrontGableDiagonalLinesV281=(drawStats.modernStableRoofPrimitiveFrontGableDiagonalLinesV281||0)+1;
+            }
+        }
+    }
+    if(drawStats) drawStats.modernStableRoofPrimitiveEdgeLinesV281=(drawStats.modernStableRoofPrimitiveEdgeLinesV281||0)+drew;
+    return drew;
+}
+function perlaStableModernRoofPrimitiveDrawLineV281(a,b,color,width,alpha,roof,face,drawStats){
+    const seg=projectRoofLinePoints(a,b);
+    if(!seg) return false;
+    const pa=seg[0], pb=seg[1];
+    const steps=Math.max(2, Math.ceil(Math.hypot(pb.x-pa.x,pb.y-pa.y)));
+    ctx.save();
+    ctx.globalAlpha=alpha==null?1:alpha;
+    ctx.fillStyle=color;
+    const w=Math.max(1,width||1);
+    let drew=false;
+    for(let i=0;i<=steps;i++){
+        const t=i/steps;
+        const sx=Math.round(pa.x+(pb.x-pa.x)*t);
+        const sy=Math.round(pa.y+(pb.y-pa.y)*t);
+        const d=pa.d+(pb.d-pa.d)*t;
+        const z=(pa.z||0)+((pb.z||0)-(pa.z||0))*t;
+        if(perlaStableModernRoofPrimitiveVisibleAtV281(sx,sy,d,roof,face,z,drawStats)){
+            ctx.fillRect(sx,sy,w,w);
+            drew=true;
+        }
+    }
+    ctx.restore();
+    return drew;
+}
+function perlaStableModernRoofPrimitiveDrawGableOutlineV281(face, roof, drawStats){
+    if(!face || !roof || !face.pts || face.pts.length<3) return 0;
+    const p=roof.palette||{};
+    const edge=roofPremixedFogColorV106(p.ridge||p.gable||p.fascia||'#6b2a1b',roofCameraDistance(roof));
+    const pairs=[[0,1],[1,2],[2,0]];
+    let drew=0;
+    for(let i=0;i<pairs.length;i++){
+        if(perlaStableModernRoofPrimitiveDrawLineV281(face.pts[pairs[i][0]],face.pts[pairs[i][1]],edge,PERLA_V281_EDGE_WIDTH,PERLA_V281_EDGE_ALPHA,roof,face,drawStats)) drew++;
+    }
+    if(drawStats) drawStats.modernStableRoofPrimitiveGableOutlineLinesV281=(drawStats.modernStableRoofPrimitiveGableOutlineLinesV281||0)+drew;
+    return drew;
+}
+function perlaStableModernRoofPrimitiveRejectHiddenGableV281(face, roof, drawStats){
+    if(!face || !roof || face.kind!=='gable') return false;
+    if(roof.ownerId===1 && roof.axis==='x' && face.side==='back_y0' && posY>roof.y3 && dirY<-.10){
+        if(drawStats) drawStats.modernStableRoofPrimitiveBackGableKeptForFarClosureV281=(drawStats.modernStableRoofPrimitiveBackGableKeptForFarClosureV281||0)+1;
+        return false;
+    }
+    if(roof.ownerId===2 && roof.axis==='y' && face.side==='back_x0' && posX>roof.x3 && dirX<-.10){
+        if(drawStats) drawStats.modernStableRoofPrimitiveRejectedHiddenBackGableV281=(drawStats.modernStableRoofPrimitiveRejectedHiddenBackGableV281||0)+1;
+        return true;
+    }
+    return false;
+}
+function drawStableModernOwnerRoofPrimitiveV281(time, drawStats){
+    if(!perlaStableModernRoofPrimitiveEnabledV281()) return 0;
+    const items=[], budget={pixels:0,fillRects:0,hit:false};
+    let candidates=0, fallback=0, drawnRoofs=0, skippedTopFaces=0, skippedLargeTopFaces=0;
+    const roofEdgeState=[], gableOutlineState=[], frontGableLateItems=[];
+    for(let i=0;i<roofSegments.length;i++){
+        const r=roofSegments[i];
+        if(!perlaStableModernRoofPrimitiveOwnerV281(r) || !shouldConsiderRoofSegmentV130(r)) continue;
+        candidates++;
+        if(perlaStableModernRoofPrimitiveCeilingOwnsCameraCellV281(r)){
+            if(drawStats){
+                drawStats.modernStableRoofPrimitiveSuppressedByCeilingOwnerCellV281=(drawStats.modernStableRoofPrimitiveSuppressedByCeilingOwnerCellV281||0)+1;
+                if(r.ownerId===1) drawStats.modernStableRoofPrimitiveSuppressedOwner1InteriorV281=(drawStats.modernStableRoofPrimitiveSuppressedOwner1InteriorV281||0)+1;
+                if(r.ownerId===2) drawStats.modernStableRoofPrimitiveSuppressedOwner2InteriorV281=(drawStats.modernStableRoofPrimitiveSuppressedOwner2InteriorV281||0)+1;
+            }
+            continue;
+        }
+        if(!perlaStableModernRoofPrimitivePreflightV281(r,drawStats)){ fallback++; continue; }
+        if(drawStats){
+            drawStats.modernStableRoofPrimitiveEligibleV281=(drawStats.modernStableRoofPrimitiveEligibleV281||0)+1;
+            if(r.ownerId===1) drawStats.modernStableRoofPrimitiveEligibleOwner1V281=(drawStats.modernStableRoofPrimitiveEligibleOwner1V281||0)+1;
+            if(r.ownerId===2) drawStats.modernStableRoofPrimitiveEligibleOwner2V281=(drawStats.modernStableRoofPrimitiveEligibleOwner2V281||0)+1;
+        }
+        const nearDoorTopRisk=perlaModernRoofNearDoorSuppressTopPlanesV280(r,drawStats);
+        const suppressTop=false;
+        if(drawStats){
+            drawStats.modernStableRoofPrimitiveNearDoorTopSuppressBypassedV281=(drawStats.modernStableRoofPrimitiveNearDoorTopSuppressBypassedV281||0)+1;
+            if(nearDoorTopRisk) drawStats.modernStableRoofPrimitiveNearDoorEdgeSuppressedV281=(drawStats.modernStableRoofPrimitiveNearDoorEdgeSuppressedV281||0)+1;
+        }
+        const faces=collectModernRoofFaces(r);
+        const bounds=perlaStableModernRoofPrimitiveProjectedBoundsV281(faces);
+        const suppressLargeTop=!!(bounds && (bounds.maxAreaRatio>PERLA_V281_PREFLIGHT_MAX_AREA_RATIO || bounds.maxScreenRatio>PERLA_V281_PREFLIGHT_MAX_SCREEN_RATIO));
+        let nearestGableDepth=9999;
+        for(let f=0; f<faces.length; f++) if(faces[f].kind==='gable') nearestGableDepth=Math.min(nearestGableDepth,roofAvgDepth(faces[f]));
+        roofEdgeState.push({roof:r, suppressTopEdges:suppressLargeTop||nearDoorTopRisk||suppressTop});
+        for(let f=0; f<faces.length; f++){
+            const faceDepth=roofAvgDepth(faces[f]);
+            if(suppressTop && faces[f].kind==='roof'){ skippedTopFaces++; continue; }
+            if(perlaStableModernRoofPrimitiveSuppressOwner1ExteriorFasciaV281(faces[f],r)){
+                if(drawStats) drawStats.modernStableRoofPrimitiveSuppressedOwner1ExteriorFasciaV281=(drawStats.modernStableRoofPrimitiveSuppressedOwner1ExteriorFasciaV281||0)+1;
+                continue;
+            }
+            if(perlaStableModernRoofPrimitiveInteriorFasciaRejectV281(faces[f],r)){
+                if(drawStats) drawStats.modernStableRoofPrimitiveRejectedInteriorFasciaV281=(drawStats.modernStableRoofPrimitiveRejectedInteriorFasciaV281||0)+1;
+                continue;
+            }
+            if(perlaStableModernRoofPrimitiveRejectHiddenGableV281(faces[f],r,drawStats)) continue;
+            const keepOwner1FarClosure=!!(r.ownerId===1 && r.axis==='x' && faces[f].kind==='gable' && faces[f].side==='back_y0' && posY>r.y3 && dirY<-.10);
+            const keepFrontFacingGable=perlaStableModernRoofPrimitiveFrontGableFacesCameraV281(faces[f],r);
+            if((suppressLargeTop||nearDoorTopRisk) && faces[f].kind==='gable' && faceDepth>nearestGableDepth+.5 && !keepOwner1FarClosure && !keepFrontFacingGable){
+                if(drawStats) drawStats.modernStableRoofPrimitiveRejectedFarGableV281=(drawStats.modernStableRoofPrimitiveRejectedFarGableV281||0)+1;
+                continue;
+            }
+            const nearTopMaxRows=perlaStableModernRoofPrimitiveNearRowsV281(faces[f],r,nearDoorTopRisk,suppressLargeTop,drawStats);
+            const owner1GeometryProof=!!(r && r.ownerId===1);
+            if(perlaStableModernRoofPrimitiveRejectNearFaceV281(faces[f],suppressLargeTop,r) && !owner1GeometryProof && !(nearTopMaxRows && faces[f].kind==='roof')){
+                if((suppressLargeTop||nearDoorTopRisk) && faces[f].kind==='gable' && faceDepth<=nearestGableDepth+.5) gableOutlineState.push({roof:r, face:faces[f]});
+                if(drawStats) drawStats.modernStableRoofPrimitiveRejectedNearFacesV281=(drawStats.modernStableRoofPrimitiveRejectedNearFacesV281||0)+1;
+                continue;
+            }
+            const nearClipMode=(nearTopMaxRows && faces[f].kind==='gable') ? 'front_gable_top' : 'roof_eave_bottom';
+            const item={roof:r, face:faces[f], depth:faceDepth, nearTopMaxRows:nearTopMaxRows, nearClipMode:nearClipMode};
+            if(keepFrontFacingGable) frontGableLateItems.push(item);
+            else items.push(item);
+        }
+    }
+    items.sort((a,b)=>b.depth-a.depth);
+    let facesConsidered=0;
+    for(let i=0;i<items.length;i++){
+        if(facesConsidered>=PERLA_V281_MAX_FACES_PER_FRAME){ budget.hit=true; break; }
+        facesConsidered++;
+        const before=budget.pixels;
+        perlaStableModernRoofPrimitiveDrawPolyV281(items[i].face,items[i].roof,budget,drawStats,{nearTopMaxRows:items[i].nearTopMaxRows||0,nearClipMode:items[i].nearClipMode});
+        if(budget.pixels>before) drawnRoofs++;
+        if(budget.hit) break;
+    }
+    frontGableLateItems.sort((a,b)=>b.depth-a.depth);
+    for(let i=0;i<frontGableLateItems.length;i++){
+        if(facesConsidered>=PERLA_V281_MAX_FACES_PER_FRAME){ budget.hit=true; break; }
+        facesConsidered++;
+        const before=budget.pixels;
+        perlaStableModernRoofPrimitiveDrawPolyV281(frontGableLateItems[i].face,frontGableLateItems[i].roof,budget,drawStats,{nearTopMaxRows:frontGableLateItems[i].nearTopMaxRows||0,nearClipMode:frontGableLateItems[i].nearClipMode});
+        if(budget.pixels>before){
+            drawnRoofs++;
+            if(drawStats) drawStats.modernStableRoofPrimitiveFrontGableLateFacesV281=(drawStats.modernStableRoofPrimitiveFrontGableLateFacesV281||0)+1;
+        }
+        if(budget.hit) break;
+    }
+    const portalUndersideSeen={};
+    for(let i=0;i<roofEdgeState.length;i++){
+        const r=roofEdgeState[i].roof;
+        const key=(r.ownerId||0)+'|'+r.x0+'|'+r.y0+'|'+r.x3+'|'+r.y3;
+        if(portalUndersideSeen[key]) continue;
+        portalUndersideSeen[key]=true;
+        perlaStableModernRoofPrimitiveDrawOwner1PortalUndersideV282(r,budget,drawStats);
+        perlaStableModernRoofPrimitiveDrawOwner2PortalUndersideV282(r,budget,drawStats);
+        if(budget.hit) break;
+    }
+    const edgeSeen={};
+    for(let i=0;i<roofEdgeState.length;i++){
+        const r=roofEdgeState[i].roof;
+        const key=(r.ownerId||0)+'|'+r.x0+'|'+r.y0+'|'+r.x3+'|'+r.y3;
+        if(edgeSeen[key]) continue;
+        edgeSeen[key]=true;
+        perlaStableModernRoofPrimitiveDrawEdgesV281(r,drawStats,roofEdgeState[i].suppressTopEdges);
+    }
+    for(let i=0;i<gableOutlineState.length;i++) perlaStableModernRoofPrimitiveDrawGableOutlineV281(gableOutlineState[i].face,gableOutlineState[i].roof,drawStats);
+    if(drawStats){
+        drawStats.roofV281=!!PERLA_V281_MODERN_ROOF_PRIMITIVE_AUTHORITY_SAFE;
+        drawStats.modernStableRoofPrimitiveV281=!!PERLA_V281_MODERN_ROOF_PRIMITIVE_AUTHORITY_SAFE;
+        drawStats.modernStableRoofPrimitiveAuthorityV281='owner_1_2_worldspace_primitive';
+        drawStats.modernStableRoofPrimitiveQaDisableOwner12LegacyFallbackV281=!!PERLA_V281_QA_DISABLE_OWNER12_LEGACY_FALLBACK;
+        drawStats.modernStableRoofPrimitiveCandidatesV281=candidates;
+        drawStats.modernStableRoofPrimitiveFallbackV281=fallback;
+        drawStats.modernStableRoofPrimitiveLegacyFallbackV281=fallback;
+        drawStats.modernStableRoofPrimitiveFacesConsideredV281=facesConsidered;
+        drawStats.modernStableRoofPrimitiveDrawnRoofsV281=drawnRoofs;
+        drawStats.modernStableRoofPrimitiveSkippedTopFacesNearDoorV281=skippedTopFaces;
+        drawStats.modernStableRoofPrimitiveSkippedLargeTopFacesV281=skippedLargeTopFaces;
+        drawStats.modernStableRoofPrimitiveBudgetHitV281=!!budget.hit;
+        drawStats.modernStableRoofPrimitiveWarnPixelsV281=budget.pixels>PERLA_V281_WARN_PIXELS;
+        const hybrid=(drawStats.modernStableRoofPrimitivePixelsV281||0)>0 && ((drawStats.modernIntegratedRoofCapPixelsV278||0)>0 || (drawStats.modernStableRoofPrimitiveSkippedSlopedSegmentsV281||0)<=0 && candidates>0);
+        drawStats.modernStableRoofPrimitiveHybridViolationV281=!!hybrid && (drawStats.modernIntegratedRoofCapPixelsV278||0)>0;
+    }
+    return budget.pixels;
 }
 function drawModernBuildingSolid2_5D(r){
     if(roofCameraDistance(r)>42) return false;
@@ -12192,6 +13442,10 @@ function drawSlopedRoofGableCaps2_5D(time, drawStats){
     for(let i=0;i<roofSegments.length;i++){
         const r=roofSegments[i];
         if(!shouldConsiderRoofSegmentV130(r)) continue;
+        if(perlaStableModernRoofPrimitiveBlocksLegacyFallbackV281(r,drawStats)){
+            if(drawStats) drawStats.modernStableRoofPrimitiveSkippedGableCapsV281=(drawStats.modernStableRoofPrimitiveSkippedGableCapsV281||0)+1;
+            continue;
+        }
         if(perlaModernIntegratedRoofReplacesSegmentV278(r)){
             if(drawStats) drawStats.modernIntegratedRoofSkippedGableCapsV278=(drawStats.modernIntegratedRoofSkippedGableCapsV278||0)+1;
             continue;
@@ -12277,9 +13531,18 @@ function drawSlopedRoofLayer2_5D(time, drawStats){
     for(let i=0;i<roofSegments.length;i++){
         const r=roofSegments[i];
         if(!shouldConsiderRoofSegmentV130(r)) continue;
+        if(perlaStableModernRoofPrimitiveBlocksLegacyFallbackV281(r,drawStats)){
+            skippedRoofsV199++;
+            if(drawStats) drawStats.modernStableRoofPrimitiveSkippedSlopedSegmentsV281=(drawStats.modernStableRoofPrimitiveSkippedSlopedSegmentsV281||0)+1;
+            continue;
+        }
         if(perlaModernIntegratedRoofReplacesSegmentV278(r)){
             skippedRoofsV199++;
             if(drawStats) drawStats.modernIntegratedRoofSkippedSlopedSegmentsV278=(drawStats.modernIntegratedRoofSkippedSlopedSegmentsV278||0)+1;
+            continue;
+        }
+        if(perlaModernRoofNearDoorSuppressTopPlanesV280(r,drawStats)){
+            skippedRoofsV199++;
             continue;
         }
         candidateRoofs++;
@@ -12469,8 +13732,9 @@ function drawRoofLayer2_5D(time, drawStats){
     }
     drawSlopedRoofLayer2_5D(time, drawStats);
     drawSlopedRoofGableCaps2_5D(time, drawStats);
-    if(typeof perlaRealRoofGeometricEaveEdgePassV274==='function') perlaRealRoofGeometricEaveEdgePassV274(roofSegments, drawStats);
-    if(typeof perlaRealRoofUndersideEavePassV272==='function') perlaRealRoofUndersideEavePassV272(roofSegments, drawStats);
+    const roofSegmentsForAuxV281=perlaStableModernRoofPrimitiveEnabledV281() ? roofSegments.filter(r=>!perlaStableModernRoofPrimitiveBlocksLegacyFallbackV281(r,drawStats)) : roofSegments;
+    if(typeof perlaRealRoofGeometricEaveEdgePassV274==='function') perlaRealRoofGeometricEaveEdgePassV274(roofSegmentsForAuxV281, drawStats);
+    if(typeof perlaRealRoofUndersideEavePassV272==='function') perlaRealRoofUndersideEavePassV272(roofSegmentsForAuxV281, drawStats);
     drawTowerRoofFasciaAnchorV132(time, drawStats);
     if(drawStats){
         drawStats.roofSpanPremixV106=true;
@@ -12493,10 +13757,14 @@ function drawRoofLayer2_5D(time, drawStats){
         drawStats.roofV275=!!PERLA_V275_REAL_EAVE_HANDOFF_SAFE;
         drawStats.roofV276=!!PERLA_V276_ROOF_ROLLBACK_TO_V265_SAFE;
         drawStats.roofV277=!!PERLA_V277_ROOF_CONTINUITY_FILL_SAFE;
+        drawStats.roofV281=!!PERLA_V281_MODERN_ROOF_PRIMITIVE_AUTHORITY_SAFE;
         drawStats.v276RoofRollbackToV265Safe=!!PERLA_V276_ROOF_ROLLBACK_TO_V265_SAFE;
-        drawStats.v276RoofVisualAuthority='v265_sloped_roof_fill_and_edge_rail';
+        drawStats.v276RoofVisualAuthority=PERLA_V281_MODERN_ROOF_PRIMITIVE_AUTHORITY_SAFE?'v281_owner_1_2_primitive_else_v265_fallback':'v265_sloped_roof_fill_and_edge_rail';
         drawStats.v277RoofContinuityFillLocalSafe=!!PERLA_V277_ROOF_CONTINUITY_FILL_SAFE;
-        drawStats.v277RoofVisualAuthority='v265_v276_sloped_roof_with_local_continuity_fill';
+        drawStats.v277RoofVisualAuthority=PERLA_V281_MODERN_ROOF_PRIMITIVE_AUTHORITY_SAFE?'fallback_only_outside_v281_owner_1_2_authority':'v265_v276_sloped_roof_with_local_continuity_fill';
+        drawStats.v281ModernRoofPrimitiveAuthoritySafe=!!PERLA_V281_MODERN_ROOF_PRIMITIVE_AUTHORITY_SAFE;
+        drawStats.v281RoofVisualAuthority='owner_1_2_worldspace_primitive_single_authority';
+        drawStats.v281DisablesV278CapWhenEnabled=!!PERLA_V281_DISABLE_V278_CAP_WHEN_ENABLED;
         drawStats.v277UsesRoofSegments=true;
         drawStats.v277LocalOnly=true;
         drawStats.v276InternalCeilingPreserved=true;
@@ -13742,6 +15010,21 @@ function buildClosedRoom(x1,y1,x2,y2,wallTex,floorType,ceilType,doors){
         if(border){ setWall(x,y,wallTex); if(ceilType && wallTex!==1) setWallHeight(x,y,buildingWallHeightForTex(wallTex)); }
     }
     doors.forEach(d=>{ for(let i=0;i<(d.w||1);i++){ const dx=d.dir==='h'?i:0, dy=d.dir==='v'?i:0; clearWall(d.x+dx,d.y+dy); } });
+    if(PERLA_V281_RECEPTION_ENTRY_CEILING_BRIDGE_SAFE && wallTex===2 && ceilType){
+        const entryY=y2+1;
+        for(let di=0; di<doors.length; di++){
+            const d=doors[di];
+            if(!d || d.dir!=='h' || d.y!==y2) continue;
+            const start=clamp(d.x,x1,x2);
+            const end=clamp(d.x+(d.w||1)-1,x1,x2);
+            for(let x=start; x<=end; x++){
+                if(!inBounds(x,entryY) || map[entryY][x]!==0) continue;
+                setCeil(x,entryY,ceilType);
+                setCeilOwner(x,entryY,ownerId);
+                noNature[entryY][x]=1;
+            }
+        }
+    }
     registerClosedBuildingRoof(x1,y1,x2,y2,wallTex,ceilType,doors);
 }
 function hedgeRect(x1,y1,x2,y2,doors){
@@ -25636,6 +26919,15 @@ function drawWorld(time){
             const floorColor=getFloorColorAt(cX,cY,fX,fY,type,rowDist,time);
             let ceilOwner=(typeC>0 && cX>=0&&cX<mapW&&cY>=0&&cY<mapH) ? ceilingOwnerMap[cY][cX] : 0;
             let ceilCloneMeta=null, ceilCloneKey='';
+            if((!typeC || typeC<=0) && !ceilCloneMeta && typeof perlaModernInteriorRoofSlabResolveV282==='function'){
+                const v282Slab=perlaModernInteriorRoofSlabResolveV282(fX,fY,cX,cY,typeC,ceilOwner,ceilCloneMeta,drawStats);
+                if(v282Slab){
+                    typeC=v282Slab.typeC;
+                    ceilOwner=v282Slab.owner;
+                    ceilCloneMeta=v282Slab;
+                    ceilCloneKey='v282_virtual_interior_roof_slab_'+ceilOwner;
+                }
+            }
             if((!typeC || typeC<=0) && (typeof perlaRealCeilingCloneResolveV271==='function' || typeof perlaRealCeilingCloneResolveV270==='function')){
                 const v271Clone=(typeof perlaRealCeilingCloneResolveV271==='function') ? perlaRealCeilingCloneResolveV271(fX,fY,cX,cY,rowDist,drawStats) : null;
                 const v270Clone=v271Clone || ((typeof perlaRealCeilingCloneResolveV270==='function') ? perlaRealCeilingCloneResolveV270(fX,fY,cX,cY,rowDist,drawStats) : null);
@@ -25659,7 +26951,10 @@ function drawWorld(time){
                     const segY=segAnchor.y|0;
                     if(isModernCoverOwner(curCeilOwner)) {
                         const externalV274=curCeilCloneMeta && typeof perlaRealRoofGeometricEaveEdgeHandlesCloneV274==='function' && perlaRealRoofGeometricEaveEdgeHandlesCloneV274(curCeilCloneMeta);
-                        if(externalV274){
+                        const suppressV281CeilingVisual=perlaStableModernRoofPrimitiveSuppressExteriorCeilingVisualV281(curCeilOwner,curCeilCloneMeta);
+                        if(suppressV281CeilingVisual){
+                            drawStats.modernStableRoofPrimitiveSuppressedExteriorCeilingVisualV281=(drawStats.modernStableRoofPrimitiveSuppressedExteriorCeilingVisualV281||0)+1;
+                        } else if(externalV274){
                             if(typeof perlaRealEaveHandoffQueueFallbackV275==='function') perlaRealEaveHandoffQueueFallbackV275(realEaveHandoffStripsV275,startXCeil,segY,segW,curCeilOwner,curCeil,rowDist,floorBandH,curCeilCloneMeta,drawStats);
                             drawStats.realCeilingCloneExternalVisualHandledV274=(drawStats.realCeilingCloneExternalVisualHandledV274||0)+1;
                             drawStats.realCeilingCloneExternalFullCoverSuppressedV274=(drawStats.realCeilingCloneExternalFullCoverSuppressedV274||0)+1;
@@ -25667,7 +26962,10 @@ function drawWorld(time){
                         } else {
                             const externalStrip=curCeilCloneMeta && typeof perlaRealCeilingCloneQueueEaveStripV273==='function' && perlaRealCeilingCloneQueueEaveStripV273(realCeilingCloneEaveStripsV273,startXCeil,segY,segW,curCeilOwner,curCeil,rowDist,floorBandH,curCeilCloneMeta,drawStats);
                             if(externalStrip) drawStats.realCeilingCloneExternalFullCoverSuppressedV273=(drawStats.realCeilingCloneExternalFullCoverSuppressedV273||0)+1;
-                            else { drawModernCoverCeilingSegment(startXCeil,segY,segW,curCeilOwner,curCeil,rowDist,floorBandH); collectDoorRainCeilingCoverSegmentV214(doorRainCeilingCoverSegmentsV214,startXCeil,segY,segW,curCeil,rowDist,floorBandH,curCeilOwner,true); }
+                            else if(perlaModernInteriorRoofSlabFlattensOwnerCeilingV282(curCeilOwner,curCeil,curCeilCloneKey)){
+                                drawModernInteriorRoofSlabCeilingV282(startXCeil,segY,segW,curCeilOwner,curCeil,rowDist,floorBandH);
+                                collectDoorRainCeilingCoverSegmentV214(doorRainCeilingCoverSegmentsV214,startXCeil,segY,segW,curCeil,rowDist,floorBandH,curCeilOwner,false);
+                            } else { drawModernCoverCeilingSegment(startXCeil,segY,segW,curCeilOwner,curCeil,rowDist,floorBandH); collectDoorRainCeilingCoverSegmentV214(doorRainCeilingCoverSegmentsV214,startXCeil,segY,segW,curCeil,rowDist,floorBandH,curCeilOwner,true); }
                         }
                     }
                     else { drawCeilingSegment(startXCeil,ceilDrawY,segW,curCeil,rowDist,floorBandH,curCeilOwner); collectDeferredCanopySegmentV121(deferredCanopySegmentsV121,startXCeil,ceilDrawY,segW,curCeil,rowDist,floorBandH,curCeilOwner); collectDoorRainCeilingCoverSegmentV214(doorRainCeilingCoverSegmentsV214,startXCeil,ceilDrawY,segW,curCeil,rowDist,floorBandH,curCeilOwner,false); rowNonModernCeilCoverage+=segW; rowNonModernCeilMinX=Math.min(rowNonModernCeilMinX,startXCeil); rowNonModernCeilMaxX=Math.max(rowNonModernCeilMaxX,x); }
@@ -25684,7 +26982,10 @@ function drawWorld(time){
             const segY=segAnchor.y|0;
             if(isModernCoverOwner(curCeilOwner)) {
                 const externalV274=curCeilCloneMeta && typeof perlaRealRoofGeometricEaveEdgeHandlesCloneV274==='function' && perlaRealRoofGeometricEaveEdgeHandlesCloneV274(curCeilCloneMeta);
-                if(externalV274){
+                const suppressV281CeilingVisual=perlaStableModernRoofPrimitiveSuppressExteriorCeilingVisualV281(curCeilOwner,curCeilCloneMeta);
+                if(suppressV281CeilingVisual){
+                    drawStats.modernStableRoofPrimitiveSuppressedExteriorCeilingVisualV281=(drawStats.modernStableRoofPrimitiveSuppressedExteriorCeilingVisualV281||0)+1;
+                } else if(externalV274){
                     if(typeof perlaRealEaveHandoffQueueFallbackV275==='function') perlaRealEaveHandoffQueueFallbackV275(realEaveHandoffStripsV275,startXCeil,segY,segW,curCeilOwner,curCeil,rowDist,floorBandH,curCeilCloneMeta,drawStats);
                     drawStats.realCeilingCloneExternalVisualHandledV274=(drawStats.realCeilingCloneExternalVisualHandledV274||0)+1;
                     drawStats.realCeilingCloneExternalFullCoverSuppressedV274=(drawStats.realCeilingCloneExternalFullCoverSuppressedV274||0)+1;
@@ -25692,7 +26993,10 @@ function drawWorld(time){
                 } else {
                     const externalStrip=curCeilCloneMeta && typeof perlaRealCeilingCloneQueueEaveStripV273==='function' && perlaRealCeilingCloneQueueEaveStripV273(realCeilingCloneEaveStripsV273,startXCeil,segY,segW,curCeilOwner,curCeil,rowDist,floorBandH,curCeilCloneMeta,drawStats);
                     if(externalStrip) drawStats.realCeilingCloneExternalFullCoverSuppressedV273=(drawStats.realCeilingCloneExternalFullCoverSuppressedV273||0)+1;
-                    else { drawModernCoverCeilingSegment(startXCeil,segY,segW,curCeilOwner,curCeil,rowDist,floorBandH); collectDoorRainCeilingCoverSegmentV214(doorRainCeilingCoverSegmentsV214,startXCeil,segY,segW,curCeil,rowDist,floorBandH,curCeilOwner,true); }
+                    else if(perlaModernInteriorRoofSlabFlattensOwnerCeilingV282(curCeilOwner,curCeil,curCeilCloneKey)){
+                        drawModernInteriorRoofSlabCeilingV282(startXCeil,segY,segW,curCeilOwner,curCeil,rowDist,floorBandH);
+                        collectDoorRainCeilingCoverSegmentV214(doorRainCeilingCoverSegmentsV214,startXCeil,segY,segW,curCeil,rowDist,floorBandH,curCeilOwner,false);
+                    } else { drawModernCoverCeilingSegment(startXCeil,segY,segW,curCeilOwner,curCeil,rowDist,floorBandH); collectDoorRainCeilingCoverSegmentV214(doorRainCeilingCoverSegmentsV214,startXCeil,segY,segW,curCeil,rowDist,floorBandH,curCeilOwner,true); }
                 }
             }
             else { drawCeilingSegment(startXCeil,ceilDrawY,segW,curCeil,rowDist,floorBandH,curCeilOwner); collectDeferredCanopySegmentV121(deferredCanopySegmentsV121,startXCeil,ceilDrawY,segW,curCeil,rowDist,floorBandH,curCeilOwner); collectDoorRainCeilingCoverSegmentV214(doorRainCeilingCoverSegmentsV214,startXCeil,ceilDrawY,segW,curCeil,rowDist,floorBandH,curCeilOwner,false); rowNonModernCeilCoverage+=segW; rowNonModernCeilMinX=Math.min(rowNonModernCeilMinX,startXCeil); rowNonModernCeilMaxX=Math.max(rowNonModernCeilMaxX,screenW); }
@@ -25835,6 +27139,7 @@ function drawWorld(time){
     stabilizeTowerVisibilityV235(time, drawStats);
     drawIntegratedTowerRoofCapV136(time, drawStats);
     drawRoofLayer2_5D(time, drawStats);
+    drawStableModernOwnerRoofPrimitiveV281(time, drawStats);
     drawModernIntegratedRoofCapV278(time, drawStats);
     if(typeof perlaRealEaveHandoffFlushV275==='function') perlaRealEaveHandoffFlushV275(realEaveHandoffStripsV275, drawStats);
     const roofT1V198=(typeof performance!=='undefined'&&performance.now)?performance.now():roofT0V198;

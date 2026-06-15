@@ -1,7 +1,7 @@
 ﻿# PERLA1 Project Map
 
 Last updated: 2026-06-14
-Current runtime build observed in `index.html`: `PERLA1_V278_MODERN_INTEGRATED_ROOF_CAP_SAFE_LOCAL`
+Current runtime build observed in `index.html`: `PERLA1_V281R_RECEPTION_ROOF_BASE_ROLLBACK_LOCAL`
 
 This file is the fast technical map for agents. Use it to orient before touching runtime code, and update it when structure, entrypoints, validation workflow, dependencies, or major renderer contracts change.
 
@@ -13,7 +13,9 @@ This file is the fast technical map for agents. Use it to orient before touching
 | User launcher | `AVVIA_GIOCO_WINDOWS_SENZA_PYTHON.bat` | Correct user-facing launch path. Calls the PowerShell server. |
 | Local server | `AVVIA_GIOCO_SERVER_POWERSHELL.ps1` | Serves `01_GIOCO_PRONTO_LOCAL_TEST/` on `http://127.0.0.1:8000/`. V278 launcher tries to bind first, then performs bounded old-server cleanup only if the port is actually occupied. |
 | Codex headless server | `AVVIA_GIOCO_CODEX_HEADLESS.ps1` | Deterministic agent validation server. Internal `-Serve` mode does not open a browser, writes log/PID/ready files, and is used by `VALIDA_RUNTIME_SCREENSHOT_HEADLESS.ps1 -StartLauncher`. |
-| Assets | `01_GIOCO_PRONTO_LOCAL_TEST/assets/raycast/` | PNG sprite/wall/sky assets loaded through `ASSET_MANIFEST`. |
+| Legacy raycaster assets | `01_GIOCO_PRONTO_LOCAL_TEST/assets/raycast/` | PNG sprite/wall/sky assets loaded through `ASSET_MANIFEST`. |
+| Optimized RTP asset package and scenario mapping protocol | `01_GIOCO_PRONTO_LOCAL_TEST/assets/rtp/`, `01_GIOCO_PRONTO_LOCAL_TEST/assets/rtp/manifest/rtp.characters.json`, `01_GIOCO_PRONTO_LOCAL_TEST/assets/rtp/SCENARIO_EVENT_MAPPING_PROTOCOL.md`, `tools/perla_rtp_asset_importer.py` | Optimized WebP package and required future mapping protocol for RTP/personaggi/NPC/animali/eventi/dialoghi/sceneggiatura/gameplay work: 9 main portraits, 198 standard 8-frame sprite animations plus 4 special ambient source assets, 211 WebP files, 5,632,616 bytes. Runtime animation IDs are normalized; left animations are derived by mirror, not stored. Dormant until runtime code explicitly loads the manifest and future placement/event manifests. |
+| Scenario/gameplay mapping draft | `report/SCENEGGIATURA_GAMEPLAY_MAPPING_DRAFT_2026-06-14.md` | Preparatory mapping from the supplied sceneggiatura TXT, GDD PDF, and intro storyboard image into atmosphere, entities, placements, schedules, behaviors, dialogue/event roles, battle placeholders, and validation risks. Not runtime source. |
 | Reports/history | `report/` | Diagnostics, extracted inline scripts, smoke tests, historical reports. Not runtime source. |
 | Current failure report | `PERLA1_REPORT_FALLIMENTI_OTTIMIZZAZIONE_TETTO_V271_2026-06-13.txt` | Root-level failure analysis report from the roof optimization work. |
 | Block map | `PERLA1_BLOCK_MAP.md` | Functional block ownership map for the monolithic runtime and cross-block risks. |
@@ -23,6 +25,7 @@ This file is the fast technical map for agents. Use it to orient before touching
 | Runtime test runbook | `PERLA1_RUNTIME_TEST_RUNBOOK.md`, `VALIDA_RUNTIME_SCREENSHOT_HEADLESS.ps1` | Practical Windows validation path: Codex headless startup with `-StartLauncher`, then screenshot through system Chrome/Edge. |
 | Static structure analyzer | `tools/perla_runtime_analyzer.mjs` | Extracts inline JS, parse-checks it, maps functions/globals, classifies blocks, and emits a conservative dependency graph without external npm installs. |
 | Local structural CI | `tools/perla_local_ci.ps1`, `tests/perla_regression_suite.json` | Runs parser/structure/regression-symbol checks and can optionally run runtime screenshot smoke poses. |
+| Project backup tool | `tools/perla_project_backup.ps1` | Creates timestamped zip backups of the full synchronized repository folder `C:\Users\ASUS\Documents\GitHub\codex`, excluding only `PERLA1\01_GIOCO_PRONTO_LOCAL_TEST\assets\rtp`. User backups go to `C:\Users\ASUS\Documents\GitHub\backup\utente`; automatic task backups go to `C:\Users\ASUS\Documents\GitHub\backup\automatici`. Automatic retention deletes only files older than 2 days and only when `automatici` already contains more than 10 files. |
 | Modularization plan | `PERLA1_MODULARIZATION_PLAN.md`, `01_GIOCO_PRONTO_LOCAL_TEST/src/module-boundaries.json`, `01_GIOCO_PRONTO_LOCAL_TEST/src/README.md` | Controlled exit plan from the monolith. The runtime source of truth remains `index.html`; `src/` is scaffold-only until a scoped extraction is validated. |
 | Codex orchestration | `.codex/ORCHESTRATION.md` | Team Leader workflow, subagent usage policy, extra-agent rules, and anti-paradox constraints. |
 | Codex subagents | `.codex/config.toml`, `.codex/agents/*.toml` | Project-scoped Codex subagent configuration. Mostly read-only auditors, one runtime fixer, and one map-only maintainer. |
@@ -60,6 +63,7 @@ Operational rules:
 - Older standalone folders under `Documents/` are historical copies unless explicitly requested for comparison.
 - The sync scripts are parent-level and path-relative, so they survive different usernames or clone locations on another PC.
 - Normal user flow: run `01_AGGIORNA_PROGETTO_PRIMA_DI_LAVORARE.bat` before work, `00_APRI_PERLA1.bat` to launch, and `02_SALVA_PROGETTO_SU_GITHUB.bat` after work.
+- `project_backup_gate` backup flow: when the user explicitly asks for a safety backup, record `backup_user_requested` and run `tools/perla_project_backup.ps1 -Kind User` before the next protected step. At the end of each meaningful task, record `automatic_task_backup` and run `tools/perla_project_backup.ps1 -Kind Automatic` before final delivery when filesystem permissions allow it. Backups are zip archives outside Git, not staged files.
 - On Windows, do not assume `git` exists in PATH. The sync scripts first try `where git`, then use GitHub Desktop's bundled Git under `%LOCALAPPDATA%\GitHubDesktop\app-*\resources\app\git\cmd\git.exe`.
 - The robust fallback uses PowerShell to enumerate `app-*`; a plain `dir /b /s` quoted wildcard fallback caused false "Git not found" failures.
 - If this map, AGENTS rules, runtime, launcher, assets, reports, or Codex agents change meaningfully, the GitHub copy should be committed and pushed.
@@ -81,19 +85,20 @@ PERLA1 is monolithic enough that agents must avoid copying broad file dumps into
 | Subsystem | Key Symbols | Location Hint | Role |
 | --- | --- | --- | --- |
 | Build metadata | `PERLA_BUILD_ID` | around line `195` | Public build id; verify in browser after edits. |
-| Asset loading | `ASSET_BASE`, `ASSET_MANIFEST`, `loadAssets`, `getTex` | around lines `5865-5910` | Loads grouped texture frames from `assets/raycast/`. |
-| Main loop | `gameLoop` | around line `26179` | Updates environment/player, calls `drawWorld`, minimap, perf stats. |
-| World renderer | `drawWorld` | around line `25225` | Main frame renderer: backdrop, floor/ceiling, wallcasting, roof, canopy, sprites, rain. |
+| Asset loading | `ASSET_BASE`, `ASSET_MANIFEST`, `loadAssets`, `getTex` | around lines `5865-5910` | Loads grouped texture frames from `assets/raycast/`. Does not load dormant RTP references yet. |
+| Main loop | `gameLoop` | around line `26609` | Updates environment/player, calls `drawWorld`, minimap, perf stats. |
+| World renderer | `drawWorld` | around line `25654` | Main frame renderer: backdrop, floor/ceiling, wallcasting, roof, canopy, sprites, rain. |
 | Floor/ceiling pass | floor loop inside `drawWorld` | start of `drawWorld` | Floor rows, ceiling rows, ceiling depth buffer, real ceiling clone. |
 | Wallcasting | wall loop inside `drawWorld` | after floor/ceiling pass | Raycasts walls, fills `ZBuffer`, `WallTopBuffer`, `WallBottomBuffer`, `WallOwnerBuffer`. |
-| Roof layer | `drawRoofLayer2_5D` | around line `12457` | Orchestrates sloped roof planes/gable caps. V278 keeps failed V266-V275 visual replacement paths runtime-off and adds a modern wall-anchored integrated roof cap for owner 1/2 when visible support columns exist. |
-| Roof planes | `drawSlopedRoofLayer2_5D` | around line `12266` | Sloped sector roof casting with budgets/watchdogs. V278 conditionally skips modern owner 1/2 sloped/gable visuals only when the integrated support-column cap is active for that owner. |
-| Roof gables | `drawSlopedRoofGableCaps2_5D` | around line `11831` | Vertical roof cap rendering. |
+| Roof layer | `drawRoofLayer2_5D` | around line `12820` | Orchestrates legacy/tower/generic roof passes. V281 filters reception/bath owner 1/2 out of sloped/gable/eave fallback when the primitive preflight accepts the roof. |
+| Modern roof primitive | `drawStableModernOwnerRoofPrimitiveV281` | around line `12030` | Single world-space primitive authority for reception/baths. Uses `collectModernRoofFaces`, depth-aware visibility, roof self-depth writes, deterministic budgets, and geometry edge lines. |
+| Roof planes | `drawSlopedRoofLayer2_5D` | around line `12620` | Sloped sector roof casting with budgets/watchdogs. Under V281 it is fallback/generic only for owner 1/2 when primitive preflight rejects the roof. |
+| Roof gables | `drawSlopedRoofGableCaps2_5D` | around line `12540` | Vertical roof cap rendering. Under V281 it is skipped for eligible reception/bath roofs so it does not hybridize with the primitive authority. |
 | Geometric eave edge | `perlaRealRoofGeometricEaveEdgePassV274` | around line `2633` | Retained for diagnostics but runtime-off in V276 after visual failure. |
 | Real eave handoff | `perlaRealEaveHandoffQueueFallbackV275`, `perlaRealEaveHandoffFlushV275` | around lines `2409` and `2490` | Retained for diagnostics but runtime-off in V276 after visual failure. |
-| Sprites | `getSpriteRenderCandidates`, sprite loop in `drawWorld` | around lines `608`, after roof/canopy | Candidate selection, shadows, stripe rendering, occlusion. |
-| Rain/weather | `drawWorldRainParticlesV222`, weather V246-V257 symbols | around line `23746` | World rain and later stabilizers. |
-| Minimap | `drawMiniMap` | around line `25500` | Desktop or frame-skipped mobile minimap. |
+| Sprites | `getSpriteRenderCandidates`, sprite loop in `drawWorld` | around line `663`, after roof/canopy | Candidate selection, shadows, stripe rendering, occlusion. |
+| Rain/weather | `drawWorldRainParticlesV222`, weather V246-V257 symbols | around line `24505` | World rain and later stabilizers. |
+| Minimap | `drawMiniMap` | around line `26254` | Desktop or frame-skipped mobile minimap. |
 | Debug API | `window.__PERLA_DEBUG__`, `perlaLastDrawStats`, `setPlayerForDebug` | near file end | Runtime inspection and deterministic QA poses. |
 
 ## Data Model And Owners
@@ -121,46 +126,80 @@ PERLA1 is monolithic enough that agents must avoid copying broad file dumps into
 | V261/V262 | active support | Coverage/pergola/roof stable budget and emergency cap logic. |
 | V263 | active support | Branch lock for owner 1/2 roof cost paths. |
 | V264 | active support | Roof cost watchdog. |
-| V265 | active fallback authority through V278 | Last user-verified good roof reference from `PERLA1_V265_COVERAGE_ULTRA_BUDGET_EDGE_RAIL_SAFE_LOCAL.zip`: sloped roof fill, V264 watchdog, and V265 edge rail/ultra budget. |
-| V266/V267 | runtime off in V276-V278 | Roof silhouette/mask/wall-clip path. V267 skipped original fill and contributed to broken replacement stack. |
-| V270 | runtime off in V276-V278 | External real ceiling clone eave path. Internal ceiling rendering remains in `drawModernCoverCeilingSegment`. |
-| V271 | runtime off in V276-V278 | Side-aware external clone continuity. Disabled with V270 in V276 rollback. |
+| V265 | active fallback outside V281 owner 1/2 authority | Last user-verified good roof reference from `PERLA1_V265_COVERAGE_ULTRA_BUDGET_EDGE_RAIL_SAFE_LOCAL.zip`: sloped roof fill, V264 watchdog, and V265 edge rail/ultra budget. |
+| V266/V267 | runtime off in V276-V281 | Roof silhouette/mask/wall-clip path. V267 skipped original fill and contributed to broken replacement stack. |
+| V270 | runtime off in V276-V281 | External real ceiling clone eave path. Internal ceiling rendering remains in `drawModernCoverCeilingSegment`. |
+| V271 | runtime off in V276-V281 | Side-aware external clone continuity. Disabled with V270 in V276 rollback. |
 | V272 | runtime off rollback | Real roof underside/eave near geometry pass. Produced slab/cost risk; do not turn on casually. |
-| V273 | runtime off in V276-V278 | External ceiling clone eave anchor/strip path. Disabled after strip/clone handoff failures. |
-| V274 | runtime off in V276-V278 | Geometric eave edge path. Retained for diagnostics, no longer primary after user-visible failure. |
-| V275 | runtime off in V276-V278 | Real eave handoff fallback. Retained for diagnostics, no longer active after user-visible failure. |
+| V273 | runtime off in V276-V281 | External ceiling clone eave anchor/strip path. Disabled after strip/clone handoff failures. |
+| V274 | runtime off in V276-V281 | Geometric eave edge path. Retained for diagnostics, no longer primary after user-visible failure. |
+| V275 | runtime off in V276-V281 | Real eave handoff fallback. Retained for diagnostics, no longer active after user-visible failure. |
 | V276 | active base contract | Rollback visual authority to V265 while preserving internal ceiling, rain cover, tower roof, and diagnostics. |
-| V277 | active support | Local budgeted continuity fill inside the V265/V276 sloped roof path, plus sparse-run guard for the V265 edge rail. It remains available but is not the final authority for modern wall-visible roof views. |
-| V278 | current contract | Modern owner 1/2 wall-anchored integrated roof cap inspired by the tower V136 principle. It uses `ModernSupport*BufferV236` columns, conditionally replaces old sloped/gable visuals only when same-owner support columns are visible, and falls back to the V265/V277 roof path when no support exists. |
+| V277 | active fallback support | Local budgeted continuity fill inside the V265/V276 sloped roof path, plus sparse-run guard for the V265 edge rail. Under V281 it does not receive owner 1/2 primitive-owned planes. |
+| V278 | disabled in normal V281 roof path | Wall-anchored integrated cap remains as historical helper code and explicit skip counter, but `PERLA_V281_DISABLE_V278_CAP_WHEN_ENABLED` prevents the slab-like hybrid overlay. |
+| V279/V280 | retained support helpers | Support-span, door-span, and near-door guard helpers remain available; the visual authority moved to V281. |
+| V281 | current contract | Reception/bath roof single authority: budgeted world-space primitive faces from `roofSegments`, exclusive fallback to V265/V277 only when primitive preflight rejects, no V278 cap overlay. Current rollback build: `PERLA1_V281R_RECEPTION_ROOF_BASE_ROLLBACK_LOCAL`. |
+| V282 | dormant/off in V281R rollback | Reception portal/slab experiments retained for diagnostics but runtime-off in the V281R rollback base after visual regressions. Do not claim V282 portal/ceiling readiness from this base. |
 
-## V278 Modern Integrated Roof Cap Contract
+## V281 Modern Roof Primitive Authority Contract
 
 Current expected behavior for modern reception/bath roof/eave work:
 
-- `PERLA_BUILD_ID` is `PERLA1_V278_MODERN_INTEGRATED_ROOF_CAP_SAFE_LOCAL`.
-- V278 adds `drawModernIntegratedRoofCapV278` as the primary modern exterior roof authority when owner `1`/`2` wall support columns are visible in `ModernSupport*BufferV236`.
-- In those support-visible views, V278 conditionally skips the old modern sloped roof/gable visuals for that owner to prevent the V265/V277 sampled roof from reintroducing dotted fragments over the integrated cap.
-- When no same-owner modern support columns are visible, V278 does not replace the old roof segment path; this preserves distant/unsupported roof visibility instead of making the roof disappear.
-- V277 continuity fill and V265 edge rail remain support/diagnostic paths, but V278 is the current authority for wall-anchored modern exterior roof views.
+- `PERLA_BUILD_ID` is `PERLA1_V281R_RECEPTION_ROOF_BASE_ROLLBACK_LOCAL`.
+- V281 adds `drawStableModernOwnerRoofPrimitiveV281` as the single reception/bath roof authority when preflight accepts the roof.
+- Eligible owner 1/2 roofSegments are skipped in `drawSlopedRoofLayer2_5D`, `drawSlopedRoofGableCaps2_5D`, V272, V274, and the V278 integrated cap. During V281 QA, `PERLA_V281_QA_DISABLE_OWNER12_LEGACY_FALLBACK` also blocks owner 1/2 legacy fallback so visual proof cannot be masked by the old sampler.
+- The primitive renderer uses real `collectModernRoofFaces` world-space faces, `roofVisibleAt`, and `roofSelfDepthWriteBudgetBlockV200`; it is not a screen overlay or fake band.
+- It draws roof top, gable, fascia, and geometry edge/ridge lines with strict budgets: max `48000` primitive pixels, `3200` fill rects, `32` faces, and warn over `46000` pixels. If projected top faces are too large in a near-camera pose, V281 keeps ownership but clips them to a limited near top band instead of falling back to a full legacy slab; near-plane non-top faces that become huge detached top-screen slabs are also culled.
+- Same-owner wall pixels remain authoritative inside the wall body span: V281 allows a narrow 5 px eave handoff only for fascia/gable and roof-plane pixels at `eaveZ`, while deeper roof pixels still cannot rasterize through visible wall texture, doors, or openings.
+- The V281 near-door guard uses `perlaModernRoofNearDoorSuppressTopPlanesV280` as a risk detector for unstable near-plane roof tops/edge lines; fascia/gable/eave handoff remain available and V278 cap stays disabled.
+- Door openings are bridged from `roofSegments[].doors` projection only; generic same-owner screen gaps are not authority.
+- V278 cap pixels must be zero in normal V281 runtime; `modernStableRoofPrimitiveSkippedIntegratedCapV281` proves the cap was not drawn.
+- If primitive preflight rejects a roof, fallback is exclusive through the existing V265/V277 path; no cap overlay is added on top.
 - V267 must not skip the original/sloped roof fill in normal runtime.
 - V266 silhouette, V270/V271 external ceiling clone, V273 external strip/anchor, V274 geometric eave edge, and V275 handoff are runtime-off.
 - Internal ceiling/soffit stays in `drawModernCoverCeilingSegment`; do not delete or disable it as part of roof visual rollback.
 - Tower roof remains separate and must not be changed to solve reception/bath roof regressions.
+- Coordinate-dependent proof must account for the west expansion display offset: HUD `X 53.64` corresponds to internal runtime `X 83.64`.
+- Screenshot proof must use canvas captures or otherwise prove no HUD/clock/minimap contamination.
+- Roof/eave proof must include `visual_pose_matrix_check`: accepted base coordinates, same-coordinate center/left/right rotations, `coordinate_offset_check`, `hud_contamination_check`, and counters per screenshot. Same-coordinate rotations that lose roof volume, drop faces, or hit budget inconsistently are validation failure, not a pass with warning.
+- Roof/eave proof must also satisfy `roof_visual_matrix_hard_gate`: `roof_matrix_declared_before_patch`, a current runtime/internal coordinate source, HUD/display X recorded separately, the active `roofSegments` owner envelope, far/close/east/west/interior-or-portal/user-repro groups as applicable, `same_coordinate_distance_rotation_grid`, contact sheet or indexed matrix, and `visual_qa_auditor_required`. If the same accepted coordinate changes roof volume, colmo/ridge/front gable, ceiling authority, wall overdraw, or budget state across rotations, record `matrix_failed_replan_not_ready` and replan.
 
-Expected counters in affected V278 roof views:
+Expected counters in affected V281 roof views:
 
 - `roofV276 === true`
 - `roofV277 === true`
 - `roofV278 === true`
+- `roofV279 === true`
+- `roofV280 === true`
+- `roofV281 === true`
+- `modernStableRoofPrimitiveV281 === true`
+- `modernStableRoofPrimitiveAuthorityV281 === "owner_1_2_worldspace_primitive"`
+- `modernStableRoofPrimitivePixelsV281 > 0` in primitive-owned modern roof poses
+- `modernStableRoofPrimitiveBudgetHitV281 === false`
+- `modernStableRoofPrimitiveWarnPixelsV281 === false` in accepted validation poses
+- `modernStableRoofPrimitiveHybridViolationV281 === false`
+- `modernStableRoofPrimitiveSkippedTopFacesNearDoorV281 === 0` in accepted roof-volume poses, or explicitly documented as a degraded near-plane exception by `visual-qa-auditor`
+- `modernStableRoofPrimitiveWallTopRoofPlaneJoinAllowedV281` may be positive in oblique/front eave handoff poses
+- `modernStableRoofPrimitiveSkippedSlopedSegmentsV281 > 0` when owner 1/2 is primitive-owned
+- `modernStableRoofPrimitiveSkippedGableCapsV281 > 0` when owner 1/2 is primitive-owned
+- `modernStableRoofPrimitiveSkippedIntegratedCapV281 > 0`
 - `v277RoofContinuityFillLocalSafe === true`
 - `v278ModernIntegratedRoofCapSafe === true`
-- `v278RoofVisualAuthority === "wall_anchored_integrated_cap"`
+- `v279ModernRoofCapProfileSafe === true`
+- `v280CleanModernRoofCapSafe === true`
+- `v280TowerLikePointProfileSafe === true`
+- `v281RoofVisualAuthority === "owner_1_2_worldspace_primitive_single_authority"`
 - `v278UsesModernSupportBuffersV236 === true`
-- `modernIntegratedRoofCapPixelsV278 > 0` in wall-support-visible modern roof poses
+- `modernIntegratedRoofCapPixelsV278 === 0` in normal V281 roof poses
 - `modernIntegratedRoofCapBudgetHitV278 === false`
-- `modernIntegratedRoofCapPixelsV278 <= 5000`
-- `modernIntegratedRoofCapFillRectsV278 <= 1400`
-- `modernIntegratedRoofSkippedSlopedSegmentsV278 > 0` only when same-owner modern support columns are visible
+- `modernIntegratedRoofCapWarnPixelsV278 === false` in accepted validation poses
+- `modernIntegratedRoofCapFillRectsV278 === 0`
+- `modernIntegratedRoofMinSupportSpanPxV279 > 0`
+- `modernIntegratedRoofSupportSpanOwner1V279` / `modernIntegratedRoofSupportSpanOwner2V279` reflect visible support span by owner
+- `modernIntegratedRoofSupportGateFallbacksV279 > 0` only when cap groups are rejected for narrow support
+- `modernIntegratedRoofLocalBayProfileSafeV279 === false` in V280
+- `modernIntegratedRoofDoorSpanProjectedV280 > 0` when a real door-bearing roof is in view
+- `modernRoofTopPlanesSuppressedNearDoorV280 > 0` only in near-door/eave poses where the top plane would fill the camera
 - `roofV266 === false`, `roofV267 === false`, `roofV273 === false`, `roofV274 === false`, `roofV275 === false`
 - `roofSilhouetteMainOriginalRoofFillSkippedV267` absent/zero
 - `realRoofGeometricEavePixelsV274` absent/zero
@@ -176,6 +215,8 @@ Expected counters in affected V278 roof views:
 | Huge red roof slabs | Re-enabling or approximating full underside/near geometry without tight visibility/budget. | Keep V272 off unless explicitly measured and redesigned. |
 | Edge disappears behind same building wall | Too strict same-owner wall/roof occlusion or screen-space strip drawn before wallcasting. | Do not reintroduce screen-space strips as primary; validate sloped roof sampling and wall buffers together. |
 | Draw count rises for no visible gain | Queuing/deduping/bridging many screen-space strips. | Prefer small geometry-derived passes and verify counters. |
+| Screenshot contaminated by HUD/orologio/minimap/overlay | HUD, clock, minimap, controls, status text, debug overlay, or browser UI covers or resembles the target world/render area. | Use `hud_contamination_check`; crop/retry/report UI layout risk/reject as visual proof when it overlaps the target. Label intentional UI/HUD QA separately. |
+| False coordinates or pose offset | Requested debug pose does not match effective PERLA1 camera, zone, tile, owner, or expected scene. | Use `coordinate_offset_check` when PERLA1 is certain or legitimately suspected and coordinate evidence matters; reconcile requested/effective pose, direction, zone, tile/owner, `offset_delta`, and `false_coordinate_suspicion`. |
 | Testing stale or wrong build | Opening `file://` or cached page. | Use server URL with cache-busting query and verify `PERLA_BUILD_ID`. |
 | Editing historical snapshot | Modifying extracted scripts in `report/`. | Patch only active runtime unless explicitly instructed. |
 
@@ -192,20 +233,43 @@ For rendered runtime changes:
 7. Check console/page errors.
 8. Use `window.__PERLA_DEBUG__.setPlayerForDebug(...)` for deterministic poses.
 9. Capture `#screen` screenshots.
-10. Inspect screenshots visually for the exact regression class.
-11. Read `window.__PERLA_DEBUG__.perlaLastDrawStats()` and relevant public summaries.
+10. Run `coordinate_offset_check` when there is certainty or legitimate doubt that the target is PERLA1 and coordinates/poses affect the conclusion.
+11. Run `hud_contamination_check` for screenshots used as world/render proof.
+12. Inspect screenshots visually for the exact regression class.
+13. Read `window.__PERLA_DEBUG__.perlaLastDrawStats()` and relevant public summaries.
 
-Preferred roof/eave QA poses:
+Preferred roof/eave QA pose selection:
 
-| Scenario | Debug Pose |
-| --- | --- |
-| Critical reception west/south edge, east view | `setPlayerForDebug(64.99, 8.44, 1, 0)` |
-| Critical reception diagonal north-east | `setPlayerForDebug(64.99, 8.44, .7071, -.7071)` |
-| Critical reception diagonal south-east | `setPlayerForDebug(64.99, 8.44, .7071, .7071)` |
-| Reception outside south overhang | `setPlayerForDebug(64.99, 9.60, 1, 0)` |
-| Bath owner 2 south side | `setPlayerForDebug(99, 71, 0, -1)` |
-| Bath owner 2 east side | `setPlayerForDebug(106.5, 65, -1, 0)` |
-| Bath owner 2 west side | `setPlayerForDebug(88, 65, 1, 0)` |
+Do not treat the table below as permanent truth. First read the current runtime with `roofSegments`, `collectPerlaDebugSnapshot()`, and `perlaLastDrawStats()`. Choose poses from the active owner envelope and record both runtime/internal coordinates and HUD/display coordinates. The west/south expansion can make HUD X differ from internal runtime X; if `posXActual` is exposed, use it as the acceptance coordinate and store the HUD X only as display evidence.
+
+For reception owner 1, recent runtime probes have observed an envelope near `x0=65.7 x3=75.3 y0=1.7 y3=9.3`. This is an example to verify, not a stale coordinate contract. If the runtime reports a different owner 1 envelope, derive the matrix from the current envelope:
+
+```text
+centerX = (owner.x0 + owner.x3) / 2
+centerY = (owner.y0 + owner.y3) / 2
+southNearY = owner.y3 + 0.35
+southFarY = owner.y3 + 2.9
+westNearX = owner.x0 - 0.7
+eastNearX = owner.x3 + 0.7
+westFarX = owner.x0 - 3.2
+eastFarX = owner.x3 + 3.2
+northFarY = owner.y0 - 1.5
+```
+
+Minimum `roof_visual_matrix_hard_gate` groups for reception owner 1:
+
+| Group | Purpose | Base from envelope | Required rotations |
+| --- | --- | --- | --- |
+| Interior center | ceiling/slab continuity | `centerX, centerY` | N, S, E, W, NE, NW, SE, SW |
+| Interior or portal threshold | door/portal/rain cover transition | `centerX, owner.y3 - 0.55` or current door line | center, left-oblique, right-oblique, reverse |
+| Outside portal close | front gable/colmo visible from near entrance | `centerX, southNearY` | center, left-oblique, right-oblique, east-graze, west-graze |
+| Outside frontal far | silhouette without disappearing roof | `centerX, southFarY` | center, left-oblique, right-oblique |
+| West lateral near/far | west edge, wall occlusion, no dotted strips | `westNearX/westFarX, centerY` | east, NE, SE, north/south where diagnostic |
+| East lateral near/far | east edge, wall occlusion, no dotted strips | `eastNearX/eastFarX, centerY` | west, NW, SW, north/south where diagnostic |
+| North/back far | back roof and opposite face | `centerX, northFarY` | south, SE, SW |
+| User repro | exact reported failure | accepted runtime/internal coordinate | same coordinate, at least center/left/right plus reported rotation |
+
+Legacy debug poses such as `setPlayerForDebug(64.99, 8.44, 1, 0)` are only comparison probes. Accept them only after `coordinate_offset_check` proves they still target the active owner envelope; otherwise reject them as proof and derive new coordinates from runtime geometry.
 
 ## Local Tooling And Dependencies
 
@@ -257,6 +321,7 @@ Multi-agent orchestration notes:
 - Use `PERLA1_CONTEXT_BUDGET.md` and `PERLA1_SYMBOL_INDEX.md` so subagents can inspect enough real code while returning compact, decision-grade evidence.
 - Use `PERLA1_TASK_INTAKE_PROTOCOL.md` to force relevant agent selection. `workflow-consistency-auditor` is always `CALL` for explicit gates; `workflow-guard`, `plan-integrity-auditor`, `task-watchdog`, `skeptic-auditor`, and `refactor-surgeon` are always at least considered.
 - If Codex exposes only generic `explorer`/`worker` tools, use the Agent Tool Adapter rule: a generic subagent satisfies a named `CALL` agent only when assigned that exact role, pointed to the matching TOML/source docs, given matching read/write scope, and recorded in `agent_tool_mapping`.
+- Protected PERLA1 steps require `call_agent_evidence`: every required `CALL` agent must be satisfied by `direct_invocation`, `generic_adapter`, or `tooling_blocked`. `critical_path` cannot be used as a generic bypass, and `visual_qa_required` makes `visual-qa-auditor` `CALL` for screenshot/rendered/browser validation or visible regression readiness claims.
 - TOML `name` and `description` define PERLA1 role identity and instructions, not guaranteed Codex UI display name, generated nickname, icon, or direct callability.
 - Root `.codex/hooks.json` runs `tools/perla_codex_workflow_check.ps1` on `Stop`, `SubagentStart`, and `SubagentStop` after Codex hook trust review. Hooks enforce lifecycle checks; they do not make subagents persistent background daemons.
 - `tools/perla_codex_workflow_check.ps1` emits schema `perla.workflow.check.v1` with `-Json` or `-Jsonl`. P0/P1 failures are blocking and return exit code `1`.
@@ -291,6 +356,7 @@ Browser validation notes:
 - Known Browser tooling failure: `CreateProcessAsUserW failed: 5`. Treat it as a Codex Browser/Windows sandbox launch failure, not as evidence that the PERLA1 runtime failed.
 - If the runbook/headless validation fails, hand off manual validation with exact URL, expected build id, debug poses, screenshot targets, console checks, and counters/API calls.
 - Do not claim full rendered validation unless screenshots and relevant counters were actually inspected.
+- Do not claim world/render visual proof from a screenshot whose target area is obscured by HUD/clock/minimap/overlay, or from PERLA1 coordinate-dependent evidence with unresolved `false_coordinate_suspicion`.
 - Do not install dependencies unless explicitly needed and approved.
 
 ## Reports And Snapshots
@@ -312,6 +378,7 @@ Update this file when:
 - roof/ceiling/sprite/rain/minimap ownership or contracts change,
 - a new Vxxx patch supersedes an old contract,
 - validation procedure changes,
+- HUD contamination or coordinate offset validation rules change,
 - dependencies/tooling change,
 - local CI, static analyzer, dependency graph, or modularization staging changes,
 - repository sync workflow or parent scripts change,

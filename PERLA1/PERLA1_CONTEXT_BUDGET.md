@@ -33,6 +33,7 @@ Agent handoffs should include enough detail for the Team Leader to decide the ne
 - evidence, risk, and unknowns;
 - exact next action or validation needed.
 - when using the analyzer, report only the relevant focus graph, top large functions, failures, and warnings; keep the full generated JSON as a file reference if needed.
+- for visual PERLA1 evidence, report compact `hud_contamination_check`, `coordinate_offset_check`, and `visual_pose_matrix_check` results when screenshots/poses/coordinates affect the conclusion. For roof/eave work, include `roof_visual_matrix_hard_gate` and `roof_matrix_declared_before_patch`: matrix id, required groups completed/missing, runtime/internal coordinate source, HUD/display X handling, owner envelope, contact sheet or indexed matrix path, `same_coordinate_distance_rotation_grid` result, key counters, `visual_qa_auditor_required` status, and whether any failure is `matrix_failed_replan_not_ready`. Include decision-grade fields only: target visual area, HUD overlap/action, requested/effective pose, direction, expected/observed zone or tile/owner, `offset_delta`, coordinate confidence, `false_coordinate_suspicion`, accepted base coordinates, same-coordinate rotations, counters, and pass/fail/degraded action.
 
 Avoid raw dumps. If a large extract is needed, write or reference a focused report only when the Team Leader asks for it or when it materially reduces context pressure.
 
@@ -115,10 +116,13 @@ Include:
 - validation run and validation not run;
 - hook trust status and fallback if hooks are configured but not proven trusted;
 - checker result plus reminder of semantic limits;
+- `project_backup_gate` status: `backup_user_requested`, `automatic_task_backup`, backup path, excluded RTP path, retention result, and `backup_not_created_permission_blocked` if filesystem approval was unavailable;
 - subagents integrated, deferred/discarded, kept open, closed, stale, or visible only as UI history;
 - staging/sync state, including `selective_staging_only`, `no_global_stage`, `sync_safe`, and residual risk.
 
 Do not paste full git status, full checker JSON, or long hook logs unless requested. Summarize decision-grade evidence and point to exact files or generated artifacts when they matter.
+
+Do not paste long screenshot narratives. For HUD/coordinate/`visual_pose_matrix_check` validation, summarize whether the proof is clean, degraded, retried/cropped, UI-level, matrix-failed, or rejected as world/render proof. For roof/eave validation, never compress away missing groups or failed rotations; report `matrix_failed_replan_not_ready` explicitly instead of calling the result ready.
 
 ## Long Task Checkpoints
 

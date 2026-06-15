@@ -12,7 +12,7 @@ Scope: this file applies to `01_GIOCO_PRONTO_LOCAL_TEST/`.
 
 - Modern roof owner `1` is reception.
 - Modern roof owner `2` is bath.
-- V278 current visual authority for wall-visible modern exterior roofs is the owner-aware integrated cap path: `drawModernIntegratedRoofCapV278`, anchored to `ModernSupport*BufferV236` columns. V265/V276/V277 sloped roof paths remain fallback/support when no same-owner modern support columns are visible.
+- V281 current visual contract is the modern owner `1`/`2` world-space primitive authority in the V281R rollback base: `drawStableModernOwnerRoofPrimitiveV281` owns reception/bath roof visuals when preflight accepts the roof. Sloped/gable/V272/V274/V278 are skipped for primitive-owned owner `1`/`2` roofs; V265/V276/V277 remain exclusive fallback only when preflight rejects. Failed V266-V275 replacement/clone/strip/handoff paths remain runtime-off as visual authority, and V282 portal/slab experiments are retained only as diagnostics while runtime-off in the rollback base.
 - `roofSegments` remain the authoritative geometry data source, but V274/V275 are no longer the active primary renderer after the V275 visual failure.
 - Do not use floorcasting/ceiling-clone samples as the primary visible source for external roof borders. In grazing views those samples become sparse and create dotted or disappearing borders.
 - The V270/V271/V273 real ceiling clone path is runtime-off in V276 for external roof visuals.
@@ -23,24 +23,46 @@ Scope: this file applies to `01_GIOCO_PRONTO_LOCAL_TEST/`.
 
 ## Current Roof Patch Contract
 
-For V278 and successors:
+For V281 and successors:
 
-- Primary wall-visible modern exterior roof fill comes from `drawModernIntegratedRoofCapV278`.
-- V278 may conditionally skip owner `1`/`2` sloped roof/gable visuals only when same-owner `ModernSupport*BufferV236` columns are visible in the current frame.
-- When no same-owner support columns are visible, V278 must not suppress the old sloped roof fallback.
+- Primary modern exterior roof profile comes from the V281 budgeted `drawStableModernOwnerRoofPrimitiveV281` world-space primitive, using `roofSegments` faces and real-door-aware near-plane handling.
+- V281 wall/eave integration allows only a narrow same-owner handoff at the wall top for fascia/gable and roof-plane pixels near `eaveZ`; it must not allow roof pixels to paint through the visible wall body.
+- V281 replaces modern owner `1`/`2` V265/V277 sloped/gable visuals only when primitive preflight accepts the roof.
+- For V281 roof/eave validation, `visual_pose_matrix_check` and `roof_visual_matrix_hard_gate` are mandatory: choose accepted base coordinates from current debug/map/`roofSegments` evidence, record runtime/internal coordinates and HUD/display X separately, then test a `same_coordinate_distance_rotation_grid` from the same `x/y`. Required groups include far/close/east/west/interior-or-portal/user-repro as applicable, with a contact sheet or indexed matrix. If a V281-owned roof loses roof volume, colmo/ridge/front gable, interior ceiling/slab authority, drops top faces, changes face count materially, draws forced seam/black lines, or hits budget in only some rotations from the same coordinate, mark `matrix_failed_replan_not_ready` and replan.
+- For the current reception owner `1` roof/portal/ceiling problem, `reception_roof_real_objective_gate` is mandatory. Clean coordinates, clean HUD, counters, and a contact sheet only make evidence admissible; they do not prove success. Success requires the actual visual objective: high pointed exterior volume, stable front colmo/gable/top faces under same-coordinate rotation, portal/interior rendered as flat monocolor ceiling/underside where expected, no exterior roof/gable fragments inside the portal, no fake seams/bands/color-family switches, and no bath owner `2` readiness claim from reception-only evidence.
+- If a reception roof candidate appears solved or near-solved, stop for user review with the required package before readiness claims or further broad iteration. Removing a black seam, preventing total disappearance, or making one screenshot look better is only `partial_visual_improvement_only` unless the real objective gate passes.
+- When primitive preflight rejects a roof, V281 must preserve exclusive fallback roof behavior without adding the V278 cap overlay.
 - V277 `perlaRoofContinuityFillLocalV277` remains a support path only; it must not become the current roof authority again without a new explicit plan.
 - V267 must not skip the original/sloped roof fill in normal runtime.
 - V266/V267/V270/V271/V273/V274/V275 are retained for diagnostics but runtime-off as visual authority.
-- Expected V278 debug pattern in affected roof views:
-  - `window.PERLA_BUILD_ID` is `PERLA1_V278_MODERN_INTEGRATED_ROOF_CAP_SAFE_LOCAL`.
+- Expected V281 debug pattern in affected roof views:
+  - `window.PERLA_BUILD_ID` is `PERLA1_V281R_RECEPTION_ROOF_BASE_ROLLBACK_LOCAL`.
   - `roofV276` is `true`.
   - `roofV277` is `true`.
   - `roofV278` is `true`.
+  - `roofV279` is `true`.
+  - `roofV280` is `true`.
+  - `roofV281` is `true`.
+  - `modernStableRoofPrimitiveV281` is `true`.
+  - `modernStableRoofPrimitiveAuthorityV281` is `owner_1_2_worldspace_primitive`.
+  - `modernStableRoofPrimitivePixelsV281 > 0` in primitive-owned roof views.
+  - `modernStableRoofPrimitiveBudgetHitV281` is `false`.
+  - `modernStableRoofPrimitiveWarnPixelsV281` is `false` in accepted validation poses.
+  - `modernStableRoofPrimitiveHybridViolationV281` is `false`.
+  - `modernStableRoofPrimitiveWallTopRoofPlaneJoinAllowedV281` may be positive in valid oblique/front eave handoff views.
+  - `modernStableRoofPrimitiveSkippedTopFacesNearDoorV281` must not be used as proof of a stable roof volume; if it is positive in an accepted roof matrix pose, the pose/result is degraded or failed unless the visual-qa-auditor accepts a narrowly documented near-plane exception.
+  - `modernStableRoofPrimitiveBudgetHitV281` and `modernStableRoofPrimitiveWarnPixelsV281` must be consistent and false across accepted same-coordinate rotations.
+  - `modernStableRoofPrimitiveSkippedSlopedSegmentsV281 > 0` and `modernStableRoofPrimitiveSkippedGableCapsV281 > 0` when V281 owns supported modern owner `1`/`2` roof views.
+  - `modernStableRoofPrimitiveSkippedIntegratedCapV281 > 0`.
   - `v278ModernIntegratedRoofCapSafe` is `true`.
-  - `v278RoofVisualAuthority` is `wall_anchored_integrated_cap`.
+  - `v279ModernRoofCapProfileSafe` is `true`.
+  - `v280CleanModernRoofCapSafe` is `true`.
+  - `v280TowerLikePointProfileSafe` is `true`.
   - `modernIntegratedRoofCapBudgetHitV278` is `false`.
-  - `modernIntegratedRoofCapPixelsV278 <= 5000` and `modernIntegratedRoofCapFillRectsV278 <= 1400`.
-  - `modernIntegratedRoofSkippedSlopedSegmentsV278 > 0` only in support-visible modern roof poses.
+  - `modernIntegratedRoofCapPixelsV278` is `0` and `modernIntegratedRoofCapFillRectsV278` is `0` in normal V281 roof views.
+  - `modernIntegratedRoofLocalBayProfileSafeV279` is `false`.
+  - `modernIntegratedRoofDoorSpanProjectedV280 > 0` when a real door-bearing roof is in view.
+  - V281 fallback counters are sane where primitive preflight rejects.
   - `roofV266`, `roofV267`, `roofV273`, `roofV274`, and `roofV275` are `false`.
   - `roofSilhouetteMainOriginalRoofFillSkippedV267` is absent or `0`.
   - `realRoofGeometricEavePixelsV274` and `realEaveHandoffPixelsV275` are absent or `0`.
@@ -48,7 +70,7 @@ For V278 and successors:
 
 ## Visual QA Poses
 
-Use these debug poses for roof/eave work unless the user provides a newer repro:
+Use these debug poses only as legacy comparison probes. For current roof/eave proof, first derive poses from runtime `roofSegments` and the accepted owner envelope. Accept a listed pose only after `coordinate_offset_check` proves requested/effective pose, owner, zone, and `offset_delta` are coherent. Do not use HUD/display X alone when runtime/internal X is available.
 
 - Critical reception west/south edge, east view: `setPlayerForDebug(64.99, 8.44, 1, 0)`
 - Critical reception diagonal north-east: `setPlayerForDebug(64.99, 8.44, .7071, -.7071)`
@@ -61,7 +83,10 @@ Use these debug poses for roof/eave work unless the user provides a newer repro:
 For each pose:
 
 - Wait at least two animation frames after setting the pose.
+- Run `coordinate_offset_check` when there is certainty or legitimate doubt that the target is PERLA1 and the visual conclusion depends on coordinates: compare requested/effective pose, direction requested/effective, expected/observed zone, expected/observed tile or owner, known offset, `offset_delta`, coordinate confidence, and `false_coordinate_suspicion`.
 - Capture the `#screen` canvas.
+- Run `hud_contamination_check` for screenshots used as world/render proof: HUD, clock, minimap, controls, status text, debug overlays, and browser UI must not cover or be confused with the roof/eave target area. If the screenshot is intentionally UI/HUD QA, label it separately.
+- Run `roof_visual_matrix_hard_gate` for roof/eave claims: `roof_matrix_declared_before_patch`, runtime/internal coordinate source, HUD/display X recorded separately, owner envelope, `same_coordinate_distance_rotation_grid`, far/close/east/west/interior-or-portal/user-repro groups as applicable, contact sheet or indexed matrix, `visual_qa_auditor_required`, and `matrix_failed_replan_not_ready` status.
 - Inspect for dotted vertical fragments, missing outer edge, slab fills, z-fighting, and edge/wall height mismatch.
 - Verify console health and relevant draw stats.
 

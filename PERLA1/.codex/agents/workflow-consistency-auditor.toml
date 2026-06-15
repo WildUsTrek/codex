@@ -22,6 +22,9 @@ Audit scope:
 - map-maintainer scope not matching the docs it is expected to maintain;
 - circular authority or self-approval risks;
 - required CALL agents that are downgraded to passive consideration instead of operational invocation;
+- missing or inconsistent `call_agent_evidence`, including protected work without `direct_invocation`, `generic_adapter`, `tooling_blocked`, `user_delegation_state`, or required `agent_tool_mapping_ref`;
+- workflow wording that lets `critical_path`, speed, or Team Leader competence bypass required CALL agents that could run as sidecar or protect the next step;
+- missing `visual_qa_required` rule for screenshot/rendered/browser validation or visible regression readiness claims;
 - plan-integrity-auditor missing from gate, orchestration, project map, AGENTS rules, or writer/governance TOMLs after it is introduced;
 - safe-fixer or refactor-surgeon allowed to proceed after plan-integrity-auditor returns PLAN_REVISION_REQUIRED or STOP_FOR_USER;
 - missing subagent tooling treated as a passed gate instead of TOOLING_BLOCKED;
@@ -34,6 +37,12 @@ Audit scope:
 - generated local CI reports treated inconsistently across report/AGENTS.md, .gitignore, validation rules, and sync guidance;
 - 01_GIOCO_PRONTO_LOCAL_TEST/src/ treated as runtime code before an approved modularization extraction changes the source of truth;
 - local static CI treated as a substitute for rendered/browser validation where visual/runtime behavior changed;
+- visual validation rules missing `hud_contamination_check` for screenshots or `coordinate_offset_check` for PERLA1 coordinate-dependent evidence when PERLA1 is certain or legitimately suspected;
+- visual validation rules missing `visual_pose_matrix_check`, `fixed_coordinate_groups`, and `same_coordinate_rotation_consistency` for roof/eave/wall-occlusion/visibility or rotation-sensitive rendered evidence;
+- roof/eave workflow rules missing `roof_visual_matrix_hard_gate`, `roof_matrix_declared_before_patch`, current runtime/internal coordinate source, HUD/display X separation, `same_coordinate_distance_rotation_grid`, far/close/east/west/interior-or-portal/user-repro groups as applicable, contact sheet or indexed matrix, `visual_qa_auditor_required`, or `matrix_failed_replan_not_ready` stop wording;
+- V281 roof validation wording missing required matrix counters such as `modernStableRoofPrimitiveFacesDrawnV281`, `modernStableRoofPrimitivePixelsV281`, `modernStableRoofPrimitiveBudgetHitV281`, `modernStableRoofPrimitiveWarnPixelsV281`, `modernStableRoofPrimitiveSkippedTopFacesNearDoorV281`, and `modernStableRoofPrimitiveRejectedNearFacesV281`;
+- screenshot validation wording that can confuse HUD, clock, minimap, touch controls, status text, debug overlays, or browser UI with renderer geometry;
+- coordinate validation wording that assumes requested PERLA1 coordinates are true without checking effective pose, expected/observed zone, tile/owner, known offset, coordinate confidence, and suspicious_coordinates when the conclusion depends on pose/location;
 - workflow anomalies in `.md`, TOML, gate hierarchy, agent permissions, or authority boundaries that are not classified before the next operational step;
 - Complex Task Accelerator Protocol drift across intake, orchestration, AGENTS, project/context/block maps, governance/write TOMLs, and the deterministic workflow check;
 - `accelerator_brief`, `cheapest_discriminating_test`, `critical_path`, `sidecar_tasks`, `serial_constraints`, `validation_ladder`, `checkpoint_ledger`, or `subagent_task_packet` documented in one layer but missing from the agents/checker that must enforce it;

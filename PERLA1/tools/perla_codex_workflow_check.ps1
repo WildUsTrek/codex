@@ -69,6 +69,12 @@ $paths = @{
   PerlaContextBudget = Join-Path $perlaRoot 'PERLA1_CONTEXT_BUDGET.md'
   PerlaAgents = Join-Path $perlaRoot 'AGENTS.md'
   PerlaBlockMap = Join-Path $perlaRoot 'PERLA1_BLOCK_MAP.md'
+  PerlaRunbook = Join-Path $perlaRoot 'PERLA1_RUNTIME_TEST_RUNBOOK.md'
+  PerlaSymbolIndex = Join-Path $perlaRoot 'PERLA1_SYMBOL_INDEX.md'
+  RuntimeIndex = Join-Path $perlaRoot '01_GIOCO_PRONTO_LOCAL_TEST/index.html'
+  RuntimeAgents = Join-Path $perlaRoot '01_GIOCO_PRONTO_LOCAL_TEST/AGENTS.md'
+  RegressionSuite = Join-Path $perlaRoot 'tests/perla_regression_suite.json'
+  PerlaBackupTool = Join-Path $perlaRoot 'tools/perla_project_backup.ps1'
   GitIgnore = Join-Path $repoRoot '.gitignore'
   PerlaTools = Join-Path $perlaRoot 'tools'
   AgentDir = Join-Path $perlaRoot '.codex/agents'
@@ -83,6 +89,12 @@ Require-File -Id 'required.project_map' -Path $paths.PerlaProjectMap -Purpose 'P
 Require-File -Id 'required.context_budget' -Path $paths.PerlaContextBudget -Purpose 'PERLA1 context budget protocol exists.'
 Require-File -Id 'required.agents' -Path $paths.PerlaAgents -Purpose 'PERLA1 AGENTS.md exists.'
 Require-File -Id 'required.block_map' -Path $paths.PerlaBlockMap -Purpose 'PERLA1 block map exists.'
+Require-File -Id 'required.runtime_runbook' -Path $paths.PerlaRunbook -Purpose 'PERLA1 runtime validation runbook exists.'
+Require-File -Id 'required.symbol_index' -Path $paths.PerlaSymbolIndex -Purpose 'PERLA1 symbol index exists.'
+Require-File -Id 'required.runtime_index' -Path $paths.RuntimeIndex -Purpose 'PERLA1 playable runtime index.html exists so current build contract can be derived.'
+Require-File -Id 'required.runtime_agents' -Path $paths.RuntimeAgents -Purpose 'PERLA1 runtime-local AGENTS.md exists.'
+Require-File -Id 'required.regression_suite' -Path $paths.RegressionSuite -Purpose 'PERLA1 structural regression suite exists so deterministic suite/build-id drift can be checked.'
+Require-File -Id 'required.project_backup_tool' -Path $paths.PerlaBackupTool -Purpose 'PERLA1 project backup tool exists.'
 Require-File -Id 'required.gitignore' -Path $paths.GitIgnore -Purpose 'Repository .gitignore exists for disposable workflow artifacts.'
 Require-File -Id 'required.agent_dir' -Path $paths.AgentDir -Purpose 'PERLA1 project agent TOML directory exists.'
 
@@ -238,6 +250,130 @@ if ($null -ne $projectMapText) {
 $agentsText = Read-Text -Path $paths.PerlaAgents
 if ($null -ne $agentsText) {
   Add-Check -Id 'docs.agents_validator' -Severity 'P2' -Ok ($agentsText -match 'perla_codex_workflow_check\.ps1') -Message 'PERLA1 AGENTS.md points maintainers to the executable workflow check.' -Files @($paths.PerlaAgents)
+}
+
+$backupToolText = Read-Text -Path $paths.PerlaBackupTool
+if ($null -ne $backupToolText) {
+  Add-Check -Id 'backup_tool.kind_modes' -Severity 'P1' -Ok ($backupToolText -match "ValidateSet\('User','Automatic'\)") -Message 'Project backup tool exposes User and Automatic modes.' -Files @($paths.PerlaBackupTool)
+  Add-Check -Id 'backup_tool.default_repo_scope' -Severity 'P1' -Ok ($backupToolText -match 'defaultProjectRoot\s*=\s*Split-Path -Parent \$perlaRoot') -Message 'Project backup tool defaults to the full synchronized repository folder, not only PERLA1.' -Files @($paths.PerlaBackupTool)
+  Add-Check -Id 'backup_tool.rtp_exclusion' -Severity 'P1' -Ok ($backupToolText -match 'PERLA1\\01_GIOCO_PRONTO_LOCAL_TEST\\assets\\rtp') -Message 'Project backup tool excludes only the requested RTP asset folder.' -Files @($paths.PerlaBackupTool)
+  Add-Check -Id 'backup_tool.zip_archive' -Severity 'P1' -Ok ($backupToolText -match 'ZipFile' -and $backupToolText -match '\.zip') -Message 'Project backup tool creates zip archives, not backup folders.' -Files @($paths.PerlaBackupTool)
+  Add-Check -Id 'backup_tool.automatic_retention_guard' -Severity 'P1' -Ok ($backupToolText -match '\$Kind -eq ''Automatic''' -and $backupToolText -match '\$files\.Count -le 10' -and $backupToolText -match 'AddDays\(-2\)' -and $backupToolText -match 'Remove-Item -LiteralPath \$file\.FullName') -Message 'Automatic backup retention is gated by Automatic mode, more than 10 files, and older-than-2-days file deletion.' -Files @($paths.PerlaBackupTool)
+  Add-Check -Id 'backup_tool.user_no_retention' -Severity 'P1' -Ok ($backupToolText -match 'if \(\$Kind -eq ''Automatic''\)' -and $backupToolText -notmatch 'backup\\utente[\s\S]{0,300}Remove-Item') -Message 'User backup folder is not pruned by the backup tool.' -Files @($paths.PerlaBackupTool)
+  Add-Check -Id 'backup_tool.schema_output' -Severity 'P2' -Ok ($backupToolText -match 'perla\.project_backup\.v1') -Message 'Project backup tool emits machine-readable backup result schema.' -Files @($paths.PerlaBackupTool)
+}
+
+$runtimeIndexText = Read-Text -Path $paths.RuntimeIndex
+$runtimeAgentsText = Read-Text -Path $paths.RuntimeAgents
+$regressionSuiteText = Read-Text -Path $paths.RegressionSuite
+$regressionSuiteRequiredBuildId = ''
+$regressionSuiteParseOk = $false
+$regressionSuiteParseError = ''
+if ($null -ne $regressionSuiteText) {
+  try {
+    $regressionSuite = $regressionSuiteText | ConvertFrom-Json
+    $regressionSuiteParseOk = $true
+    $regressionSuiteRequiredBuildId = [string]$regressionSuite.requiredBuildId
+  }
+  catch {
+    $regressionSuiteParseError = $_.Exception.Message
+  }
+}
+$blockMapTextForContract = Read-Text -Path $paths.PerlaBlockMap
+$symbolIndexText = Read-Text -Path $paths.PerlaSymbolIndex
+$orchestrationTextForContract = Read-Text -Path $paths.PerlaOrchestration
+$safeFixerPath = Join-Path $paths.AgentDir 'safe-fixer.toml'
+$regressionAuditorPath = Join-Path $paths.AgentDir 'regression-auditor.toml'
+$safeFixerText = Read-Text -Path $safeFixerPath
+$regressionAuditorText = Read-Text -Path $regressionAuditorPath
+
+if ($null -ne $runtimeIndexText) {
+  $buildMatch = [regex]::Match($runtimeIndexText, "PERLA_BUILD_ID\s*=\s*'([^']+)'")
+  $buildId = if ($buildMatch.Success) { $buildMatch.Groups[1].Value } else { '' }
+  $versionMatch = [regex]::Match($buildId, 'PERLA1_V(\d+)')
+  $currentVersion = if ($versionMatch.Success) { 'V' + $versionMatch.Groups[1].Value } else { '' }
+
+  Add-Check -Id 'runtime_contract.build_id_parse' -Severity 'P1' -Ok ($buildMatch.Success -and $versionMatch.Success) -Message ('Runtime PERLA_BUILD_ID is parseable for current contract derivation: ' + $buildId) -Files @($paths.RuntimeIndex)
+
+  $suiteBuildMatchesRuntime = (
+    $regressionSuiteParseOk -and
+    $regressionSuiteRequiredBuildId.Length -gt 0 -and
+    $buildId.Length -gt 0 -and
+    $regressionSuiteRequiredBuildId -eq $buildId
+  )
+  $suiteBuildMessage = ('Deterministic regression suite requiredBuildId matches runtime PERLA_BUILD_ID. Suite=' + $regressionSuiteRequiredBuildId + '; runtime=' + $buildId + '.')
+  if (-not $regressionSuiteParseOk -and $regressionSuiteParseError.Length -gt 0) {
+    $suiteBuildMessage += (' Parse error: ' + $regressionSuiteParseError)
+  }
+  Add-Check -Id 'runtime_contract.deterministic_suite_build_id' -Severity 'P1' -Ok $suiteBuildMatchesRuntime -Message $suiteBuildMessage -Files @($paths.RegressionSuite, $paths.RuntimeIndex)
+
+  if ($currentVersion.Length -gt 0) {
+    $projectMapCurrent = (
+      $null -ne $projectMapText -and
+      $projectMapText -match [regex]::Escape($buildId) -and
+      ($projectMapText -match ([regex]::Escape($currentVersion) + '\s*\|\s*current contract') -or $projectMapText -match ([regex]::Escape($currentVersion) + '.*current contract'))
+    )
+    Add-Check -Id 'runtime_contract.project_map_current_build' -Severity 'P1' -Ok $projectMapCurrent -Message ('Project map mirrors runtime current build and marks ' + $currentVersion + ' as current contract.') -Files @($paths.PerlaProjectMap, $paths.RuntimeIndex)
+
+    $blockMapCurrent = (
+      $null -ne $blockMapTextForContract -and
+      $blockMapTextForContract -match [regex]::Escape($currentVersion) -and
+      $blockMapTextForContract -match 'current|Highest-risk rendering block|roof-system'
+    )
+    Add-Check -Id 'runtime_contract.block_map_current_contract' -Severity 'P1' -Ok $blockMapCurrent -Message ('Block map roof-system contract mentions current runtime version ' + $currentVersion + '.') -Files @($paths.PerlaBlockMap, $paths.RuntimeIndex)
+
+    $symbolIndexCurrent = (
+      $null -ne $symbolIndexText -and
+      $symbolIndexText -match [regex]::Escape($buildId) -and
+      $symbolIndexText -match [regex]::Escape($currentVersion)
+    )
+    Add-Check -Id 'runtime_contract.symbol_index_current_build' -Severity 'P1' -Ok $symbolIndexCurrent -Message ('Symbol index mirrors runtime current build ' + $buildId + '.') -Files @($paths.PerlaSymbolIndex, $paths.RuntimeIndex)
+
+    $runtimeAgentsCurrent = (
+      $null -ne $runtimeAgentsText -and
+      $runtimeAgentsText -match [regex]::Escape($buildId) -and
+      $runtimeAgentsText -match ([regex]::Escape($currentVersion) + ' current visual contract') -and
+      $runtimeAgentsText -match ('For ' + [regex]::Escape($currentVersion) + ' and successors')
+    )
+    Add-Check -Id 'runtime_contract.runtime_agents_current_contract' -Severity 'P1' -Ok $runtimeAgentsCurrent -Message ('Runtime-local AGENTS.md mirrors current roof contract ' + $currentVersion + ' and build id.') -Files @($paths.RuntimeAgents, $paths.RuntimeIndex)
+
+    $agentTomlsCurrent = (
+      $null -ne $safeFixerText -and
+      $null -ne $regressionAuditorText -and
+      $safeFixerText -match ('As of ' + [regex]::Escape($currentVersion)) -and
+      $regressionAuditorText -match ('As of ' + [regex]::Escape($currentVersion))
+    )
+    Add-Check -Id 'runtime_contract.agent_tomls_current_contract' -Severity 'P1' -Ok $agentTomlsCurrent -Message ('Roof-sensitive agent TOMLs name the current runtime contract ' + $currentVersion + ' as current authority.') -Files @($safeFixerPath, $regressionAuditorPath, $paths.RuntimeIndex)
+
+    $staleAuthorityPatterns = @(
+      'As of V278',
+      'As of V279',
+      'V278 current',
+      'V279 current',
+      'V282 is the current runtime roof/portal contract',
+      'drawModernIntegratedRoofCapV278` is the mapped wall-visible modern roof authority',
+      'For V279 and successors',
+      'PERLA1_V279_MODERN_ROOF_CAP_PROFILE_SAFE_LOCAL'
+    )
+    $staleAuthorityHits = @()
+    foreach ($candidate in @(
+      @{ Path = $paths.RuntimeAgents; Text = $runtimeAgentsText },
+      @{ Path = $paths.PerlaBlockMap; Text = $blockMapTextForContract },
+      @{ Path = $paths.PerlaOrchestration; Text = $orchestrationTextForContract },
+      @{ Path = $safeFixerPath; Text = $safeFixerText },
+      @{ Path = $regressionAuditorPath; Text = $regressionAuditorText }
+    )) {
+      if ($null -eq $candidate.Text) {
+        continue
+      }
+      foreach ($pattern in $staleAuthorityPatterns) {
+        if ($candidate.Text -match [regex]::Escape($pattern)) {
+          $staleAuthorityHits += ($candidate.Path + ':' + $pattern)
+        }
+      }
+    }
+    Add-Check -Id 'runtime_contract.no_stale_roof_authority_phrases' -Severity 'P1' -Ok ($staleAuthorityHits.Count -eq 0) -Message ('Runtime roof authority docs avoid stale current-contract phrases. Hits: ' + (($staleAuthorityHits | Sort-Object) -join '; ')) -Files @($paths.RuntimeAgents, $paths.PerlaBlockMap, $paths.PerlaOrchestration, $safeFixerPath, $regressionAuditorPath)
+  }
 }
 
 $acceleratorCoreDocs = @(
@@ -500,6 +636,9 @@ if ($acceleratorText.Trim().Length -gt 0) {
     'finalization_gate',
     'workflow_tooling_manifest',
     'subagent_task_lifecycle',
+    'project_backup_gate',
+    'backup_user_requested',
+    'automatic_task_backup',
     'selective_staging_only',
     'no_global_stage'
   )
@@ -509,12 +648,12 @@ if ($acceleratorText.Trim().Length -gt 0) {
   }
 
   $finalizationCoreDocTermRequirements = @{
-    'PERLA1_TASK_INTAKE_PROTOCOL.md' = @('hook_trust_check','checker_semantic_limit','scoped_finalization','finalization_gate','workflow_tooling_manifest','subagent_task_lifecycle','selective_staging_only','no_global_stage')
-    'ORCHESTRATION.md' = @('hook_trust_check','checker_semantic_limit','scoped_finalization','finalization_gate','workflow_tooling_manifest','subagent_task_lifecycle','selective_staging_only','no_global_stage')
-    'AGENTS.md' = @('hook_trust_check','checker_semantic_limit','scoped_finalization','finalization_gate','workflow_tooling_manifest','subagent_task_lifecycle','selective_staging_only','no_global_stage')
-    'PERLA1_PROJECT_MAP.md' = @('hook_trust_check','checker_semantic_limit','scoped_finalization','finalization_gate','workflow_tooling_manifest','subagent_task_lifecycle')
-    'PERLA1_CONTEXT_BUDGET.md' = @('hook_trust_check','checker_semantic_limit','scoped_finalization','finalization_gate','workflow_tooling_manifest','subagent_task_lifecycle','selective_staging_only','no_global_stage')
-    'PERLA1_BLOCK_MAP.md' = @('hook_trust_check','checker_semantic_limit','scoped_finalization','finalization_gate','workflow_tooling_manifest','subagent_task_lifecycle')
+    'PERLA1_TASK_INTAKE_PROTOCOL.md' = @('hook_trust_check','checker_semantic_limit','scoped_finalization','finalization_gate','workflow_tooling_manifest','subagent_task_lifecycle','project_backup_gate','backup_user_requested','automatic_task_backup','selective_staging_only','no_global_stage')
+    'ORCHESTRATION.md' = @('hook_trust_check','checker_semantic_limit','scoped_finalization','finalization_gate','workflow_tooling_manifest','subagent_task_lifecycle','project_backup_gate','backup_user_requested','automatic_task_backup','selective_staging_only','no_global_stage')
+    'AGENTS.md' = @('hook_trust_check','checker_semantic_limit','scoped_finalization','finalization_gate','workflow_tooling_manifest','subagent_task_lifecycle','project_backup_gate','backup_user_requested','automatic_task_backup','selective_staging_only','no_global_stage')
+    'PERLA1_PROJECT_MAP.md' = @('hook_trust_check','checker_semantic_limit','scoped_finalization','finalization_gate','workflow_tooling_manifest','subagent_task_lifecycle','project_backup_gate','backup_user_requested','automatic_task_backup')
+    'PERLA1_CONTEXT_BUDGET.md' = @('hook_trust_check','checker_semantic_limit','scoped_finalization','finalization_gate','workflow_tooling_manifest','subagent_task_lifecycle','project_backup_gate','backup_user_requested','automatic_task_backup','selective_staging_only','no_global_stage')
+    'PERLA1_BLOCK_MAP.md' = @('hook_trust_check','checker_semantic_limit','scoped_finalization','finalization_gate','workflow_tooling_manifest','subagent_task_lifecycle','project_backup_gate','backup_user_requested','automatic_task_backup')
   }
 
   foreach ($requirement in $finalizationCoreDocTermRequirements.GetEnumerator()) {
@@ -556,6 +695,166 @@ if ($acceleratorText.Trim().Length -gt 0) {
   Add-Check -Id 'hooks.trust_not_forced' -Severity 'P1' -Ok ($acceleratorText -match 'cannot be forced|cannot force Codex|not necessarily trusted|not proven active' -and $acceleratorText -match 'manual workflow checker|run the workflow checker manually') -Message 'Hook trust wording states configured hooks are not proof of active trusted enforcement and defines manual fallback.' -Files $acceleratorScanFiles
   Add-Check -Id 'checker.semantic_limit' -Severity 'P1' -Ok ($acceleratorText -match 'checker_semantic_limit' -and $acceleratorText -match 'cannot prove|does not prove' -and $acceleratorText -match 'visual|rendered|user intent|agent reasoning') -Message 'Checker semantic limit is explicit: deterministic checks do not prove runtime visuals, user intent, or agent reasoning quality.' -Files $acceleratorScanFiles
   Add-Check -Id 'subagent_lifecycle.close_at_task_completion' -Severity 'P1' -Ok ($acceleratorText -match 'Team Leader task completion' -and $acceleratorText -match 'not close|Do not close' -and $acceleratorText -match 'internal step') -Message 'Subagent lifecycle says to close at Team Leader task completion or packet completion/obsolescence, not merely after an internal step.' -Files $acceleratorScanFiles
+
+  $agentInvocationFiles = @(
+    $paths.PerlaAgents,
+    $paths.PerlaOrchestration,
+    $paths.PerlaIntake,
+    $paths.PerlaProjectMap,
+    $paths.PerlaBlockMap,
+    (Join-Path $paths.AgentDir 'workflow-guard.toml'),
+    (Join-Path $paths.AgentDir 'workflow-consistency-auditor.toml'),
+    (Join-Path $paths.AgentDir 'visual-qa-auditor.toml')
+  )
+
+  $agentInvocationText = @(
+    foreach ($scanPath in $agentInvocationFiles) {
+      Read-Text -Path $scanPath
+    }
+  ) -join "`n"
+
+  $requiredAgentInvocationTerms = @(
+    'call_agent_evidence',
+    'direct_invocation',
+    'generic_adapter',
+    'tooling_blocked',
+    'user_delegation_state',
+    'agent_tool_mapping_ref',
+    'tooling_discovery_attempted',
+    'adapter_attempted',
+    'visual_qa_required'
+  )
+
+  foreach ($term in $requiredAgentInvocationTerms) {
+    Add-Check -Id ('agent_invocation.required_term.' + $term) -Severity 'P1' -Ok ($agentInvocationText -match [regex]::Escape($term)) -Message ('Agent invocation enforcement required term is documented/enforced: ' + $term) -Files $agentInvocationFiles
+  }
+
+  Add-Check -Id 'agent_invocation.critical_path_not_bypass' -Severity 'P1' -Ok ($agentInvocationText -match 'critical_path' -and $agentInvocationText -match 'not.*bypass|not an excuse|cannot.*bypass' -and $agentInvocationText -match 'sidecar') -Message 'Agent invocation wording states critical_path is not a bypass for required CALL agents and sidecars should run when useful.' -Files $agentInvocationFiles
+  Add-Check -Id 'agent_invocation.visual_qa_call' -Severity 'P1' -Ok ($agentInvocationText -match 'visual_qa_required' -and $agentInvocationText -match 'visual-qa-auditor' -and $agentInvocationText -match 'screenshot|rendered|browser') -Message 'Visual QA wording makes visual-qa-auditor CALL for screenshot/rendered/browser validation or visible regression risk before readiness claims.' -Files $agentInvocationFiles
+  Add-Check -Id 'agent_invocation.no_local_self_certification' -Severity 'P1' -Ok ($agentInvocationText -match 'only visual QA authority|Self-audit by the Team Leader is degraded evidence|self-audit by the Team Leader is degraded evidence' -and $agentInvocationText -match 'residual risk|degraded fallback') -Message 'Agent invocation wording blocks local-only self-certification except recorded degraded fallback with residual risk.' -Files $agentInvocationFiles
+
+  $visualEvidenceFiles = @(
+    $paths.PerlaAgents,
+    $paths.PerlaOrchestration,
+    $paths.PerlaIntake,
+    $paths.PerlaProjectMap,
+    $paths.PerlaBlockMap,
+    $paths.PerlaContextBudget,
+    $paths.PerlaRunbook,
+    $paths.PerlaSymbolIndex,
+    $paths.RuntimeAgents,
+    (Join-Path $paths.AgentDir 'visual-qa-auditor.toml'),
+    (Join-Path $paths.AgentDir 'workflow-guard.toml'),
+    (Join-Path $paths.AgentDir 'workflow-consistency-auditor.toml'),
+    (Join-Path $paths.AgentDir 'plan-integrity-auditor.toml'),
+    (Join-Path $paths.AgentDir 'regression-auditor.toml'),
+    (Join-Path $paths.AgentDir 'renderer-block-auditor.toml'),
+    (Join-Path $paths.AgentDir 'performance-auditor.toml'),
+    (Join-Path $paths.AgentDir 'safe-fixer.toml'),
+    (Join-Path $paths.AgentDir 'refactor-surgeon.toml'),
+    (Join-Path $paths.AgentDir 'task-watchdog.toml'),
+    (Join-Path $paths.AgentDir 'skeptic-auditor.toml'),
+    (Join-Path $paths.AgentDir 'map-maintainer.toml')
+  )
+
+  $visualEvidenceText = @(
+    foreach ($scanPath in $visualEvidenceFiles) {
+      Read-Text -Path $scanPath
+    }
+  ) -join "`n"
+
+  $visualEvidenceRequiredTerms = @(
+    'hud_contamination_check',
+    'coordinate_offset_check',
+    'visual_pose_matrix_check',
+    'fixed_coordinate_groups',
+    'same_coordinate_rotation_consistency',
+    'requested_pose',
+    'effective_pose',
+    'direction_requested',
+    'direction_effective',
+    'zone',
+    'offset_delta',
+    'false_coordinate_suspicion',
+    'roof_visual_matrix_hard_gate',
+    'roof_matrix_declared_before_patch',
+    'same_coordinate_distance_rotation_grid',
+    'matrix_failed_replan_not_ready',
+    'visual_qa_auditor_required'
+  )
+
+  foreach ($term in $visualEvidenceRequiredTerms) {
+    Add-Check -Id ('visual_evidence.required_term.' + $term) -Severity 'P1' -Ok ($visualEvidenceText -match [regex]::Escape($term)) -Message ('Visual evidence hygiene required term is documented/enforced: ' + $term) -Files $visualEvidenceFiles
+  }
+
+  $visualCoreDocTermRequirements = @{
+    'AGENTS.md' = @('hud_contamination_check','coordinate_offset_check','visual_pose_matrix_check','false_coordinate_suspicion','roof_visual_matrix_hard_gate','roof_matrix_declared_before_patch','same_coordinate_distance_rotation_grid','matrix_failed_replan_not_ready')
+    'ORCHESTRATION.md' = @('hud_contamination_check','coordinate_offset_check','visual_pose_matrix_check','false_coordinate_suspicion','roof_visual_matrix_hard_gate','roof_matrix_declared_before_patch','same_coordinate_distance_rotation_grid','matrix_failed_replan_not_ready')
+    'PERLA1_TASK_INTAKE_PROTOCOL.md' = @('hud_contamination_check','coordinate_offset_check','visual_pose_matrix_check','fixed_coordinate_groups','same_coordinate_rotation_consistency','requested_pose','effective_pose','direction_requested','direction_effective','offset_delta','false_coordinate_suspicion','roof_visual_matrix_hard_gate','roof_matrix_declared_before_patch','same_coordinate_distance_rotation_grid','matrix_failed_replan_not_ready','visual_qa_auditor_required')
+    'PERLA1_RUNTIME_TEST_RUNBOOK.md' = @('hud_contamination_check','coordinate_offset_check','visual_pose_matrix_check','fixed_coordinate_groups','same_coordinate_rotation_consistency','requested_pose','effective_pose','direction_requested','direction_effective','offset_delta','false_coordinate_suspicion','roof_visual_matrix_hard_gate','roof_matrix_declared_before_patch','same_coordinate_distance_rotation_grid','matrix_failed_replan_not_ready','visual_qa_auditor_required')
+    'PERLA1_PROJECT_MAP.md' = @('hud_contamination_check','coordinate_offset_check','visual_pose_matrix_check','same-coordinate','false_coordinate_suspicion','roof_visual_matrix_hard_gate','roof_matrix_declared_before_patch','same_coordinate_distance_rotation_grid','matrix_failed_replan_not_ready')
+    'PERLA1_BLOCK_MAP.md' = @('hud_contamination_check','coordinate_offset_check','visual_pose_matrix_check','roof_visual_matrix_hard_gate','roof_matrix_declared_before_patch','same_coordinate_distance_rotation_grid','matrix_failed_replan_not_ready')
+    'PERLA1_CONTEXT_BUDGET.md' = @('hud_contamination_check','coordinate_offset_check','visual_pose_matrix_check','offset_delta','false_coordinate_suspicion','roof_visual_matrix_hard_gate','roof_matrix_declared_before_patch','same_coordinate_distance_rotation_grid','matrix_failed_replan_not_ready')
+    'PERLA1_SYMBOL_INDEX.md' = @('hud_contamination_check','coordinate_offset_check','visual_pose_matrix_check','roof_visual_matrix_hard_gate','setPlayerForDebug','collectPerlaDebugSnapshot','zoneAtPlayer','perlaLastDrawStats','roof_matrix_declared_before_patch','same_coordinate_distance_rotation_grid','matrix_failed_replan_not_ready')
+    '01_GIOCO_PRONTO_LOCAL_TEST/AGENTS.md' = @('hud_contamination_check','coordinate_offset_check','visual_pose_matrix_check','offset_delta','false_coordinate_suspicion','roof_visual_matrix_hard_gate','roof_matrix_declared_before_patch','same_coordinate_distance_rotation_grid','matrix_failed_replan_not_ready')
+  }
+
+  $visualCoreDocPaths = @{
+    'AGENTS.md' = $paths.PerlaAgents
+    'ORCHESTRATION.md' = $paths.PerlaOrchestration
+    'PERLA1_TASK_INTAKE_PROTOCOL.md' = $paths.PerlaIntake
+    'PERLA1_RUNTIME_TEST_RUNBOOK.md' = $paths.PerlaRunbook
+    'PERLA1_PROJECT_MAP.md' = $paths.PerlaProjectMap
+    'PERLA1_BLOCK_MAP.md' = $paths.PerlaBlockMap
+    'PERLA1_CONTEXT_BUDGET.md' = $paths.PerlaContextBudget
+    'PERLA1_SYMBOL_INDEX.md' = $paths.PerlaSymbolIndex
+    '01_GIOCO_PRONTO_LOCAL_TEST/AGENTS.md' = $paths.RuntimeAgents
+  }
+
+  foreach ($requirement in $visualCoreDocTermRequirements.GetEnumerator()) {
+    $docPath = $visualCoreDocPaths[$requirement.Key]
+    $docText = Read-Text -Path $docPath
+    $missingTerms = @()
+    foreach ($term in $requirement.Value) {
+      if ($null -eq $docText -or $docText -notmatch [regex]::Escape($term)) {
+        $missingTerms += $term
+      }
+    }
+    Add-Check -Id ('visual_evidence.core_doc_terms.' + (($requirement.Key -replace '\.md$','') -replace '[^a-zA-Z0-9]+','_').Trim('_')) -Severity 'P1' -Ok ($missingTerms.Count -eq 0) -Message ('Core workflow/runtime doc carries required visual evidence hygiene terms: ' + $requirement.Key + '. Missing: ' + (($missingTerms | Sort-Object) -join ', ')) -Files @($docPath)
+  }
+
+  $visualTomlTermRequirements = @{
+    'visual-qa-auditor.toml' = @('hud_contamination_check','coordinate_offset_check','visual_pose_matrix_check','fixed_coordinate_groups','same_coordinate_rotation_consistency','modernStableRoofPrimitiveFacesDrawnV281','modernStableRoofPrimitiveBudgetHitV281','requested_pose','effective_pose','direction_requested','direction_effective','offset_delta','false_coordinate_suspicion','roof_visual_matrix_hard_gate','roof_matrix_declared_before_patch','same_coordinate_distance_rotation_grid','matrix_failed_replan_not_ready','visual_qa_auditor_required')
+    'workflow-guard.toml' = @('hud_contamination_check','coordinate_offset_check','visual_pose_matrix_check','fixed_coordinate_groups','same_coordinate_rotation_consistency','modernStableRoofPrimitiveFacesDrawnV281','modernStableRoofPrimitiveBudgetHitV281','false_coordinate_suspicion','roof_visual_matrix_hard_gate','roof_matrix_declared_before_patch','same_coordinate_distance_rotation_grid','matrix_failed_replan_not_ready','visual_qa_auditor_required')
+    'workflow-consistency-auditor.toml' = @('hud_contamination_check','coordinate_offset_check','visual_pose_matrix_check','fixed_coordinate_groups','same_coordinate_rotation_consistency','suspicious_coordinates','roof_visual_matrix_hard_gate','roof_matrix_declared_before_patch','same_coordinate_distance_rotation_grid','matrix_failed_replan_not_ready','visual_qa_auditor_required')
+    'plan-integrity-auditor.toml' = @('hud_contamination_check','coordinate_offset_check','visual_pose_matrix_check','fixed_coordinate_groups','same_coordinate_rotation_consistency','requested_pose','effective_pose','offset_delta','false_coordinate_suspicion','roof_visual_matrix_hard_gate','roof_matrix_declared_before_patch','same_coordinate_distance_rotation_grid','matrix_failed_replan_not_ready')
+    'regression-auditor.toml' = @('hud_contamination_check','coordinate_offset_check','visual_pose_matrix_check','fixed_coordinate_groups','same_coordinate_rotation_consistency','modernStableRoofPrimitiveFacesDrawnV281','modernStableRoofPrimitiveSkippedTopFacesNearDoorV281','roof_visual_matrix_hard_gate','roof_matrix_declared_before_patch','same_coordinate_distance_rotation_grid','matrix_failed_replan_not_ready')
+    'renderer-block-auditor.toml' = @('hud_contamination_check','coordinate_offset_check','visual_pose_matrix_check','fixed_coordinate_groups','same_coordinate_rotation_consistency','roof_visual_matrix_hard_gate','roof_matrix_declared_before_patch','same_coordinate_distance_rotation_grid','matrix_failed_replan_not_ready')
+    'performance-auditor.toml' = @('hud_contamination_check','coordinate_offset_check','visual_pose_matrix_check','same_coordinate_rotation_consistency','modernStableRoofPrimitiveBudgetHitV281','modernStableRoofPrimitiveWarnPixelsV281','roof_visual_matrix_hard_gate','roof_matrix_declared_before_patch','same_coordinate_distance_rotation_grid','matrix_failed_replan_not_ready')
+    'safe-fixer.toml' = @('hud_contamination_check','coordinate_offset_check','visual_pose_matrix_check','fixed_coordinate_groups','same_coordinate_rotation_consistency','modernStableRoofPrimitiveFacesDrawnV281','modernStableRoofPrimitiveBudgetHitV281','roof_visual_matrix_hard_gate','roof_matrix_declared_before_patch','same_coordinate_distance_rotation_grid','matrix_failed_replan_not_ready')
+    'refactor-surgeon.toml' = @('hud_contamination_check','coordinate_offset_check')
+    'task-watchdog.toml' = @('hud_contamination_check','coordinate_offset_check','visual_pose_matrix_check','fixed_coordinate_groups','same_coordinate_rotation_consistency','roof_visual_matrix_hard_gate','roof_matrix_declared_before_patch','same_coordinate_distance_rotation_grid','matrix_failed_replan_not_ready')
+    'skeptic-auditor.toml' = @('hud_contamination_check','coordinate_offset_check','visual_pose_matrix_check','fixed_coordinate_groups','same_coordinate_rotation_consistency','false_coordinate_suspicion','roof_visual_matrix_hard_gate','roof_matrix_declared_before_patch','same_coordinate_distance_rotation_grid','matrix_failed_replan_not_ready')
+    'map-maintainer.toml' = @('hud_contamination_check','coordinate_offset_check','offset_delta','false_coordinate_suspicion')
+  }
+
+  foreach ($requirement in $visualTomlTermRequirements.GetEnumerator()) {
+    $agentPath = Join-Path $paths.AgentDir $requirement.Key
+    $agentText = Read-Text -Path $agentPath
+    $missingTerms = @()
+    foreach ($term in $requirement.Value) {
+      if ($null -eq $agentText -or $agentText -notmatch [regex]::Escape($term)) {
+        $missingTerms += $term
+      }
+    }
+    Add-Check -Id ('visual_evidence.toml_terms.' + (($requirement.Key -replace '\.toml$','') -replace '[^a-zA-Z0-9]+','_').Trim('_')) -Severity 'P1' -Ok ($missingTerms.Count -eq 0) -Message ('Agent TOML carries role-required visual evidence hygiene terms: ' + $requirement.Key + '. Missing: ' + (($missingTerms | Sort-Object) -join ', ')) -Files @($agentPath)
+  }
+
+  Add-Check -Id 'visual_evidence.hud_not_geometry' -Severity 'P1' -Ok ($visualEvidenceText -match 'HUD|hud' -and $visualEvidenceText -match 'clock|orologio' -and $visualEvidenceText -match 'minimap' -and $visualEvidenceText -match 'renderer geometry|world/render') -Message 'Visual evidence rules distinguish HUD/clock/minimap/overlay contamination from renderer geometry.' -Files $visualEvidenceFiles
+  Add-Check -Id 'visual_evidence.coordinate_perla_trigger' -Severity 'P1' -Ok ($visualEvidenceText -match 'certainty or legitimate doubt|certain or legitimately suspected|legitimate doubt' -and $visualEvidenceText -match 'PERLA1' -and $visualEvidenceText -match 'unrelated non-PERLA') -Message 'Coordinate offset check is scoped to PERLA1 certainty/legitimate doubt and does not burden unrelated non-PERLA work.' -Files $visualEvidenceFiles
+  Add-Check -Id 'visual_evidence.pose_matrix_rotation_invariants' -Severity 'P1' -Ok ($visualEvidenceText -match 'visual_pose_matrix_check' -and $visualEvidenceText -match 'same-coordinate|same coordinate|same `x/y`' -and $visualEvidenceText -match 'center.*left.*right|left.*right' -and $visualEvidenceText -match 'budget|face count|faces') -Message 'Visual evidence rules require same-coordinate rotation matrix and counter invariants for rotation-sensitive rendered work.' -Files $visualEvidenceFiles
+  Add-Check -Id 'visual_evidence.roof_matrix_hard_gate' -Severity 'P1' -Ok ($visualEvidenceText -match 'roof_visual_matrix_hard_gate' -and $visualEvidenceText -match 'roof_matrix_declared_before_patch' -and $visualEvidenceText -match 'same_coordinate_distance_rotation_grid' -and $visualEvidenceText -match 'runtime/internal|runtime internal|internal coordinate' -and $visualEvidenceText -match 'HUD/display|display X' -and $visualEvidenceText -match 'far.*close.*east.*west|east.*west.*interior|user-repro|user repro' -and $visualEvidenceText -match 'contact sheet|indexed matrix' -and $visualEvidenceText -match 'matrix_failed_replan_not_ready' -and $visualEvidenceText -match 'visual_qa_auditor_required|visual-qa-auditor') -Message 'Roof/eave visual evidence requires declared hard-gate matrix with runtime coordinates, HUD separation, required distance/rotation groups, contact sheet/index, visual QA, and hard fail wording.' -Files $visualEvidenceFiles
+  Add-Check -Id 'visual_evidence.not_automatic_proof' -Severity 'P1' -Ok ($visualEvidenceText -match 'not.*automatic proof|Do not rewrite them into automatic proof|not.*substitute|cannot replace' -and $visualEvidenceText -match 'visual inspection|screenshot inspection|counters') -Message 'Visual evidence hygiene wording does not turn checks into automatic proof replacing inspection/counters.' -Files $visualEvidenceFiles
 }
 
 if (Test-Path -LiteralPath $paths.AgentDir) {

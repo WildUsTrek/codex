@@ -1,0 +1,594 @@
+{
+  "errors": [],
+  "results": [
+    {
+      "name": "P1_user_39_48_10_78_N",
+      "build": "PERLA1_V281R_RECEPTION_ROOF_BASE_ROLLBACK_LOCAL",
+      "pose": {
+        "x": 69.48,
+        "y": 10.78,
+        "dx": 0,
+        "dy": -1,
+        "displayX": 39.48
+      },
+      "cell": {
+        "x": 69,
+        "y": 10,
+        "wall": 0,
+        "ceil": 0,
+        "zone": "erba"
+      },
+      "stats": {
+        "roofV281": true,
+        "roofPixelsV281": 152929,
+        "roofFacesV281": 0,
+        "roofDrawnV281": 4,
+        "budgetHitV281": false,
+        "skippedTopV281": 0,
+        "v282SlabCells": 0,
+        "v282Portal": false,
+        "drawWorldMs": 0,
+        "roofMsV198": 1,
+        "sprites": 1
+      }
+    },
+    {
+      "name": "P1_user_39_48_10_78_NE",
+      "build": "PERLA1_V281R_RECEPTION_ROOF_BASE_ROLLBACK_LOCAL",
+      "pose": {
+        "x": 69.48,
+        "y": 10.78,
+        "dx": 0.7071,
+        "dy": -0.7071,
+        "displayX": 39.48
+      },
+      "cell": {
+        "x": 69,
+        "y": 10,
+        "wall": 0,
+        "ceil": 0,
+        "zone": "erba"
+      },
+      "stats": {
+        "roofV281": true,
+        "roofPixelsV281": 104012,
+        "roofFacesV281": 0,
+        "roofDrawnV281": 3,
+        "budgetHitV281": false,
+        "skippedTopV281": 0,
+        "v282SlabCells": 0,
+        "v282Portal": false,
+        "drawWorldMs": 0,
+        "roofMsV198": 0.7,
+        "sprites": 13
+      }
+    },
+    {
+      "name": "P1_user_39_48_10_78_NW",
+      "build": "PERLA1_V281R_RECEPTION_ROOF_BASE_ROLLBACK_LOCAL",
+      "pose": {
+        "x": 69.48,
+        "y": 10.78,
+        "dx": -0.7071,
+        "dy": -0.7071,
+        "displayX": 39.48
+      },
+      "cell": {
+        "x": 69,
+        "y": 10,
+        "wall": 0,
+        "ceil": 0,
+        "zone": "erba"
+      },
+      "stats": {
+        "roofV281": true,
+        "roofPixelsV281": 59268,
+        "roofFacesV281": 0,
+        "roofDrawnV281": 2,
+        "budgetHitV281": false,
+        "skippedTopV281": 0,
+        "v282SlabCells": 0,
+        "v282Portal": false,
+        "drawWorldMs": 0,
+        "roofMsV198": 0.9,
+        "sprites": 23
+      }
+    },
+    {
+      "name": "P2_portal_40_56_11_05_N",
+      "build": "PERLA1_V281R_RECEPTION_ROOF_BASE_ROLLBACK_LOCAL",
+      "pose": {
+        "x": 70.56,
+        "y": 11.05,
+        "dx": 0,
+        "dy": -1,
+        "displayX": 40.56
+      },
+      "cell": {
+        "x": 70,
+        "y": 11,
+        "wall": 0,
+        "ceil": 0,
+        "zone": "erba"
+      },
+      "stats": {
+        "roofV281": true,
+        "roofPixelsV281": 183295,
+        "roofFacesV281": 0,
+        "roofDrawnV281": 4,
+        "budgetHitV281": false,
+        "skippedTopV281": 0,
+        "v282SlabCells": 0,
+        "v282Portal": false,
+        "drawWorldMs": 0,
+        "roofMsV198": 0.8,
+        "sprites": 1
+      }
+    },
+    {
+      "name": "P2_portal_40_56_11_05_NE",
+      "build": "PERLA1_V281R_RECEPTION_ROOF_BASE_ROLLBACK_LOCAL",
+      "pose": {
+        "x": 70.56,
+        "y": 11.05,
+        "dx": 0.7071,
+        "dy": -0.7071,
+        "displayX": 40.56
+      },
+      "cell": {
+        "x": 70,
+        "y": 11,
+        "wall": 0,
+        "ceil": 0,
+        "zone": "erba"
+      },
+      "stats": {
+        "roofV281": true,
+        "roofPixelsV281": 82150,
+        "roofFacesV281": 0,
+        "roofDrawnV281": 2,
+        "budgetHitV281": false,
+        "skippedTopV281": 0,
+        "v282SlabCells": 0,
+        "v282Portal": false,
+        "drawWorldMs": 0,
+        "roofMsV198": 0.7,
+        "sprites": 15
+      }
+    },
+    {
+      "name": "P2_portal_40_56_11_05_NW",
+      "build": "PERLA1_V281R_RECEPTION_ROOF_BASE_ROLLBACK_LOCAL",
+      "pose": {
+        "x": 70.56,
+        "y": 11.05,
+        "dx": -0.7071,
+        "dy": -0.7071,
+        "displayX": 40.56
+      },
+      "cell": {
+        "x": 70,
+        "y": 11,
+        "wall": 0,
+        "ceil": 0,
+        "zone": "erba"
+      },
+      "stats": {
+        "roofV281": true,
+        "roofPixelsV281": 84325,
+        "roofFacesV281": 0,
+        "roofDrawnV281": 2,
+        "budgetHitV281": false,
+        "skippedTopV281": 0,
+        "v282SlabCells": 0,
+        "v282Portal": false,
+        "drawWorldMs": 0,
+        "roofMsV198": 0.8,
+        "sprites": 23
+      }
+    },
+    {
+      "name": "P3_inside_40_44_9_06_N",
+      "build": "PERLA1_V281R_RECEPTION_ROOF_BASE_ROLLBACK_LOCAL",
+      "pose": {
+        "x": 70.44,
+        "y": 9.06,
+        "dx": 0,
+        "dy": -1,
+        "displayX": 40.44
+      },
+      "cell": {
+        "x": 70,
+        "y": 9,
+        "wall": 0,
+        "ceil": 7,
+        "zone": "erba"
+      },
+      "stats": {
+        "roofV281": true,
+        "roofPixelsV281": 0,
+        "roofFacesV281": 0,
+        "roofDrawnV281": 0,
+        "budgetHitV281": false,
+        "skippedTopV281": 0,
+        "v282SlabCells": 0,
+        "v282Portal": false,
+        "drawWorldMs": 0,
+        "roofMsV198": 0.3,
+        "sprites": 0
+      }
+    },
+    {
+      "name": "P3_inside_40_44_9_06_E",
+      "build": "PERLA1_V281R_RECEPTION_ROOF_BASE_ROLLBACK_LOCAL",
+      "pose": {
+        "x": 70.44,
+        "y": 9.06,
+        "dx": 1,
+        "dy": 0,
+        "displayX": 40.44
+      },
+      "cell": {
+        "x": 70,
+        "y": 9,
+        "wall": 0,
+        "ceil": 7,
+        "zone": "erba"
+      },
+      "stats": {
+        "roofV281": true,
+        "roofPixelsV281": 0,
+        "roofFacesV281": 0,
+        "roofDrawnV281": 0,
+        "budgetHitV281": false,
+        "skippedTopV281": 0,
+        "v282SlabCells": 0,
+        "v282Portal": false,
+        "drawWorldMs": 0,
+        "roofMsV198": 0.2,
+        "sprites": 106
+      }
+    },
+    {
+      "name": "P3_inside_40_44_9_06_W",
+      "build": "PERLA1_V281R_RECEPTION_ROOF_BASE_ROLLBACK_LOCAL",
+      "pose": {
+        "x": 70.44,
+        "y": 9.06,
+        "dx": -1,
+        "dy": 0,
+        "displayX": 40.44
+      },
+      "cell": {
+        "x": 70,
+        "y": 9,
+        "wall": 0,
+        "ceil": 7,
+        "zone": "erba"
+      },
+      "stats": {
+        "roofV281": true,
+        "roofPixelsV281": 0,
+        "roofFacesV281": 0,
+        "roofDrawnV281": 0,
+        "budgetHitV281": false,
+        "skippedTopV281": 0,
+        "v282SlabCells": 0,
+        "v282Portal": false,
+        "drawWorldMs": 0,
+        "roofMsV198": 0.3,
+        "sprites": 119
+      }
+    },
+    {
+      "name": "P4_mid_40_67_14_50_N",
+      "build": "PERLA1_V281R_RECEPTION_ROOF_BASE_ROLLBACK_LOCAL",
+      "pose": {
+        "x": 70.67,
+        "y": 14.5,
+        "dx": 0,
+        "dy": -1,
+        "displayX": 40.67
+      },
+      "cell": {
+        "x": 70,
+        "y": 14,
+        "wall": 0,
+        "ceil": 0,
+        "zone": "erba"
+      },
+      "stats": {
+        "roofV281": true,
+        "roofPixelsV281": 78492,
+        "roofFacesV281": 0,
+        "roofDrawnV281": 4,
+        "budgetHitV281": false,
+        "skippedTopV281": 0,
+        "v282SlabCells": 0,
+        "v282Portal": false,
+        "drawWorldMs": 0,
+        "roofMsV198": 1.9,
+        "sprites": 5
+      }
+    },
+    {
+      "name": "P4_mid_40_67_14_50_NE",
+      "build": "PERLA1_V281R_RECEPTION_ROOF_BASE_ROLLBACK_LOCAL",
+      "pose": {
+        "x": 70.67,
+        "y": 14.5,
+        "dx": 0.7071,
+        "dy": -0.7071,
+        "displayX": 40.67
+      },
+      "cell": {
+        "x": 70,
+        "y": 14,
+        "wall": 0,
+        "ceil": 0,
+        "zone": "erba"
+      },
+      "stats": {
+        "roofV281": true,
+        "roofPixelsV281": 44496,
+        "roofFacesV281": 0,
+        "roofDrawnV281": 3,
+        "budgetHitV281": false,
+        "skippedTopV281": 0,
+        "v282SlabCells": 0,
+        "v282Portal": false,
+        "drawWorldMs": 0,
+        "roofMsV198": 1.5,
+        "sprites": 31
+      }
+    },
+    {
+      "name": "P4_mid_40_67_14_50_NW",
+      "build": "PERLA1_V281R_RECEPTION_ROOF_BASE_ROLLBACK_LOCAL",
+      "pose": {
+        "x": 70.67,
+        "y": 14.5,
+        "dx": -0.7071,
+        "dy": -0.7071,
+        "displayX": 40.67
+      },
+      "cell": {
+        "x": 70,
+        "y": 14,
+        "wall": 0,
+        "ceil": 0,
+        "zone": "erba"
+      },
+      "stats": {
+        "roofV281": true,
+        "roofPixelsV281": 50099,
+        "roofFacesV281": 0,
+        "roofDrawnV281": 3,
+        "budgetHitV281": false,
+        "skippedTopV281": 0,
+        "v282SlabCells": 0,
+        "v282Portal": false,
+        "drawWorldMs": 0,
+        "roofMsV198": 0.9,
+        "sprites": 27
+      }
+    },
+    {
+      "name": "P5_far_40_67_18_00_N",
+      "build": "PERLA1_V281R_RECEPTION_ROOF_BASE_ROLLBACK_LOCAL",
+      "pose": {
+        "x": 70.67,
+        "y": 18,
+        "dx": 0,
+        "dy": -1,
+        "displayX": 40.67
+      },
+      "cell": {
+        "x": 70,
+        "y": 18,
+        "wall": 0,
+        "ceil": 0,
+        "zone": "erba"
+      },
+      "stats": {
+        "roofV281": true,
+        "roofPixelsV281": 27518,
+        "roofFacesV281": 0,
+        "roofDrawnV281": 4,
+        "budgetHitV281": false,
+        "skippedTopV281": 0,
+        "v282SlabCells": 0,
+        "v282Portal": false,
+        "drawWorldMs": 0,
+        "roofMsV198": 5.6,
+        "sprites": 9
+      }
+    },
+    {
+      "name": "P5_far_40_67_18_00_NE",
+      "build": "PERLA1_V281R_RECEPTION_ROOF_BASE_ROLLBACK_LOCAL",
+      "pose": {
+        "x": 70.67,
+        "y": 18,
+        "dx": 0.7071,
+        "dy": -0.7071,
+        "displayX": 40.67
+      },
+      "cell": {
+        "x": 70,
+        "y": 18,
+        "wall": 0,
+        "ceil": 0,
+        "zone": "erba"
+      },
+      "stats": {
+        "roofV281": true,
+        "roofPixelsV281": 17898,
+        "roofFacesV281": 0,
+        "roofDrawnV281": 3,
+        "budgetHitV281": false,
+        "skippedTopV281": 0,
+        "v282SlabCells": 0,
+        "v282Portal": false,
+        "drawWorldMs": 0,
+        "roofMsV198": 0.4,
+        "sprites": 44
+      }
+    },
+    {
+      "name": "P5_far_40_67_18_00_NW",
+      "build": "PERLA1_V281R_RECEPTION_ROOF_BASE_ROLLBACK_LOCAL",
+      "pose": {
+        "x": 70.67,
+        "y": 18,
+        "dx": -0.7071,
+        "dy": -0.7071,
+        "displayX": 40.67
+      },
+      "cell": {
+        "x": 70,
+        "y": 18,
+        "wall": 0,
+        "ceil": 0,
+        "zone": "erba"
+      },
+      "stats": {
+        "roofV281": true,
+        "roofPixelsV281": 20378,
+        "roofFacesV281": 0,
+        "roofDrawnV281": 3,
+        "budgetHitV281": false,
+        "skippedTopV281": 0,
+        "v282SlabCells": 0,
+        "v282Portal": false,
+        "drawWorldMs": 0,
+        "roofMsV198": 0.6,
+        "sprites": 38
+      }
+    },
+    {
+      "name": "P6_west_angle_actual64_99_8_44_E",
+      "build": "PERLA1_V281R_RECEPTION_ROOF_BASE_ROLLBACK_LOCAL",
+      "pose": {
+        "x": 64.99,
+        "y": 8.44,
+        "dx": 1,
+        "dy": 0,
+        "displayX": 34.99
+      },
+      "cell": {
+        "x": 64,
+        "y": 8,
+        "wall": 0,
+        "ceil": 0,
+        "zone": "erba"
+      },
+      "stats": {
+        "roofV281": true,
+        "roofPixelsV281": 5309,
+        "roofFacesV281": 0,
+        "roofDrawnV281": 2,
+        "budgetHitV281": false,
+        "skippedTopV281": 0,
+        "v282SlabCells": 0,
+        "v282Portal": false,
+        "drawWorldMs": 0,
+        "roofMsV198": 5.3,
+        "sprites": 90
+      }
+    },
+    {
+      "name": "P6_west_angle_actual64_99_8_44_NE",
+      "build": "PERLA1_V281R_RECEPTION_ROOF_BASE_ROLLBACK_LOCAL",
+      "pose": {
+        "x": 64.99,
+        "y": 8.44,
+        "dx": 0.7071,
+        "dy": -0.7071,
+        "displayX": 34.99
+      },
+      "cell": {
+        "x": 64,
+        "y": 8,
+        "wall": 0,
+        "ceil": 0,
+        "zone": "erba"
+      },
+      "stats": {
+        "roofV281": true,
+        "roofPixelsV281": 177,
+        "roofFacesV281": 0,
+        "roofDrawnV281": 1,
+        "budgetHitV281": false,
+        "skippedTopV281": 0,
+        "v282SlabCells": 0,
+        "v282Portal": false,
+        "drawWorldMs": 0,
+        "roofMsV198": 4.7,
+        "sprites": 5
+      }
+    },
+    {
+      "name": "P7_east_angle_actual78_50_8_44_W",
+      "build": "PERLA1_V281R_RECEPTION_ROOF_BASE_ROLLBACK_LOCAL",
+      "pose": {
+        "x": 78.5,
+        "y": 8.44,
+        "dx": -1,
+        "dy": 0,
+        "displayX": 48.5
+      },
+      "cell": {
+        "x": 78,
+        "y": 8,
+        "wall": 0,
+        "ceil": 0,
+        "zone": "erba"
+      },
+      "stats": {
+        "roofV281": true,
+        "roofPixelsV281": 9439,
+        "roofFacesV281": 0,
+        "roofDrawnV281": 4,
+        "budgetHitV281": false,
+        "skippedTopV281": 0,
+        "v282SlabCells": 0,
+        "v282Portal": false,
+        "drawWorldMs": 0,
+        "roofMsV198": 6,
+        "sprites": 103
+      }
+    },
+    {
+      "name": "P7_east_angle_actual78_50_8_44_NW",
+      "build": "PERLA1_V281R_RECEPTION_ROOF_BASE_ROLLBACK_LOCAL",
+      "pose": {
+        "x": 78.5,
+        "y": 8.44,
+        "dx": -0.7071,
+        "dy": -0.7071,
+        "displayX": 48.5
+      },
+      "cell": {
+        "x": 78,
+        "y": 8,
+        "wall": 0,
+        "ceil": 0,
+        "zone": "erba"
+      },
+      "stats": {
+        "roofV281": true,
+        "roofPixelsV281": 9007,
+        "roofFacesV281": 0,
+        "roofDrawnV281": 3,
+        "budgetHitV281": false,
+        "skippedTopV281": 0,
+        "v282SlabCells": 0,
+        "v282Portal": false,
+        "drawWorldMs": 0,
+        "roofMsV198": 0.8,
+        "sprites": 14
+      }
+    }
+  ]
+}

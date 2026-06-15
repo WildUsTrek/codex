@@ -25,7 +25,8 @@ The Team Leader owns coordination, final integration, and the user-facing answer
 13. Run local static CI for meaningful runtime or `tooling-ci` changes when practical, preferably with `-ReportPath` outside the repo for disposable reports.
 14. Validate through the PERLA1 launcher/server route for runtime behavior changes.
 15. Maintain workflow heartbeat checkpoints during long waits or tool/subagent work.
-16. Update technical maps/indexes only when structure, contracts, validation, tooling, symbol hints, or recurring risks change.
+16. Run the `project_backup_gate` when required: user-requested backups before the next protected step, and automatic task backups before final delivery for meaningful tasks when filesystem permissions allow it.
+17. Update technical maps/indexes only when structure, contracts, validation, tooling, symbol hints, or recurring risks change.
 
 ## Agent Selection Gate
 
@@ -37,6 +38,11 @@ Use `PERLA1_TASK_INTAKE_PROTOCOL.md` before meaningful work.
 - `workflow-guard`, `plan-integrity-auditor`, `task-watchdog`, `skeptic-auditor`, and `refactor-surgeon` are always at least `CONSIDER`.
 - Domain agents are `CALL` when their task signal matches the current work.
 - `CALL` means the agent must actually be invoked or delegated before the protected step. It cannot be treated as a passive checklist item.
+- Before a protected patch, rendered/runtime validation, sync, refactor application, or readiness claim, every required `CALL` agent needs `call_agent_evidence` with exactly one satisfaction state: `direct_invocation`, `generic_adapter`, or `tooling_blocked`.
+- `call_agent_evidence` must include `user_delegation_state`, `agent_tool_mapping_ref` when a generic adapter is used, `tooling_discovery_attempted`, `adapter_attempted`, and the output or blocked reason.
+- `critical_path` is not a bypass for required agents. If a `CALL` agent can run as an independent sidecar while the Team Leader advances non-overlapping local work, start it first. If the specialist output protects the next step, wait for it or stop with `TOOLING_BLOCKED`.
+- `visual_qa_required`: screenshots, rendered QA, browser/runtime validation, or visible user-facing regression risk make `visual-qa-auditor` `CALL` before readiness claims. The Team Leader may collect screenshots/counters but cannot be the only visual QA authority unless `call_agent_evidence` records `tooling_blocked` or explicitly accepted degraded fallback with residual risk.
+- `visual_pose_matrix_check`: roof/eave/wall-occlusion/visibility work, and any visual bug that can vary by camera angle, requires accepted base coordinates plus same-coordinate rotation sweeps before readiness claims. For roof/eave work this escalates to `roof_visual_matrix_hard_gate`: `roof_matrix_declared_before_patch`, current runtime/internal coordinates, HUD/display X recorded separately, `same_coordinate_distance_rotation_grid` with far/close/east/west/interior-or-portal/user-repro groups as applicable, same-coordinate rotations, contact sheet or indexed matrix, counters, `hud_contamination_check`, `coordinate_offset_check`, and a `visual-qa-auditor` result. A single attractive screenshot is not enough; partial matrices are `matrix_failed_replan_not_ready` when rotation/distance changes hide roof volume, colmo/ridge, ceiling authority, or budget failure.
 - The user has standing project authorization for PERLA1 configured subagents selected by the gate. Do not require a fresh user sentence before using a required project agent.
 - Standing project authorization is subordinate to higher-priority Codex tool-surface rules. If the active tool surface requires explicit user delegation before spawning subagents, obtain it or stop with `TOOLING_BLOCKED` before protected work.
 - If subagent tooling is not visible, first use tool discovery when available. If only generic subagent types are visible, apply the Agent Tool Adapter rule before considering `TOOLING_BLOCKED`.
@@ -87,6 +93,7 @@ Mandatory escalation:
 - If `rg`, diff, or another search emits excessive output from the monolith, stop consuming raw output and narrow to named functions, block ids, line windows, or deterministic file comparison.
 - Use every agent required by the Agent Selection Gate. If the task genuinely needs many `CALL` agents, including 7 agents and especially more than the configured concurrency budget, use the required agents and batch only when the active tool surface imposes a hard limit. `max_threads` is a technical concurrency cap, not permission to downgrade necessary agents.
 - Do not fill all available subagent slots with non-critical explorers before required governance/domain agents have run. If capacity is tight, prioritize required `CALL` agents and serialize optional `CONSIDER` work.
+- For rendered visual work, do not let local Team Leader interpretation replace the visual specialist. If `visual-qa-auditor`, `plan-integrity-auditor`, or `workflow-guard` is required and not invoked through direct invocation or a valid generic adapter, the next protected patch/readiness claim must stop as `TOOLING_BLOCKED` or degraded fallback with residual risk.
 
 Checkpoint evidence before retrying must include `task_id`, `task_started_at`, `elapsed_task_time`, `operation_id`, `logical_step_id`, elapsed step time, method tried, evidence gained, next proof target, retry count, last completed checkpoint, allowed next action, and forbidden next action.
 
@@ -309,6 +316,32 @@ Checker semantic limit:
 - Mitigate that limit with `workflow-consistency-auditor`, `workflow-guard`, `plan-integrity-auditor`, `task-watchdog`, and domain auditors when their triggers fire.
 - A passing checker plus missing required audit output is not a passed gate.
 
+## Project Backup Gate
+
+Use `tools/perla_project_backup.ps1` as the canonical backup tool.
+
+Backup scope is the full synchronized repository folder:
+
+```text
+C:\Users\ASUS\Documents\GitHub\codex
+```
+
+The only excluded path is:
+
+```text
+C:\Users\ASUS\Documents\GitHub\codex\PERLA1\01_GIOCO_PRONTO_LOCAL_TEST\assets\rtp
+```
+
+Operational rules:
+
+- Backups are timestamped `.zip` archives, not copied backup directories.
+- `backup_user_requested`: `-Kind User` writes to `C:\Users\ASUS\Documents\GitHub\backup\utente` when the user explicitly orders a backup.
+- `backup\utente` is append-only unless the user explicitly orders a specific deletion.
+- `-Kind Automatic` writes to `C:\Users\ASUS\Documents\GitHub\backup\automatici` before final delivery of a meaningful task when filesystem permissions allow it.
+- Before creating an automatic backup, if `backup\automatici` contains more than 10 files, delete only files older than 2 days. Never delete folders and never delete anything under `backup\utente`.
+- If writing outside the repository needs filesystem approval, request it. If approval is unavailable, record `backup_not_created_permission_blocked` in `finalization_gate` and report it.
+- Backup zip files are outside Git and must not be staged.
+
 ## Scoped Finalization
 
 Use `scoped_finalization` and `finalization_gate` before final delivery, staging, sync, or a readiness claim.
@@ -323,6 +356,15 @@ finalization_gate:
   changed_out_of_scope:
   generated_or_disposable:
   untracked_workflow_tooling:
+  project_backup_gate:
+    user_backup_requested: yes/no
+    user_backup_status: created/not_requested/blocked/failed
+    automatic_task_backup_status: created/blocked/failed/not_meaningful_task
+    backup_tool:
+    backup_path:
+    excluded_path:
+    retention_applied:
+    files_removed_from_automatici:
   validation_run:
   blocking_failures:
   subagent_task_lifecycle:
@@ -383,6 +425,12 @@ When this happens:
 4. Use `powershell -NoProfile -ExecutionPolicy Bypass -File .\PERLA1\VALIDA_RUNTIME_SCREENSHOT_HEADLESS.ps1 ...` or equivalent Playwright/system Chrome headless flow.
 5. If headless browser validation also fails, provide a manual validation handoff with exact URL, launcher to run, expected `window.PERLA_BUILD_ID`, debug poses, screenshots to capture, and counters/API calls to read.
 6. Do not mark a rendered fix as fully validated unless visual evidence and relevant counters were actually inspected.
+
+Visual evidence hygiene:
+
+- Use `hud_contamination_check` for screenshots used as world/render proof. HUD, clock, minimap, controls, status text, debug overlays, and browser UI are contamination when they cover or could be confused with the target rendered area. If the test is intentionally UI/HUD layout QA, state that separately and do not treat HUD visibility as renderer contamination.
+- Use `coordinate_offset_check` when there is certainty or legitimate doubt that the target is PERLA1 and a conclusion depends on coordinates, deterministic poses, map cells, or screenshot placement. Record requested/effective pose, direction requested/effective, expected/observed zone, expected/observed tile or owner, known offset, `offset_delta`, coordinate confidence, and `false_coordinate_suspicion`.
+- Suspicious PERLA1 coordinates require map/debug inspection or an adjusted retry before renderer conclusions.
 
 Subagents should not attempt to open Chrome, Edge, the user `.bat`, or external GUI browsers directly unless the Team Leader explicitly assigns that fallback path. Do not repeatedly retry known-failing methods before using the runbook method.
 
@@ -471,7 +519,7 @@ Before any operational patch, runtime validation, refactor application, or sync 
 - If a TOML file contradicts the current contract, fix the TOML or record an explicit user-approved derogation before the protected step.
 - Prefer TOML wording that points agents to the current project/block maps, then records the current version contract as a dated snapshot.
 - `workflow-consistency-auditor` is `CALL` after any TOML, AGENTS, orchestration, or intake-protocol change, and before sync when these files changed.
-- For roof work as of V278, `drawModernIntegratedRoofCapV278` is the mapped wall-visible modern roof authority for reception/bath owner `1`/`2` when same-owner support columns are visible; V265/V277 remain fallback/support paths, and V266/V267/V270/V271/V273/V274/V275 remain runtime-off unless a later project-map contract and explicit user-approved scope supersede it.
+- For roof work under the current V281R/V281 contract, `drawStableModernOwnerRoofPrimitiveV281` is the mapped modern owner `1`/`2` roof authority when primitive preflight accepts the roof; `drawModernIntegratedRoofCapV278` is historical/diagnostic and must stay disabled as normal authority under V281; V265/V277 remain fallback/support paths only when primitive preflight rejects, V282 portal/slab helpers remain dormant/off diagnostics unless explicitly approved, and V266/V267/V270/V271/V273/V274/V275 remain runtime-off unless a later project-map contract and explicit user-approved scope supersede it.
 
 ## Long Task Watchdog
 
@@ -654,7 +702,7 @@ Before final delivery after meaningful work:
 - separate `changed_in_scope`, `changed_out_of_scope`, `generated_or_disposable`, and `untracked_workflow_tooling`,
 - record `hook_trust_check` when hook enforcement is part of the claim,
 - keep `checker_semantic_limit` visible when relying on deterministic checker output,
-- confirm required `CALL` agent outputs or recorded `TOOLING_BLOCKED` state,
+- confirm required `CALL` agent outputs through `call_agent_evidence`, or recorded `TOOLING_BLOCKED` state,
 - record `subagent_task_lifecycle`, including which subagents were integrated, deferred/discarded, kept open, or closed,
 - close no-longer-needed subagents only after Team Leader task completion or packet integration/obsolescence/staleness,
 - state what validation ran,

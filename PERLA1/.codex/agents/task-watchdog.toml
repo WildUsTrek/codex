@@ -56,6 +56,9 @@ Mandatory triggers:
 - Any sidecar wait treated as critical path without an explicit dependency: CHECKPOINT.
 - Any returned sidecar result that is not classified through `sidecar_result_integration`, `result_status`, `affects_critical_path`, `dependency_on_critical_path`, `accepted_into_plan`, `integration_decision`, `validation_impact`, `write_scope_impact`, `approval_impact`, `heartbeat_checkpoint`, `stop_condition_triggered`, `discard_or_defer_reason`, and `ledger_update` before it changes the plan: CHECKPOINT.
 - Any user message received during active, long, delicate, multi-agent, runtime, workflow, refactor, or validation work that is not classified through `user_message_intake`, `user_message_id`, `message_class`, `must_interrupt`, `must_report_to_team_leader`, `checkpoint_required`, `user_intent_summary`, `conflicts_current_plan`, `changes_scope`, `changes_validation`, `changes_write_scope`, `approval_impact`, `agent_gate_impact`, `agent_tool_mapping_impact`, `critical_path_impact`, `sidecar_integration_impact`, `decision`, `ledger_update`, `relay_note`, `next_action`, `forbidden_next_action`, and `response_due` before the next protected step: CHECKPOINT.
+- Any rendered PERLA1 visual task using screenshots without `hud_contamination_check`, or coordinate/pose-dependent evidence without `coordinate_offset_check` when PERLA1 is certain or legitimately suspected: CHECKPOINT.
+- Any roof/eave/wall-occlusion/visibility or rotation-sensitive rendered task without `visual_pose_matrix_check`, accepted base coordinates, `fixed_coordinate_groups`, same-coordinate rotations, `same_coordinate_rotation_consistency`, and counters per rotation: CHECKPOINT or REPLAN.
+- Any roof/eave task that patches or claims readiness without `roof_visual_matrix_hard_gate`, `roof_matrix_declared_before_patch`, current runtime/internal coordinates, HUD/display X recorded separately, owner envelope, `same_coordinate_distance_rotation_grid`, far/close/east/west/interior-or-portal/user-repro groups as applicable, contact sheet or indexed matrix, `visual_qa_auditor_required`, and explicit `matrix_failed_replan_not_ready` handling: REPLAN or STOP_FOR_USER.
 - Any meaningful task approaching final delivery without `scoped_finalization`, `finalization_gate`, dirty worktree separation, validation status, `hook_trust_check` when hooks are cited, `checker_semantic_limit` when checker output is cited, `workflow_tooling_manifest` for dirty/untracked tooling, and `subagent_task_lifecycle`: CHECKPOINT.
 - Any task that leaves no-longer-needed subagents open after Team Leader task completion, or closes useful subagents before their packet is integrated/obsolete/stale/aborted: CHECKPOINT.
 
@@ -95,6 +98,13 @@ critical_path_status:
 sidecar_status:
 sidecar_result_integration:
 user_message_intake:
+hud_contamination_check:
+coordinate_offset_check:
+visual_pose_matrix_check:
+roof_visual_matrix_hard_gate:
+roof_matrix_declared_before_patch:
+same_coordinate_distance_rotation_grid:
+matrix_failed_replan_not_ready:
 hook_trust_check:
 checker_semantic_limit:
 scoped_finalization:

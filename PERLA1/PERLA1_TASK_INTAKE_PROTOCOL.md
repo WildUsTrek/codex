@@ -163,6 +163,116 @@ For runtime or visual changes, use a validation ladder instead of jumping direct
 4. regression poses and acceptance screenshots;
 5. broader validation only when the changed surface justifies it.
 
+For rendered PERLA1 evidence, screenshot/pose validation must include `hud_contamination_check` and, when coordinates matter, `coordinate_offset_check`. The coordinate check is required when there is certainty or legitimate doubt that the target is PERLA1 and the conclusion depends on coordinates, map location, deterministic poses, or screenshot placement.
+
+For roof/eave/wall-occlusion/visibility regressions, or any rendered bug where the visual result can change with camera angle, screenshot validation must also include `visual_pose_matrix_check`. This is required before a visual fix can be called ready, even when one screenshot looks correct.
+
+```text
+hud_contamination_check:
+  screenshot_path:
+  viewport:
+  target_visual_area:
+  hud_visible: yes/no
+  hud_elements:
+  hud_overlaps_target: yes/no
+  contamination_level: none/low/medium/high
+  action: accept/crop/retry_different_viewport/report_ui_layout_risk/reject_as_visual_proof
+
+coordinate_offset_check:
+  target_project: PERLA1/unknown/other
+  trigger: certain_perla1/legitimate_doubt_perla1/coordinate_dependent_validation
+  requested_pose:
+  effective_pose:
+  direction_requested:
+  direction_effective:
+  expected_zone:
+  observed_zone:
+  expected_tile_or_owner:
+  observed_tile_or_owner:
+  known_offset_applied:
+  offset_delta:
+  coordinate_source:
+  coordinate_confidence: high/medium/low
+  suspicious_coordinates: yes/no
+  false_coordinate_suspicion: yes/no
+  action: accept/adjust_and_retry/inspect_map_or_debug_api/reject_pose_as_proof
+
+visual_pose_matrix_check:
+  target_visual_system:
+  reception_roof_real_objective_gate:
+  objective_match_verdict: pass/fail/degraded
+  objective_mismatch_notes:
+  coordinate_selection_method: debug_api/map_scan/roofSegments/user_pose/other
+  accepted_base_coordinates:
+  rejected_coordinates:
+  fixed_coordinate_groups:
+    - base_pose:
+      expected_zone:
+      expected_tile_or_owner:
+      rotations:
+        - direction_name:
+          dx:
+          dy:
+          screenshot_path:
+          hud_contamination_check_ref:
+          coordinate_offset_check_ref:
+          counters:
+          visual_result: pass/fail/degraded/reject
+  same_coordinate_rotation_consistency: pass/fail
+  required_specialist: visual-qa-auditor
+  specialist_result_ref:
+  roof_visual_matrix_hard_gate:
+    roof_matrix_declared_before_patch: yes/no
+    same_coordinate_distance_rotation_grid: pass/fail
+    runtime_internal_coordinate_source:
+    hud_display_coordinate_recorded: yes/no
+    roof_owner_envelope:
+    required_groups_completed:
+    contact_sheet_path:
+    matrix_failed_replan_not_ready: yes/no
+    visual_qa_auditor_required: yes/no
+    user_review_pause_required: yes/no
+    user_review_package:
+  action: accept/retry_matrix/replan/stop
+```
+
+Rules:
+
+- HUD, clock, minimap, touch controls, debug overlays, browser UI, and status text must not be mistaken for renderer geometry.
+- If HUD overlaps the target visual area, the screenshot is degraded evidence and must be cropped, retried, reported as UI/viewport risk, or rejected as visual proof.
+- If the observed zone does not match the requested PERLA1 pose, mark suspicious coordinates and inspect map/debug evidence or retry with adjusted coordinates before drawing renderer conclusions.
+- Do not require coordinate checks for unrelated non-PERLA work, but do require them when PERLA1 is certain or legitimately suspected and the evidence depends on pose/location.
+- `visual_pose_matrix_check` must first establish reliable base coordinates, then rotate from those exact coordinates. Do not compare unrelated distances/coordinates as proof of angle stability.
+- Roof/eave plans must include `roof_visual_matrix_hard_gate` and `roof_matrix_declared_before_patch` before the first runtime patch unless the step is explicitly read-only diagnosis. `plan-integrity-auditor` must return `PLAN_REVISION_REQUIRED` or `STOP_FOR_USER` if a roof plan reaches patching/readiness without the declared matrix.
+- The roof matrix must be a `same_coordinate_distance_rotation_grid`, not a set of attractive screenshots. Minimum required groups are: far/mid frontal exterior, close exterior or portal threshold, west lateral, east lateral, and every user-reported repro coordinate. Add interior/inside-looking-out when ceiling, rain cover, portal underside, or roof-inside behavior changed. Add very-close near-plane when the reported failure appears while approaching. Bath owner 2 uses the same pattern only when bath is in scope; otherwise record bath as deferred and do not claim bath readiness.
+- Each group must rotate from the exact same `x/y`: center, left-oblique, and right-oblique at minimum. Roof portal/lateral groups should add east/west graze or equivalent rotations when diagnostic. Interior groups should include north/south/east/west plus diagonals when ceiling authority changes with camera direction.
+- Roof coordinates must be selected from current runtime/debug evidence, preferably `roofSegments`, owner envelope, and `collectPerlaDebugSnapshot()`. Record runtime/internal `posXActual` when exposed, HUD/display X separately, target owner, zone, wall/cMap state, `offset_delta`, and `false_coordinate_suspicion`. HUD/display coordinates alone are not proof.
+- The matrix must record counters beside each screenshot. For roof/eave work, include face count, roof pixels, budget/warn flags, skipped/suppressed/rejected face counters, same-owner wall rejection counters, cap/fallback counters, and build id.
+- If the same accepted coordinate produces materially different roof volume, missing colmo/ridge/front gable/top faces, disappearing interior ceiling/slab, dotted/broken edge, forced seam line, budget hit in only some rotations, or different occlusion class without an explained geometry reason, the result is `matrix_failed_replan_not_ready` and the next action is `replan` or `stop`, not readiness.
+- A contact sheet or indexed matrix table is required before success claims. Labels must include group id, requested/effective pose, runtime/internal X, HUD/display X, direction, owner envelope, key counters, and pass/fail/degraded/reject. Missing contact sheet means partial evidence only.
+- The Team Leader's own visual judgment is not enough for `visual_pose_matrix_check` when `visual_qa_required` applies. `visual-qa-auditor` must be called directly or through a valid generic adapter, unless `tooling_blocked` or degraded fallback is recorded with residual risk.
+- `workflow-guard` must stop a repeated roof attempt if the new plan omits `roof_visual_matrix_hard_gate`, reuses a failed coordinate set without the missing rotations/distances, or tries to claim success after a partial matrix.
+
+### Reception Roof Real Objective Gate
+
+`reception_roof_real_objective_gate` is mandatory for every patch, validation, or readiness claim that touches reception owner `1` roof, portal, ceiling, underside, wall/roof occlusion, or rain-cover behavior. It remains mandatory until the user explicitly retires this specific problem gate.
+
+Coordinate correctness, clean HUD checks, counters, console health, and a labeled contact sheet make evidence admissible. They do not prove the reception roof is correct. The gate must judge whether the real visual objective was achieved.
+
+Pass requires all of the following:
+
+- owner `1` reception target confirmed from current runtime/debug/`roofSegments` evidence, with runtime/internal coordinates and HUD/display coordinates recorded separately;
+- complete same-coordinate matrix for far/mid frontal exterior, close exterior or portal threshold, west lateral, east lateral, every user repro coordinate, and interior/inside-looking-out when ceiling, portal underside, rain cover, or roof-inside behavior changed;
+- exterior roof reads as a high, pointed, tower-like roof with visible volume/colmo from front, three-quarter, far, mid, close, east, and west views;
+- rotating at the same coordinate does not make the front colmo, front gable, roof body, top faces, eave continuity, portal underside, or ceiling/slab authority disappear, flatten into a wrong-looking slab, or change visual family;
+- portal/interior view does not show exterior roof faces, mixed triangular gable fragments, fake bands, dark seams, color-family switches, roof pixels through wall/door/opening, or roof geometry where a flat monocolor ceiling/underside is expected;
+- budget, warning, hybrid, fallback, cap, and runtime-off counters agree with the visual claim; V278 cap must not mask normal V281/V282 reception evidence;
+- bath owner `2` is either separately validated with its own matrix or explicitly deferred with no bath readiness claim.
+
+Hard fail if any listed objective is missed, even when the roof is present, the black seam is gone, coordinates are correct, or one screenshot looks improved. "The roof is visible", "it does not fully disappear", "the screenshot is clean", or "the black line is gone" are not sufficient success criteria.
+
+When a candidate appears solved or near-solved, `user_review_pause_required` is `yes`. Before calling readiness or continuing broad iteration, stop and provide a compact `user_review_package`: contact sheet path, 3-6 decisive full-size screenshots, requested/effective coordinate mapping, known degraded shots, and a per-objective self-verdict. If the user rejects the visual result, the next action is `replan` with a new rendering hypothesis or alternative route, not another readiness claim.
+
 Broad search limit: after 1-2 broad `rg`, diff, or search passes without decision-grade evidence, stop broad searching and narrow to named symbols, block ids, line windows, analyzer focus, or deterministic comparison. Raw output volume is not progress.
 
 Every delegated complex-task subagent needs a standard task packet:
@@ -308,6 +418,28 @@ This project authorization does not override higher-priority Codex tool-surface 
 
 If subagent or multi-agent tooling is not currently loaded, the Team Leader must first use the available tool-discovery mechanism when present, then apply the Agent Tool Adapter Rule if generic subagents are available. Only if direct invocation, role-assigned generic invocation, and approved degraded read-only self-audit are all unavailable or rejected may the Team Leader record `TOOLING_BLOCKED`, list the blocked `CALL` agents, and stop before patching, runtime validation, sync, or refactor application.
 
+Before any protected patch, rendered/runtime validation, sync, refactor application, or readiness claim with one or more `CALL` agents, record `call_agent_evidence`:
+
+```text
+call_agent_evidence:
+- required_agent:
+  gate_status: CALL
+  satisfaction: direct_invocation / generic_adapter / tooling_blocked
+  evidence_ref:
+  output_decision:
+  agent_tool_mapping_ref:
+  user_delegation_state: standing_perla_authorization / explicit_current_turn_authorization / blocked_by_higher_priority_tool_surface / missing
+  tooling_discovery_attempted: yes/no
+  adapter_attempted: yes/no
+  blocked_reason:
+```
+
+Each required `CALL` agent must have exactly one valid satisfaction state before the protected step: real output from direct invocation, real output from a role-assigned generic adapter, or `tooling_blocked` with discovery/adapter attempted and operational stop. A self-audit by the Team Leader is degraded evidence only; it is not equivalent to output from the required agent.
+
+`critical_path` is not an excuse to bypass required agents. If a `CALL` agent can run as an independent sidecar while the Team Leader advances the blocking local proof/change, spawn or direct that agent first and continue non-overlapping local work. If the required specialist result protects the next step, wait for it or stop with `TOOLING_BLOCKED`.
+
+For screenshots, rendered QA, browser/runtime validation, or visible user-facing regression risk, `visual_qa_required` makes `visual-qa-auditor` `CALL` before readiness claims. The Team Leader may collect screenshots and counters directly, but must not be the only visual QA authority unless `call_agent_evidence` records `tooling_blocked` or an explicitly accepted degraded fallback with residual risk.
+
 ## Agent Tool Adapter Rule
 
 PERLA1 names project agents by role, such as `workflow-consistency-auditor`, `workflow-guard`, or `visual-qa-auditor`. The active Codex tool surface may expose those custom agents directly, or it may expose only generic subagent types such as `explorer` and `worker`.
@@ -432,6 +564,41 @@ Mitigation:
 - Use `plan-integrity-auditor`, `task-watchdog`, and domain auditors when their triggers fire.
 - Do not replace audit agents with grep-style checks and do not treat audit agents as substitutes for deterministic checks.
 
+## Project Backup Gate
+
+`project_backup_gate` is mandatory for protected PERLA1 work. It creates zip archives of the full synchronized repository folder:
+
+```text
+C:\Users\ASUS\Documents\GitHub\codex
+```
+
+The backup includes repository content, PERLA1 runtime, `index.html`, agents, docs, tools, parent sync scripts, reports, and current working files. The only excluded path is:
+
+```text
+C:\Users\ASUS\Documents\GitHub\codex\PERLA1\01_GIOCO_PRONTO_LOCAL_TEST\assets\rtp
+```
+
+Backups are zip files, not backup directories. This keeps retention safe because `backup\automatici` cleanup deletes only files. It never needs to delete backup folders.
+
+Use the project tool:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File .\PERLA1\tools\perla_project_backup.ps1 -Kind User
+powershell -NoProfile -ExecutionPolicy Bypass -File .\PERLA1\tools\perla_project_backup.ps1 -Kind Automatic
+```
+
+Rules:
+
+- `backup_user_requested`: when the user explicitly orders a safety backup, run `-Kind User` before the next operational patch, refactor, cleanup, sync, or risky validation step.
+- User backups go to `C:\Users\ASUS\Documents\GitHub\backup\utente`.
+- Never delete, prune, rotate, overwrite, or clean files in `backup\utente` unless the user explicitly asks for that exact deletion.
+- `automatic_task_backup`: at the end of every meaningful task, run `-Kind Automatic` before final delivery when filesystem permissions allow it.
+- Automatic backups go to `C:\Users\ASUS\Documents\GitHub\backup\automatici`.
+- Before creating a new automatic backup, if `backup\automatici` already contains more than 10 files, delete only files older than 2 days. Do not delete folders, do not delete anything in `backup\utente`, and do not delete files newer than or equal to 2 days.
+- If the active sandbox cannot write to `C:\Users\ASUS\Documents\GitHub\backup`, request filesystem approval. If approval is unavailable, record `backup_not_created_permission_blocked` in `finalization_gate` and tell the user the backup did not run.
+- Backup archives are outside Git and must not be staged.
+- Do not use `git add .` to include backup evidence or generated artifacts.
+
 ## Scoped Finalization Gate
 
 Use `scoped_finalization` and `finalization_gate` before final delivery, staging, sync, or any claim that a meaningful patch is ready.
@@ -448,6 +615,15 @@ finalization_gate:
   changed_out_of_scope:
   generated_or_disposable:
   untracked_workflow_tooling:
+  project_backup_gate:
+    user_backup_requested: yes/no
+    user_backup_status: created/not_requested/blocked/failed
+    automatic_task_backup_status: created/blocked/failed/not_meaningful_task
+    backup_tool:
+    backup_path:
+    excluded_path:
+    retention_applied:
+    files_removed_from_automatici:
   validation_run:
   blocking_failures:
   subagent_task_lifecycle:
@@ -476,6 +652,7 @@ Rules:
 Tracked workflow tooling candidates:
 
 - `PERLA1/tools/perla_codex_workflow_check.ps1`
+- `PERLA1/tools/perla_project_backup.ps1`
 - `PERLA1/tools/perla_local_ci.ps1`
 - `PERLA1/tools/perla_runtime_analyzer.mjs`
 - `PERLA1/.codex/config.toml`
@@ -533,6 +710,22 @@ For delicate tasks, both `workflow-consistency-auditor` and `workflow-guard` are
 Delicate tasks include workflow policy changes, TOML agent changes, permissions or hierarchy changes, runtime validation route changes, GitHub sync after policy changes, refactor planning/application, critical renderer/runtime changes, failed-patch rollback, and any task where agent availability or authority is uncertain.
 
 `workflow-consistency-auditor` checks whether the rules and adapter mapping are coherent. `workflow-guard` checks whether the next operational step is safe to execute. `plan-integrity-auditor` checks whether the proposed plan is objective-fit, scoped, dependency-complete, and verifiable before execution. These agents may be satisfied through direct named agents or valid Agent Tool Adapter mappings.
+
+## RTP Asset Reference Gate
+
+When the task goal mentions RTP, characters, personaggi, NPC, animals, eventi, dialoghi, dialogue portraits, or RPG Maker-style conversation UI, the intake must treat the RTP reference files as required orientation material:
+
+- `01_GIOCO_PRONTO_LOCAL_TEST/assets/rtp/README_RTP_ASSETS.md`;
+- `01_GIOCO_PRONTO_LOCAL_TEST/assets/rtp/manifest/rtp.characters.json`;
+- `01_GIOCO_PRONTO_LOCAL_TEST/assets/rtp/SCENARIO_EVENT_MAPPING_PROTOCOL.md` when sceneggiatura, gameplay, placements, schedules, events, behaviors, dialogue lines, battle placeholders, resources, or player-base upgrades are involved;
+- `report/SCENEGGIATURA_GAMEPLAY_MAPPING_DRAFT_2026-06-14.md` when using the first supplied sceneggiatura/GDD/storyboard source set;
+- `report/RTP_CHARACTERS_ASSET_AUDIT_2026-06-14.md` when source provenance, weight, optimization, or import policy matters.
+
+Exception: historical environment/object assets already present in `01_GIOCO_PRONTO_LOCAL_TEST/assets/raycast/` remain governed by `ASSET_MANIFEST` and the existing raycaster asset pipeline.
+
+Until runtime code explicitly loads the RTP manifest, these files are dormant asset/data references. They do not change gameplay behavior, renderer behavior, or validation requirements by themselves. Once a task connects them to `index.html`, loader code, event code, dialogue UI, service-worker caching, or rendered behavior, normal runtime validation and project map/block map updates apply.
+
+For these task signals, `asset-integrity-auditor` is `CALL`; `code-mapper` is `CALL` if runtime integration points are unclear; `renderer-block-auditor` is `CALL` only when world sprite rendering, occlusion, or draw order may change.
 
 ## Domain Agent Matrix
 
