@@ -1,7 +1,7 @@
 ﻿# PERLA1 Project Map
 
 Last updated: 2026-06-15
-Current runtime build observed in `index.html`: `PERLA1_V292_REPLAY_RAIN_GUARD_COLUMN_OCCLUSION_SAFE_LOCAL`
+Current runtime build observed in `index.html`: `PERLA1_V296_PHYSICAL_TOMBSTONE_PRUNE_SAFE_LOCAL`
 
 This file is the fast technical map for agents. Use it to orient before touching runtime code, and update it when structure, entrypoints, validation workflow, dependencies, or major renderer contracts change.
 
@@ -146,13 +146,17 @@ PERLA1 is monolithic enough that agents must avoid copying broad file dumps into
 | V287 | active targeted reception wall sprite occlusion contract | The far west reception wall remains visually drawn by the normal wallcast and keeps normal wall buffers, but it is removed from the V227 sprite-clipping range list only for the long bar/north-field east-facing repro where that wall was incorrectly masking tamarisk/tree sprites. Scope: reception wood wall tex `2`, vertical west/east reception boundary cells from gameplay X `36..44`, Y `2..8`, camera in the north/bar corridor, long-distance east view. V286-style visual wall suppression is not present in the runtime. |
 | V288/V289 | active reception direct/foreground tree sprite occlusion contracts | Narrow sprite-occlusion follow-ups for direct reception wall/tree/tamarisk masking. They preserve wall pixels, map/collision, and primary wallcast buffers while restricting invalid sprite clipping authority. |
 | V290/V291 | retained inactive diagnostics | V291 pre-wall restore is intentionally disabled after visual QA showed it could hide the real replay-order bug by copying pre-wall pixels. Do not use positive V291 restore counters as proof for the tamarisk/reception wall issue. |
-| V292 | current contract | Fixes the accepted cause directly: `drawV220LocalWallsAfterV216Cover` is gated to active rain/V216 replay context, and `game_room_column` canopy sprites are hidden only when an owner-1 reception wall is in front of them, using either a direct V227 wall layer or the already captured `wallColumnV218` rects as sprite occlusion authority. Current build: `PERLA1_V292_REPLAY_RAIN_GUARD_COLUMN_OCCLUSION_SAFE_LOCAL`. |
+| V292 | active functional contract | Fixes the accepted cause directly: `drawV220LocalWallsAfterV216Cover` is gated to active rain/V216 replay context, and `game_room_column` canopy sprites are hidden only when an owner-1 reception wall is in front of them, using either a direct V227 wall layer or the already captured `wallColumnV218` rects as sprite occlusion authority. |
+| V293 | debug/telemetry only | Additive unified telemetry/debug facade. It does not change renderer, draw order, maps, assets, roof/canopy/sprite/rain predicates, overlay defaults, or occlusion behavior. It exposes `collectPerlaUnifiedTelemetryV293`, `perlaTelemetryHealthV293`, `perlaTelemetryBranchInventoryV293`, and `perlaTelemetryDeletionReadinessV293` while preserving historical V258/V258A, V281, V283, V284/V285, and V292 commands/counters. |
+| V294 | preserved compatibility contract (V237 tombstone cleanup only) | Removes the dead V237 safe-emerging-wall draw integration and converts V237 implementation bodies to no-op/tombstone shims. It preserves V237/V238 constants, `getV238CleanStatus`, `getV237EmergingLayerStats`, V293 telemetry APIs, and all current visual authorities. It does not change roof, canopy, rain, wall/replay, map/collision, asset, sky/backdrop, or overlay behavior. |
+| V295 | preserved debug/cleanup contract | Adds the modern read-only debug hub `window.perlaDebugV295`, `collectPerlaModernDebugV295`, health/branch/deletion readiness aliases, and absorbs legacy high-wall diagnostics into a non-mutating status surface. It blocks V245 one-shot activation and tombstones public mode/toggle activation for failed roof branches V266/V267/V270/V271/V272 while preserving compatibility shims and counters. It does not change active V281 roof authority, V283 canopy foreground guard, V222/V292 rain/wall behavior, V185 horizon, maps, assets, or overlay defaults. |
+| V296 | current contract (physical tombstone prune) | Physically removes proved-dead heavy implementation bodies for V239-V241C high-wall diagnostics and failed V266/V267/V270/V271/V272/V273/V274/V275 roof/eave attempts, while preserving public compatibility shims, status/toggle/download names, V293/V295 debug APIs, and `safeDeleteNow: []` for public APIs. It does not change active V281 roof authority, V283 canopy foreground guard, V222/V292 rain/wall behavior, V185 horizon, maps, assets, overlay defaults, or rain output. Current build: `PERLA1_V296_PHYSICAL_TOMBSTONE_PRUNE_SAFE_LOCAL`. |
 
 ## V281 Modern Roof Primitive Authority Contract
 
 Current expected behavior for modern reception/bath roof/eave work:
 
-- `PERLA_BUILD_ID` is `PERLA1_V292_REPLAY_RAIN_GUARD_COLUMN_OCCLUSION_SAFE_LOCAL`.
+- `PERLA_BUILD_ID` is `PERLA1_V296_PHYSICAL_TOMBSTONE_PRUNE_SAFE_LOCAL`.
 - V281 adds `drawStableModernOwnerRoofPrimitiveV281` as the single reception/bath roof authority when preflight accepts the roof.
 - Eligible owner 1/2 roofSegments are skipped in `drawSlopedRoofLayer2_5D`, `drawSlopedRoofGableCaps2_5D`, V272, V274, and the V278 integrated cap. During V281 QA, `PERLA_V281_QA_DISABLE_OWNER12_LEGACY_FALLBACK` also blocks owner 1/2 legacy fallback so visual proof cannot be masked by the old sampler.
 - The primitive renderer uses real `collectModernRoofFaces` world-space faces, `roofVisibleAt`, and `roofSelfDepthWriteBudgetBlockV200`; it is not a screen overlay or fake band.
@@ -172,6 +176,10 @@ Current expected behavior for modern reception/bath roof/eave work:
 - V288/V289 are narrow reception direct/foreground tree sprite-occlusion refinements. They preserve wall drawing, map/collision, and primary wall buffers.
 - V290/V291 are retained as inactive diagnostics; V291 restore must stay disabled for this bug because it hides the order problem instead of fixing the layer authority.
 - V292 gates local V220 wall replay to active rain/V216 replay context and adds a sprite-span guard for `game_room_column` only when it is behind an owner-1 reception wall layer or matching captured `wallColumnV218` wall rect.
+- V293 is telemetry/debug only. It inventories protected/runtime-off/compatibility branches and deletion readiness, but it must not be used as broad permission to delete code or to change visual behavior.
+- V294 is the first cleanup wave and is intentionally narrow: only the V237 safe-emerging-wall prototype implementation and wallcast call-site are tombstoned.
+- V295 is the preserved cleanup/debug wave: `window.perlaDebugV295` is the preferred read-only hub, V245 high-wall one-shot activation is blocked and reported as absorbed, and V266/V267/V270/V271/V272 failed roof mode/toggle activation remains forced off with tombstone shims.
+- V296 is the current physical cleanup wave: the proved-dead heavy implementation bodies for V239-V241C and V266-V275 are pruned behind no-op/status shims. `safeDeleteNow` remains empty for public APIs: V282, V216/V220/V221, V233, V290/V291, and any still-referenced public debug symbols are deferred until a dedicated proof patch.
 - Door openings are bridged from `roofSegments[].doors` projection only; generic same-owner screen gaps are not authority.
 - V278 cap pixels must be zero in normal V281 runtime; `modernStableRoofPrimitiveSkippedIntegratedCapV281` proves the cap was not drawn.
 - If primitive preflight rejects a roof, fallback is exclusive through the existing V265/V277 path; no cap overlay is added on top.

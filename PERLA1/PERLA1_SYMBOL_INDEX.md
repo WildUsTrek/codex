@@ -2,7 +2,7 @@
 
 Last updated: 2026-06-15
 
-Derived from the current `01_GIOCO_PRONTO_LOCAL_TEST/index.html` build observed as `PERLA1_V292_REPLAY_RAIN_GUARD_COLUMN_OCCLUSION_SAFE_LOCAL`.
+Derived from the current `01_GIOCO_PRONTO_LOCAL_TEST/index.html` build observed as `PERLA1_V296_PHYSICAL_TOMBSTONE_PRUNE_SAFE_LOCAL`.
 
 This index is for orientation only. It is not the source of truth. Before patching, verify symbols and line numbers with `rg` against the current runtime file.
 
@@ -11,7 +11,7 @@ This index is for orientation only. It is not the source of truth. Before patchi
 | Block ID | Symbol / Area | Current Hint | Notes |
 | --- | --- | --- | --- |
 | `boot-shell` | `PERLA_BUILD_ID` | around line `195` | Public build id used for cache/build validation. |
-| `boot-shell` | `PERLA1_V292_REPLAY_RAIN_GUARD_COLUMN_OCCLUSION_SAFE_LOCAL` | around line `195` | V292 current build id: gates V220 local wall replay behind active rain/V216 replay context and lets a direct owner-1 reception wall occlude the game-room canopy column. |
+| `boot-shell` | `PERLA1_V296_PHYSICAL_TOMBSTONE_PRUNE_SAFE_LOCAL` | around line `195` | V296 current build id: V296 physically prunes proved-dead V239-V241C and V266-V275 implementation bodies while preserving public shims; V281/V283/V292 remain the active roof/canopy/wall contracts. |
 | `sprites` | `getSpriteRenderCandidates` | around line `663` | Sprite candidate selection entry point. |
 | `roof-system` | V278 constants | around lines `498-514` | Modern wall-anchored integrated roof cap tuning, unchanged 5000 pixel / 1400 fill-rect budget, and support-visible replacement flag. |
 | `roof-system` | V279 constants | around lines `515-533` | Modern cap profile/support-span tuning retained as the V280 base; local-bay profile is disabled in current runtime. |
@@ -58,9 +58,14 @@ This index is for orientation only. It is not the source of truth. Before patchi
 | `wallcasting` | `perlaV287ReceptionFarWestWallBypassesSpriteOcclusion` | around line `3586` | Predicate used while collecting V227 wall layers: skips only the far west reception wall from sprite occlusion ranges, preserving wall pixels and primary wall buffers. |
 | `sprites` | `receptionFarWestWallSpriteLayerSkippedV287` | summary/counter around lines `3446`, `3556`, and inside `perlaV287ReceptionFarWestWallBypassesSpriteOcclusion` | Proof counter for the targeted wall range being removed from sprite clipping at the affected long east-facing poses. |
 | `sprites` | `PERLA_V290_TAMARISK_WALL_FOREGROUND_MATTE_SAFE` / `PERLA_V291_TAMARISK_WALL_FOREGROUND_RESTORE_SAFE` | around lines `386-399` | V290/V291 tamarisk diagnostics retained in V292; V291 restore is inactive and not a V292 success criterion. |
-| `sprites` | `PERLA_V292_LOCAL_WALL_REPLAY_REQUIRES_ACTIVE_RAIN_REPLAY_SAFE` / `PERLA_V292_GAME_ROOM_COLUMN_DIRECT_WALL_OCCLUSION_SAFE` | around lines `400-401` | Current V292 wall/replay flags. V220 local wall replay after V216 requires active rain/V216 replay context; game-room canopy column follows direct owner-1 reception wall occlusion. |
-| `sprites` | `perlaV292LocalWallReplayAfterV216Allowed`, `perlaV292IsGameRoomCanopyColumnSprite`, `perlaV292GameRoomColumnBlockedByDirectReceptionWall` | around lines `3707-3724` and `10238-10266` | Current V292 helpers for replay gating and direct-wall column occlusion. Verify counters and visual result in affected poses before claiming readiness. |
+| `sprites` | `PERLA_V292_LOCAL_WALL_REPLAY_REQUIRES_ACTIVE_RAIN_REPLAY_SAFE` / `PERLA_V292_GAME_ROOM_COLUMN_DIRECT_WALL_OCCLUSION_SAFE` | around lines `400-401` | Active V292 wall/replay flags. V220 local wall replay after V216 requires active rain/V216 replay context; game-room canopy column follows direct owner-1 reception wall occlusion. |
+| `sprites` | `perlaV292LocalWallReplayAfterV216Allowed`, `perlaV292IsGameRoomCanopyColumnSprite`, `perlaV292GameRoomColumnBlockedByDirectReceptionWall` | around lines `3707-3724` and `10238-10266` | Active V292 helpers for replay gating and direct-wall column occlusion. Verify counters and visual result in affected poses before claiming readiness. |
 | `sprites` | `v220WallReplayReason`, `v292LocalWallReplayRainGuard`, `v292GameRoomColumnClosedWallHiddenPixels` | inside V292 replay/column paths | Proof counters for V292 activity. Positive counters are supporting evidence only; screenshot inspection is still required. |
+| `debug-api` | `PERLA_V293_UNIFIED_TELEMETRY_DEBUG_SAFE` / `PERLA_V294_V237_TOMBSTONE_CLEANUP_SAFE` / `PERLA_V295_MODERN_DEBUG_HUB_CLEANUP_SAFE` / `PERLA_V296_PHYSICAL_TOMBSTONE_PRUNE_SAFE` | around line `403` | V293 additive telemetry/debug gate, V294 narrow V237 tombstone gate, V295 modern debug hub gate, and V296 physical prune gate. They must not change roof/canopy/rain/map/assets/overlay defaults or current visual authority. |
+| `debug-api` | `collectPerlaUnifiedTelemetryV293`, `perlaUnifiedTelemetrySummaryV293`, `downloadPerlaUnifiedTelemetryV293` | near `perlaLastDrawStatsSummaryV258` | V293 unified telemetry collectors/export. Default output is bounded and read-only; raw draw stats require explicit option. |
+| `debug-api` | `perlaTelemetryHealthV293`, `perlaTelemetryBranchInventoryV293`, `perlaTelemetryDeletionReadinessV293` | near `perlaLastDrawStatsSummaryV258` | V293 health, branch classification, and cleanup readiness. In V294 it records V237 as tombstoned but keeps `safeDeleteNow` empty for later candidates. |
+| `debug-api` | `window.perlaDebugV295`, `collectPerlaModernDebugV295`, `perlaModernDebugSummaryV295`, `downloadPerlaModernDebugV295` | near `perlaLastDrawStatsSummaryV258` | V295 preferred modern read-only debug hub. Default snapshot does not enable overlays, high-wall one-shot diagnostics, recorder sessions, lazy registry builds, canvas readback, or render mutations. |
+| `debug-api` | `perlaModernDebugHealthV295`, `perlaModernDebugBranchInventoryV295`, `perlaModernDebugDeletionReadinessV295` | near `perlaLastDrawStatsSummaryV258` | V295/V296 health, branch classification, and cleanup readiness. Reports V245 absorbed/off, V266/V267/V270/V271/V272 activation tombstoned, and V296 physical pruning behind shims while keeping `safeDeleteNow` empty for public/high-risk referenced systems. |
 | `roof-system` | V281 primitive counters | around lines `12140-12170` | `roofV281`, primitive authority, candidates, fallback, pixels, rects, budget/warn, skipped/suppressed/rejected faces, same-owner wall rejection, wall-top join, cap/fallback skip, and hybrid violation counters. Required in `visual_pose_matrix_check`. |
 | `roof-system` | `drawSlopedRoofGableCaps2_5D` | around line `12540` | Sloped roof gable cap renderer; V281 skips eligible modern owner 1/2 gables so they do not hybridize with the primitive authority. |
 | `roof-system` | `drawSlopedRoofLayer2_5D` | around line `12620` | Sloped roof plane renderer and V277 hook before V265 edge rail; V281 uses this as fallback/generic path outside primitive-owned owner 1/2 roofs. |
@@ -69,7 +74,7 @@ This index is for orientation only. It is not the source of truth. Before patchi
 | `renderer` | `drawWorld` | around line `25691` | Main world render pipeline. |
 | `minimap` | `drawMiniMap` | around line `26291` | Minimap rendering and mobile frame skipping. |
 | `renderer` | `gameLoop` | around line `26646` | Main update/render loop. |
-| `debug-api` | `window.__PERLA_DEBUG__` | around line `26831` | Public debug API container. |
+| `debug-api` | `window.__PERLA_DEBUG__` | around line `28900` | Public debug API container. V293 extends this object with `Object.assign`; do not replace it. |
 | `debug-api` | `perlaLastDrawStats`, `setPlayerForDebug` | near `window.__PERLA_DEBUG__` | Main validation counters and deterministic pose setter. |
 | `debug-api` | `window.perlaRealEaveHandoffSummaryV275` | around line `26806` | V275 public summary export. |
 
