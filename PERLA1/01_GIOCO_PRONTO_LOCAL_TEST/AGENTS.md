@@ -12,7 +12,7 @@ Scope: this file applies to `01_GIOCO_PRONTO_LOCAL_TEST/`.
 
 - Modern roof owner `1` is reception.
 - Modern roof owner `2` is bath.
-- V281 current visual contract is the modern owner `1`/`2` world-space primitive authority in the V281R rollback base: `drawStableModernOwnerRoofPrimitiveV281` owns reception/bath roof visuals when preflight accepts the roof. Sloped/gable/V272/V274/V278 are skipped for primitive-owned owner `1`/`2` roofs; V265/V276/V277 remain exclusive fallback only when preflight rejects. Failed V266-V275 replacement/clone/strip/handoff paths remain runtime-off as visual authority, and V282 portal/slab experiments are retained only as diagnostics while runtime-off in the rollback base.
+- V281 current visual contract is the modern owner `1`/`2` world-space primitive authority: `drawStableModernOwnerRoofPrimitiveV281` owns reception/bath roof visuals when preflight accepts the roof. V281S keeps the owner `1` `back_y0` gable only in the real posterior/far-closure or reception portal band so the colmo cannot disappear under same-coordinate rotation. Sloped/gable/V272/V274/V278 are skipped for primitive-owned owner `1`/`2` roofs; V265/V276/V277 remain exclusive fallback only when preflight rejects. Failed V266-V275 replacement/clone/strip/handoff paths remain runtime-off as visual authority, and V282 portal/slab experiments are retained only as diagnostics while runtime-off in the rollback base.
 - `roofSegments` remain the authoritative geometry data source, but V274/V275 are no longer the active primary renderer after the V275 visual failure.
 - Do not use floorcasting/ceiling-clone samples as the primary visible source for external roof borders. In grazing views those samples become sparse and create dotted or disappearing borders.
 - The V270/V271/V273 real ceiling clone path is runtime-off in V276 for external roof visuals.
@@ -36,7 +36,7 @@ For V281 and successors:
 - V267 must not skip the original/sloped roof fill in normal runtime.
 - V266/V267/V270/V271/V273/V274/V275 are retained for diagnostics but runtime-off as visual authority.
 - Expected V281 debug pattern in affected roof views:
-  - `window.PERLA_BUILD_ID` is `PERLA1_V281R_RECEPTION_ROOF_BASE_ROLLBACK_LOCAL`.
+  - `window.PERLA_BUILD_ID` is `PERLA1_V281S_RECEPTION_BACK_GABLE_PORTAL_KEEP_LOCAL`.
   - `roofV276` is `true`.
   - `roofV277` is `true`.
   - `roofV278` is `true`.

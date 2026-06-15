@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Camping Sole, Mare & Zanzare - PERLA1 V281R Reception Roof Base</title>
+    <title>Camping Sole, Mare & Zanzare - PERLA1 V281S Reception Roof Back Gable</title>
     <style>
         :root { --panel: rgba(20,16,12,.88); --gold:#f1c40f; --sand:#f5d99e; --perla-vv-left:0px; --perla-vv-top:0px; --perla-vv-width:100vw; --perla-vv-height:100dvh; }
         body { margin:0; min-height:100vh; background:radial-gradient(circle at 50% 0%,#183b4a 0%,#07090d 55%,#000 100%); color:white; font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; display:flex; flex-direction:column; align-items:center; overflow-x:hidden; }
@@ -99,12 +99,12 @@
     </style>
 </head>
 <body>
-            <h2>Camping Sole, Mare & Zanzare - PERLA1 V281R</h2>
+            <h2>Camping Sole, Mare & Zanzare - PERLA1 V281S</h2>
     <div id="game-container">
         <canvas id="screen" width="800" height="450"></canvas>
         <canvas id="mini-map" width="128" height="128"></canvas>
         <div id="perlaClockHud" data-weather="clear" aria-label="Orologio e meteo PERLA1"><span class="perla-clock-time">14:00</span><span class="perla-clock-meta">☀️ Giorno</span></div>
-        <div id="loading"><div><strong>Caricamento asset PERLA1 V281R reception roof base...</strong><br><span class="muted">Usa un server locale per evitare problemi da file://.</span></div></div>
+        <div id="loading"><div><strong>Caricamento asset PERLA1 V281S reception back gable...</strong><br><span class="muted">Usa un server locale per evitare problemi da file://.</span></div></div>
     </div>
     <div id="mobile-controls" aria-label="Controlli touch PERLA1">
         <div class="touch-cluster touch-cluster-left">
@@ -192,7 +192,7 @@ const loading = document.getElementById('loading');
 const debugLine = document.getElementById('debugLine');
 const perlaClockHud = document.getElementById('perlaClockHud');
 
-const PERLA_BUILD_ID = 'PERLA1_V281R_RECEPTION_ROOF_BASE_ROLLBACK_LOCAL';
+const PERLA_BUILD_ID = 'PERLA1_V281S_RECEPTION_BACK_GABLE_PORTAL_KEEP_LOCAL';
 const PERLA_V258_PERFORMANCE_BASELINE_DEBUG_OVERHEAD_SAFE = true;
 const PERLA_V258A_PHASE1_REAL_QUICK_WINS_COMPLETE_SAFE = true;
 const PERLA_V258_BASE_BUILD = 'PERLA1_V257_RAIN_SKYBOX_DEPTH_ANCHOR_FIX_SAFE_LOCAL';
@@ -587,6 +587,7 @@ const PERLA_V281_SAME_OWNER_WALL_TOP_ALLOW_PX = 1;
 const PERLA_V281_WALL_TOP_ROOF_JOIN_ALLOW_PX = 5;
 const PERLA_V281_WALL_TOP_ROOF_JOIN_Z_EPS = .10;
 const PERLA_V281_OWNER1_FRONT_GABLE_KEEP_DIRY_MAX = .35;
+const PERLA_V281_OWNER1_BACK_GABLE_KEEP_DIRY_MAX = -.10;
 const PERLA_V281_OWNER1_FRONT_GABLE_KEEP_FRONT_PAD = .75;
 const PERLA_V281_OWNER1_FRONT_GABLE_KEEP_LATERAL_PAD = 2.25;
 const PERLA_V281_OWNER1_LATERAL_ROOF_JOIN_ALLOW_PX = 7;
@@ -12175,6 +12176,16 @@ function perlaStableModernRoofPrimitiveFrontGableFacesCameraV281(face, roof){
     if(roof.ownerId===2 && roof.axis==='y' && face.side==='front_x1') return posX>roof.x3 && dirX<-.10;
     return false;
 }
+function perlaStableModernRoofPrimitiveOwner1BackGableClosureNeededV281(face, roof){
+    if(!(face && roof && roof.ownerId===1 && roof.axis==='x' && face.kind==='gable' && face.side==='back_y0')) return false;
+    if(posY>roof.y3 && dirY<PERLA_V281_OWNER1_BACK_GABLE_KEEP_DIRY_MAX) return true;
+    if(playerInsideRoof(roof)) return false;
+    const portalBand=posY>=roof.y3-PERLA_V281_OWNER1_FRONT_GABLE_KEEP_FRONT_PAD && posY<=roof.y3+PERLA_V281_OWNER1_FRONT_GABLE_KEEP_FRONT_PAD;
+    if(!portalBand || dirY>=PERLA_V281_OWNER1_BACK_GABLE_KEEP_DIRY_MAX) return false;
+    const centerX=(roof.x0+roof.x3)*.5;
+    const halfW=Math.max(.5,(roof.x3-roof.x0)*.5);
+    return Math.abs(posX-centerX)<=halfW+PERLA_V281_OWNER1_FRONT_GABLE_KEEP_LATERAL_PAD;
+}
 function perlaStableModernRoofPrimitiveInteriorFasciaRejectV281(face, roof){
     return !!(face && roof && face.kind==='fascia' && playerInsideRoof(roof));
 }
@@ -12724,8 +12735,11 @@ function perlaStableModernRoofPrimitiveDrawGableOutlineV281(face, roof, drawStat
 }
 function perlaStableModernRoofPrimitiveRejectHiddenGableV281(face, roof, drawStats){
     if(!face || !roof || face.kind!=='gable') return false;
-    if(roof.ownerId===1 && roof.axis==='x' && face.side==='back_y0' && posY>roof.y3 && dirY<-.10){
-        if(drawStats) drawStats.modernStableRoofPrimitiveBackGableKeptForFarClosureV281=(drawStats.modernStableRoofPrimitiveBackGableKeptForFarClosureV281||0)+1;
+    if(perlaStableModernRoofPrimitiveOwner1BackGableClosureNeededV281(face, roof)){
+        if(drawStats){
+            drawStats.modernStableRoofPrimitiveBackGableKeptForFarClosureV281=(drawStats.modernStableRoofPrimitiveBackGableKeptForFarClosureV281||0)+1;
+            if(posY<=roof.y3) drawStats.modernStableRoofPrimitiveBackGablePortalClosureKeptV281=(drawStats.modernStableRoofPrimitiveBackGablePortalClosureKeptV281||0)+1;
+        }
         return false;
     }
     if(roof.ownerId===2 && roof.axis==='y' && face.side==='back_x0' && posX>roof.x3 && dirX<-.10){
@@ -12781,7 +12795,7 @@ function drawStableModernOwnerRoofPrimitiveV281(time, drawStats){
                 continue;
             }
             if(perlaStableModernRoofPrimitiveRejectHiddenGableV281(faces[f],r,drawStats)) continue;
-            const keepOwner1FarClosure=!!(r.ownerId===1 && r.axis==='x' && faces[f].kind==='gable' && faces[f].side==='back_y0' && posY>r.y3 && dirY<-.10);
+            const keepOwner1FarClosure=perlaStableModernRoofPrimitiveOwner1BackGableClosureNeededV281(faces[f],r);
             const keepFrontFacingGable=perlaStableModernRoofPrimitiveFrontGableFacesCameraV281(faces[f],r);
             if((suppressLargeTop||nearDoorTopRisk) && faces[f].kind==='gable' && faceDepth>nearestGableDepth+.5 && !keepOwner1FarClosure && !keepFrontFacingGable){
                 if(drawStats) drawStats.modernStableRoofPrimitiveRejectedFarGableV281=(drawStats.modernStableRoofPrimitiveRejectedFarGableV281||0)+1;

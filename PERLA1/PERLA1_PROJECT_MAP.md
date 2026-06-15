@@ -1,7 +1,7 @@
 ﻿# PERLA1 Project Map
 
 Last updated: 2026-06-14
-Current runtime build observed in `index.html`: `PERLA1_V281R_RECEPTION_ROOF_BASE_ROLLBACK_LOCAL`
+Current runtime build observed in `index.html`: `PERLA1_V281S_RECEPTION_BACK_GABLE_PORTAL_KEEP_LOCAL`
 
 This file is the fast technical map for agents. Use it to orient before touching runtime code, and update it when structure, entrypoints, validation workflow, dependencies, or major renderer contracts change.
 
@@ -138,20 +138,21 @@ PERLA1 is monolithic enough that agents must avoid copying broad file dumps into
 | V277 | active fallback support | Local budgeted continuity fill inside the V265/V276 sloped roof path, plus sparse-run guard for the V265 edge rail. Under V281 it does not receive owner 1/2 primitive-owned planes. |
 | V278 | disabled in normal V281 roof path | Wall-anchored integrated cap remains as historical helper code and explicit skip counter, but `PERLA_V281_DISABLE_V278_CAP_WHEN_ENABLED` prevents the slab-like hybrid overlay. |
 | V279/V280 | retained support helpers | Support-span, door-span, and near-door guard helpers remain available; the visual authority moved to V281. |
-| V281 | current contract | Reception/bath roof single authority: budgeted world-space primitive faces from `roofSegments`, exclusive fallback to V265/V277 only when primitive preflight rejects, no V278 cap overlay. Current rollback build: `PERLA1_V281R_RECEPTION_ROOF_BASE_ROLLBACK_LOCAL`. |
-| V282 | dormant/off in V281R rollback | Reception portal/slab experiments retained for diagnostics but runtime-off in the V281R rollback base after visual regressions. Do not claim V282 portal/ceiling readiness from this base. |
+| V281/V281S | current contract | Reception/bath roof single authority: budgeted world-space primitive faces from `roofSegments`, exclusive fallback to V265/V277 only when primitive preflight rejects, no V278 cap overlay. Current build: `PERLA1_V281S_RECEPTION_BACK_GABLE_PORTAL_KEEP_LOCAL`; V281S adds a narrow owner 1 `back_y0` gable keep for the reception portal/far-closure band so same-coordinate rotation cannot drop the posterior colmo. |
+| V282 | dormant/off in current V281/V281S contract | Reception portal/slab experiments retained for diagnostics but runtime-off after visual regressions. Do not claim V282 portal/ceiling readiness from this base. |
 
 ## V281 Modern Roof Primitive Authority Contract
 
 Current expected behavior for modern reception/bath roof/eave work:
 
-- `PERLA_BUILD_ID` is `PERLA1_V281R_RECEPTION_ROOF_BASE_ROLLBACK_LOCAL`.
+- `PERLA_BUILD_ID` is `PERLA1_V281S_RECEPTION_BACK_GABLE_PORTAL_KEEP_LOCAL`.
 - V281 adds `drawStableModernOwnerRoofPrimitiveV281` as the single reception/bath roof authority when preflight accepts the roof.
 - Eligible owner 1/2 roofSegments are skipped in `drawSlopedRoofLayer2_5D`, `drawSlopedRoofGableCaps2_5D`, V272, V274, and the V278 integrated cap. During V281 QA, `PERLA_V281_QA_DISABLE_OWNER12_LEGACY_FALLBACK` also blocks owner 1/2 legacy fallback so visual proof cannot be masked by the old sampler.
 - The primitive renderer uses real `collectModernRoofFaces` world-space faces, `roofVisibleAt`, and `roofSelfDepthWriteBudgetBlockV200`; it is not a screen overlay or fake band.
 - It draws roof top, gable, fascia, and geometry edge/ridge lines with strict budgets: max `48000` primitive pixels, `3200` fill rects, `32` faces, and warn over `46000` pixels. If projected top faces are too large in a near-camera pose, V281 keeps ownership but clips them to a limited near top band instead of falling back to a full legacy slab; near-plane non-top faces that become huge detached top-screen slabs are also culled.
 - Same-owner wall pixels remain authoritative inside the wall body span: V281 allows a narrow 5 px eave handoff only for fascia/gable and roof-plane pixels at `eaveZ`, while deeper roof pixels still cannot rasterize through visible wall texture, doors, or openings.
 - The V281 near-door guard uses `perlaModernRoofNearDoorSuppressTopPlanesV280` as a risk detector for unstable near-plane roof tops/edge lines; fascia/gable/eave handoff remain available and V278 cap stays disabled.
+- V281S keeps owner 1 `back_y0` gable closure only when it is the real far/posterior closure: original outside-front `dirY < -0.10`, or the narrow reception portal band around `roof.y3` with lateral bounds. This prevents the posterior colmo from disappearing under rotation without re-enabling broad decorative edges, V278 cap, bridge, or legacy roof fallback.
 - Door openings are bridged from `roofSegments[].doors` projection only; generic same-owner screen gaps are not authority.
 - V278 cap pixels must be zero in normal V281 runtime; `modernStableRoofPrimitiveSkippedIntegratedCapV281` proves the cap was not drawn.
 - If primitive preflight rejects a roof, fallback is exclusive through the existing V265/V277 path; no cap overlay is added on top.

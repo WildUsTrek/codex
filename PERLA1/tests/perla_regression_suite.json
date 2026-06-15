@@ -1,6 +1,6 @@
 {
   "name": "PERLA1 local structural regression suite",
-  "requiredBuildId": "PERLA1_V281R_RECEPTION_ROOF_BASE_ROLLBACK_LOCAL",
+  "requiredBuildId": "PERLA1_V281S_RECEPTION_BACK_GABLE_PORTAL_KEEP_LOCAL",
   "minimumFunctionCount": 180,
   "warnFunctionLines": 450,
   "requiredSymbols": [
@@ -25,7 +25,10 @@
     "const PERLA_V281_RECEPTION_RIDGE_RISE = .96;",
     "const PERLA_V281_WALL_TOP_ROOF_JOIN_ALLOW_PX = 5;",
     "const PERLA_V281_WALL_TOP_ROOF_JOIN_Z_EPS = .10;",
+    "const PERLA_V281_OWNER1_BACK_GABLE_KEEP_DIRY_MAX = -.10;",
     "modernStableRoofPrimitiveAuthorityV281",
+    "perlaStableModernRoofPrimitiveOwner1BackGableClosureNeededV281",
+    "modernStableRoofPrimitiveBackGablePortalClosureKeptV281",
     "const PERLA_V278_REPLACE_MODERN_SLOPED_ROOF_VISUAL = false;",
     "const PERLA_V280_CLEAN_MODERN_ROOF_CAP_SAFE = true;",
     "const PERLA_V280_DOOR_GAP_BRIDGE_SAFE = true;",

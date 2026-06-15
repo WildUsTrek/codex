@@ -2,7 +2,7 @@
 
 Last updated: 2026-06-14
 
-Derived from the current `01_GIOCO_PRONTO_LOCAL_TEST/index.html` build observed as `PERLA1_V281R_RECEPTION_ROOF_BASE_ROLLBACK_LOCAL`.
+Derived from the current `01_GIOCO_PRONTO_LOCAL_TEST/index.html` build observed as `PERLA1_V281S_RECEPTION_BACK_GABLE_PORTAL_KEEP_LOCAL`.
 
 This index is for orientation only. It is not the source of truth. Before patching, verify symbols and line numbers with `rg` against the current runtime file.
 
@@ -11,7 +11,7 @@ This index is for orientation only. It is not the source of truth. Before patchi
 | Block ID | Symbol / Area | Current Hint | Notes |
 | --- | --- | --- | --- |
 | `boot-shell` | `PERLA_BUILD_ID` | around line `195` | Public build id used for cache/build validation. |
-| `boot-shell` | `PERLA1_V281R_RECEPTION_ROOF_BASE_ROLLBACK_LOCAL` | around line `195` | V281 current contract rollback build id for reception roof base validation. |
+| `boot-shell` | `PERLA1_V281S_RECEPTION_BACK_GABLE_PORTAL_KEEP_LOCAL` | around line `195` | V281S current contract build id for reception back-gable portal keep validation. |
 | `sprites` | `getSpriteRenderCandidates` | around line `663` | Sprite candidate selection entry point. |
 | `roof-system` | V278 constants | around lines `498-514` | Modern wall-anchored integrated roof cap tuning, unchanged 5000 pixel / 1400 fill-rect budget, and support-visible replacement flag. |
 | `roof-system` | V279 constants | around lines `515-533` | Modern cap profile/support-span tuning retained as the V280 base; local-bay profile is disabled in current runtime. |
@@ -34,6 +34,7 @@ This index is for orientation only. It is not the source of truth. Before patchi
 | `roof-system` | `drawModernIntegratedRoofCapV278` | around line `11330` | V278/V279/V280 wall-anchored integrated cap renderer. Under V281 it is explicitly skipped in normal owner 1/2 runtime to avoid a hybrid slab overlay. |
 | `roof-system` | `perlaStableModernRoofPrimitiveReplacesSegmentV281` | around line `11920` | Central predicate for owner 1/2 primitive eligibility and exclusive legacy skip/fallback. |
 | `roof-system` | `drawStableModernOwnerRoofPrimitiveV281` | around line `12030` | Budgeted world-space roof primitive authority for reception/baths; draws `collectModernRoofFaces` with depth and counters. |
+| `roof-system` | `perlaStableModernRoofPrimitiveOwner1BackGableClosureNeededV281` | around line `12178` | V281S narrow owner 1 `back_y0` keep predicate for posterior/far closure and reception portal band; prevents rotation-dependent back colmo disappearance without enabling V278 cap or legacy fallback. |
 | `roof-system` | V281 primitive counters | around lines `12140-12170` | `roofV281`, primitive authority, candidates, fallback, pixels, rects, budget/warn, skipped/suppressed/rejected faces, same-owner wall rejection, wall-top join, cap/fallback skip, and hybrid violation counters. Required in `visual_pose_matrix_check`. |
 | `roof-system` | `drawSlopedRoofGableCaps2_5D` | around line `12540` | Sloped roof gable cap renderer; V281 skips eligible modern owner 1/2 gables so they do not hybridize with the primitive authority. |
 | `roof-system` | `drawSlopedRoofLayer2_5D` | around line `12620` | Sloped roof plane renderer and V277 hook before V265 edge rail; V281 uses this as fallback/generic path outside primitive-owned owner 1/2 roofs. |
