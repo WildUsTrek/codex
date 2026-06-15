@@ -1,6 +1,6 @@
 {
   "name": "PERLA1 local structural regression suite",
-  "requiredBuildId": "PERLA1_V296_PHYSICAL_TOMBSTONE_PRUNE_SAFE_LOCAL",
+  "requiredBuildId": "PERLA1_V297_PERGOLA_DRAW_BUDGET_SAFE_LOCAL",
   "minimumFunctionCount": 180,
   "warnFunctionLines": 450,
   "requiredSymbols": [
@@ -90,6 +90,12 @@
     "const PERLA_V296_FAILED_ROOF_IMPLEMENTATIONS_PRUNED = true;",
     "const PERLA_V296_HIGH_WALL_IMPLEMENTATIONS_PRUNED = true;",
     "const PERLA_V296_COMPATIBILITY_SHIMS_PRESERVED = true;",
+    "const PERLA_V297_PERGOLA_DRAW_BUDGET_SAFE = true;",
+    "const PERLA_V297_BASE_BUILD = 'PERLA1_V296_PHYSICAL_TOMBSTONE_PRUNE_SAFE_LOCAL';",
+    "const PERLA_V297_PATCH_MODE = 'pergola_row_span_cull_visibility_reject_fog_cache_light_budget';",
+    "pergolaOptimizedV297",
+    "pergolaScanSamplesSavedV297",
+    "pergolaLightBudgetV297",
     "perlaHighWallPrunedSummaryV296",
     "perlaPhysicallyPrunedBranchSummaryV296",
     "perlaDebugV295",

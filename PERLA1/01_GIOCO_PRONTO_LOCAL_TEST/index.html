@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Camping Sole, Mare & Zanzare - PERLA1 V296 Physical Tombstone Prune Safe</title>
+    <title>Camping Sole, Mare & Zanzare - PERLA1 V297 Pergola Draw Budget Safe</title>
     <style>
         :root { --panel: rgba(20,16,12,.88); --gold:#f1c40f; --sand:#f5d99e; --perla-vv-left:0px; --perla-vv-top:0px; --perla-vv-width:100vw; --perla-vv-height:100dvh; }
         body { margin:0; min-height:100vh; background:radial-gradient(circle at 50% 0%,#183b4a 0%,#07090d 55%,#000 100%); color:white; font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; display:flex; flex-direction:column; align-items:center; overflow-x:hidden; }
@@ -99,12 +99,12 @@
     </style>
 </head>
 <body>
-            <h2>Camping Sole, Mare & Zanzare - PERLA1 V296</h2>
+            <h2>Camping Sole, Mare & Zanzare - PERLA1 V297</h2>
     <div id="game-container">
         <canvas id="screen" width="800" height="450"></canvas>
         <canvas id="mini-map" width="128" height="128"></canvas>
         <div id="perlaClockHud" data-weather="clear" aria-label="Orologio e meteo PERLA1"><span class="perla-clock-time">14:00</span><span class="perla-clock-meta">☀️ Giorno</span></div>
-        <div id="loading"><div><strong>Caricamento asset PERLA1 V296...</strong><br><span class="muted">Usa un server locale per evitare problemi da file://.</span></div></div>
+        <div id="loading"><div><strong>Caricamento asset PERLA1 V297...</strong><br><span class="muted">Usa un server locale per evitare problemi da file://.</span></div></div>
     </div>
     <div id="mobile-controls" aria-label="Controlli touch PERLA1">
         <div class="touch-cluster touch-cluster-left">
@@ -192,7 +192,7 @@ const loading = document.getElementById('loading');
 const debugLine = document.getElementById('debugLine');
 const perlaClockHud = document.getElementById('perlaClockHud');
 
-const PERLA_BUILD_ID = 'PERLA1_V296_PHYSICAL_TOMBSTONE_PRUNE_SAFE_LOCAL';
+const PERLA_BUILD_ID = 'PERLA1_V297_PERGOLA_DRAW_BUDGET_SAFE_LOCAL';
 const PERLA_V258_PERFORMANCE_BASELINE_DEBUG_OVERHEAD_SAFE = true;
 const PERLA_V258A_PHASE1_REAL_QUICK_WINS_COMPLETE_SAFE = true;
 const PERLA_V258_BASE_BUILD = 'PERLA1_V257_RAIN_SKYBOX_DEPTH_ANCHOR_FIX_SAFE_LOCAL';
@@ -431,6 +431,20 @@ const PERLA_V296_NO_RAIN_OUTPUT_CHANGE = true;
 const PERLA_V296_FAILED_ROOF_IMPLEMENTATIONS_PRUNED = true;
 const PERLA_V296_HIGH_WALL_IMPLEMENTATIONS_PRUNED = true;
 const PERLA_V296_COMPATIBILITY_SHIMS_PRESERVED = true;
+const PERLA_V297_PERGOLA_DRAW_BUDGET_SAFE = true;
+const PERLA_V297_BASE_BUILD = 'PERLA1_V296_PHYSICAL_TOMBSTONE_PRUNE_SAFE_LOCAL';
+const PERLA_V297_PATCH_MODE = 'pergola_row_span_cull_visibility_reject_fog_cache_light_budget';
+const PERLA_V297_NO_WORLDGEN_CHANGE = true;
+const PERLA_V297_NO_ASSET_CHANGE = true;
+const PERLA_V297_NO_RAIN_OUTPUT_CHANGE = true;
+const PERLA_V297_PERGOLA_VISUAL_SIMILARITY_TARGET = true;
+const PERLA_V297_PERGOLA_LIGHT_BUDGET_MAX_EXTRA_X = 1;
+const PERLA_V297_PERGOLA_LIGHT_BUDGET_MAX_EXTRA_Y = 1;
+const PERLA_V297_PERGOLA_LIGHT_BUDGET_MS = 7.5;
+const PERLA_V297_PERGOLA_LIGHT_BUDGET_AREA_X = .88;
+const PERLA_V297_PERGOLA_LIGHT_BUDGET_AREA_Y = .92;
+const PERLA_V297_PERGOLA_LIGHT_BUDGET_Y_MS = 8.5;
+const PERLA_V297_PERGOLA_FOG_STYLE_CACHE_LIMIT = 4096;
 let perlaV291PreWallCanvas = null;
 let perlaV291PreWallCtx = null;
 const perlaV290TamariskHullCache = typeof WeakMap !== 'undefined' ? new WeakMap() : null;
@@ -2062,7 +2076,45 @@ function perlaCoverageFinalizeFrameV261(drawStats){
 }
 function perlaCoverageSurfaceSummaryV261(){ const last=perlaLastDrawStats||{}; return Object.assign({}, perlaCoverageSurfaceLastSummaryV261, {buildId:PERLA_BUILD_ID, currentMode:perlaCoverageSurfaceModeV261, lastDraw:{drawWorldMs:last.drawWorldMs||0, roofMs:last.roofMsV198||0, canopyMs:last.deferredCanopyMsV198||0, pergolaMs:last.pergolaMsV89||0, coverageTotalMs:last.coverageTotalMsV261||0, hardCapApplied:last.coverageHardCapAppliedV261||0, pressureLevel:last.coveragePressureLevelV261||0}}); }
 function perlaCoverageStableSummaryV262(){ const last=perlaLastDrawStats||{}; return Object.assign({}, perlaCoverageStableLastSummaryV262, {buildId:PERLA_BUILD_ID, currentMode:perlaCoverageStableModeV262, lastDraw:{drawWorldMs:last.drawWorldMs||0, roofMs:last.roofMsV198||0, canopyMs:last.deferredCanopyMsV198||0, pergolaMs:last.pergolaMsV89||0, stableBudgetApplied:last.coverageStableBudgetAppliedV262||0, emergencyCapApplied:last.coverageEmergencyCapAppliedV262||0, uncappedRoofSamples:last.coverageUncappedRoofSamplesV262||0, edgeFullQualityPixels:last.coverageEdgeFullQualityPixelsV262||0, pathLabels:last.coveragePathLabelsV262||null}}); }
-function perlaPergolaBudgetSummaryV261(){ const d=perlaLastDrawStats||{}; return {buildId:PERLA_BUILD_ID, mode:perlaCoverageSurfaceModeV261, stableMode:perlaCoverageStableModeV262, pressureLevel:d.coveragePergolaPressureLevelV261||d.coveragePressureLevelV261||0, pergolaMs:d.pergolaMsV89||0, hardCapApplied:d.coveragePergolaHardCapAppliedV261||0, stableBudgetApplied:d.coveragePergolaStableBudgetAppliedV262||0, bbox:d.pergolaBBoxV89||null, scanSamples:d.pergolaScanSamplesV89||0, stepX:d.pergolaStepXV147||0, stepY:d.pergolaStepYV147||0, extraStepX:d.coveragePergolaExtraStepXV261||0, extraStepY:d.coveragePergolaExtraStepYV261||0}; }
+function perlaPergolaBudgetSummaryV261(){
+    const d=perlaLastDrawStats||{};
+    return {
+        buildId:PERLA_BUILD_ID,
+        mode:perlaCoverageSurfaceModeV261,
+        stableMode:perlaCoverageStableModeV262,
+        pressureLevel:d.coveragePergolaPressureLevelV261||d.coveragePressureLevelV261||0,
+        pergolaMs:d.pergolaMsV89||0,
+        hardCapApplied:d.coveragePergolaHardCapAppliedV261||0,
+        stableBudgetApplied:d.coveragePergolaStableBudgetAppliedV262||0,
+        bbox:d.pergolaBBoxV89||null,
+        scanSamples:d.pergolaScanSamplesV89||0,
+        stepX:d.pergolaStepXV147||0,
+        stepY:d.pergolaStepYV147||0,
+        extraStepX:d.coveragePergolaExtraStepXV261||0,
+        extraStepY:d.coveragePergolaExtraStepYV261||0,
+        v297:{
+            enabled:!!PERLA_V297_PERGOLA_DRAW_BUDGET_SAFE,
+            candidateSamples:d.pergolaCandidateSamplesV297||0,
+            rowSpanRows:d.pergolaRowSpanRowsV297||0,
+            rowSpanRowsCulled:d.pergolaRowSpanRowsCulledV297||0,
+            scanSamplesSaved:d.pergolaScanSamplesSavedV297||0,
+            rowSpanFalsePositive:d.pergolaRowSpanFalsePositiveV297||0,
+            visibilityFastChecks:d.pergolaVisibilityFastChecksV297||0,
+            visibilityFastRejects:d.pergolaVisibilityFastRejectsV297||0,
+            fogStyleCacheHits:d.pergolaFogStyleCacheHitsV297||0,
+            fogStyleCacheMisses:d.pergolaFogStyleCacheMissesV297||0,
+            fogStyleOverlayRects:d.pergolaFogStyleOverlayRectsV297||0,
+            fogBatchedSamples:d.pergolaFogBatchedSamplesV297||0,
+            fogBatchedRuns:d.pergolaFogBatchedRunsV297||0,
+            lightBudgetReason:d.pergolaLightBudgetReasonV297||'none',
+            lightBudgetLastMs:d.pergolaLightBudgetLastMsV297||0,
+            lightBudgetExtraX:d.pergolaLightBudgetExtraXV297||0,
+            lightBudgetExtraY:d.pergolaLightBudgetExtraYV297||0,
+            coverageExtraX:d.pergolaCoverageExtraXV297||0,
+            coverageExtraY:d.pergolaCoverageExtraYV297||0
+        }
+    };
+}
 function perlaCoverageSurfaceDownloadV261(){ const payload={generatedAt:new Date().toISOString(), summary:perlaCoverageSurfaceSummaryV261(), stableV262:perlaCoverageStableSummaryV262(), pergola:perlaPergolaBudgetSummaryV261(), lastDrawStats:perlaLastDrawStats||null}; const name='PERLA1_V261_COVERAGE_SURFACE_DEBUG_'+new Date().toISOString().replace(/[:.]/g,'-')+'.json'; if(typeof downloadTextFile==='function') downloadTextFile(name, JSON.stringify(payload,null,2)); return payload; }
 function perlaCoverageStableDownloadV262(){ const payload={generatedAt:new Date().toISOString(), summary:perlaCoverageStableSummaryV262(), legacyV261:perlaCoverageSurfaceSummaryV261(), pergola:perlaPergolaBudgetSummaryV261(), lastDrawStats:perlaLastDrawStats||null}; const name='PERLA1_V262_COVERAGE_STABLE_EDGE_DEBUG_'+new Date().toISOString().replace(/[:.]/g,'-')+'.json'; if(typeof downloadTextFile==='function') downloadTextFile(name, JSON.stringify(payload,null,2)); return payload; }
 
@@ -13856,6 +13908,133 @@ function ivyPergolaScreenBoundsV89(){
     return {x0,x1,y0,y1,yCap,visible,nearest,areaRatio,marginX,marginTop,marginBottom};
 }
 
+let perlaPergolaFogStyleCacheV297=Object.create(null);
+let perlaPergolaFogStyleCacheSizeV297=0;
+let perlaPergolaFogStyleCacheHitsV297=0;
+let perlaPergolaFogStyleCacheMissesV297=0;
+function perlaPergolaSampleCountV297(x0,x1,stepX){
+    return Math.max(0, Math.ceil(Math.max(0,(x1||0)-(x0||0))/Math.max(1,stepX||1)));
+}
+function perlaPergolaIntervalForAxisV297(base,slope,min,max){
+    const eps=1e-7;
+    if(Math.abs(slope)<eps){
+        return (base>=min-eps && base<=max+eps) ? [-Infinity,Infinity] : null;
+    }
+    let a=(min-base)/slope, b=(max-base)/slope;
+    if(a>b){ const t=a; a=b; b=t; }
+    return [a-eps,b+eps];
+}
+function perlaPergolaRowSpanV297(xStart,xEnd,stepX,baseWX,baseWY,fStepX,fStepY){
+    if(!PERLA_V297_PERGOLA_DRAW_BUDGET_SAFE) return {x0:xStart,x1:xEnd-stepX};
+    const lastX=xEnd-stepX;
+    if(lastX<xStart) return null;
+    const eps=1e-5;
+    const ix=perlaPergolaIntervalForAxisV297(baseWX,fStepX,IVY_PERGOLA_V79.x0-eps,IVY_PERGOLA_V79.x1+eps);
+    if(!ix) return null;
+    const iy=perlaPergolaIntervalForAxisV297(baseWY,fStepY,IVY_PERGOLA_V79.y0-eps,IVY_PERGOLA_V79.y1+eps);
+    if(!iy) return null;
+    const lo=Math.max(xStart,ix[0],iy[0]);
+    const hi=Math.min(lastX,ix[1],iy[1]);
+    if(hi<lo) return null;
+    const sx0=xStart+Math.max(0,Math.ceil((lo-xStart-1e-6)/stepX))*stepX;
+    const sx1=xStart+Math.floor((hi-xStart+1e-6)/stepX)*stepX;
+    if(sx1<sx0 || sx0>=xEnd) return null;
+    return {x0:sx0,x1:Math.min(sx1,lastX)};
+}
+function perlaPergolaVisibilityEarlyRejectV297(px,sy,dist,drawStats){
+    if(!PERLA_V297_PERGOLA_DRAW_BUDGET_SAFE) return false;
+    if(drawStats) drawStats.pergolaVisibilityFastChecksV297=(drawStats.pergolaVisibilityFastChecksV297||0)+1;
+    if(px<0 || px>=screenW || sy<0 || sy>=screenH || dist<=ROOF_NEAR_PLANE){
+        if(drawStats) drawStats.pergolaVisibilityFastRejectsV297=(drawStats.pergolaVisibilityFastRejectsV297||0)+1;
+        return true;
+    }
+    const wallD=ZBuffer[px] || 1000;
+    const wt=WallTopBuffer[px] == null ? screenH : WallTopBuffer[px];
+    if(wallD>0 && wallD<999 && dist>wallD+.025 && sy>=wt-1){
+        if(drawStats) drawStats.pergolaVisibilityFastRejectsV297=(drawStats.pergolaVisibilityFastRejectsV297||0)+1;
+        return true;
+    }
+    return false;
+}
+function perlaPergolaFogEnvironmentKeyV297(){
+    const env=(typeof currentEnvironmentV163==='function') ? currentEnvironmentV163() : null;
+    const near=(env&&env.fogNearRGB)||[];
+    const mid=(env&&env.horizonRGB)||[];
+    const low=(env&&env.horizonLowRGB)||[];
+    return [near[0]|0,near[1]|0,near[2]|0,mid[0]|0,mid[1]|0,mid[2]|0,low[0]|0,low[1]|0,low[2]|0,env&&env.weather||''].join(',');
+}
+function perlaPergolaFogStyleV297(y,w,h,dist,drawStats){
+    const fog=clamp(dist/25,0,1);
+    if(fog<=0 || w<=0 || h<=0) return null;
+    if(y < screenH*.5-4 && w>=12 && h>=12){
+        roofSkyLargeFogRectsSkippedV111++;
+        if(drawStats) drawStats.pergolaFogLargeSkySkippedV297=(drawStats.pergolaFogLargeSkySkippedV297||0)+1;
+        return null;
+    }
+    const key=String(dist)+'|'+perlaPergolaFogEnvironmentKeyV297();
+    const cached=perlaPergolaFogStyleCacheV297[key];
+    if(cached){
+        perlaPergolaFogStyleCacheHitsV297++;
+        if(drawStats) drawStats.pergolaFogStyleCacheHitsV297=(drawStats.pergolaFogStyleCacheHitsV297||0)+1;
+        return cached;
+    }
+    perlaPergolaFogStyleCacheMissesV297++;
+    if(drawStats) drawStats.pergolaFogStyleCacheMissesV297=(drawStats.pergolaFogStyleCacheMissesV297||0)+1;
+    const fc=wallFogColorForDistanceV163(dist);
+    const style=`rgba(${fc[0]},${fc[1]},${fc[2]},${fog})`;
+    if(perlaPergolaFogStyleCacheSizeV297>PERLA_V297_PERGOLA_FOG_STYLE_CACHE_LIMIT){
+        perlaPergolaFogStyleCacheV297=Object.create(null);
+        perlaPergolaFogStyleCacheSizeV297=0;
+        if(drawStats) drawStats.pergolaFogStyleCacheResetV297=(drawStats.pergolaFogStyleCacheResetV297||0)+1;
+    }
+    perlaPergolaFogStyleCacheV297[key]=style;
+    perlaPergolaFogStyleCacheSizeV297++;
+    return style;
+}
+function perlaPergolaDrawFogOverlayV297(x,y,w,h,dist,drawStats){
+    if(!PERLA_V297_PERGOLA_DRAW_BUDGET_SAFE){
+        drawExistingWallFogOverlay(x,y,w,h,dist);
+        return;
+    }
+    const style=perlaPergolaFogStyleV297(y,w,h,dist,drawStats);
+    if(!style) return;
+    ctx.fillStyle=style;
+    ctx.fillRect(x,y,w,h);
+    if(drawStats) drawStats.pergolaFogStyleOverlayRectsV297=(drawStats.pergolaFogStyleOverlayRectsV297||0)+1;
+}
+function perlaPergolaLightBudgetStepsV297(bounds, drawStats, existingExtraX, existingExtraY){
+    const out={x:0,y:0,reason:'none',lastMs:0,weather:null};
+    if(!PERLA_V297_PERGOLA_DRAW_BUDGET_SAFE || !bounds) return out;
+    const weather=(typeof perlaCoverageEdgeRailWeatherV265==='function') ? perlaCoverageEdgeRailWeatherV265() : 'clear';
+    const last=perlaLastDrawStats||{};
+    const lastMs=Number(last.pergolaMsV89)||0;
+    const area=Number(bounds.areaRatio)||0;
+    out.lastMs=+lastMs.toFixed(3);
+    out.weather=weather;
+    const hasWeatherBudget=(weather==='rain'||weather==='storm');
+    const hasExistingX=(Number(existingExtraX)||0)>0;
+    const hasExistingY=(Number(existingExtraY)||0)>0;
+    if(!hasWeatherBudget && !hasExistingX && (lastMs>=PERLA_V297_PERGOLA_LIGHT_BUDGET_MS || area>=PERLA_V297_PERGOLA_LIGHT_BUDGET_AREA_X)){
+        out.x=PERLA_V297_PERGOLA_LIGHT_BUDGET_MAX_EXTRA_X;
+        out.reason=lastMs>=PERLA_V297_PERGOLA_LIGHT_BUDGET_MS?'last_pergola_ms':'large_area';
+    }
+    if(!hasWeatherBudget && !hasExistingY && area>=PERLA_V297_PERGOLA_LIGHT_BUDGET_AREA_Y && lastMs>=PERLA_V297_PERGOLA_LIGHT_BUDGET_Y_MS){
+        out.y=PERLA_V297_PERGOLA_LIGHT_BUDGET_MAX_EXTRA_Y;
+        out.reason=out.reason==='none'?'large_area_last_ms':out.reason+'+large_area_last_ms';
+    }
+    if(drawStats){
+        drawStats.pergolaLightBudgetV297=true;
+        drawStats.pergolaLightBudgetReasonV297=out.reason;
+        drawStats.pergolaLightBudgetLastMsV297=out.lastMs;
+        drawStats.pergolaLightBudgetWeatherV297=weather;
+        drawStats.pergolaLightBudgetExistingExtraXV297=Number(existingExtraX)||0;
+        drawStats.pergolaLightBudgetExistingExtraYV297=Number(existingExtraY)||0;
+        drawStats.pergolaLightBudgetExtraXV297=out.x;
+        drawStats.pergolaLightBudgetExtraYV297=out.y;
+    }
+    return out;
+}
+
 function drawIvyPergolaHangingV79(time){
     const yEdges=[IVY_PERGOLA_V79.y0+.34, IVY_PERGOLA_V79.y1-.34];
     let count=0;
@@ -13890,7 +14069,8 @@ function drawIvyPergolaLayerV79(time, drawStats){
     if(Math.hypot(posX-cx,posY-cy)>IVY_PERGOLA_V79.maxDist+6) return;
     const bounds=ivyPergolaScreenBoundsV89();
     if(!bounds){ if(drawStats){ drawStats.pergolaSkippedV89=true; } return; }
-    let leafPixels=0, holes=0, trellisPixels=0, scanSamples=0, fogCalls=0;
+    let leafPixels=0, holes=0, trellisPixels=0, scanSamples=0, fogCalls=0, fogBatchedSamplesV297=0, fogBatchedRunsV297=0;
+    let rowSpanRowsV297=0, rowSpanRowsCulledV297=0, rowSpanCandidateSamplesV297=0, rowSpanSamplesAfterV297=0, rowSpanSamplesSavedV297=0, rowSpanFalsePositiveV297=0;
     const z=IVY_PERGOLA_V79.z;
     // V90: conserva l'ottimizzazione V89, ma limita il LOD aggressivo.
     // I campioni piu' grossi vanno bene come densita', ma non devono rendere grossolani i bordi.
@@ -13908,10 +14088,14 @@ function drawIvyPergolaLayerV79(time, drawStats){
     let pergolaLodV147=false;
     if(bounds.areaRatio>.82){ stepX+=1; pergolaLodV147=true; }
     if(bounds.areaRatio>.90){ stepY+=1; pergolaLodV147=true; }
+    const stepBeforeCoverageXV297=stepX, stepBeforeCoverageYV297=stepY;
+    let coverageExtraXV297=0, coverageExtraYV297=0;
     const v261Pergola=(typeof perlaCoveragePergolaDecisionV261==='function') ? perlaCoveragePergolaDecisionV261(bounds,drawStats) : null;
-    if(v261Pergola && !v261Pergola.skip){ stepX+=v261Pergola.stepX||0; stepY+=v261Pergola.stepY||0; }
+    if(v261Pergola && !v261Pergola.skip){ const ex=v261Pergola.stepX||0, ey=v261Pergola.stepY||0; stepX+=ex; stepY+=ey; coverageExtraXV297+=ex; coverageExtraYV297+=ey; }
     const v265Pergola=(typeof perlaCoveragePergolaExtraStepsV265==='function') ? perlaCoveragePergolaExtraStepsV265(drawStats) : null;
-    if(v265Pergola){ stepX+=v265Pergola.x||0; stepY+=v265Pergola.y||0; }
+    if(v265Pergola){ const ex=v265Pergola.x||0, ey=v265Pergola.y||0; stepX+=ex; stepY+=ey; coverageExtraXV297+=ex; coverageExtraYV297+=ey; }
+    const v297Pergola=(typeof perlaPergolaLightBudgetStepsV297==='function') ? perlaPergolaLightBudgetStepsV297(bounds,drawStats,coverageExtraXV297,coverageExtraYV297) : null;
+    if(v297Pergola){ stepX+=v297Pergola.x||0; stepY+=v297Pergola.y||0; }
     const xStart=Math.max(0, Math.floor(bounds.x0/stepX)*stepX);
     const xEnd=Math.min(screenW, Math.ceil(bounds.x1/stepX)*stepX + stepX);
     const yPadTop=bounds.areaRatio>.82 ? stepY : stepY*2;
@@ -13925,11 +14109,36 @@ function drawIvyPergolaLayerV79(time, drawStats){
         const dist=(.5-z)/screenSlope;
         if(dist<=ROOF_NEAR_PLANE || dist>IVY_PERGOLA_V79.maxDist) continue;
         const fStepX=dist*(rayDirX1-rayDirX0)/screenW, fStepY=dist*(rayDirY1-rayDirY0)/screenW;
-        let wx=posX+dist*rayDirX0 + fStepX*xStart;
-        let wy=posY+dist*rayDirY0 + fStepY*xStart;
-        for(let sx=xStart; sx<xEnd; sx+=stepX){
+        const baseWX=posX+dist*rayDirX0;
+        const baseWY=posY+dist*rayDirY0;
+        const fullRowSamples=perlaPergolaSampleCountV297(xStart,xEnd,stepX);
+        rowSpanRowsV297++;
+        rowSpanCandidateSamplesV297+=fullRowSamples;
+        const rowSpan=perlaPergolaRowSpanV297(xStart,xEnd,stepX,baseWX,baseWY,fStepX,fStepY);
+        if(!rowSpan){
+            rowSpanRowsCulledV297++;
+            rowSpanSamplesSavedV297+=fullRowSamples;
+            continue;
+        }
+        const rowSamples=Math.max(0,Math.floor((rowSpan.x1-rowSpan.x0)/stepX)+1);
+        rowSpanSamplesAfterV297+=rowSamples;
+        rowSpanSamplesSavedV297+=Math.max(0,fullRowSamples-rowSamples);
+        let wx=baseWX + fStepX*rowSpan.x0;
+        let wy=baseWY + fStepY*rowSpan.x0;
+        let fogRunStartV297=-1, fogRunEndV297=-1, fogRunSamplesV297=0;
+        const flushPergolaFogRunV297=()=>{
+            if(fogRunStartV297<0) return;
+            perlaPergolaDrawFogOverlayV297(fogRunStartV297,sy,Math.max(1,fogRunEndV297-fogRunStartV297),stepY,dist,drawStats);
+            fogCalls++;
+            fogBatchedSamplesV297+=fogRunSamplesV297;
+            fogBatchedRunsV297++;
+            fogRunStartV297=-1; fogRunEndV297=-1; fogRunSamplesV297=0;
+        };
+        for(let sx=rowSpan.x0; sx<=rowSpan.x1; sx+=stepX){
             scanSamples++;
-            if(isInsideIvyPergolaV79(wx,wy) && slopedRoofPixelVisible(sx,sy,dist)){
+            if(isInsideIvyPergolaV79(wx,wy)){
+                if(perlaPergolaVisibilityEarlyRejectV297(sx,sy,dist,drawStats)){ flushPergolaFogRunV297(); wx+=fStepX*stepX; wy+=fStepY*stepX; continue; }
+                if(!slopedRoofPixelVisible(sx,sy,dist)){ flushPergolaFogRunV297(); wx+=fStepX*stepX; wy+=fStepY*stepX; continue; }
                 const trellis=ivyPergolaTrellisColorV86(wx,wy);
                 const leaf=ivyPergolaLeafColorV86(wx,wy,time);
                 let drew=false;
@@ -13948,12 +14157,19 @@ function drawIvyPergolaLayerV79(time, drawStats){
                     drew=true;
                 }
                 if(drew){
-                    drawExistingWallFogOverlay(sx,sy,stepX,stepY,dist);
-                    fogCalls++;
+                    if(fogRunStartV297<0) fogRunStartV297=sx;
+                    fogRunEndV297=sx+stepX;
+                    fogRunSamplesV297++;
+                } else {
+                    flushPergolaFogRunV297();
                 }
+            } else {
+                rowSpanFalsePositiveV297++;
+                flushPergolaFogRunV297();
             }
             wx+=fStepX*stepX; wy+=fStepY*stepX;
         }
+        flushPergolaFogRunV297();
     }
     const hanging=drawIvyPergolaHangingV79(time);
     if(typeof perlaCoverageDrawPergolaEdgeRailV265==='function') perlaCoverageDrawPergolaEdgeRailV265(drawStats);
@@ -13967,6 +14183,24 @@ function drawIvyPergolaLayerV79(time, drawStats){
         drawStats.pergolaSingleProtectedMeshV88=true;
         drawStats.pergolaOptimizedV89=true;
         drawStats.pergolaEdgeQualityV90=true;
+        drawStats.pergolaOptimizedV297=true;
+        drawStats.pergolaRowSpanCullV297=true;
+        drawStats.pergolaCandidateSamplesV297=rowSpanCandidateSamplesV297;
+        drawStats.pergolaRowSpanRowsV297=rowSpanRowsV297;
+        drawStats.pergolaRowSpanRowsCulledV297=rowSpanRowsCulledV297;
+        drawStats.pergolaRowSpanSamplesAfterV297=rowSpanSamplesAfterV297;
+        drawStats.pergolaScanSamplesSavedV297=rowSpanSamplesSavedV297;
+        drawStats.pergolaRowSpanFalsePositiveV297=rowSpanFalsePositiveV297;
+        drawStats.pergolaStepBeforeCoverageXV297=stepBeforeCoverageXV297;
+        drawStats.pergolaStepBeforeCoverageYV297=stepBeforeCoverageYV297;
+        drawStats.pergolaCoverageExtraXV297=coverageExtraXV297;
+        drawStats.pergolaCoverageExtraYV297=coverageExtraYV297;
+        drawStats.pergolaFogStyleCacheEnabledV297=true;
+        drawStats.pergolaFogStyleCacheSizeV297=perlaPergolaFogStyleCacheSizeV297;
+        drawStats.pergolaFogStyleCacheGlobalHitsV297=perlaPergolaFogStyleCacheHitsV297;
+        drawStats.pergolaFogStyleCacheGlobalMissesV297=perlaPergolaFogStyleCacheMissesV297;
+        drawStats.pergolaFogBatchedSamplesV297=fogBatchedSamplesV297;
+        drawStats.pergolaFogBatchedRunsV297=fogBatchedRunsV297;
         drawStats.pergolaScanSamplesV89=scanSamples;
         drawStats.pergolaFogCallsV89=fogCalls;
         drawStats.pergolaBBoxV89={x0:xStart,x1:xEnd,y0:yStart,y1:yEnd,yCap:bounds.yCap,areaRatio:+bounds.areaRatio.toFixed(3),stepX,stepY,visible:bounds.visible,nearest:+bounds.nearest.toFixed(2),marginX:bounds.marginX,marginTop:bounds.marginTop,marginBottom:bounds.marginBottom};
@@ -25140,7 +25374,7 @@ function perlaTelemetryDeletionReadinessV293(options){
 }
 function perlaTelemetryHealthV293(){
     const warnings=[];
-    if(!/V29[3-6]/.test(String(PERLA_BUILD_ID))) warnings.push('build_id_not_v293_v294_v295_or_v296');
+    if(!/V29[3-7]/.test(String(PERLA_BUILD_ID))) warnings.push('build_id_not_v293_v294_v295_v296_or_v297');
     if(!PERLA_V293_NO_VISUAL_OUTPUT_CHANGE) warnings.push('v293_visual_change_flag_not_safe');
     if(String(PERLA_BUILD_ID).indexOf('V294')>=0){
         if(!PERLA_V294_V237_TOMBSTONE_CLEANUP_SAFE) warnings.push('v294_v237_cleanup_flag_not_safe');
@@ -25153,12 +25387,18 @@ function perlaTelemetryHealthV293(){
         if(!PERLA_V295_HIGH_WALL_DIAGNOSTICS_ABSORBED) warnings.push('v295_high_wall_absorption_missing');
         if(!PERLA_V295_FAILED_ROOF_BRANCHES_TOMBSTONED) warnings.push('v295_failed_roof_tombstone_missing');
     }
-    if(String(PERLA_BUILD_ID).indexOf('V296')>=0){
+    if(/V29[67]/.test(String(PERLA_BUILD_ID))){
         if(!PERLA_V296_PHYSICAL_TOMBSTONE_PRUNE_SAFE) warnings.push('v296_physical_prune_flag_not_safe');
         if(!PERLA_V296_NO_VISUAL_OUTPUT_CHANGE) warnings.push('v296_visual_change_flag_not_safe');
         if(!PERLA_V296_FAILED_ROOF_IMPLEMENTATIONS_PRUNED) warnings.push('v296_failed_roof_prune_missing');
         if(!PERLA_V296_HIGH_WALL_IMPLEMENTATIONS_PRUNED) warnings.push('v296_high_wall_prune_missing');
         if(!PERLA_V296_COMPATIBILITY_SHIMS_PRESERVED) warnings.push('v296_compatibility_shims_not_preserved');
+    }
+    if(String(PERLA_BUILD_ID).indexOf('V297')>=0){
+        if(!PERLA_V297_PERGOLA_DRAW_BUDGET_SAFE) warnings.push('v297_pergola_draw_budget_not_safe');
+        if(!PERLA_V297_NO_WORLDGEN_CHANGE) warnings.push('v297_worldgen_change_flag_not_safe');
+        if(!PERLA_V297_NO_ASSET_CHANGE) warnings.push('v297_asset_change_flag_not_safe');
+        if(!PERLA_V297_NO_RAIN_OUTPUT_CHANGE) warnings.push('v297_rain_change_flag_not_safe');
     }
     if(typeof collectPerlaDebugSnapshot!=='function') warnings.push('missing_collectPerlaDebugSnapshot');
     if(typeof perlaLastDrawStatsSummaryV258!=='function') warnings.push('missing_v258_draw_stats_summary');
@@ -25166,7 +25406,7 @@ function perlaTelemetryHealthV293(){
     if(!PERLA_V281_MODERN_ROOF_PRIMITIVE_AUTHORITY_SAFE) warnings.push('v281_roof_authority_not_enabled');
     if(!PERLA_V283_DEFERRED_CANOPY_FOREGROUND_DEPTH_SAFE) warnings.push('v283_canopy_foreground_guard_not_enabled');
     if(!PERLA_V292_LOCAL_WALL_REPLAY_REQUIRES_ACTIVE_RAIN_REPLAY_SAFE) warnings.push('v292_replay_guard_not_enabled');
-    return {status:warnings.length?'warning':'ok', warnings, noVisualOutputChange:!!(PERLA_V293_NO_VISUAL_OUTPUT_CHANGE&&PERLA_V294_NO_VISUAL_OUTPUT_CHANGE&&PERLA_V295_NO_VISUAL_OUTPUT_CHANGE&&PERLA_V296_NO_VISUAL_OUTPUT_CHANGE), noWorldgenChange:!!(PERLA_V293_NO_WORLDGEN_CHANGE&&PERLA_V294_NO_WORLDGEN_CHANGE&&PERLA_V295_NO_WORLDGEN_CHANGE&&PERLA_V296_NO_WORLDGEN_CHANGE), noAssetChange:!!(PERLA_V293_NO_ASSET_CHANGE&&PERLA_V294_NO_ASSET_CHANGE&&PERLA_V295_NO_ASSET_CHANGE&&PERLA_V296_NO_ASSET_CHANGE), noRainOutputChange:!!(PERLA_V293_NO_RAIN_OUTPUT_CHANGE&&PERLA_V294_NO_RAIN_OUTPUT_CHANGE&&PERLA_V295_NO_RAIN_OUTPUT_CHANGE&&PERLA_V296_NO_RAIN_OUTPUT_CHANGE), v294V237Tombstoned:!!PERLA_V294_V237_IMPLEMENTATION_TOMBSTONED, v295ModernDebugHub:!!PERLA_V295_MODERN_DEBUG_HUB_CLEANUP_SAFE, v296PhysicalPrune:!!PERLA_V296_PHYSICAL_TOMBSTONE_PRUNE_SAFE};
+    return {status:warnings.length?'warning':'ok', warnings, noVisualOutputChange:!!(PERLA_V293_NO_VISUAL_OUTPUT_CHANGE&&PERLA_V294_NO_VISUAL_OUTPUT_CHANGE&&PERLA_V295_NO_VISUAL_OUTPUT_CHANGE&&PERLA_V296_NO_VISUAL_OUTPUT_CHANGE), noWorldgenChange:!!(PERLA_V293_NO_WORLDGEN_CHANGE&&PERLA_V294_NO_WORLDGEN_CHANGE&&PERLA_V295_NO_WORLDGEN_CHANGE&&PERLA_V296_NO_WORLDGEN_CHANGE&&PERLA_V297_NO_WORLDGEN_CHANGE), noAssetChange:!!(PERLA_V293_NO_ASSET_CHANGE&&PERLA_V294_NO_ASSET_CHANGE&&PERLA_V295_NO_ASSET_CHANGE&&PERLA_V296_NO_ASSET_CHANGE&&PERLA_V297_NO_ASSET_CHANGE), noRainOutputChange:!!(PERLA_V293_NO_RAIN_OUTPUT_CHANGE&&PERLA_V294_NO_RAIN_OUTPUT_CHANGE&&PERLA_V295_NO_RAIN_OUTPUT_CHANGE&&PERLA_V296_NO_RAIN_OUTPUT_CHANGE&&PERLA_V297_NO_RAIN_OUTPUT_CHANGE), v294V237Tombstoned:!!PERLA_V294_V237_IMPLEMENTATION_TOMBSTONED, v295ModernDebugHub:!!PERLA_V295_MODERN_DEBUG_HUB_CLEANUP_SAFE, v296PhysicalPrune:!!PERLA_V296_PHYSICAL_TOMBSTONE_PRUNE_SAFE, v297PergolaDrawBudget:!!PERLA_V297_PERGOLA_DRAW_BUDGET_SAFE};
 }
 function perlaUnifiedTelemetryCoreV293(reason='manual', options){
     options=options||{};
@@ -25402,12 +25642,18 @@ function perlaModernDebugHealthV295(){
     if(!PERLA_V295_MODERN_DEBUG_HUB_CLEANUP_SAFE) warnings.push('v295_cleanup_flag_missing');
     if(!PERLA_V295_NO_VISUAL_OUTPUT_CHANGE) warnings.push('v295_visual_change_flag_not_safe');
     if(!PERLA_V295_V293_COMPATIBILITY_PRESERVED) warnings.push('v293_compatibility_not_declared');
-    if(String(PERLA_BUILD_ID).indexOf('V296')>=0){
+    if(/V29[67]/.test(String(PERLA_BUILD_ID))){
         if(!PERLA_V296_PHYSICAL_TOMBSTONE_PRUNE_SAFE) warnings.push('v296_physical_prune_flag_missing');
         if(!PERLA_V296_NO_VISUAL_OUTPUT_CHANGE) warnings.push('v296_visual_change_flag_not_safe');
         if(!PERLA_V296_FAILED_ROOF_IMPLEMENTATIONS_PRUNED) warnings.push('v296_failed_roof_implementation_prune_missing');
         if(!PERLA_V296_HIGH_WALL_IMPLEMENTATIONS_PRUNED) warnings.push('v296_high_wall_implementation_prune_missing');
         if(!PERLA_V296_COMPATIBILITY_SHIMS_PRESERVED) warnings.push('v296_compatibility_shims_missing');
+    }
+    if(String(PERLA_BUILD_ID).indexOf('V297')>=0){
+        if(!PERLA_V297_PERGOLA_DRAW_BUDGET_SAFE) warnings.push('v297_pergola_draw_budget_missing');
+        if(!PERLA_V297_NO_WORLDGEN_CHANGE) warnings.push('v297_worldgen_change_flag_not_safe');
+        if(!PERLA_V297_NO_ASSET_CHANGE) warnings.push('v297_asset_change_flag_not_safe');
+        if(!PERLA_V297_NO_RAIN_OUTPUT_CHANGE) warnings.push('v297_rain_change_flag_not_safe');
     }
     if(!PERLA_V281_MODERN_ROOF_PRIMITIVE_AUTHORITY_SAFE) warnings.push('v281_roof_authority_not_enabled');
     if(!PERLA_V283_DEFERRED_CANOPY_FOREGROUND_DEPTH_SAFE) warnings.push('v283_canopy_foreground_guard_not_enabled');
@@ -25428,6 +25674,7 @@ function perlaModernDebugHealthV295(){
         v296PhysicalPrune:!!PERLA_V296_PHYSICAL_TOMBSTONE_PRUNE_SAFE,
         v296HighWallPruned:!!PERLA_V296_HIGH_WALL_IMPLEMENTATIONS_PRUNED,
         v296FailedRoofPruned:!!PERLA_V296_FAILED_ROOF_IMPLEMENTATIONS_PRUNED,
+        v297PergolaDrawBudget:!!PERLA_V297_PERGOLA_DRAW_BUDGET_SAFE,
         v293Health:perlaTelemetryHealthV293()
     };
 }
@@ -25788,6 +26035,13 @@ Object.assign(window.__PERLA_DEBUG__, {
     PERLA_V296_FAILED_ROOF_IMPLEMENTATIONS_PRUNED,
     PERLA_V296_HIGH_WALL_IMPLEMENTATIONS_PRUNED,
     PERLA_V296_COMPATIBILITY_SHIMS_PRESERVED,
+    PERLA_V297_PERGOLA_DRAW_BUDGET_SAFE,
+    PERLA_V297_BASE_BUILD,
+    PERLA_V297_PATCH_MODE,
+    PERLA_V297_NO_WORLDGEN_CHANGE,
+    PERLA_V297_NO_ASSET_CHANGE,
+    PERLA_V297_NO_RAIN_OUTPUT_CHANGE,
+    PERLA_V297_PERGOLA_VISUAL_SIMILARITY_TARGET,
     perlaV237TombstoneV294,
     perlaDebugV295,
     collectPerlaModernDebugV295,
