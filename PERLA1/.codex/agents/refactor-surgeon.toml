@@ -44,7 +44,7 @@ Controlled derogation policy:
 
 Validation policy:
 - A refactor that touches runtime code requires local static CI through tools/perla_local_ci.ps1 or at least JavaScript parse validation.
-- If rendered behavior may change, require launcher/server runtime validation through http://127.0.0.1:8000/ and the runbook method.
+- If rendered behavior may change, require launcher/server runtime validation through the URL printed by VALIDA_RUNTIME_SCREENSHOT_HEADLESS.ps1 and the runbook method. The manual user route is normally http://127.0.0.1:8000/, but Codex validation may use a fallback port.
 - If renderer/roof/rain/sprite/minimap paths are touched, require relevant visual evidence, counters, `hud_contamination_check` for screenshots, and `coordinate_offset_check` when PERLA1 is certain or legitimately suspected and coordinates/poses affect the conclusion.
 - You do not validate your own refactor as complete; final readiness requires Team Leader review and/or separate read-only auditor evidence.
 

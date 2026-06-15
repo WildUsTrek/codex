@@ -105,12 +105,12 @@ Before saying a rendered game fix is ready:
 
 - Run local static CI through `tools/perla_local_ci.ps1` or an equivalent inline JavaScript parse check and regression-suite analyzer path.
 - Treat static CI as structure evidence only. It does not replace rendered/browser validation for visual or runtime behavior changes.
-- For Codex/agent validation, start the PERLA1 local server with `VALIDA_RUNTIME_SCREENSHOT_HEADLESS.ps1 -StartLauncher`, which uses `AVVIA_GIOCO_CODEX_HEADLESS.ps1` internally and stops only the PID it created after validation.
+- For Codex/agent validation, start the PERLA1 local server with `VALIDA_RUNTIME_SCREENSHOT_HEADLESS.ps1 -StartLauncher`, which uses `AVVIA_GIOCO_CODEX_HEADLESS.ps1` internally, applies the known fallback ports when `8000` is blocked, and stops only the PID it created after validation.
 - For manual user play, `AVVIA_GIOCO_WINDOWS_SENZA_PYTHON.bat` remains the user-facing launcher.
-- Or explicitly confirm an existing PERLA1 server is already responding on `http://127.0.0.1:8000/`.
+- Or explicitly confirm an existing PERLA1 server is already responding on the validation URL being used.
 - Do not try to validate the runtime by opening `index.html` directly, by using `file://`, or by opening a browser before the local server is running.
 - Prefer the proven automated screenshot path in `PERLA1_RUNTIME_TEST_RUNBOOK.md`: `VALIDA_RUNTIME_SCREENSHOT_HEADLESS.ps1` with system Chrome/Edge through Playwright.
-- Load `http://127.0.0.1:8000/` with a cache-busting query string.
+- Load the URL printed by `VALIDA_RUNTIME_SCREENSHOT_HEADLESS.ps1` with its cache-busting query string. It is normally `http://127.0.0.1:8000/`, but may be a fallback port when `8000` is blocked.
 - Confirm `window.PERLA_BUILD_ID` matches the edited build.
 - Check browser console/page errors.
 - Capture screenshots for the exact visual risk area.
@@ -123,12 +123,14 @@ Before saying a rendered game fix is ready:
 
 ## Runtime Browser Method
 
-- The reliable Windows method currently is: `powershell -NoProfile -ExecutionPolicy Bypass -File .\PERLA1\VALIDA_RUNTIME_SCREENSHOT_HEADLESS.ps1 -StartLauncher ...` for automated screenshots and debug counters. This starts the Codex headless server when needed.
-- Browser automation is useful only after the PERLA1 server is running. If `http://127.0.0.1:8000/` is not responding, agents should use `-StartLauncher`; only hand off `AVVIA_GIOCO_WINDOWS_SENZA_PYTHON.bat` to the user for manual play or when headless startup fails.
+- The reliable Windows method currently is: `powershell -NoProfile -ExecutionPolicy Bypass -File .\PERLA1\VALIDA_RUNTIME_SCREENSHOT_HEADLESS.ps1 -StartLauncher ...` for automated screenshots and debug counters. This starts the Codex headless server when needed and automatically falls back from port `8000` to the project-known Codex ports.
+- Browser automation is useful only after the PERLA1 server is running. If the selected validation URL is not responding, agents should use `-StartLauncher`; only hand off `AVVIA_GIOCO_WINDOWS_SENZA_PYTHON.bat` to the user for manual play or when headless startup fails.
+- Do not manually rediscover the Codex Playwright runtime or probe local ports with ad hoc commands before the headless validator. The validator already sets the bundled Node/Playwright path, uses system Chrome/Edge, and prints the selected runtime URL.
+- Server cleanup boundary: the validator stops and verifies only the headless server PID it created. Do not kill pre-existing manual/user servers automatically; at finalization, close only recognized PERLA/Codex server processes that are no longer useful for the task.
 - Codex in-app Browser is allowed as an extra attempt, but on this Windows setup it has repeatedly failed before navigation with `CreateProcessAsUserW failed: 5`.
 - Do not loop through known-failing methods. If in-app Browser fails with a sandbox/permission error, immediately use the headless script or provide a manual handoff.
 - Record `browser_failure_cache` after the first deterministic in-app Browser launch failure in the current task/session. While it is active, do not retry in-app Browser bootstrap unless the user explicitly asks, the browser/tooling environment changed, a new Codex session lacks current failure evidence, or the Playwright/headless route fails and comparison is necessary.
-- Keep the target URL identical across methods: `http://127.0.0.1:8000/` plus the same cache-busting query string.
+- Keep the target URL identical across methods by using the exact URL printed by the validator, including fallback port and cache-busting query string.
 - Manual validation handoff must include the exact URL, expected `window.PERLA_BUILD_ID`, debug poses, screenshots to capture, console checks, and counters/API calls to read.
 - Do not claim a rendered fix is fully validated unless the screenshot evidence and relevant counters were actually inspected.
 
@@ -145,6 +147,6 @@ Before saying a rendered game fix is ready:
 - Be direct about root cause, especially after a failed visual patch.
 - Distinguish diagnosis from proof.
 - When the user is testing locally, give the exact file/path/URL they should use.
-- If Browser automation fails, report the fallback method and keep the target URL identical.
+- If Browser automation fails, report the fallback method and keep the target URL identical to the validator-printed URL.
 
 

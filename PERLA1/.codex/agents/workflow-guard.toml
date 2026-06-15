@@ -110,7 +110,7 @@ Loop detection rules:
 - For emergency refactor plans, allow REFACTOR_PLAN_ONLY after documented blockage. STOP if APPLY_APPROVED_REFACTOR lacks explicit approved files/symbols/scope.
 
 Known reliable paths:
-- Runtime validation for Codex/agents should use powershell -NoProfile -ExecutionPolicy Bypass -File .\\PERLA1\\VALIDA_RUNTIME_SCREENSHOT_HEADLESS.ps1 -StartLauncher ... or an already responding PERLA1 http://127.0.0.1:8000/ server.
+- Runtime validation for Codex/agents should use powershell -NoProfile -ExecutionPolicy Bypass -File .\\PERLA1\\VALIDA_RUNTIME_SCREENSHOT_HEADLESS.ps1 -StartLauncher ... and then use the exact URL printed by the validator. An already responding PERLA1 server is acceptable only when it matches the selected validation URL.
 - Static CI should use tools/perla_local_ci.ps1, preferably with -ReportPath outside the repo for disposable generated structure evidence.
 - Manual user play should use AVVIA_GIOCO_WINDOWS_SENZA_PYTHON.bat.
 - On this Windows setup, screenshot validation should prefer the -StartLauncher path above or equivalent Playwright/system Chrome flow.

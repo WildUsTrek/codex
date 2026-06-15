@@ -10,7 +10,7 @@ For rendered runtime validation, the reliable sequence is:
 
 1. Run local static CI when code changed: `powershell -NoProfile -ExecutionPolicy Bypass -File .\PERLA1\tools\perla_local_ci.ps1`.
 2. Start or confirm the PERLA1 server.
-3. Load `http://127.0.0.1:8000/` with a cache-busting query string.
+3. Load the URL printed by `VALIDA_RUNTIME_SCREENSHOT_HEADLESS.ps1` with its cache-busting query string. It is normally `http://127.0.0.1:8000/`, but may be a fallback port when `8000` is blocked.
 4. Use the debug API to set deterministic player poses.
 5. Capture the `#screen` canvas.
 6. Inspect the screenshot visually and read relevant counters.
@@ -56,6 +56,10 @@ AVVIA_GIOCO_CODEX_HEADLESS.ps1
 
 in internal `-Serve` mode. It does not open a browser window, writes `AVVIO_GIOCO_CODEX_HEADLESS_LOG.txt`, `AVVIO_GIOCO_CODEX_HEADLESS_PID.txt`, and `AVVIO_GIOCO_CODEX_HEADLESS_READY.txt`, and the validator stops the PID it created after validation.
 
+The validator has the Codex fast path built in. It first tries port `8000`; if that port does not respond or cannot be bound, it automatically tries `8787`, `8081`, `5179`, `9001`, and `43210`. Do not repeat manual port probing or ad hoc Python `http.server` attempts before using this command. With `-StartLauncher`, the validator may reuse an already responding server only on the requested port; already-running fallback-port servers are skipped so stale fallback sessions are not silently used as fresh proof.
+
+Server cleanup rule: `VALIDA_RUNTIME_SCREENSHOT_HEADLESS.ps1 -StartLauncher` stops and verifies the PID it created before exiting. It does not kill a pre-existing manual/user server or an already-running requested-port server, because that process may belong to the user. At finalization, if no manual PERLA1 play session should remain open, check the known PERLA ports and close only recognized PERLA/Codex server processes.
+
 Manual user startup entry point:
 
 ```text
@@ -98,6 +102,12 @@ If no server is already responding, add `-StartLauncher`:
 powershell -NoProfile -ExecutionPolicy Bypass -File .\VALIDA_RUNTIME_SCREENSHOT_HEADLESS.ps1 -StartLauncher -X 44.5 -Y 74.5 -Dx 0 -Dy 1
 ```
 
+If a specific port is needed, pass it explicitly. The fallback list still applies after the requested port:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File .\VALIDA_RUNTIME_SCREENSHOT_HEADLESS.ps1 -StartLauncher -Port 43210 -X 44.5 -Y 74.5 -Dx 0 -Dy 1
+```
+
 Default output goes to:
 
 ```text
@@ -127,6 +137,7 @@ Use `powershell -NoProfile -ExecutionPolicy Bypass -File ...`, matching the laun
 This method uses:
 
 - the PERLA1 Codex headless launcher/server on `127.0.0.1:8000` when `-StartLauncher` is used,
+- automatic fallback to `127.0.0.1:8787`, `8081`, `5179`, `9001`, or `43210` when `8000` is blocked,
 - bundled Codex Node.js,
 - bundled Playwright packages with explicit `NODE_PATH`,
 - installed system Chrome at `C:\Program Files\Google\Chrome\Application\chrome.exe`, with Edge fallback.
@@ -152,6 +163,7 @@ Do not spend repeated attempts on these before using the reliable method above:
 | Playwright without explicit `NODE_PATH` | Can fail with `Cannot find module 'playwright'`. |
 | Playwright bundled browser without system Chrome | Can fail because the Playwright browser executable is not installed. |
 | Running the helper `.ps1` directly | Can fail under Windows execution policy. Use `powershell -NoProfile -ExecutionPolicy Bypass -File ...`. |
+| Manual port probing before the headless validator | Obsolete for Codex validation. The validator already has the known fallback ports. |
 
 These methods may be retried only as secondary options if the reliable method stops working or if the user specifically asks to test that browser path.
 
@@ -165,7 +177,7 @@ Stop immediately instead of retrying when the failure is already known and deter
 - `Cannot find module 'playwright'` without changing `NODE_PATH`;
 - missing `chromium_headless_shell` without switching to system Chrome/Edge;
 - Windows execution policy blocking direct `.ps1` execution;
-- `http://127.0.0.1:8000/` not responding because the launcher/server is not running.
+- the selected validation URL is not responding because the launcher/server is not running.
 
 The next attempt must materially change the method: use `-StartLauncher`, start the Codex headless server, fix `NODE_PATH`, switch browser executable, use `ExecutionPolicy Bypass`, or hand off manual validation. Do not keep retrying the same command.
 

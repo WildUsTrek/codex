@@ -2,7 +2,7 @@
 
 Last updated: 2026-06-15
 
-Derived from the current `01_GIOCO_PRONTO_LOCAL_TEST/index.html` build observed as `PERLA1_V283_DEFERRED_CANOPY_FOREGROUND_DEPTH_SAFE_LOCAL`.
+Derived from the current `01_GIOCO_PRONTO_LOCAL_TEST/index.html` build observed as `PERLA1_V292_REPLAY_RAIN_GUARD_COLUMN_OCCLUSION_SAFE_LOCAL`.
 
 This index is for orientation only. It is not the source of truth. Before patching, verify symbols and line numbers with `rg` against the current runtime file.
 
@@ -11,7 +11,7 @@ This index is for orientation only. It is not the source of truth. Before patchi
 | Block ID | Symbol / Area | Current Hint | Notes |
 | --- | --- | --- | --- |
 | `boot-shell` | `PERLA_BUILD_ID` | around line `195` | Public build id used for cache/build validation. |
-| `boot-shell` | `PERLA1_V283_DEFERRED_CANOPY_FOREGROUND_DEPTH_SAFE_LOCAL` | around line `195` | V283 current build id: preserves V281X reception/bath roof authority and adds local foreground-depth guards for legacy/open canopy rendering. |
+| `boot-shell` | `PERLA1_V292_REPLAY_RAIN_GUARD_COLUMN_OCCLUSION_SAFE_LOCAL` | around line `195` | V292 current build id: gates V220 local wall replay behind active rain/V216 replay context and lets a direct owner-1 reception wall occlude the game-room canopy column. |
 | `sprites` | `getSpriteRenderCandidates` | around line `663` | Sprite candidate selection entry point. |
 | `roof-system` | V278 constants | around lines `498-514` | Modern wall-anchored integrated roof cap tuning, unchanged 5000 pixel / 1400 fill-rect budget, and support-visible replacement flag. |
 | `roof-system` | V279 constants | around lines `515-533` | Modern cap profile/support-span tuning retained as the V280 base; local-bay profile is disabled in current runtime. |
@@ -48,6 +48,19 @@ This index is for orientation only. It is not the source of truth. Before patchi
 | `canopy-system` | `recordSpriteForegroundSpanV283` | around line `8877` | V283 records visible sprite spans only when a legacy rain replay foreground buffer can be needed. |
 | `canopy-system` | `perlaV283ClipV221OpenCanopyReplayRect` | around line `9605` | V283 splits V221 open-canopy replay rects so legacy replay cannot overdraw closer foreground walls or sprites. |
 | `canopy-system` | `perlaV283WorldRainParticlesModeActive` | around line `8898` | V283 treats every `world_particles*` V222 mode as authoritative world rain, disabling legacy V216 replay. |
+| `wallcasting` | `PERLA_V284_WALL_LAYER_SPRITE_OCCLUSION_DIAGNOSTIC` | around line `356` | V284 diagnostic flag; default runtime behavior remains unchanged because the overlay mode starts as `off`. |
+| `wallcasting` | `perlaWallLayerDebugModeV284Set`, `perlaWallLayerDebugSummaryV284` | around lines `3411-3430` | Public debug API for selecting `off`, `direct`, `extra`, `sprite`, `seal`, or `all` overlay modes and reading direct-vs-extra wall/sprite occlusion counters. |
+| `wallcasting` | `drawWallLayerDebugOverlayV284` | around line `3475` | Opt-in overlay: cyan for direct wall layer ranges, red/magenta/orange for extra wall layers, red/cyan for hidden sprite spans, yellow/orange for seal bands. |
+| `sprites` | `perlaWallLayerDebugRecordSpriteOcclusionV284` | around line `3449` | Records whether each sprite-hidden span came from the direct V227 wall layer or an extra V227 wall layer; does not change span decisions. |
+| `sprites` | `perlaWallLayerAllowsSpriteOcclusionV285` | around line `3550` | V285 sprite-only guard: direct ranges still occlude, but undrawn `v227_extra_wall_layer` ranges are skipped while V233 far-wall extra draw remains disabled. |
+| `sprites` | `spriteOcclusionUndrawnExtraLayerSkippedPixelsV285` | inside `spriteVisibleSpansV227` | Proof counter for sprite pixels that would have been hidden by an undrawn V227 extra wall layer and are now left visible. |
+| `wallcasting` | `PERLA_V287_RECEPTION_FAR_WEST_WALL_SPRITE_OCCLUSION_SAFE` | around line `368` | V287 targeted gate for the reception wall/tamarisk repro; it must not be implemented by suppressing the normal wallcast. |
+| `wallcasting` | `perlaV287ReceptionFarWestWallBypassesSpriteOcclusion` | around line `3586` | Predicate used while collecting V227 wall layers: skips only the far west reception wall from sprite occlusion ranges, preserving wall pixels and primary wall buffers. |
+| `sprites` | `receptionFarWestWallSpriteLayerSkippedV287` | summary/counter around lines `3446`, `3556`, and inside `perlaV287ReceptionFarWestWallBypassesSpriteOcclusion` | Proof counter for the targeted wall range being removed from sprite clipping at the affected long east-facing poses. |
+| `sprites` | `PERLA_V290_TAMARISK_WALL_FOREGROUND_MATTE_SAFE` / `PERLA_V291_TAMARISK_WALL_FOREGROUND_RESTORE_SAFE` | around lines `386-399` | V290/V291 tamarisk diagnostics retained in V292; V291 restore is inactive and not a V292 success criterion. |
+| `sprites` | `PERLA_V292_LOCAL_WALL_REPLAY_REQUIRES_ACTIVE_RAIN_REPLAY_SAFE` / `PERLA_V292_GAME_ROOM_COLUMN_DIRECT_WALL_OCCLUSION_SAFE` | around lines `400-401` | Current V292 wall/replay flags. V220 local wall replay after V216 requires active rain/V216 replay context; game-room canopy column follows direct owner-1 reception wall occlusion. |
+| `sprites` | `perlaV292LocalWallReplayAfterV216Allowed`, `perlaV292IsGameRoomCanopyColumnSprite`, `perlaV292GameRoomColumnBlockedByDirectReceptionWall` | around lines `3707-3724` and `10238-10266` | Current V292 helpers for replay gating and direct-wall column occlusion. Verify counters and visual result in affected poses before claiming readiness. |
+| `sprites` | `v220WallReplayReason`, `v292LocalWallReplayRainGuard`, `v292GameRoomColumnClosedWallHiddenPixels` | inside V292 replay/column paths | Proof counters for V292 activity. Positive counters are supporting evidence only; screenshot inspection is still required. |
 | `roof-system` | V281 primitive counters | around lines `12140-12170` | `roofV281`, primitive authority, candidates, fallback, pixels, rects, budget/warn, skipped/suppressed/rejected faces, same-owner wall rejection, wall-top join, cap/fallback skip, and hybrid violation counters. Required in `visual_pose_matrix_check`. |
 | `roof-system` | `drawSlopedRoofGableCaps2_5D` | around line `12540` | Sloped roof gable cap renderer; V281 skips eligible modern owner 1/2 gables so they do not hybridize with the primitive authority. |
 | `roof-system` | `drawSlopedRoofLayer2_5D` | around line `12620` | Sloped roof plane renderer and V277 hook before V265 edge rail; V281 uses this as fallback/generic path outside primitive-owned owner 1/2 roofs. |
@@ -67,7 +80,7 @@ This index is for orientation only. It is not the source of truth. Before patchi
 | Runtime validation runbook | `PERLA1_RUNTIME_TEST_RUNBOOK.md` | Read before browser or screenshot validation. |
 | Task intake protocol | `PERLA1_TASK_INTAKE_PROTOCOL.md` | Read before meaningful edits, runtime validation, multi-agent work, or refactor planning. |
 | Headless screenshot helper | `VALIDA_RUNTIME_SCREENSHOT_HEADLESS.ps1` | Reliable Windows path after launcher/server is running. |
-| Required server route | `http://127.0.0.1:8000/` | Use cache-busting query and verify `PERLA_BUILD_ID`. |
+| Required server route | validator-printed URL from `VALIDA_RUNTIME_SCREENSHOT_HEADLESS.ps1` | Use cache-busting query and verify `PERLA_BUILD_ID`. Normally `http://127.0.0.1:8000/`, but Codex validation may use a fallback port. |
 | Deterministic pose setter | `window.__PERLA_DEBUG__.setPlayerForDebug(...)` | Use with `coordinate_offset_check`; compare requested/effective pose and direction before accepting coordinate-dependent proof. |
 | Debug camera snapshot | `window.__PERLA_DEBUG__.collectPerlaDebugSnapshot().camera` | Preferred current-camera evidence for effective pose, direction, zone, and `offset_delta` checks when available. |
 | Player zone helper | `window.__PERLA_DEBUG__.zoneAtPlayer` / debug snapshot zone | Use to compare expected/observed zone and detect `false_coordinate_suspicion`. Verify exact exported shape in current runtime before relying on it. |

@@ -762,6 +762,15 @@ Until runtime code explicitly loads the RTP manifest, these files are dormant as
 
 For these task signals, `asset-integrity-auditor` is `CALL`; `code-mapper` is `CALL` if runtime integration points are unclear; `renderer-block-auditor` is `CALL` only when world sprite rendering, occlusion, or draw order may change.
 
+The RTP/scenario domain gate is mandatory when its signal appears. These agents are read-only domain auditors and do not replace asset, code, renderer, visual, workflow, or runtime validation:
+
+- `scenario-rtp-map-auditor` is `CALL` for sceneggiatura, gameplay, storyboard, RTP identity mapping, entity discovery, source priority, source-vs-inference labeling, placeholder planning, or future `rtp.placements/behaviors/dialogues/events` manifest planning.
+- `map-placement-auditor` is `CALL` for placements, coordinates, zones, schedules tied to location, route reachability, walkability, visibility, collision, sprite density, or event trigger location.
+- `event-flow-auditor` is `CALL` for events, quest steps, intro chain, recruitment, rent/debt flow, battle placeholders, prerequisites/effects, success/failure branches, loop risk, softlock risk, or `rtp.events.json`.
+- `dialogue-continuity-auditor` is `CALL` for dialoghi, dialogue portraits, RPG Maker-style conversation UI, speaker lines, ambient/event dialogue, portrait policy, dialogueRefs, speaker continuity, or `rtp.dialogues.json`.
+
+If future scenario manifests are created or changed, run `tools/perla_rtp_scenario_validator.py` in addition to the normal workflow checker. Static validation blocks data paradoxes but does not replace runtime coordinate, walkability, visibility, or rendered validation.
+
 ## Domain Agent Matrix
 
 | Task Signal | Agent | Default |
@@ -772,6 +781,10 @@ For these task signals, `asset-integrity-auditor` is `CALL`; `code-mapper` is `C
 | Performance, counters, draw cost, cache/hotspot risk | `performance-auditor` | `CALL` |
 | Screenshot, rendered QA, browser/runtime validation | `visual-qa-auditor` | `CALL` |
 | Assets, manifest, paths, missing textures | `asset-integrity-auditor` | `CALL` |
+| Sceneggiatura, gameplay, storyboard, RTP identity, source-vs-inference mapping, future scenario manifests | `scenario-rtp-map-auditor` | `CALL` |
+| Placements, coordinates, zones, schedules tied to location, walkability, visibility, route/reachability, sprite density | `map-placement-auditor` | `CALL` |
+| Events, quest flow, intro chain, recruitment, battle placeholders, prerequisites/effects, success/failure, no-softlock checks | `event-flow-auditor` | `CALL` |
+| Dialoghi, speaker continuity, portraits, dialogueRefs, RPG Maker-style conversation UI, character-only dialogue policy | `dialogue-continuity-auditor` | `CALL` |
 | Launcher, server, sync, GitHub Desktop Git fallback | `launcher-sync-auditor` | `CALL` |
 | Static CI, analyzer, dependency graph, regression suite, modularization scaffold, generated structure reports | `code-mapper`, `regression-auditor`, `launcher-sync-auditor` | `CALL` according to changed file and validation route |
 | Workflow docs, TOML agents, gate, orchestration, hierarchy | `workflow-consistency-auditor` | `CALL` |
@@ -810,12 +823,30 @@ agents:
 - performance-auditor: CONSIDER/CALL/SKIP - reason
 - visual-qa-auditor: CONSIDER/CALL/SKIP - reason
 - asset-integrity-auditor: CONSIDER/CALL/SKIP - reason
+- scenario-rtp-map-auditor: CONSIDER/CALL/SKIP - reason
+- map-placement-auditor: CONSIDER/CALL/SKIP - reason
+- event-flow-auditor: CONSIDER/CALL/SKIP - reason
+- dialogue-continuity-auditor: CONSIDER/CALL/SKIP - reason
 - launcher-sync-auditor: CONSIDER/CALL/SKIP - reason
 - safe-fixer: CONSIDER/CALL/SKIP - reason
 - map-maintainer: CONSIDER/CALL/SKIP - reason
 ```
 
 For tiny direct answers or simple shell checks, the gate can stay implicit. For code edits, runtime validation, multi-agent work, or refactor, it must be explicit.
+
+## Workflow Self-Expansion Circuit
+
+When any task exposes a structural workflow limit, loop, recurring blind spot, missing checker rule, missing agent, schema gap, authority ambiguity, or cross-document conflict, treat it as a workflow anomaly before the next protected step.
+
+Required handling:
+
+- classify the anomaly as `missing_agent`, `missing_schema`, `missing_validator`, `doc_drift`, `authority_conflict`, `runtime_boundary_conflict`, `loop_or_softlock`, `validation_gap`, or `source_of_truth_gap`;
+- stop runtime integration, readiness claims, sync, refactor application, or final scenario/event approval until the anomaly is resolved or reported as blocked;
+- call `workflow-guard` and `workflow-consistency-auditor`; also call the relevant domain auditor such as `scenario-rtp-map-auditor`, `map-placement-auditor`, `event-flow-auditor`, or `dialogue-continuity-auditor` when the anomaly is RTP/scenario-specific;
+- apply the smallest durable fix in the owning layer: protocol, project map, orchestration, TOML agent, schema, validator, checker, or runbook;
+- add deterministic checker coverage when the rule is mechanically inspectable;
+- preserve authority boundaries: no new write authority, runtime activation, approval bypass, or self-validation loop can be introduced without explicit user approval;
+- validate with `tools/perla_codex_workflow_check.ps1` and any domain validator required by the changed files.
 
 ## Anti-Paradox Rules
 

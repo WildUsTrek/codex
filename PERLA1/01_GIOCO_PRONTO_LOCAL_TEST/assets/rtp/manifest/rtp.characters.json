@@ -8954,5 +8954,16 @@
     "behaviors": "assets/rtp/manifest/rtp.behaviors.json",
     "dialogues": "assets/rtp/manifest/rtp.dialogues.json",
     "events": "assets/rtp/manifest/rtp.events.json"
+  },
+  "futureScenarioSchemas": {
+    "placements": "assets/rtp/schema/rtp.placements.schema.json",
+    "behaviors": "assets/rtp/schema/rtp.behaviors.schema.json",
+    "dialogues": "assets/rtp/schema/rtp.dialogues.schema.json",
+    "events": "assets/rtp/schema/rtp.events.schema.json"
+  },
+  "futureScenarioValidator": {
+    "path": "PERLA1/tools/perla_rtp_scenario_validator.py",
+    "mode": "static_no_runtime_coordinates",
+    "runtimeSnapshotMode": "reserved_for_future_map_export"
   }
 }

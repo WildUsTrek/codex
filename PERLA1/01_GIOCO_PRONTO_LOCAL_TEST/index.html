@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Camping Sole, Mare & Zanzare - PERLA1 V281S Reception Roof Back Gable</title>
+    <title>Camping Sole, Mare & Zanzare - PERLA1 V292 Replay Rain Guard Column Occlusion Safe</title>
     <style>
         :root { --panel: rgba(20,16,12,.88); --gold:#f1c40f; --sand:#f5d99e; --perla-vv-left:0px; --perla-vv-top:0px; --perla-vv-width:100vw; --perla-vv-height:100dvh; }
         body { margin:0; min-height:100vh; background:radial-gradient(circle at 50% 0%,#183b4a 0%,#07090d 55%,#000 100%); color:white; font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; display:flex; flex-direction:column; align-items:center; overflow-x:hidden; }
@@ -99,12 +99,12 @@
     </style>
 </head>
 <body>
-            <h2>Camping Sole, Mare & Zanzare - PERLA1 V281S</h2>
+            <h2>Camping Sole, Mare & Zanzare - PERLA1 V292</h2>
     <div id="game-container">
         <canvas id="screen" width="800" height="450"></canvas>
         <canvas id="mini-map" width="128" height="128"></canvas>
         <div id="perlaClockHud" data-weather="clear" aria-label="Orologio e meteo PERLA1"><span class="perla-clock-time">14:00</span><span class="perla-clock-meta">☀️ Giorno</span></div>
-        <div id="loading"><div><strong>Caricamento asset PERLA1 V281S reception back gable...</strong><br><span class="muted">Usa un server locale per evitare problemi da file://.</span></div></div>
+        <div id="loading"><div><strong>Caricamento asset PERLA1 V292...</strong><br><span class="muted">Usa un server locale per evitare problemi da file://.</span></div></div>
     </div>
     <div id="mobile-controls" aria-label="Controlli touch PERLA1">
         <div class="touch-cluster touch-cluster-left">
@@ -128,7 +128,7 @@
     </div>
     <div class="ui-panel">
         <strong>COMANDI:</strong> Desktop [W][A][S][D] o Frecce. Smartphone: pad CAMMINA + pad GIRA, oppure tieni premuto lo schermo.<br>
-        <span class="alert">V225: pioggia world-space con occlusione verticale corretta dei muri, airspace sopra siepi, clipping bordo schermo e refill emergenziale.</span><br>
+        <span class="alert">V292: replay muri V220 solo con pioggia attiva; colonna sala giochi occlusa dal muro diretto.</span><br>
         <span class="muted" id="debugLine">posizione...</span>
     </div>
 
@@ -192,7 +192,7 @@ const loading = document.getElementById('loading');
 const debugLine = document.getElementById('debugLine');
 const perlaClockHud = document.getElementById('perlaClockHud');
 
-const PERLA_BUILD_ID = 'PERLA1_V283_DEFERRED_CANOPY_FOREGROUND_DEPTH_SAFE_LOCAL';
+const PERLA_BUILD_ID = 'PERLA1_V292_REPLAY_RAIN_GUARD_COLUMN_OCCLUSION_SAFE_LOCAL';
 const PERLA_V258_PERFORMANCE_BASELINE_DEBUG_OVERHEAD_SAFE = true;
 const PERLA_V258A_PHASE1_REAL_QUICK_WINS_COMPLETE_SAFE = true;
 const PERLA_V258_BASE_BUILD = 'PERLA1_V257_RAIN_SKYBOX_DEPTH_ANCHOR_FIX_SAFE_LOCAL';
@@ -349,6 +349,60 @@ const PERLA_V283_DEFERRED_CANOPY_REPLAY_FOREGROUND_SAFE = true;
 const PERLA_V283_DEFERRED_CANOPY_WALL_DEPTH_EPS = .040;
 const PERLA_V283_DEFERRED_CANOPY_WALL_Y_MARGIN_PX = 2;
 const PERLA_V283_CANOPY_SPRITE_FOREGROUND_EPS = .075;
+
+// V284 - Wall-layer sprite occlusion diagnostic.
+// Opt-in visual overlay only: it identifies direct vs extra V227 wall layers and the sprite spans hidden by them.
+// It does not change wall, sprite, rain, roof, canopy, map, collision, or occlusion decisions.
+const PERLA_V284_WALL_LAYER_SPRITE_OCCLUSION_DIAGNOSTIC = true;
+const PERLA_V284_WALL_LAYER_DEBUG_MAX_RECTS = 9000;
+const PERLA_V288_WALL_LAYER_HIDDEN_SAMPLE_LIMIT = 512;
+let perlaWallLayerDebugModeV284 = 'off'; // off | direct | extra | sprite | seal | all
+let perlaWallLayerDebugHiddenRectsV284 = [];
+let perlaWallLayerDebugHiddenSamplesV288 = [];
+let perlaWallLayerDebugLastSummaryV284 = { buildId:PERLA_BUILD_ID, enabled:false, mode:'off', message:'drawWorld not run yet' };
+
+// V285 - Sprite occlusion must follow wall layers that are actually drawn.
+// The V233 rollback intentionally disables the extra wall draw passes; their stale V227 ranges must not keep hiding sprites.
+const PERLA_V285_SPRITE_OCCLUSION_DRAWN_WALL_LAYER_SAFE = true;
+
+// V287 - The far west reception wall must still draw, but it must not clip sprites in the bar/north-field long view.
+// This is sprite-occlusion-only: map, collision, wall pixels, ZBuffer, roofs, close views and frontal views stay unchanged.
+const PERLA_V287_RECEPTION_FAR_WEST_WALL_SPRITE_OCCLUSION_SAFE = true;
+const PERLA_V287_RECEPTION_WALL_TEX = 2;
+const PERLA_V287_RECEPTION_GAMEPLAY_X0 = 36;
+const PERLA_V287_RECEPTION_GAMEPLAY_X1 = 44;
+const PERLA_V287_RECEPTION_Y0 = 2;
+const PERLA_V287_RECEPTION_Y1 = 8;
+const PERLA_V287_RECEPTION_FAR_WEST_MIN_DEPTH = 21.0;
+const PERLA_V287_RECEPTION_FAR_WEST_CAMERA_Y0 = 1.0;
+const PERLA_V287_RECEPTION_FAR_WEST_CAMERA_Y1 = 12.5;
+// V288 - Direct reception wall ranges can still mask distant tree/tamarisk sprites after V287 removed extra layers.
+const PERLA_V288_RECEPTION_DIRECT_TREE_SPRITE_OCCLUSION_SAFE = true;
+const PERLA_V288_RECEPTION_DIRECT_TREE_MIN_DEPTH = 21.0;
+// V289 - If an east-facing reception wall layer claims a tree/tamarisk that is physically west of that wall cell,
+// the wall layer is not a valid sprite-clip authority. Wall pixels, ZBuffer, map and collision stay unchanged.
+const PERLA_V289_RECEPTION_FOREGROUND_TREE_SPRITE_OCCLUSION_SAFE = true;
+const PERLA_V289_RECEPTION_FOREGROUND_TREE_WEST_MARGIN = 0.15;
+// V290/V291 are retained as inactive diagnostics. V292 fixes the accepted root cause instead:
+// V220 local wall replay must not run in clear weather, and the game-room canopy column must
+// obey the already-drawn direct reception wall when it is physically behind it.
+const PERLA_V290_TAMARISK_WALL_FOREGROUND_MATTE_SAFE = true;
+const PERLA_V290_TAMARISK_WALL_MATTE_MAX_DIST = 34.0;
+const PERLA_V290_TAMARISK_WALL_MATTE_MIN_DIST = 7.0;
+const PERLA_V290_TAMARISK_WALL_MATTE_DEPTH_EPS = 0.20;
+const PERLA_V290_TAMARISK_WALL_MATTE_ALPHA = 0.96;
+const PERLA_V290_TAMARISK_WALL_MATTE_HULL_PAD_TEX = 3;
+const PERLA_V290_TAMARISK_WALL_MATTE_ALPHA_THRESHOLD = 16;
+const PERLA_V290_TAMARISK_WALL_MATTE_ENVELOPE_WINDOW_TEX = 12;
+const PERLA_V290_TAMARISK_WALL_MATTE_ENVELOPE_MAX_Y_RATIO = 0.80;
+const PERLA_V290_TAMARISK_WALL_MATTE_ENVELOPE_MIN_RATIO = 0.70;
+const PERLA_V291_TAMARISK_WALL_FOREGROUND_RESTORE_SAFE = false;
+const PERLA_V292_LOCAL_WALL_REPLAY_REQUIRES_ACTIVE_RAIN_REPLAY_SAFE = true;
+const PERLA_V292_GAME_ROOM_COLUMN_DIRECT_WALL_OCCLUSION_SAFE = true;
+const PERLA_V292_GAME_ROOM_COLUMN_CAPTURED_WALL_OCCLUSION_SAFE = true;
+let perlaV291PreWallCanvas = null;
+let perlaV291PreWallCtx = null;
+const perlaV290TamariskHullCache = typeof WeakMap !== 'undefined' ? new WeakMap() : null;
 // V266 — Roof Silhouette Mask + hierarchy repair.
 // La silhouette/mask continua non aumenta la qualita' globale: rende continuo il profilo
 // e lascia l'interno sotto il budget V264/V265. Include guardie anti-overlay per tettoie/rail.
@@ -3396,6 +3450,488 @@ function resetWallLayersV227(){
     FarWallSpanStatsV228={groups:0,gapsFilled:0,thinRecovered:0,drawnPixels:0,rejectedLowConfidence:0,occlusionRangesAdded:0,grazingStabilized:0};
     if(HeightStepStatsV229) HeightStepStatsV229={facesBuilt:HeightStepFacesV229?HeightStepFacesV229.length:0,runsBuilt:HeightStepRunsV229?HeightStepRunsV229.length:0,drawn:0,columns:0,occlusionRanges:0,rejectedNotEmergent:0,rejectedBackface:0};
 }
+function perlaWallLayerDebugEnabledV284(){
+    return !!(PERLA_V284_WALL_LAYER_SPRITE_OCCLUSION_DIAGNOSTIC && perlaWallLayerDebugModeV284 !== 'off');
+}
+function perlaWallLayerDebugModeV284Set(mode){
+    const m=String(mode||'off').toLowerCase();
+    perlaWallLayerDebugModeV284 = ['off','direct','extra','sprite','seal','all'].indexOf(m)>=0 ? m : 'off';
+    return perlaWallLayerDebugSummaryV284();
+}
+function perlaWallLayerDebugSummaryV284(){
+    return Object.assign({}, perlaWallLayerDebugLastSummaryV284, {
+        buildId:PERLA_BUILD_ID,
+        currentMode:perlaWallLayerDebugModeV284,
+        enabled:perlaWallLayerDebugEnabledV284(),
+        lastDraw:perlaLastDrawStats ? {
+            wallLayerDirectRangesV284:perlaLastDrawStats.wallLayerDirectRangesV284||0,
+            wallLayerExtraRangesV284:perlaLastDrawStats.wallLayerExtraRangesV284||0,
+            spriteHiddenByDirectLayerV284:perlaLastDrawStats.spriteHiddenByDirectLayerV284||0,
+            spriteHiddenByExtraLayerV284:perlaLastDrawStats.spriteHiddenByExtraLayerV284||0,
+            spriteGroundSealDirectPixelsV284:perlaLastDrawStats.spriteGroundSealDirectPixelsV284||0,
+            spriteGroundSealExtraPixelsV284:perlaLastDrawStats.spriteGroundSealExtraPixelsV284||0,
+            spriteOcclusionUndrawnExtraLayerSkippedPixelsV285:perlaLastDrawStats.spriteOcclusionUndrawnExtraLayerSkippedPixelsV285||0,
+            spriteOcclusionUndrawnExtraLayerSkippedStripesV285:perlaLastDrawStats.spriteOcclusionUndrawnExtraLayerSkippedStripesV285||0,
+            receptionFarWestWallSpriteLayerSkippedV287:perlaLastDrawStats.receptionFarWestWallSpriteLayerSkippedV287||0,
+            receptionDirectWallTreeSpriteSkippedPixelsV288:perlaLastDrawStats.receptionDirectWallTreeSpriteSkippedPixelsV288||0,
+            receptionDirectWallTreeSpriteLayerSkippedV288:perlaLastDrawStats.receptionDirectWallTreeSpriteLayerSkippedV288||0,
+            receptionForegroundTreeWallSpriteSkippedPixelsV289:perlaLastDrawStats.receptionForegroundTreeWallSpriteSkippedPixelsV289||0,
+            receptionForegroundTreeWallSpriteSkippedStripesV289:perlaLastDrawStats.receptionForegroundTreeWallSpriteSkippedStripesV289||0,
+            receptionForegroundTreeWallSpriteLayerSkippedV289:perlaLastDrawStats.receptionForegroundTreeWallSpriteLayerSkippedV289||0,
+            tamariskWallForegroundRestorePixelsV291:perlaLastDrawStats.tamariskWallForegroundRestorePixelsV291||0,
+            tamariskWallForegroundRestoreColumnsV291:perlaLastDrawStats.tamariskWallForegroundRestoreColumnsV291||0,
+            tamariskWallForegroundRestoreSpritesV291:perlaLastDrawStats.tamariskWallForegroundRestoreSpritesV291||0,
+            overlayRectsV284:perlaLastDrawStats.wallLayerDebugOverlayRectsV284||0,
+            hiddenSamplesV288:perlaWallLayerDebugHiddenSamplesV288.slice(0,PERLA_V288_WALL_LAYER_HIDDEN_SAMPLE_LIMIT)
+        } : null
+    });
+}
+function perlaWallLayerDebugBeginFrameV284(drawStats){
+    perlaWallLayerDebugHiddenRectsV284.length=0;
+    perlaWallLayerDebugHiddenSamplesV288.length=0;
+    if(!drawStats) return;
+    drawStats.wallLayerSpriteOcclusionDiagnosticV284=!!PERLA_V284_WALL_LAYER_SPRITE_OCCLUSION_DIAGNOSTIC;
+    drawStats.wallLayerDebugModeV284=perlaWallLayerDebugModeV284;
+    drawStats.wallLayerDebugEnabledV284=perlaWallLayerDebugEnabledV284();
+}
+function perlaWallLayerRangeForDebugV284(l,index){
+    if(!l) return null;
+    const layerIndex=Number.isFinite(l.layerIndex) ? l.layerIndex|0 : (index|0);
+    return {
+        depth:l.depth,yTop:l.yTop,yBottom:l.yBottom,wallH:l.wallH,owner:l.owner,tex:l.tex,mapX:l.mapX,mapY:l.mapY,
+        layerIndex,
+        layerRole:layerIndex===0?'direct':'extra',
+        source:layerIndex===0?'v227_direct_wall':'v227_extra_wall_layer'
+    };
+}
+function perlaWallLayerDebugRecordSpriteOcclusionV284(layer,x,drawW,y0,y1,seal,drawStats,sprite,transY){
+    if(!drawStats || !layer) return;
+    const w=Math.max(1,drawW||1), h=Math.max(0,y1-y0);
+    const pixels=h*w, sealPixels=Math.min(Math.max(0,seal||0),h)*w;
+    const extra=(layer.layerIndex||0)>0;
+    if(extra){
+        drawStats.spriteHiddenByExtraLayerV284=(drawStats.spriteHiddenByExtraLayerV284||0)+pixels;
+        drawStats.spriteHiddenExtraLayerStripesV284=(drawStats.spriteHiddenExtraLayerStripesV284||0)+1;
+        if(sealPixels>0) drawStats.spriteGroundSealExtraPixelsV284=(drawStats.spriteGroundSealExtraPixelsV284||0)+sealPixels;
+    } else {
+        drawStats.spriteHiddenByDirectLayerV284=(drawStats.spriteHiddenByDirectLayerV284||0)+pixels;
+        drawStats.spriteHiddenDirectLayerStripesV284=(drawStats.spriteHiddenDirectLayerStripesV284||0)+1;
+        if(sealPixels>0) drawStats.spriteGroundSealDirectPixelsV284=(drawStats.spriteGroundSealDirectPixelsV284||0)+sealPixels;
+    }
+    if(perlaWallLayerDebugEnabledV284() && perlaWallLayerDebugHiddenRectsV284.length<PERLA_V284_WALL_LAYER_DEBUG_MAX_RECTS){
+        perlaWallLayerDebugHiddenRectsV284.push({x,w,y0,y1,seal:seal||0,layerIndex:layer.layerIndex||0,layerRole:extra?'extra':'direct'});
+    }
+    if(perlaWallLayerDebugEnabledV284() && perlaWallLayerDebugHiddenSamplesV288.length<PERLA_V288_WALL_LAYER_HIDDEN_SAMPLE_LIMIT){
+        const sx=sprite||{};
+        perlaWallLayerDebugHiddenSamplesV288.push({
+            x,w,y0,y1,seal:seal||0,pixels,
+            layer:{depth:+(layer.depth||0).toFixed(3), yTop:layer.yTop, yBottom:layer.yBottom, wallH:layer.wallH, owner:layer.owner||0, tex:layer.tex, mapX:layer.mapX, mapY:layer.mapY, layerIndex:layer.layerIndex||0, layerRole:extra?'extra':'direct', source:layer.source||''},
+            sprite:{tex:sx.tex, kind:sx.kind||'', x:Number.isFinite(sx.x)?+sx.x.toFixed(2):null, gameplayX:(Number.isFinite(sx.x)&&typeof gameplayXFromWorldV77==='function')?+gameplayXFromWorldV77(sx.x).toFixed(2):null, y:Number.isFinite(sx.y)?+sx.y.toFixed(2):null, transY:Number.isFinite(transY)?+transY.toFixed(3):null}
+        });
+    }
+}
+function perlaWallLayerDebugColorV284(layer, alpha){
+    const a=Number.isFinite(alpha)?alpha:.32;
+    const idx=layer && Number.isFinite(layer.layerIndex) ? layer.layerIndex|0 : 0;
+    if(idx===0) return 'rgba(0,210,255,'+a+')';
+    if(idx===1) return 'rgba(255,48,48,'+a+')';
+    if(idx===2) return 'rgba(210,60,255,'+a+')';
+    return 'rgba(255,190,40,'+a+')';
+}
+function drawWallLayerDebugOverlayV284(drawStats){
+    if(!perlaWallLayerDebugEnabledV284()) return;
+    const mode=perlaWallLayerDebugModeV284;
+    let rects=0, directRanges=0, extraRanges=0;
+    ctx.save();
+    ctx.globalCompositeOperation='source-over';
+    if(mode==='direct' || mode==='extra' || mode==='all'){
+        for(let x=0;x<screenW;x++){
+            const ranges=WallOcclusionRangesV227 && WallOcclusionRangesV227[x];
+            if(!ranges || !ranges.length) continue;
+            for(const r of ranges){
+                const extra=(r.layerIndex||0)>0;
+                if(mode==='direct' && extra) continue;
+                if(mode==='extra' && !extra) continue;
+                const y0=clamp(Math.floor(r.yTop),0,screenH), y1=clamp(Math.ceil(r.yBottom),0,screenH);
+                if(y1<=y0) continue;
+                ctx.fillStyle=perlaWallLayerDebugColorV284(r, extra ? .34 : .26);
+                ctx.fillRect(x,y0,1,y1-y0);
+                rects++; if(extra) extraRanges++; else directRanges++;
+            }
+        }
+    }
+    if(mode==='sprite' || mode==='seal' || mode==='all'){
+        for(const r of perlaWallLayerDebugHiddenRectsV284){
+            const extra=(r.layerIndex||0)>0;
+            if(mode!=='seal'){
+                ctx.fillStyle=extra?'rgba(255,0,0,.40)':'rgba(0,210,255,.28)';
+                ctx.fillRect(r.x,clamp(Math.floor(r.y0),0,screenH),Math.max(1,r.w),Math.max(1,Math.ceil(r.y1-r.y0)));
+                rects++;
+            }
+            if(r.seal>0){
+                const sy=clamp(Math.floor(r.y1-r.seal),0,screenH);
+                ctx.fillStyle=extra?'rgba(255,185,0,.64)':'rgba(255,245,0,.48)';
+                ctx.fillRect(r.x,sy,Math.max(1,r.w),Math.max(1,Math.ceil(r.seal)));
+                rects++;
+            }
+        }
+    }
+    ctx.restore();
+    if(drawStats){
+        drawStats.wallLayerDebugOverlayDrawnV284=true;
+        drawStats.wallLayerDebugOverlayModeV284=mode;
+        drawStats.wallLayerDebugOverlayRectsV284=rects;
+        drawStats.wallLayerDebugOverlayDirectRangesV284=directRanges;
+        drawStats.wallLayerDebugOverlayExtraRangesV284=extraRanges;
+        drawStats.wallLayerDebugHiddenRectSamplesV284=perlaWallLayerDebugHiddenRectsV284.length;
+    }
+}
+function perlaWallLayerDebugFinalizeFrameV284(drawStats){
+    if(!drawStats) return;
+    perlaWallLayerDebugLastSummaryV284={
+        buildId:PERLA_BUILD_ID,
+        enabled:perlaWallLayerDebugEnabledV284(),
+        mode:perlaWallLayerDebugModeV284,
+        directRanges:drawStats.wallLayerDirectRangesV284||0,
+        extraRanges:drawStats.wallLayerExtraRangesV284||0,
+        spriteHiddenByDirectLayer:drawStats.spriteHiddenByDirectLayerV284||0,
+        spriteHiddenByExtraLayer:drawStats.spriteHiddenByExtraLayerV284||0,
+        spriteGroundSealDirectPixels:drawStats.spriteGroundSealDirectPixelsV284||0,
+        spriteGroundSealExtraPixels:drawStats.spriteGroundSealExtraPixelsV284||0,
+        spriteOcclusionUndrawnExtraLayerSkippedPixels:drawStats.spriteOcclusionUndrawnExtraLayerSkippedPixelsV285||0,
+        spriteOcclusionUndrawnExtraLayerSkippedStripes:drawStats.spriteOcclusionUndrawnExtraLayerSkippedStripesV285||0,
+        receptionFarWestWallSpriteLayerSkipped:drawStats.receptionFarWestWallSpriteLayerSkippedV287||0,
+        receptionDirectWallTreeSpriteSkippedPixels:drawStats.receptionDirectWallTreeSpriteSkippedPixelsV288||0,
+        receptionDirectWallTreeSpriteLayerSkipped:drawStats.receptionDirectWallTreeSpriteLayerSkippedV288||0,
+        receptionForegroundTreeWallSpriteSkippedPixels:drawStats.receptionForegroundTreeWallSpriteSkippedPixelsV289||0,
+        receptionForegroundTreeWallSpriteSkippedStripes:drawStats.receptionForegroundTreeWallSpriteSkippedStripesV289||0,
+        receptionForegroundTreeWallSpriteLayerSkipped:drawStats.receptionForegroundTreeWallSpriteLayerSkippedV289||0,
+        tamariskWallForegroundRestorePixels:drawStats.tamariskWallForegroundRestorePixelsV291||0,
+        tamariskWallForegroundRestoreColumns:drawStats.tamariskWallForegroundRestoreColumnsV291||0,
+        tamariskWallForegroundRestoreSprites:drawStats.tamariskWallForegroundRestoreSpritesV291||0,
+        v292LocalWallReplayRainGuard:!!drawStats.v292LocalWallReplayRainGuard,
+        v292GameRoomColumnClosedWallHiddenPixels:drawStats.v292GameRoomColumnClosedWallHiddenPixels||0,
+        v292GameRoomColumnClosedWallHiddenStripes:drawStats.v292GameRoomColumnClosedWallHiddenStripes||0,
+        v292GameRoomColumnCapturedWallHiddenPixels:drawStats.v292GameRoomColumnCapturedWallHiddenPixels||0,
+        v292GameRoomColumnCapturedWallHiddenStripes:drawStats.v292GameRoomColumnCapturedWallHiddenStripes||0,
+        overlayDrawn:!!drawStats.wallLayerDebugOverlayDrawnV284,
+        overlayRects:drawStats.wallLayerDebugOverlayRectsV284||0,
+        hiddenRectSamples:drawStats.wallLayerDebugHiddenRectSamplesV284||perlaWallLayerDebugHiddenRectsV284.length
+    };
+}
+function perlaWallLayerIsExtraForSpriteV285(layer){
+    if(!layer) return false;
+    return (layer.layerIndex||0)>0 || layer.layerRole==='extra';
+}
+function perlaV227ExtraWallDrawDisabledForSpriteV285(layer){
+    if(!PERLA_V285_SPRITE_OCCLUSION_DRAWN_WALL_LAYER_SAFE || !perlaWallLayerIsExtraForSpriteV285(layer)) return false;
+    if(layer.source && layer.source!=='v227_extra_wall_layer') return false;
+    const legacyExtraDrawDisabled=!!PERLA_V228_FAR_SPAN_STABILIZATION;
+    const stabilizedFarSpanDrawDisabled=!!(PERLA_V233_OVERDRAW_ROLLBACK_STABILITY && PERLA_V233_DISABLE_FAR_WALL_SPAN_DRAW);
+    return legacyExtraDrawDisabled && stabilizedFarSpanDrawDisabled;
+}
+function perlaWallLayerAllowsSpriteOcclusionV285(layer, drawStats){
+    if(!PERLA_V285_SPRITE_OCCLUSION_DRAWN_WALL_LAYER_SAFE) return true;
+    if(!perlaV227ExtraWallDrawDisabledForSpriteV285(layer)) return true;
+    if(drawStats){
+        drawStats.spriteOcclusionDrawnWallLayerSafeV285=true;
+        drawStats.spriteOcclusionUndrawnExtraLayerSkippedV285=(drawStats.spriteOcclusionUndrawnExtraLayerSkippedV285||0)+1;
+    }
+    return false;
+}
+function perlaV287ReceptionWorldX(gameplayX){
+    if(typeof worldXFromGameplayV77==='function') return Math.round(worldXFromGameplayV77(gameplayX));
+    return Math.round(gameplayX + (typeof PERLA_DISPLAY_X_OFFSET_V74==='number' ? PERLA_DISPLAY_X_OFFSET_V74 : 0));
+}
+function perlaV287ReceptionFarWestWallBypassesSpriteOcclusion(mapX,mapY,tex,side,stepX,depth,drawStats){
+    if(!PERLA_V287_RECEPTION_FAR_WEST_WALL_SPRITE_OCCLUSION_SAFE) return false;
+    if(tex!==PERLA_V287_RECEPTION_WALL_TEX) return false;
+    if(side!==0 || stepX!==1) return false;
+    if(!(Number.isFinite(depth) && depth>=PERLA_V287_RECEPTION_FAR_WEST_MIN_DEPTH)) return false;
+    if(!(posY>=PERLA_V287_RECEPTION_FAR_WEST_CAMERA_Y0 && posY<=PERLA_V287_RECEPTION_FAR_WEST_CAMERA_Y1)) return false;
+    if(!(dirX>.20)) return false;
+    const x0=perlaV287ReceptionWorldX(PERLA_V287_RECEPTION_GAMEPLAY_X0);
+    const x1=perlaV287ReceptionWorldX(PERLA_V287_RECEPTION_GAMEPLAY_X1);
+    const minX=Math.min(x0,x1), maxX=Math.max(x0,x1);
+    if(!(mapY>=PERLA_V287_RECEPTION_Y0 && mapY<=PERLA_V287_RECEPTION_Y1)) return false;
+    if(!(mapX===minX || mapX===maxX)) return false;
+    if(!(posX<minX-PERLA_V287_RECEPTION_FAR_WEST_MIN_DEPTH*.45)) return false;
+    if(drawStats){
+        drawStats.receptionFarWestWallSpriteOcclusionSafeV287=true;
+        drawStats.receptionFarWestWallVisualPreservedV287=true;
+        drawStats.receptionFarWestWallSpriteMinDepthV287=PERLA_V287_RECEPTION_FAR_WEST_MIN_DEPTH;
+        drawStats.receptionFarWestWallSpriteLayerSkippedV287=(drawStats.receptionFarWestWallSpriteLayerSkippedV287||0)+1;
+    }
+    return true;
+}
+function perlaV288ReceptionWallFootprintMatchesLayer(layer){
+    if(!layer || layer.tex!==PERLA_V287_RECEPTION_WALL_TEX) return false;
+    if((layer.layerIndex||0)!==0 || layer.source!=='v227_direct_wall') return false;
+    if(!(Number.isFinite(layer.depth) && layer.depth>0)) return false;
+    if(!(posY>=PERLA_V287_RECEPTION_FAR_WEST_CAMERA_Y0 && posY<=PERLA_V287_RECEPTION_FAR_WEST_CAMERA_Y1)) return false;
+    if(!(dirX>.20)) return false;
+    const x0=perlaV287ReceptionWorldX(PERLA_V287_RECEPTION_GAMEPLAY_X0);
+    const x1=perlaV287ReceptionWorldX(PERLA_V287_RECEPTION_GAMEPLAY_X1);
+    const minX=Math.min(x0,x1), maxX=Math.max(x0,x1);
+    if(!(posX<minX-PERLA_V287_RECEPTION_FAR_WEST_MIN_DEPTH*.45)) return false;
+    if(!(layer.mapX>=minX && layer.mapX<=maxX)) return false;
+    if(!(layer.mapY>=PERLA_V287_RECEPTION_Y0 && layer.mapY<=PERLA_V287_RECEPTION_Y1)) return false;
+    return true;
+}
+function perlaV288SpriteIsReceptionTreeCandidate(sprite){
+    if(!sprite) return false;
+    const tex=sprite.tex|0, k=String(sprite.kind||'').toLowerCase();
+    if(typeof v147IsTreeSprite==='function' && v147IsTreeSprite(sprite)) return true;
+    if(tex===7 || tex===25 || tex===26 || tex===54 || tex===55 || tex===56) return true;
+    return k.indexOf('tree')>=0 || k.indexOf('pine')>=0 || k.indexOf('palm')>=0 || k.indexOf('tamarisk')>=0 || k.indexOf('bush')>=0 || k.indexOf('flower_field')>=0;
+}
+function perlaV289SpriteIsPhysicallyWestOfReceptionWall(layer, sprite){
+    if(!PERLA_V289_RECEPTION_FOREGROUND_TREE_SPRITE_OCCLUSION_SAFE || !layer || !sprite) return false;
+    if(!(dirX>.20)) return false;
+    if(!Number.isFinite(sprite.x) || !Number.isFinite(layer.mapX)) return false;
+    return sprite.x < layer.mapX - PERLA_V289_RECEPTION_FOREGROUND_TREE_WEST_MARGIN;
+}
+function perlaWallLayerAllowsTreeSpriteOcclusionV288(layer, sprite, spriteDepth, drawStats){
+    if(!PERLA_V288_RECEPTION_DIRECT_TREE_SPRITE_OCCLUSION_SAFE) return true;
+    if(!perlaV288ReceptionWallFootprintMatchesLayer(layer)) return true;
+    if(!perlaV288SpriteIsReceptionTreeCandidate(sprite)) return true;
+    if(!(Number.isFinite(spriteDepth) && spriteDepth>layer.depth+PERLA_V227_SPRITE_LAYER_EPS)) return true;
+    const foregroundTreeV289=perlaV289SpriteIsPhysicallyWestOfReceptionWall(layer,sprite);
+    const longDepthV288=Number.isFinite(layer.depth) && layer.depth>=PERLA_V288_RECEPTION_DIRECT_TREE_MIN_DEPTH;
+    if(!foregroundTreeV289 && !longDepthV288) return true;
+    if(drawStats){
+        drawStats.receptionDirectWallTreeSpriteOcclusionSafeV288=true;
+        drawStats.receptionDirectWallTreeSpriteLayerSkippedV288=(drawStats.receptionDirectWallTreeSpriteLayerSkippedV288||0)+1;
+        drawStats.receptionDirectWallTreeSpriteMinDepthV288=PERLA_V288_RECEPTION_DIRECT_TREE_MIN_DEPTH;
+        if(foregroundTreeV289){
+            drawStats.receptionForegroundTreeWallSpriteOcclusionSafeV289=true;
+            drawStats.receptionForegroundTreeWallSpriteLayerSkippedV289=(drawStats.receptionForegroundTreeWallSpriteLayerSkippedV289||0)+1;
+        }
+    }
+    return false;
+}
+function perlaV292IsGameRoomCanopyColumnSprite(sprite){
+    if(!PERLA_V292_GAME_ROOM_COLUMN_DIRECT_WALL_OCCLUSION_SAFE || !sprite) return false;
+    if((sprite.tex|0)!==18) return false;
+    const kind=String(sprite.kind||'').toLowerCase();
+    return kind==='game_room_column' || (kind.indexOf('game_room')>=0 && kind.indexOf('column')>=0);
+}
+function perlaV292GameRoomColumnBlockedByDirectReceptionWall(layer, sprite, spriteDepth, drawStats){
+    if(!perlaV292IsGameRoomCanopyColumnSprite(sprite)) return false;
+    if(!layer || layer.source!=='v227_direct_wall' || (layer.layerIndex||0)!==0) return false;
+    if((layer.owner|0)!==1 || layer.tex!==PERLA_V287_RECEPTION_WALL_TEX) return false;
+    if(!perlaV288ReceptionWallFootprintMatchesLayer(layer)) return false;
+    if(!(Number.isFinite(spriteDepth) && Number.isFinite(layer.depth) && spriteDepth>layer.depth+PERLA_V227_SPRITE_LAYER_EPS)) return false;
+    if(drawStats){
+        drawStats.v292GameRoomColumnDirectWallOcclusionSafe=true;
+        drawStats.v292GameRoomColumnDirectWallOcclusionLayers=(drawStats.v292GameRoomColumnDirectWallOcclusionLayers||0)+1;
+        drawStats.v292GameRoomColumnDirectWallOcclusionOwner=layer.owner|0;
+        drawStats.v292GameRoomColumnDirectWallOcclusionTex=layer.tex|0;
+    }
+    return true;
+}
+function perlaV292CapturedWallRectBlocksGameRoomColumn(rect, spriteDepth){
+    if(!PERLA_V292_GAME_ROOM_COLUMN_CAPTURED_WALL_OCCLUSION_SAFE || !rect) return false;
+    if(rect.category!=='wall' || rect.source!=='wallColumnV218') return false;
+    if((rect.owner|0)!==1 || (rect.wallTex|0)!==PERLA_V287_RECEPTION_WALL_TEX) return false;
+    if(!(Number.isFinite(rect.dist) && Number.isFinite(spriteDepth) && spriteDepth>rect.dist+PERLA_V227_SPRITE_LAYER_EPS)) return false;
+    return rect.w>0 && rect.h>0;
+}
+function perlaV292CapturedWallHiddenRangesForGameRoomColumn(stripe, drawW, y0, y1, spriteDepth, drawStats, sprite){
+    if(!perlaV292IsGameRoomCanopyColumnSprite(sprite)) return null;
+    const rects=(typeof doorRainExactCeilingRectsV216!=='undefined') ? doorRainExactCeilingRectsV216 : null;
+    if(!rects || !rects.length || y1<=y0) return null;
+    const sx0=stripe|0, sx1=sx0+Math.max(1,drawW|0);
+    let rectHits=0;
+    for(const r of rects){
+        if(!perlaV292CapturedWallRectBlocksGameRoomColumn(r,spriteDepth)) continue;
+        const rx0=r.x|0, rx1=rx0+Math.max(0,r.w|0);
+        if(rx1<=sx0 || rx0>=sx1) continue;
+        rectHits++;
+    }
+    if(drawStats && rectHits>0){
+        const pixels=(y1-y0)*Math.max(1,drawW);
+        drawStats.v292GameRoomColumnCapturedWallOcclusionSafe=true;
+        drawStats.v292GameRoomColumnCapturedWallHiddenPixels=(drawStats.v292GameRoomColumnCapturedWallHiddenPixels||0)+pixels;
+        drawStats.v292GameRoomColumnCapturedWallHiddenStripes=(drawStats.v292GameRoomColumnCapturedWallHiddenStripes||0)+1;
+        drawStats.v292GameRoomColumnCapturedWallRects=(drawStats.v292GameRoomColumnCapturedWallRects||0)+rectHits;
+        drawStats.v292GameRoomColumnCapturedWallFullStripeHidden=true;
+    }
+    return rectHits>0 ? [[y0,y1]] : null;
+}
+function perlaV290IsTamariskWallMatteSprite(sprite, transY){
+    if(!PERLA_V290_TAMARISK_WALL_FOREGROUND_MATTE_SAFE || !sprite) return false;
+    const tex=sprite.tex|0, k=String(sprite.kind||'').toLowerCase();
+    if(tex<54 || tex>56) return false;
+    if(k && k.indexOf('tamarisk')<0) return false;
+    return Number.isFinite(transY) && transY>=PERLA_V290_TAMARISK_WALL_MATTE_MIN_DIST && transY<=PERLA_V290_TAMARISK_WALL_MATTE_MAX_DIST;
+}
+function perlaV290WallLayerBehindTamarisk(layer, sprite, spriteDepth){
+    if(!layer || !sprite) return false;
+    if((layer.layerIndex||0)!==0 || layer.source!=='v227_direct_wall') return false;
+    if(!Number.isFinite(layer.tex) || layer.tex<=0) return false;
+    if(!Number.isFinite(layer.yTop) || !Number.isFinite(layer.yBottom) || layer.yBottom<=layer.yTop) return false;
+    return Number.isFinite(spriteDepth) && Number.isFinite(layer.depth) && layer.depth>spriteDepth+PERLA_V290_TAMARISK_WALL_MATTE_DEPTH_EPS;
+}
+function perlaV290TamariskTextureHull(img){
+    if(!img) return null;
+    if(perlaV290TamariskHullCache){
+        const cached=perlaV290TamariskHullCache.get(img);
+        if(cached) return cached;
+    }
+    const w=(img.naturalWidth||img.width||texW)|0, h=(img.naturalHeight||img.height||texH)|0;
+    if(w<=0 || h<=0 || !document || !document.createElement) return null;
+    const c=document.createElement('canvas');
+    c.width=w; c.height=h;
+    const cx=c.getContext('2d',{willReadFrequently:true});
+    if(!cx) return null;
+    cx.drawImage(img,0,0,w,h);
+    const data=cx.getImageData(0,0,w,h).data;
+    const rawRows=[];
+    for(let y=0;y<h;y++){
+        let min=w, max=-1, r=0, g=0, b=0, n=0;
+        for(let x=0;x<w;x++){
+            const i=(y*w+x)*4, a=data[i+3];
+            if(a<=PERLA_V290_TAMARISK_WALL_MATTE_ALPHA_THRESHOLD) continue;
+            min=Math.min(min,x); max=Math.max(max,x);
+            r+=data[i]; g+=data[i+1]; b+=data[i+2]; n++;
+        }
+        if(n>0){
+            rawRows[y]={
+                min:Math.max(0,min-PERLA_V290_TAMARISK_WALL_MATTE_HULL_PAD_TEX),
+                max:Math.min(w-1,max+PERLA_V290_TAMARISK_WALL_MATTE_HULL_PAD_TEX),
+                count:n,
+                style:(g>=r*.92 && g>=b*.92) ? '#6f8d68' : '#7b5a42'
+            };
+        } else {
+            rawRows[y]=null;
+        }
+    }
+    const rows=[];
+    const envelopeMaxY=Math.floor(h*PERLA_V290_TAMARISK_WALL_MATTE_ENVELOPE_MAX_Y_RATIO);
+    const win=PERLA_V290_TAMARISK_WALL_MATTE_ENVELOPE_WINDOW_TEX|0;
+    for(let y=0;y<h;y++){
+        const row=rawRows[y];
+        if(!row){ rows[y]=null; continue; }
+        let min=row.min, max=row.max, style=row.style;
+        const width=max-min+1;
+        if(y<=envelopeMaxY){
+            let best=null, bestWidth=0;
+            for(let yy=Math.max(0,y-win); yy<=Math.min(h-1,y+win); yy++){
+                const candidate=rawRows[yy];
+                if(!candidate) continue;
+                const cw=candidate.max-candidate.min+1;
+                if(cw>bestWidth){ best=candidate; bestWidth=cw; }
+            }
+            if(best && bestWidth>width && width<bestWidth*PERLA_V290_TAMARISK_WALL_MATTE_ENVELOPE_MIN_RATIO){
+                min=Math.min(min,best.min);
+                max=Math.max(max,best.max);
+                style='#6f8d68';
+            }
+        }
+        rows[y]={min,max,style};
+    }
+    const hull={w,h,rows};
+    if(perlaV290TamariskHullCache) perlaV290TamariskHullCache.set(img,hull);
+    return hull;
+}
+function perlaV290TamariskWallMatteEnvelopePixel(texX, texY, hull){
+    if(!hull || hull.w<=0 || hull.h<=0) return null;
+    const u=(texX+.5)/hull.w, v=(texY+.5)/hull.h;
+    const d=Math.abs(u-.50);
+    let half=0, style='#6f8d68';
+    if(v>=.13 && v<=.62){
+        const lower=clamp((v-.43)/.19,0,1);
+        half=.48 - lower*.18;
+        style='#6f8d68';
+    } else if(v>.62 && v<=.84){
+        const t=clamp((v-.62)/.22,0,1);
+        half=.30 - t*.15;
+        style=t<.55 ? '#6f8d68' : '#76553d';
+    } else if(v>.38 && v<=.94){
+        half=.105;
+        style='#76553d';
+    }
+    if(half<=0 || d>half) return null;
+    return {style};
+}
+function perlaV291CapturePreWallCanvas(drawStats){
+    if(!PERLA_V291_TAMARISK_WALL_FOREGROUND_RESTORE_SAFE || !document || !document.createElement) return;
+    if(!perlaV291PreWallCanvas){
+        perlaV291PreWallCanvas=document.createElement('canvas');
+        perlaV291PreWallCtx=perlaV291PreWallCanvas.getContext('2d');
+    }
+    if(!perlaV291PreWallCtx) return;
+    if(perlaV291PreWallCanvas.width!==screenW || perlaV291PreWallCanvas.height!==screenH){
+        perlaV291PreWallCanvas.width=screenW;
+        perlaV291PreWallCanvas.height=screenH;
+    }
+    perlaV291PreWallCtx.clearRect(0,0,screenW,screenH);
+    perlaV291PreWallCtx.drawImage(canvas,0,0);
+    if(drawStats) drawStats.tamariskWallForegroundPreWallCapturedV291=true;
+}
+function perlaV291RestorePreWallPixel(sx, y){
+    if(!perlaV291PreWallCtx) return false;
+    ctx.drawImage(perlaV291PreWallCanvas,sx,y,1,1,sx,y,1,1);
+    return true;
+}
+function drawTamariskWallForegroundRestoreV291(sprite,img,transY,spriteHeight,spriteWidth,spScreenX,startY,endY,drawSX,drawEX,drawStats){
+    if(!perlaV290IsTamariskWallMatteSprite(sprite,transY) || !img || spriteHeight<=0 || spriteWidth<=0 || drawEX<=drawSX) return false;
+    if(!PERLA_V291_TAMARISK_WALL_FOREGROUND_RESTORE_SAFE || !perlaV291PreWallCtx) return false;
+    const hull=perlaV290TamariskTextureHull(img);
+    if(!hull) return false;
+    const left=-spriteWidth/2+spScreenX;
+    let pixels=0, columns=0, wallLayers=0;
+    ctx.save();
+    ctx.globalAlpha=1;
+    ctx.globalCompositeOperation='source-over';
+    for(let sx=drawSX; sx<drawEX; sx++){
+        if(sx<0 || sx>=screenW || !(transY<ZBuffer[sx]-.001)) continue;
+        const ranges=WallOcclusionRangesV227 && WallOcclusionRangesV227[sx];
+        if(!ranges || !ranges.length) continue;
+        const texX=clamp(Math.floor((sx-left)*hull.w/Math.max(1,spriteWidth)),0,hull.w-1);
+        let columnPainted=false;
+        for(const layer of ranges){
+            if(!perlaV290WallLayerBehindTamarisk(layer,sprite,transY)) continue;
+            const y0=clamp(Math.max(startY,Math.floor(layer.yTop)),0,screenH);
+            const y1=clamp(Math.min(endY,Math.ceil(layer.yBottom)),0,screenH);
+            if(y1<=y0) continue;
+            wallLayers++;
+            let runY=-1, runStyle='';
+            function flushRun(yEnd){
+                if(runY<0 || yEnd<=runY) return;
+                ctx.drawImage(perlaV291PreWallCanvas,sx,runY,1,yEnd-runY,sx,runY,1,yEnd-runY);
+                pixels+=yEnd-runY;
+                columnPainted=true;
+                runY=-1; runStyle='';
+            }
+            for(let y=y0;y<y1;y++){
+                const ceilingDepth=CeilingDepthBuffer ? CeilingDepthBuffer[y*screenW+sx] : 0;
+                if(ceilingDepth>0 && ceilingDepth<transY-.05){ flushRun(y); continue; }
+                const ty=clamp(Math.floor((y-startY)*hull.h/Math.max(1,spriteHeight)),0,hull.h-1);
+                const row=hull.rows[ty];
+                const envelope=perlaV290TamariskWallMatteEnvelopePixel(texX,ty,hull);
+                const insideRow=!!(row && texX>=row.min && texX<=row.max);
+                const inside=insideRow || !!envelope;
+                if(!inside){ flushRun(y); continue; }
+                const style=insideRow ? row.style : envelope.style;
+                if(runY<0){ runY=y; runStyle=style; }
+                else if(runStyle!==style){ flushRun(y); runY=y; runStyle=style; }
+            }
+            flushRun(y1);
+        }
+        if(columnPainted) columns++;
+    }
+    ctx.restore();
+    if(drawStats && pixels>0){
+        drawStats.tamariskWallForegroundRestoreSafeV291=true;
+        drawStats.tamariskWallForegroundRestoreSpritesV291=(drawStats.tamariskWallForegroundRestoreSpritesV291||0)+1;
+        drawStats.tamariskWallForegroundRestorePixelsV291=(drawStats.tamariskWallForegroundRestorePixelsV291||0)+pixels;
+        drawStats.tamariskWallForegroundRestoreColumnsV291=(drawStats.tamariskWallForegroundRestoreColumnsV291||0)+columns;
+        drawStats.tamariskWallForegroundRestoreLayersV291=(drawStats.tamariskWallForegroundRestoreLayersV291||0)+wallLayers;
+    }
+    return pixels>0;
+}
 function wallLayerProjectionV227(mapX,mapY,side,rDirX,rDirY,stepX,stepY){
     if(!(map[mapY] && map[mapY][mapX]>0)) return null;
     const tex=map[mapY][mapX];
@@ -3439,6 +3975,7 @@ function collectWallLayersForColumnV227(x,rDirX,rDirY,drawStats){
         if(map[mapY]&&map[mapY][mapX]>0){
             const layer=wallLayerProjectionV227(mapX,mapY,side,rDirX,rDirY,stepX,stepY);
             if(layer){
+                if(perlaV287ReceptionFarWestWallBypassesSpriteOcclusion(mapX,mapY,layer.tex,side,stepX,layer.depth,drawStats)) continue;
                 if(PERLA_V228_SPRITE_OCCLUSION_DISTANCE_FIX && layer.depth>getWallOcclusionMaxDistV228()) break;
                 const prev=layers[layers.length-1];
                 const duplicate=prev && Math.abs(prev.depth-layer.depth)<.11 && prev.tex===layer.tex && Math.abs(prev.yTop-layer.yTop)<2;
@@ -3462,8 +3999,12 @@ function setWallLayersForColumnV227(x,layers,drawStats){
     if(!PERLA_V227_LAYERED_WALL_OCCLUSION_HEIGHT_FIX || x<0 || x>=screenW) return;
     const arr=layers||[];
     WallLayerBufferV227[x]=arr;
-    WallOcclusionRangesV227[x]=arr.map(l=>({depth:l.depth,yTop:l.yTop,yBottom:l.yBottom,wallH:l.wallH,owner:l.owner,tex:l.tex,mapX:l.mapX,mapY:l.mapY}));
-    if(drawStats && arr.length) drawStats.wallOcclusionRangesV227=(drawStats.wallOcclusionRangesV227||0)+arr.length;
+    WallOcclusionRangesV227[x]=arr.map((l,i)=>perlaWallLayerRangeForDebugV284(l,i));
+    if(drawStats && arr.length){
+        drawStats.wallOcclusionRangesV227=(drawStats.wallOcclusionRangesV227||0)+arr.length;
+        drawStats.wallLayerDirectRangesV284=(drawStats.wallLayerDirectRangesV284||0)+1;
+        if(arr.length>1) drawStats.wallLayerExtraRangesV284=(drawStats.wallLayerExtraRangesV284||0)+(arr.length-1);
+    }
 }
 function drawAdditionalWallLayersV227(x,layers,time,drawStats){
     if(PERLA_V228_FAR_SPAN_STABILIZATION) return;
@@ -5825,18 +6366,52 @@ function finalizeColumnFragmentStatsV239(drawStats){
     };
 }
 
-function spriteVisibleSpansV227(stripe,drawW,y0,y1,transY,drawStats){
+function spriteVisibleSpansV227(stripe,drawW,y0,y1,transY,drawStats,sprite){
     if(!PERLA_V227_LAYERED_WALL_OCCLUSION_HEIGHT_FIX || y1<=y0) return null;
     const x=clamp((stripe+Math.floor(Math.max(1,drawW)/2))|0,0,screenW-1);
     const layers=WallOcclusionRangesV227 && WallOcclusionRangesV227[x];
-    if(!layers || !layers.length) return [[y0,y1]];
     let hidden=[];
+    const capturedWallHiddenV292=perlaV292CapturedWallHiddenRangesForGameRoomColumn(stripe,drawW,y0,y1,transY,drawStats,sprite);
+    if(capturedWallHiddenV292) hidden.push(...capturedWallHiddenV292);
+    if(!layers || !layers.length){
+        if(!hidden.length) return [[y0,y1]];
+    }
     for(const l of layers){
         if(transY>l.depth+PERLA_V227_SPRITE_LAYER_EPS){
+            if(perlaV292GameRoomColumnBlockedByDirectReceptionWall(l,sprite,transY,drawStats)){
+                const fullPixels=(y1-y0)*Math.max(1,drawW);
+                if(drawStats){
+                    drawStats.v292GameRoomColumnClosedWallHiddenPixels=(drawStats.v292GameRoomColumnClosedWallHiddenPixels||0)+fullPixels;
+                    drawStats.v292GameRoomColumnClosedWallHiddenStripes=(drawStats.v292GameRoomColumnClosedWallHiddenStripes||0)+1;
+                }
+                perlaWallLayerDebugRecordSpriteOcclusionV284(l,stripe,drawW,y0,y1,0,drawStats,sprite,transY);
+                return [];
+            }
+            if(!perlaWallLayerAllowsTreeSpriteOcclusionV288(l,sprite,transY,drawStats)){
+                const aSkip=Math.max(y0,l.yTop), bSkip=Math.min(y1,l.yBottom);
+                if(drawStats && bSkip>aSkip){
+                    drawStats.receptionDirectWallTreeSpriteSkippedPixelsV288=(drawStats.receptionDirectWallTreeSpriteSkippedPixelsV288||0)+(bSkip-aSkip)*Math.max(1,drawW);
+                    drawStats.receptionDirectWallTreeSpriteSkippedStripesV288=(drawStats.receptionDirectWallTreeSpriteSkippedStripesV288||0)+1;
+                    if(perlaV289SpriteIsPhysicallyWestOfReceptionWall(l,sprite)){
+                        drawStats.receptionForegroundTreeWallSpriteSkippedPixelsV289=(drawStats.receptionForegroundTreeWallSpriteSkippedPixelsV289||0)+(bSkip-aSkip)*Math.max(1,drawW);
+                        drawStats.receptionForegroundTreeWallSpriteSkippedStripesV289=(drawStats.receptionForegroundTreeWallSpriteSkippedStripesV289||0)+1;
+                    }
+                }
+                continue;
+            }
+            if(!perlaWallLayerAllowsSpriteOcclusionV285(l,drawStats)){
+                const aSkip=Math.max(y0,l.yTop), bSkip=Math.min(y1,l.yBottom);
+                if(drawStats && bSkip>aSkip){
+                    drawStats.spriteOcclusionUndrawnExtraLayerSkippedPixelsV285=(drawStats.spriteOcclusionUndrawnExtraLayerSkippedPixelsV285||0)+(bSkip-aSkip)*Math.max(1,drawW);
+                    drawStats.spriteOcclusionUndrawnExtraLayerSkippedStripesV285=(drawStats.spriteOcclusionUndrawnExtraLayerSkippedStripesV285||0)+1;
+                }
+                continue;
+            }
             const seal=(PERLA_V229_SPRITE_OCCLUSION_GROUND_SEAL? spriteOcclusionSealMarginV229(l,transY,drawStats) : 0);
             const a=Math.max(y0,l.yTop), b=Math.min(y1,l.yBottom+seal);
             if(b>a){
                 hidden.push([a,b]);
+                perlaWallLayerDebugRecordSpriteOcclusionV284(l,stripe,drawW,a,b,seal,drawStats,sprite,transY);
                 if(drawStats){
                     drawStats.spritePixelsHiddenByLowWallBodyV227=(drawStats.spritePixelsHiddenByLowWallBodyV227||0)+(b-a)*Math.max(1,drawW);
                     if(seal>0){
@@ -5931,7 +6506,7 @@ function addWallOcclusionRangeV228(x,l,y0,y1,source,drawStats){
     const arr=WallOcclusionRangesV227[x] || (WallOcclusionRangesV227[x]=[]);
     const dup=arr.some(r=>Math.abs(r.depth-l.depth)<.06 && Math.abs(r.yTop-y0)<2 && Math.abs(r.yBottom-y1)<2 && r.tex===l.tex);
     if(!dup){
-        arr.push({depth:l.depth,yTop:y0,yBottom:y1,wallH:l.wallH,owner:l.owner,tex:l.tex,mapX:l.mapX,mapY:l.mapY,source:source||'v228'});
+        arr.push({depth:l.depth,yTop:y0,yBottom:y1,wallH:l.wallH,owner:l.owner,tex:l.tex,mapX:l.mapX,mapY:l.mapY,layerIndex:Number.isFinite(l.layerIndex)?l.layerIndex:99,layerRole:'extra',source:source||'v228'});
         arr.sort((a,b)=>a.depth-b.depth);
         if(drawStats) drawStats.farWallOcclusionRangesAddedV228=(drawStats.farWallOcclusionRangesAddedV228||0)+1;
     }
@@ -9699,6 +10274,15 @@ function v220RainActiveForShelterOcclusion(drawStats){
     const resolved=(typeof resolveShelterProfileV218==='function') ? resolveShelterProfileV218(drawStats||{},{}) : null;
     return !!(resolved && resolved.profile);
 }
+function perlaV292LocalWallReplayAfterV216Allowed(drawStats){
+    if(!PERLA_V292_LOCAL_WALL_REPLAY_REQUIRES_ACTIVE_RAIN_REPLAY_SAFE) return true;
+    const weather=(perlaEnvironmentStateV188 && perlaEnvironmentStateV188.weather)||'clear';
+    if(weather!=='rain' && weather!=='storm') return false;
+    if(drawStats && ((drawStats.doorRainExactCeilingRectsReplayedV216||0)>0 || (drawStats.v221CoverRects||0)>0)) return true;
+    if(typeof perlaWeatherExactReplayRainActiveV216==='function' && perlaWeatherExactReplayRainActiveV216(drawStats||{})) return true;
+    if(v220RainActiveForShelterOcclusion(drawStats||{})) return true;
+    return false;
+}
 function v220V216CeilingCoverRects(rects,drawStats){
     const out=[];
     const src=rects||[];
@@ -9718,6 +10302,17 @@ function v220V216CeilingCoverRects(rects,drawStats){
 }
 function drawV220LocalWallsAfterV216Cover(rects,drawStats,time){
     if(!PERLA_V220_V216_OCCLUSION_METHOD_RESTORED || !drawStats) return 0;
+    if(!perlaV292LocalWallReplayAfterV216Allowed(drawStats)){
+        drawStats.v292LocalWallReplayRainGuard=true;
+        drawStats.v220WallReplayAfterV216=false;
+        drawStats.v220WallReplayProfileId=null;
+        drawStats.v220WallReplayRects=0;
+        drawStats.v220WallReplayPixels=0;
+        drawStats.v220WallReplaySources={};
+        drawStats.v220WallReplayOwners={};
+        drawStats.v220WallReplayReason='disabled_v292_no_active_rain_or_v216_replay';
+        return 0;
+    }
     const resolved=(typeof resolveShelterProfileV218==='function') ? resolveShelterProfileV218(drawStats,{}) : null;
     if(!resolved || !resolved.profile){
         drawStats.v220WallReplayAfterV216=false;
@@ -27236,6 +27831,7 @@ function ceilingSpriteClipY(stripe, y0, y1, spriteDist, sprite, drawStats){
 function drawWorld(time){
     roofSoffitSegmentsV109=0; roofInteriorCeilingRoofColorV200=0; roofSoffitRedSuppressedV109=0; roofSoffitResidualLineSuppressedV110=0; roofWallTopSeamSuppressSpansV110=0; roofSeamDrawSuppressedV111=0; roofNearSideSelfOcclusionRelaxedV111=0; roofVisibilityRejectsV111=0; roofSkyLargeFogRectsSkippedV111=0; roofWallTopSeamDebugSpansV111=0; roofSelfDepthPlaneWritesV112=0; roofSelfDepthCapWritesV112=0; roofSelfDepthCapRejectsV112=0; roofWallTopTextureLineSuppressedV114=0; roofWallTopTextureLineCandidatesV114=0; roofWallTopTextureLineFixDrawsV114=0; roofModernCoverFogPremixSegmentsV115=0; roofModernCoverFogPremixPixelsV115=0; roofModernCoverTopLineMergedV115=0; roofModernCoverRawFogBypassPreventedV115=0; roofSoffitWallOverlapSegmentsV116=0; roofSoffitWallOverlapPixelsV116=0; roofSoffitWallOverlapMaxPxV116=0; roofModernWallRoofMergeColumnsV117=0; roofModernWallRoofMergePixelsV117=0; roofModernWallRoofMergeMaxPxV117=0; ceilingFogFullWidthRemovedV118=0; ceilingFogSegmentedV118=0; skyFogRectsSkippedV118=0; legacyCeilingFogRestoredV119=0; legacyCeilingFogSkippedSkyV119=0; legacyCeilingFogCoverageV119=0; legacyCeilingFogFullWidthSuppressedV120=0; legacyCeilingFogCoverageSuppressedV120=0; canopyCeilingLegacySegmentModeV120=0; deferredCanopySegmentsCollectedV121=0; deferredCanopySegmentsDrawnV121=0; deferredCanopySpansV121=0; deferredCanopyRejectsV121=0; canopySpriteClipForcedV121=0; pergolaHedgeWallRaisedV119=0;
     const drawStats={ mode:currentViewportMode, screenW, screenH, projectionH:+projectionH.toFixed(3), planeScale:+planeScale.toFixed(3), floorRows:0, floorSegments:0, floorLodBands:0, ceilingSegments:0, wallColumns:0, wallHits:0, spriteConsidered:0, spriteVisible:0, spriteStripes:0, spriteCulled:0, spriteCandidates:0, shadowRects:0, shadowSoftCachedV141:0, shadowSkippedNoProfileV141:0, shadowSkippedFarV141:0, shadowSkippedZV141:0, shadowSkippedTinyV141:0, shadowCacheHitsV141:0, shadowCacheFallbackV141:0, shadowFlatTopCachedV143:0, shadowTopAnchoredV143:0, shadowNearNotShrunkV143:0, shadowClippedBottomV143:0, shadowProfilesV141:{} };
+    perlaWallLayerDebugBeginFrameV284(drawStats);
     perlaLongViewBeginFrameV260(drawStats);
     if(typeof perlaCoverageBeginFrameV261==='function') perlaCoverageBeginFrameV261(drawStats);
     markHighWallDiagnosticsRuntimeStatusV245(drawStats,'drawWorld_init');
@@ -27364,6 +27960,7 @@ function drawWorld(time){
         y+=floorBandH;
     }
     if(typeof perlaRealCeilingCloneFlushEaveStripsV273==='function') perlaRealCeilingCloneFlushEaveStripsV273(realCeilingCloneEaveStripsV273,drawStats);
+    perlaV291CapturePreWallCanvas(drawStats);
     for(let x=0;x<screenW;x++){
         drawStats.wallColumns++;
         const camX=2*x/screenW-1, rDirX=dirX+planeX*camX, rDirY=dirY+planeY*camX;
@@ -27524,6 +28121,7 @@ function drawWorld(time){
         const endY=startY+spriteHeight;
         if(drawEX>drawSX && endY>0 && startY<screenH) drawStats.spriteVisible++;
         drawSpriteContactShadowV141(s,transY,spSize,spriteWidth,spScreenX,baseY,anchorSink,drawStats);
+        drawTamariskWallForegroundRestoreV291(s,img,transY,spriteHeight,spriteWidth,spScreenX,startY,endY,drawSX,drawEX,drawStats);
         const stripeStep=Math.max(v147SpriteStripeStep(s,transY,spriteWidth), perlaLongViewSpriteStripeStepV260(v260SpriteLod,s,transY,spriteWidth,drawStats));
         if(stripeStep>1) drawStats.spriteStripeStepAppliedV147=(drawStats.spriteStripeStepAppliedV147||0)+1;
         for(let stripe=drawSX;stripe<drawEX;stripe+=stripeStep){
@@ -27534,7 +28132,7 @@ function drawWorld(time){
                 let destY1=Math.min(endY,screenH);
                 destY0=ceilingSpriteClipY(stripe,destY0,destY1,transY,s,drawStats);
                 if(destY1<=destY0) continue;
-                const spansV227=spriteVisibleSpansV227(stripe,drawW,destY0,destY1,transY,drawStats);
+                const spansV227=spriteVisibleSpansV227(stripe,drawW,destY0,destY1,transY,drawStats,s);
                 const drawSpans=(PERLA_V227_LAYERED_WALL_OCCLUSION_HEIGHT_FIX && spansV227) ? spansV227 : [[destY0,destY1]];
                 for(const spn of drawSpans){
                     const sy0=Math.max(destY0,Math.floor(spn[0]));
@@ -27550,6 +28148,8 @@ function drawWorld(time){
             }
         }
     });
+    drawWallLayerDebugOverlayV284(drawStats);
+    perlaWallLayerDebugFinalizeFrameV284(drawStats);
     if(typeof perlaCoverageFinalizeFrameV261==='function') perlaCoverageFinalizeFrameV261(drawStats);
     if(typeof perlaCoverageEdgeRailFinalizeV265==='function') perlaCoverageEdgeRailFinalizeV265(drawStats);
     perlaLongViewFinalizeFrameV260(drawStats);
@@ -28315,6 +28915,15 @@ Object.assign(window.__PERLA_DEBUG__, {
     perlaRoofHotspotSummaryV259, perlaRoofHotspotColumnsV259, perlaRoofHotspotToggleV259, perlaRoofHotspotModeV259Set, perlaDownloadRoofHotspotDebugV259,
     PERLA_V260_LONG_VIEW_SPRITE_FLOOR_BUDGET_SAFE, PERLA_V260_BASE_BUILD, PERLA_V260_PATCH_MODE,
     perlaLongViewBudgetSummaryV260, perlaLongViewBudgetToggleV260, perlaLongViewBudgetModeV260Set, perlaLongViewBudgetDownloadV260,
+    PERLA_V284_WALL_LAYER_SPRITE_OCCLUSION_DIAGNOSTIC, PERLA_V284_WALL_LAYER_DEBUG_MAX_RECTS,
+    PERLA_V285_SPRITE_OCCLUSION_DRAWN_WALL_LAYER_SAFE,
+    PERLA_V287_RECEPTION_FAR_WEST_WALL_SPRITE_OCCLUSION_SAFE, perlaV287ReceptionFarWestWallBypassesSpriteOcclusion,
+    PERLA_V288_RECEPTION_DIRECT_TREE_SPRITE_OCCLUSION_SAFE, perlaV288ReceptionWallFootprintMatchesLayer, perlaV288SpriteIsReceptionTreeCandidate, perlaWallLayerAllowsTreeSpriteOcclusionV288,
+    PERLA_V289_RECEPTION_FOREGROUND_TREE_SPRITE_OCCLUSION_SAFE, perlaV289SpriteIsPhysicallyWestOfReceptionWall,
+    PERLA_V290_TAMARISK_WALL_FOREGROUND_MATTE_SAFE, PERLA_V291_TAMARISK_WALL_FOREGROUND_RESTORE_SAFE, perlaV290IsTamariskWallMatteSprite, perlaV290WallLayerBehindTamarisk, perlaV291CapturePreWallCanvas, drawTamariskWallForegroundRestoreV291,
+    PERLA_V292_LOCAL_WALL_REPLAY_REQUIRES_ACTIVE_RAIN_REPLAY_SAFE, PERLA_V292_GAME_ROOM_COLUMN_DIRECT_WALL_OCCLUSION_SAFE, PERLA_V292_GAME_ROOM_COLUMN_CAPTURED_WALL_OCCLUSION_SAFE,
+    perlaV292LocalWallReplayAfterV216Allowed, perlaV292IsGameRoomCanopyColumnSprite, perlaV292GameRoomColumnBlockedByDirectReceptionWall, perlaV292CapturedWallHiddenRangesForGameRoomColumn,
+    perlaWallLayerDebugSummaryV284, perlaWallLayerDebugModeV284Set,
     perlaCoverageSurfaceSummaryV261, perlaCoverageSurfaceToggleV261, perlaCoverageSurfaceModeV261Set, perlaCoverageSurfaceDownloadV261, perlaPergolaBudgetSummaryV261,
     PERLA_V263_ROOF_MID_DISTANCE_BRANCH_LOCK_SAFE, PERLA_V263_BASE_BUILD, PERLA_V263_PATCH_MODE, perlaRoofBranchLockSummaryV263, perlaRoofBranchLockToggleV263, perlaRoofBranchLockModeV263Set, perlaRoofBranchLockDownloadV263, PERLA_V264_ROOF_COST_WATCHDOG_EMERGENCY_SAFE, PERLA_V264_BASE_BUILD, PERLA_V264_PATCH_MODE, perlaRoofCostWatchdogSummaryV264, perlaRoofCostWatchdogToggleV264, perlaRoofCostWatchdogModeV264Set, perlaRoofCostWatchdogDownloadV264, PERLA_V265_COVERAGE_ULTRA_BUDGET_EDGE_RAIL_SAFE, PERLA_V265_BASE_BUILD, PERLA_V265_PATCH_MODE, perlaCoverageEdgeRailSummaryV265, perlaCoverageEdgeRailToggleV265, perlaCoverageEdgeRailModeV265Set, perlaCoverageEdgeRailDownloadV265, PERLA_V266_ROOF_SILHOUETTE_MASK_BUDGET_HIERARCHY_SAFE, PERLA_V266_BASE_BUILD, PERLA_V266_PATCH_MODE, perlaRoofSilhouetteMaskSummaryV266, perlaRoofSilhouetteMaskToggleV266, perlaRoofSilhouetteMaskModeV266Set, perlaRoofSilhouetteMaskDownloadV266, PERLA_V267_ROOF_SILHOUETTE_MAIN_WALL_CLIP_SAFE, PERLA_V267_BASE_BUILD, PERLA_V267_PATCH_MODE, perlaRoofSilhouetteMainSummaryV267, perlaRoofSilhouetteMainToggleV267, perlaRoofSilhouetteMainModeV267Set, perlaRoofSilhouetteMainDownloadV267, PERLA_V270_REAL_CEILING_CLONE_EAVE_SAFE, PERLA_V270_BASE_BUILD, PERLA_V270_PATCH_MODE, perlaRealCeilingCloneSummaryV270, perlaRealCeilingCloneToggleV270, perlaRealCeilingCloneModeV270Set, perlaRealCeilingCloneDownloadV270, PERLA_V271_REAL_CEILING_CLONE_SIDE_AWARE_CONTINUITY_SAFE, PERLA_V271_BASE_BUILD, PERLA_V271_PATCH_MODE, perlaRealCeilingCloneContinuitySummaryV271, perlaRealCeilingCloneContinuityToggleV271, perlaRealCeilingCloneContinuityModeV271Set, perlaRealCeilingCloneContinuityDownloadV271, PERLA_V262_COVERAGE_STABLE_EDGE_REPAIR_SAFE, PERLA_V262_BASE_BUILD, PERLA_V262_PATCH_MODE, perlaCoverageStableSummaryV262, perlaCoverageStableToggleV262, perlaCoverageStableModeV262Set, perlaCoverageStableDownloadV262,
     perlaLastDrawStatsSummaryV258,
@@ -28345,6 +28954,9 @@ window.perlaLongViewBudgetSummaryV260=perlaLongViewBudgetSummaryV260;
 window.perlaLongViewBudgetDownloadV260=perlaLongViewBudgetDownloadV260;
 window.getPerlaLongViewBudgetSummaryV260=perlaLongViewBudgetSummaryV260;
 window.downloadPerlaLongViewBudgetDebugV260=perlaLongViewBudgetDownloadV260;
+window.perlaWallLayerDebugModeV284=perlaWallLayerDebugModeV284Set;
+window.perlaWallLayerDebugSummaryV284=perlaWallLayerDebugSummaryV284;
+window.getPerlaWallLayerDebugSummaryV284=perlaWallLayerDebugSummaryV284;
 window.perlaCoverageSurfaceSummaryV261=perlaCoverageSurfaceSummaryV261;
 window.getPerlaCoverageSurfaceSummaryV261=perlaCoverageSurfaceSummaryV261;
 window.perlaCoverageSurfaceToggleV261=perlaCoverageSurfaceToggleV261;

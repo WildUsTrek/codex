@@ -22,6 +22,8 @@ For tasks that map sceneggiatura/gameplay into world placement, time bands, beha
 
 For the first supplied scenario/gameplay source set, also consult `PERLA1/report/SCENEGGIATURA_GAMEPLAY_MAPPING_DRAFT_2026-06-14.md`.
 
+When scenario/gameplay mapping is in scope, the intake gate must call the matching read-only domain auditors: `scenario-rtp-map-auditor`, `map-placement-auditor`, `event-flow-auditor`, and `dialogue-continuity-auditor` as their signals apply. These agents do not activate the RTP layer and do not replace runtime validation.
+
 Exception: legacy environmental/object assets already present in `assets/raycast/` remain governed by `ASSET_MANIFEST` and the existing raycaster asset pipeline.
 
 ## Runtime Folder Contract
@@ -32,6 +34,15 @@ assets/rtp/
   SCENARIO_EVENT_MAPPING_PROTOCOL.md
   manifest/
     rtp.characters.json
+    rtp.placements.json      # future dormant manifest
+    rtp.behaviors.json       # future dormant manifest
+    rtp.dialogues.json       # future dormant manifest
+    rtp.events.json          # future dormant manifest
+  schema/
+    rtp.placements.schema.json
+    rtp.behaviors.schema.json
+    rtp.dialogues.schema.json
+    rtp.events.schema.json
   characters/
     portraits/
       main/
@@ -103,6 +114,12 @@ Do not inflate special ambient sources to 8 frames when the source only provides
 - Main portraits load by dialogue.
 - Animals load by ambience zone.
 - Service worker caching must be versioned and capped before activation.
+
+## Scenario Manifest Validation
+
+Future `rtp.placements.json`, `rtp.behaviors.json`, `rtp.dialogues.json`, and `rtp.events.json` files are validated by `PERLA1/tools/perla_rtp_scenario_validator.py`.
+
+The static validator checks schema parseability, cross-manifest references, character roles, no animal dialogue, portrait policy, explicit/inferred labeling, schedule conflicts, battle placeholder `won`/`lost` branches, and mirror-derived left-facing policy. It intentionally does not prove runtime coordinate bounds, walkability, visibility, collision, sprite occlusion, or rendered correctness.
 
 ## Safety Rules
 

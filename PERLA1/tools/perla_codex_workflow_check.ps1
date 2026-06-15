@@ -78,6 +78,11 @@ $paths = @{
   GitIgnore = Join-Path $repoRoot '.gitignore'
   PerlaTools = Join-Path $perlaRoot 'tools'
   AgentDir = Join-Path $perlaRoot '.codex/agents'
+  RtpRoot = Join-Path $perlaRoot '01_GIOCO_PRONTO_LOCAL_TEST/assets/rtp'
+  RtpReadme = Join-Path $perlaRoot '01_GIOCO_PRONTO_LOCAL_TEST/assets/rtp/README_RTP_ASSETS.md'
+  RtpScenarioProtocol = Join-Path $perlaRoot '01_GIOCO_PRONTO_LOCAL_TEST/assets/rtp/SCENARIO_EVENT_MAPPING_PROTOCOL.md'
+  RtpCharactersManifest = Join-Path $perlaRoot '01_GIOCO_PRONTO_LOCAL_TEST/assets/rtp/manifest/rtp.characters.json'
+  RtpScenarioValidator = Join-Path $perlaRoot 'tools/perla_rtp_scenario_validator.py'
 }
 
 Require-File -Id 'required.root_hooks' -Path $paths.RootHooks -Purpose 'Root Codex hook file exists so sessions started from the synchronized repository can run workflow enforcement.'
@@ -97,12 +102,137 @@ Require-File -Id 'required.regression_suite' -Path $paths.RegressionSuite -Purpo
 Require-File -Id 'required.project_backup_tool' -Path $paths.PerlaBackupTool -Purpose 'PERLA1 project backup tool exists.'
 Require-File -Id 'required.gitignore' -Path $paths.GitIgnore -Purpose 'Repository .gitignore exists for disposable workflow artifacts.'
 Require-File -Id 'required.agent_dir' -Path $paths.AgentDir -Purpose 'PERLA1 project agent TOML directory exists.'
+Require-File -Id 'required.rtp_readme' -Path $paths.RtpReadme -Purpose 'PERLA1 RTP asset reference README exists.'
+Require-File -Id 'required.rtp_scenario_protocol' -Path $paths.RtpScenarioProtocol -Purpose 'PERLA1 RTP scenario/event mapping protocol exists.'
+Require-File -Id 'required.rtp_characters_manifest' -Path $paths.RtpCharactersManifest -Purpose 'PERLA1 RTP characters manifest exists.'
+Require-File -Id 'required.rtp_scenario_validator' -Path $paths.RtpScenarioValidator -Purpose 'PERLA1 RTP scenario validator exists.'
+
+$rtpRequiredAgents = @(
+  'scenario-rtp-map-auditor',
+  'map-placement-auditor',
+  'event-flow-auditor',
+  'dialogue-continuity-auditor'
+)
+
+$rtpRequiredAgentTomls = @{}
+foreach ($agentName in $rtpRequiredAgents) {
+  $agentPath = Join-Path $paths.AgentDir ($agentName + '.toml')
+  $rtpRequiredAgentTomls[$agentName] = $agentPath
+  Require-File -Id ('required.rtp_agent.' + $agentName) -Path $agentPath -Purpose ('Required RTP/scenario project agent TOML exists: ' + $agentName)
+}
+
+$rtpScenarioSchemaFiles = @(
+  (Join-Path -Path $paths.RtpRoot -ChildPath 'schema/rtp.placements.schema.json'),
+  (Join-Path -Path $paths.RtpRoot -ChildPath 'schema/rtp.behaviors.schema.json'),
+  (Join-Path -Path $paths.RtpRoot -ChildPath 'schema/rtp.dialogues.schema.json'),
+  (Join-Path -Path $paths.RtpRoot -ChildPath 'schema/rtp.events.schema.json')
+)
+foreach ($schemaPath in $rtpScenarioSchemaFiles) {
+  Require-File -Id ('required.rtp_schema.' + ((Split-Path -Leaf $schemaPath) -replace '[^a-zA-Z0-9]+','_').Trim('_')) -Path $schemaPath -Purpose ('Required RTP scenario schema exists: ' + (Split-Path -Leaf $schemaPath))
+}
 
 $configText = Read-Text -Path $paths.PerlaConfig
 if ($null -ne $configText) {
   Add-Check -Id 'config.max_threads_12' -Severity 'P1' -Ok ($configText -match '(?m)^\s*max_threads\s*=\s*12\s*$') -Message 'Configured subagent concurrency remains max_threads = 12.' -Files @($paths.PerlaConfig)
   Add-Check -Id 'config.max_depth_1' -Severity 'P2' -Ok ($configText -match '(?m)^\s*max_depth\s*=\s*1\s*$') -Message 'Nested subagent fan-out remains capped at max_depth = 1.' -Files @($paths.PerlaConfig)
   Add-Check -Id 'config.job_timeout' -Severity 'P1' -Ok ($configText -match '(?m)^\s*job_max_runtime_seconds\s*=\s*1500\s*$') -Message 'Project agent hard timeout remains 1500 seconds, leaving margin after the 21-minute complex-step checkpoint.' -Files @($paths.PerlaConfig)
+}
+
+$rtpDocText = @(
+  Read-Text -Path $paths.PerlaIntake
+  Read-Text -Path $paths.PerlaOrchestration
+  Read-Text -Path $paths.PerlaProjectMap
+  Read-Text -Path $paths.RtpReadme
+  Read-Text -Path $paths.RtpScenarioProtocol
+) -join "`n"
+
+foreach ($agentName in $rtpRequiredAgents) {
+  $agentPath = $rtpRequiredAgentTomls[$agentName]
+  $agentText = Read-Text -Path $agentPath
+  Add-Check -Id ('rtp_auditors.read_only.' + $agentName) -Severity 'P1' -Ok ($null -ne $agentText -and $agentText -match '(?m)^\s*sandbox_mode\s*=\s*"read-only"\s*$') -Message ('Required RTP/scenario auditor is read-only: ' + $agentName) -Files @($agentPath)
+  Add-Check -Id ('rtp_auditors.no_runtime_override.' + $agentName) -Severity 'P1' -Ok ($null -ne $agentText -and ($agentText -match 'does not change runtime behavior|dormant') -and $agentText -match 'does not replace runtime validation') -Message ('Required RTP/scenario auditor cannot activate runtime behavior or replace runtime validation: ' + $agentName) -Files @($agentPath)
+  Add-Check -Id ('rtp_auditors.no_agent_substitution.' + $agentName) -Severity 'P1' -Ok ($null -ne $agentText -and $agentText -match 'does not replace asset-integrity-auditor' -and $agentText -match 'code-mapper' -and $agentText -match 'renderer-block-auditor' -and $agentText -match 'visual-qa-auditor') -Message ('Required RTP/scenario auditor does not substitute asset/code/renderer/visual auditors: ' + $agentName) -Files @($agentPath)
+  Add-Check -Id ('rtp_gate.registry_mentions.' + $agentName) -Severity 'P1' -Ok ($rtpDocText -match [regex]::Escape($agentName)) -Message ('RTP/scenario auditor is mentioned in workflow docs and RTP references: ' + $agentName) -Files @($paths.PerlaIntake, $paths.PerlaOrchestration, $paths.PerlaProjectMap, $paths.RtpReadme, $paths.RtpScenarioProtocol)
+}
+
+$rtpIntakeText = Read-Text -Path $paths.PerlaIntake
+if ($null -ne $rtpIntakeText) {
+  foreach ($agentName in $rtpRequiredAgents) {
+    Add-Check -Id ('rtp_gate.required_intake_output.' + $agentName) -Severity 'P1' -Ok ($rtpIntakeText -match ('- ' + [regex]::Escape($agentName) + ': CONSIDER/CALL/SKIP')) -Message ('Required Intake Output includes RTP/scenario auditor: ' + $agentName) -Files @($paths.PerlaIntake)
+  }
+  $rtpDomainTerms = @('sceneggiatura','placements','events','dialoghi','walkability','visibility','battle placeholders')
+  foreach ($term in $rtpDomainTerms) {
+    Add-Check -Id ('rtp_gate.domain_matrix_term.' + ($term -replace '[^a-zA-Z0-9]+','_').Trim('_')) -Severity 'P1' -Ok ($rtpIntakeText -match [regex]::Escape($term)) -Message ('RTP/scenario intake gate carries domain term: ' + $term) -Files @($paths.PerlaIntake)
+  }
+}
+
+$rtpProtocolText = Read-Text -Path $paths.RtpScenarioProtocol
+if ($null -ne $rtpProtocolText) {
+  $rtpInvariantTerms = @(
+    'Animals must not receive dialogue lines',
+    'reachable, visible',
+    'event prerequisites and effects do not create loops or dead states',
+    'explicit vs inferred',
+    'left-facing behavior uses mirror logic',
+    'Workflow Self-Expansion Circuit',
+    'tools/perla_rtp_scenario_validator.py'
+  )
+  foreach ($term in $rtpInvariantTerms) {
+    Add-Check -Id ('rtp_protocol.invariant_term.' + ($term -replace '[^a-zA-Z0-9]+','_').Trim('_')) -Severity 'P1' -Ok ($rtpProtocolText -match [regex]::Escape($term)) -Message ('RTP scenario protocol carries invariant term: ' + $term) -Files @($paths.RtpScenarioProtocol)
+  }
+}
+
+$workflowEvolutionTerms = @('Workflow Self-Expansion Circuit','missing_agent','missing_schema','missing_validator','authority_conflict','deterministic checker coverage')
+foreach ($term in $workflowEvolutionTerms) {
+  Add-Check -Id ('workflow_self_expansion.term.' + ($term -replace '[^a-zA-Z0-9]+','_').Trim('_')) -Severity 'P1' -Ok ($rtpDocText -match [regex]::Escape($term)) -Message ('Workflow self-expansion circuit carries required term: ' + $term) -Files @($paths.PerlaIntake, $paths.PerlaOrchestration, $paths.RtpScenarioProtocol)
+}
+
+foreach ($schemaPath in $rtpScenarioSchemaFiles) {
+  $schemaText = Read-Text -Path $schemaPath
+  $schemaOk = $false
+  if ($null -ne $schemaText) {
+    try {
+      $null = $schemaText | ConvertFrom-Json -ErrorAction Stop
+      $schemaOk = $true
+    } catch {
+      $schemaOk = $false
+    }
+  }
+  Add-Check -Id ('rtp_schema.valid_json.' + ((Split-Path -Leaf $schemaPath) -replace '[^a-zA-Z0-9]+','_').Trim('_')) -Severity 'P1' -Ok $schemaOk -Message ('RTP scenario schema parses as JSON: ' + (Split-Path -Leaf $schemaPath)) -Files @($schemaPath)
+}
+
+$rtpValidatorText = Read-Text -Path $paths.RtpScenarioValidator
+if ($null -ne $rtpValidatorText) {
+  $validatorTerms = @('perla.rtp.scenario.validator.v1','animal_has_dialogue','battle_placeholder_switch_requires_won_lost','derive_by_mirroring_right_assets','runtime_snapshot_validation_reserved_for_future_map_export')
+  foreach ($term in $validatorTerms) {
+    Add-Check -Id ('rtp_validator.term.' + ($term -replace '[^a-zA-Z0-9]+','_').Trim('_')) -Severity 'P1' -Ok ($rtpValidatorText -match [regex]::Escape($term)) -Message ('RTP scenario validator carries required validation term: ' + $term) -Files @($paths.RtpScenarioValidator)
+  }
+}
+
+$pythonCommand = Get-Command python -ErrorAction SilentlyContinue
+$pythonExe = $null
+if ($null -ne $pythonCommand) {
+  $pythonExe = $pythonCommand.Source
+}
+if (-not $pythonExe) {
+  $bundledPython = Join-Path -Path $env:USERPROFILE -ChildPath '.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe'
+  if (Test-Path -LiteralPath $bundledPython) {
+    $pythonExe = $bundledPython
+  }
+}
+if ($pythonExe -and (Test-Path -LiteralPath $paths.RtpScenarioValidator)) {
+  $validatorRunOk = $false
+  try {
+    $validatorOutput = & $pythonExe $paths.RtpScenarioValidator --json 2>&1
+    $validatorExit = $LASTEXITCODE
+    $validatorJson = ($validatorOutput -join "`n") | ConvertFrom-Json -ErrorAction Stop
+    $validatorRunOk = ($validatorExit -eq 0 -and $validatorJson.status -eq 'pass')
+  } catch {
+    $validatorRunOk = $false
+  }
+  Add-Check -Id 'rtp_validator.executable_static_pass' -Severity 'P1' -Ok $validatorRunOk -Message 'RTP scenario validator executes in static mode and returns pass.' -Files @($paths.RtpScenarioValidator)
+} else {
+  Add-Check -Id 'rtp_validator.python_runtime_available' -Severity 'P2' -Ok $false -Message 'Python runtime for executing the RTP scenario validator was not found in PATH or the Codex bundled runtime.' -Files @($paths.RtpScenarioValidator)
 }
 
 $heartbeatDocs = @(
@@ -696,6 +826,51 @@ if ($acceleratorText.Trim().Length -gt 0) {
   Add-Check -Id 'hooks.trust_not_forced' -Severity 'P1' -Ok ($acceleratorText -match 'cannot be forced|cannot force Codex|not necessarily trusted|not proven active' -and $acceleratorText -match 'manual workflow checker|run the workflow checker manually') -Message 'Hook trust wording states configured hooks are not proof of active trusted enforcement and defines manual fallback.' -Files $acceleratorScanFiles
   Add-Check -Id 'checker.semantic_limit' -Severity 'P1' -Ok ($acceleratorText -match 'checker_semantic_limit' -and $acceleratorText -match 'cannot prove|does not prove' -and $acceleratorText -match 'visual|rendered|user intent|agent reasoning') -Message 'Checker semantic limit is explicit: deterministic checks do not prove runtime visuals, user intent, or agent reasoning quality.' -Files $acceleratorScanFiles
   Add-Check -Id 'tooling.browser_failure_cache' -Severity 'P1' -Ok ($acceleratorText -match 'browser_failure_cache' -and $acceleratorText -match 'CreateProcessAsUserW failed: 5' -and $acceleratorText -match 'forbidden_next_action' -and $acceleratorText -match 'Playwright|headless') -Message 'Workflow records deterministic in-app Browser failures and forbids repeated bootstrap attempts while the cached fallback route is active.' -Files $acceleratorScanFiles
+
+  $runtimeRouteFiles = @(
+    $paths.PerlaAgents,
+    $paths.PerlaRunbook,
+    $paths.PerlaProjectMap,
+    $paths.PerlaBlockMap,
+    $paths.PerlaOrchestration,
+    (Join-Path $paths.AgentDir 'visual-qa-auditor.toml'),
+    (Join-Path $paths.AgentDir 'workflow-guard.toml'),
+    (Join-Path $paths.AgentDir 'launcher-sync-auditor.toml'),
+    (Join-Path $paths.AgentDir 'refactor-surgeon.toml')
+  )
+  $runtimeRouteText = @(
+    foreach ($scanPath in $runtimeRouteFiles) {
+      Read-Text -Path $scanPath
+    }
+  ) -join "`n"
+  $staleFixed8000Patterns = @(
+    'starts\s+`?AVVIA_GIOCO_CODEX_HEADLESS\.ps1`?\s+-Serve\s+on\s+port\s+`?8000`?',
+    'starts\s+AVVIA_GIOCO_CODEX_HEADLESS\.ps1\s+-Serve\s+on\s+port\s+8000',
+    'require validation through http://127\.0\.0\.1:8000/',
+    'Keep the validation target identical:\s+`http://127\.0\.0\.1:8000/',
+    'Load\s+`http://127\.0\.0\.1:8000/`\s+with a cache-busting query string',
+    'Then load\s+`http://127\.0\.0\.1:8000/`'
+  )
+  $staleFixed8000Hits = @()
+  foreach ($pattern in $staleFixed8000Patterns) {
+    if ($runtimeRouteText -match $pattern) {
+      $staleFixed8000Hits += $pattern
+    }
+  }
+  Add-Check -Id 'runtime_route.validator_printed_url' -Severity 'P1' -Ok ($runtimeRouteText -match 'validator-printed|URL printed by `VALIDA_RUNTIME_SCREENSHOT_HEADLESS\.ps1`|URL printed by VALIDA_RUNTIME_SCREENSHOT_HEADLESS\.ps1' -and $runtimeRouteText -match 'fallback port|fallback ports|known Codex ports') -Message 'Runtime validation workflow uses the validator-printed URL and documents fallback ports instead of a fixed Codex-only port.' -Files $runtimeRouteFiles
+  Add-Check -Id 'runtime_route.no_stale_fixed_codex_8000' -Severity 'P1' -Ok ($staleFixed8000Hits.Count -eq 0) -Message ('Runtime validation workflow avoids stale Codex-only fixed-8000 wording. Hits: ' + (($staleFixed8000Hits | Sort-Object) -join '; ')) -Files $runtimeRouteFiles
+
+  $validatorScriptPath = Join-Path $perlaRoot 'VALIDA_RUNTIME_SCREENSHOT_HEADLESS.ps1'
+  $validatorScriptText = Read-Text -Path $validatorScriptPath
+  $cleanupDocsText = @(
+    Read-Text -Path $paths.PerlaAgents
+    Read-Text -Path $paths.PerlaRunbook
+    Read-Text -Path $paths.PerlaOrchestration
+    Read-Text -Path (Join-Path $paths.AgentDir 'launcher-sync-auditor.toml')
+  ) -join "`n"
+  Add-Check -Id 'runtime_route.validator_created_server_cleanup' -Severity 'P1' -Ok ($null -ne $validatorScriptText -and $validatorScriptText -match 'Stop-CreatedHeadlessServer' -and $validatorScriptText -match 'WaitForExit\(3000\)' -and $validatorScriptText -match 'validation server stopped') -Message 'Headless validator stops and verifies the server PID it created before exit.' -Files @($validatorScriptPath)
+  Add-Check -Id 'runtime_route.server_cleanup_boundary' -Severity 'P1' -Ok ($cleanupDocsText -match 'pre-existing manual/user server|pre-existing manual/user servers' -and $cleanupDocsText -match 'recognized PERLA/Codex server processes' -and $cleanupDocsText -match 'no longer useful') -Message 'Workflow documents the server cleanup boundary: close only no-longer-useful recognized PERLA/Codex servers, not arbitrary user/manual processes.' -Files @($paths.PerlaAgents, $paths.PerlaRunbook, $paths.PerlaOrchestration, (Join-Path $paths.AgentDir 'launcher-sync-auditor.toml'))
+
   Add-Check -Id 'subagent_lifecycle.close_at_task_completion' -Severity 'P1' -Ok ($acceleratorText -match 'Team Leader task completion' -and $acceleratorText -match 'not close|Do not close' -and $acceleratorText -match 'internal step') -Message 'Subagent lifecycle says to close at Team Leader task completion or packet completion/obsolescence, not merely after an internal step.' -Files $acceleratorScanFiles
   Add-Check -Id 'subagent_lifecycle.slot_hygiene' -Severity 'P1' -Ok ($acceleratorText -match 'subagent_slot_hygiene' -and $acceleratorText -match 'pre_spawn|spawning new agents|spawning more agents|before spawning' -and $acceleratorText -match 'integrated/deferred/discarded|integrate/defer/discard' -and $acceleratorText -match 'useful.*open|useful.*agents') -Message 'Subagent lifecycle requires slot hygiene before new spawns/waits/finalization and preserves useful agents until evidence is integrated/deferred/discarded.' -Files $acceleratorScanFiles
 

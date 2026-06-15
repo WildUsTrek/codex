@@ -1,7 +1,7 @@
 ﻿# PERLA1 Project Map
 
-Last updated: 2026-06-14
-Current runtime build observed in `index.html`: `PERLA1_V283_DEFERRED_CANOPY_FOREGROUND_DEPTH_SAFE_LOCAL`
+Last updated: 2026-06-15
+Current runtime build observed in `index.html`: `PERLA1_V292_REPLAY_RAIN_GUARD_COLUMN_OCCLUSION_SAFE_LOCAL`
 
 This file is the fast technical map for agents. Use it to orient before touching runtime code, and update it when structure, entrypoints, validation workflow, dependencies, or major renderer contracts change.
 
@@ -22,7 +22,7 @@ This file is the fast technical map for agents. Use it to orient before touching
 | Context budget | `PERLA1_CONTEXT_BUDGET.md` | Rules for inspecting the monolithic runtime without flooding the Team Leader context. Limits handoff volume, not useful code inspection. |
 | Symbol index | `PERLA1_SYMBOL_INDEX.md` | Current high-value symbol orientation map. Verify with `rg` before patching. |
 | Task intake protocol | `PERLA1_TASK_INTAKE_PROTOCOL.md` | Required startup gate for selecting `CALL`/`CONSIDER`/`SKIP` agents and forcing guard/consistency/watchdog/skeptic/refactor consideration. |
-| Runtime test runbook | `PERLA1_RUNTIME_TEST_RUNBOOK.md`, `VALIDA_RUNTIME_SCREENSHOT_HEADLESS.ps1` | Practical Windows validation path: Codex headless startup with `-StartLauncher`, then screenshot through system Chrome/Edge. |
+| Runtime test runbook | `PERLA1_RUNTIME_TEST_RUNBOOK.md`, `VALIDA_RUNTIME_SCREENSHOT_HEADLESS.ps1` | Practical Windows validation path: Codex headless startup with `-StartLauncher`, automatic fallback ports when `8000` is blocked, then screenshot through system Chrome/Edge. |
 | Static structure analyzer | `tools/perla_runtime_analyzer.mjs` | Extracts inline JS, parse-checks it, maps functions/globals, classifies blocks, and emits a conservative dependency graph without external npm installs. |
 | Local structural CI | `tools/perla_local_ci.ps1`, `tests/perla_regression_suite.json` | Runs parser/structure/regression-symbol checks and can optionally run runtime screenshot smoke poses. |
 | Project backup tool | `tools/perla_project_backup.ps1` | Creates timestamped zip backups of the full synchronized repository folder `C:\Users\ASUS\Documents\GitHub\codex`, excluding only `PERLA1\01_GIOCO_PRONTO_LOCAL_TEST\assets\rtp`. User backups go to `C:\Users\ASUS\Documents\GitHub\backup\utente`; automatic task backups go to `C:\Users\ASUS\Documents\GitHub\backup\automatici`. Automatic retention deletes only files older than 2 days and only when `automatici` already contains more than 10 files. |
@@ -140,13 +140,19 @@ PERLA1 is monolithic enough that agents must avoid copying broad file dumps into
 | V279/V280 | retained support helpers | Support-span, door-span, and near-door guard helpers remain available; the visual authority moved to V281. |
 | V281/V281S/V281T/V281U/V281V/V281W/V281X | current modern roof contract | Reception/bath roof single authority: world-space primitive faces from `roofSegments`, exclusive fallback to V265/V277 only when primitive ownership is not active, no V278 cap overlay. V281S stabilizes owner 1 far/portal gables, V281T adds owner 2 door/opposite gable keeps, V281U promotes owner2 to the same full-surface authority class as reception, V281V suppresses owner2 exterior decorative edge lines, V281W suppresses owner2 exterior fascia/gronda faces, and V281X applies owner2 flush wall join plus V281-local foreground-top rejection for unrelated hedge/wall tops. |
 | V282 | dormant/off in current V281 contract | Reception/bath portal/slab experiments retained for diagnostics but runtime-off after visual regressions. Do not claim V282 portal/ceiling readiness from this base. |
-| V283 | current contract (open canopy + replay gate) | Local fix for legacy/open canopy owner `0` rendering: `drawDeferredCanopySegmentsV121` clips against V227 foreground wall/hedge ranges so foreground wins, while `ceilingSpriteClipY` preserves sprites that are clearly closer than canopy ceiling depth. V221 open-canopy replay rects are foreground-clipped if a legacy replay path is active, and V222 world-particles modes disable that legacy replay by prefix (`world_particles*`). Does not re-enable V266/V267 and does not touch V281 owner 1/2 roof authority. Current build: `PERLA1_V283_DEFERRED_CANOPY_FOREGROUND_DEPTH_SAFE_LOCAL`. |
+| V283 | active contract (open canopy + replay gate) | Local fix for legacy/open canopy owner `0` rendering: `drawDeferredCanopySegmentsV121` clips against V227 foreground wall/hedge ranges so foreground wins, while `ceilingSpriteClipY` preserves sprites that are clearly closer than canopy ceiling depth. V221 open-canopy replay rects are foreground-clipped if a legacy replay path is active, and V222 world-particles modes disable that legacy replay by prefix (`world_particles*`). Does not re-enable V266/V267 and does not touch V281 owner 1/2 roof authority. |
+| V284 | active diagnostic contract (wall-layer/sprite occlusion proof) | Adds an opt-in visual/debug diagnostic for the V227 wall-layer sprite occlusion stack. Default mode is `off`; `perlaWallLayerDebugModeV284Set('direct'|'extra'|'sprite'|'seal'|'all')` overlays direct wall ranges, extra wall ranges, sprite-hidden spans, and ground-seal bands separately. It records direct-vs-extra counters without changing wall, roof, canopy, rain, map, collision, or occlusion decisions. |
+| V285 | active sprite occlusion baseline | Fixes the V233 rollback mismatch where undrawn V227 extra wall layers still hid sprites. Sprite occlusion now follows drawn wall authority: direct wall ranges still occlude sprites, but `v227_extra_wall_layer` ranges are skipped for sprite clipping while V233 keeps the far-wall extra draw disabled. Canopy/rain consumers keep their existing V227 range semantics. |
+| V287 | active targeted reception wall sprite occlusion contract | The far west reception wall remains visually drawn by the normal wallcast and keeps normal wall buffers, but it is removed from the V227 sprite-clipping range list only for the long bar/north-field east-facing repro where that wall was incorrectly masking tamarisk/tree sprites. Scope: reception wood wall tex `2`, vertical west/east reception boundary cells from gameplay X `36..44`, Y `2..8`, camera in the north/bar corridor, long-distance east view. V286-style visual wall suppression is not present in the runtime. |
+| V288/V289 | active reception direct/foreground tree sprite occlusion contracts | Narrow sprite-occlusion follow-ups for direct reception wall/tree/tamarisk masking. They preserve wall pixels, map/collision, and primary wallcast buffers while restricting invalid sprite clipping authority. |
+| V290/V291 | retained inactive diagnostics | V291 pre-wall restore is intentionally disabled after visual QA showed it could hide the real replay-order bug by copying pre-wall pixels. Do not use positive V291 restore counters as proof for the tamarisk/reception wall issue. |
+| V292 | current contract | Fixes the accepted cause directly: `drawV220LocalWallsAfterV216Cover` is gated to active rain/V216 replay context, and `game_room_column` canopy sprites are hidden only when an owner-1 reception wall is in front of them, using either a direct V227 wall layer or the already captured `wallColumnV218` rects as sprite occlusion authority. Current build: `PERLA1_V292_REPLAY_RAIN_GUARD_COLUMN_OCCLUSION_SAFE_LOCAL`. |
 
 ## V281 Modern Roof Primitive Authority Contract
 
 Current expected behavior for modern reception/bath roof/eave work:
 
-- `PERLA_BUILD_ID` is `PERLA1_V283_DEFERRED_CANOPY_FOREGROUND_DEPTH_SAFE_LOCAL`.
+- `PERLA_BUILD_ID` is `PERLA1_V292_REPLAY_RAIN_GUARD_COLUMN_OCCLUSION_SAFE_LOCAL`.
 - V281 adds `drawStableModernOwnerRoofPrimitiveV281` as the single reception/bath roof authority when preflight accepts the roof.
 - Eligible owner 1/2 roofSegments are skipped in `drawSlopedRoofLayer2_5D`, `drawSlopedRoofGableCaps2_5D`, V272, V274, and the V278 integrated cap. During V281 QA, `PERLA_V281_QA_DISABLE_OWNER12_LEGACY_FALLBACK` also blocks owner 1/2 legacy fallback so visual proof cannot be masked by the old sampler.
 - The primitive renderer uses real `collectModernRoofFaces` world-space faces, `roofVisibleAt`, and `roofSelfDepthWriteBudgetBlockV200`; it is not a screen overlay or fake band.
@@ -160,6 +166,12 @@ Current expected behavior for modern reception/bath roof/eave work:
 - V281W suppresses owner2 exterior fascia/gronda faces in full-surface mode, matching the reception behavior and removing the thick dark strip between wall and roof; roof top and gable faces remain active.
 - V281X extends the reception flush wall join to owner2 full-surface roofs, removing the residual discontinuous warm wall/top pixels at the bath wall/roof junction without drawing a replacement seam. It also makes owner2 columns with unrelated foreground hedge/wall tops fall back from fast-span to per-pixel visibility and rejects only the near-eave/top foreground overlap, avoiding the old V232 fake roof support clip.
 - V283 is not a modern roof renderer. It only guards legacy/open canopy owner `0` spans from `drawDeferredCanopySegmentsV121`: foreground walls/hedges in V227 ranges reject canopy sub-runs, and sprite foreground depth prevents `ceilingSpriteClipY` from clipping sprites clearly in front of the canopy. If the legacy V221 local replay path is active, V283 clips open-canopy replay rects against foreground walls/sprites; current V222 world-particles rain/storm modes disable legacy V216 replay by `world_particles*` prefix.
+- V284 is diagnostic-only. It annotates the existing V227 wall-layer occlusion ranges with direct/extra roles, exposes the opt-in wall-layer debug overlay, and records which role hides sprite pixels. It must not be treated as the functional fix for the wall-in-front-of-sprites issue.
+- V285 is the functional sprite-only baseline for the V233/V227 mismatch. It does not delete extra ranges and does not change canopy/rain consumers; it only prevents undrawn V227 extra wall layers from clipping sprite spans.
+- V287 is the targeted fix for the reception wall/tamarisk repro. It does not suppress wall drawing, does not mutate map/collision, and does not alter the primary wallcast `ZBuffer`; it only prevents the identified far west reception wall range from being inserted as a sprite clipping authority in `WallOcclusionRangesV227`.
+- V288/V289 are narrow reception direct/foreground tree sprite-occlusion refinements. They preserve wall drawing, map/collision, and primary wall buffers.
+- V290/V291 are retained as inactive diagnostics; V291 restore must stay disabled for this bug because it hides the order problem instead of fixing the layer authority.
+- V292 gates local V220 wall replay to active rain/V216 replay context and adds a sprite-span guard for `game_room_column` only when it is behind an owner-1 reception wall layer or matching captured `wallColumnV218` wall rect.
 - Door openings are bridged from `roofSegments[].doors` projection only; generic same-owner screen gaps are not authority.
 - V278 cap pixels must be zero in normal V281 runtime; `modernStableRoofPrimitiveSkippedIntegratedCapV281` proves the cap was not drawn.
 - If primitive preflight rejects a roof, fallback is exclusive through the existing V265/V277 path; no cap overlay is added on top.
@@ -200,6 +212,11 @@ Expected counters in affected V281 roof views:
 - `deferredCanopySpriteForegroundPreservedV283` may be positive when a sprite is closer than canopy ceiling depth
 - `v221LocalV216OcclusionPrimaryDisabledByV222 === true` and `legacyV216ReplayPrimaryUsedV222 === false` in V222 world-particles rain/storm poses
 - `deferredCanopyReplayForegroundWallRejectedV283` / `deferredCanopyReplaySpriteForegroundRejectedV283` are the expected proof counters only if a legacy V221 open-canopy replay path is active
+- `wallLayerSpriteOcclusionDiagnosticV284 === true` and `wallLayerDebugEnabledV284 === false` by default
+- When the V284 overlay is explicitly enabled for wall/sprite occlusion proof, compare `spriteHiddenByDirectLayerV284`, `spriteHiddenByExtraLayerV284`, `spriteGroundSealDirectPixelsV284`, and `spriteGroundSealExtraPixelsV284` before proposing any layer disablement
+- Under V285, expected proof for undrawn extra wall-layer safety is `spriteHiddenByExtraLayerV284 === 0`, `spriteGroundSealExtraPixelsV284 === 0`, and positive `spriteOcclusionUndrawnExtraLayerSkippedPixelsV285`; `wallLayerExtraRangesV284` may remain positive because the diagnostic still shows skipped non-sprite ranges.
+- Under V287, expected proof at display X `9.08` / Y `6.28` east and display X `14.53` / Y `5.21` east is positive `receptionFarWestWallSpriteLayerSkippedV287`, `receptionFarWestWallVisualPreservedV287 === true`, `spriteHiddenByExtraLayerV284 === 0`, and `spriteGroundSealExtraPixelsV284 === 0`; the control view at display X `16.35` / Y `5.31` east should keep `receptionFarWestWallSpriteLayerSkippedV287 === 0`.
+- Under V292, expected proof at display X `9.08` / Y `6.28` east is `v220WallReplayAfterV216 === false`, `v220WallReplayRects === 0`, `v220WallReplayReason === "disabled_v292_no_active_rain_or_v216_replay"`, `tamariskWallForegroundRestorePixelsV291 === 0`, and positive `v292GameRoomColumnCapturedWallHiddenPixels` or `v292GameRoomColumnClosedWallHiddenPixels` only where the `game_room_column` sprite is behind owner-1 reception wall authority.
 - `v277RoofContinuityFillLocalSafe === true`
 - `v278ModernIntegratedRoofCapSafe === true`
 - `v279ModernRoofCapProfileSafe === true`
@@ -244,9 +261,9 @@ For rendered runtime changes:
 
 1. Run the local static checks: `powershell -NoProfile -ExecutionPolicy Bypass -File .\PERLA1\tools\perla_local_ci.ps1`.
 2. Parse inline JS from `01_GIOCO_PRONTO_LOCAL_TEST/index.html`. The local CI wrapper does this through `tools/perla_runtime_analyzer.mjs`.
-3. For Codex/agent validation, run `VALIDA_RUNTIME_SCREENSHOT_HEADLESS.ps1 -StartLauncher`, which starts `AVVIA_GIOCO_CODEX_HEADLESS.ps1 -Serve` when no server is responding. For manual play, use `AVVIA_GIOCO_WINDOWS_SENZA_PYTHON.bat`.
+3. For Codex/agent validation, run `VALIDA_RUNTIME_SCREENSHOT_HEADLESS.ps1 -StartLauncher`, which starts `AVVIA_GIOCO_CODEX_HEADLESS.ps1 -Serve` when no server is responding and falls back from `8000` to the known Codex ports. For manual play, use `AVVIA_GIOCO_WINDOWS_SENZA_PYTHON.bat`.
 4. Prefer `VALIDA_RUNTIME_SCREENSHOT_HEADLESS.ps1 -StartLauncher` for automated screenshot/counter validation on this Windows setup.
-5. Load `http://127.0.0.1:8000/` with a cache-busting query, for example `http://127.0.0.1:8000/?v=<build>_<timestamp>`.
+5. Load the URL printed by `VALIDA_RUNTIME_SCREENSHOT_HEADLESS.ps1` with a cache-busting query. It is normally `http://127.0.0.1:8000/`, but may be a fallback port when `8000` is blocked.
 6. Confirm page title and `window.PERLA_BUILD_ID`.
 7. Check console/page errors.
 8. Use `window.__PERLA_DEBUG__.setPlayerForDebug(...)` for deterministic poses.
@@ -302,7 +319,7 @@ Known useful local tools:
 - `PERLA1_TASK_INTAKE_PROTOCOL.md` for mandatory agent selection before meaningful work.
 - `AVVIA_GIOCO_CODEX_HEADLESS.ps1` for deterministic Codex server startup without opening a browser.
 - Bundled Node.js from Codex workspace dependencies for JS parse checks and Playwright/Chrome validation.
-- `powershell -NoProfile -ExecutionPolicy Bypass -File .\PERLA1\VALIDA_RUNTIME_SCREENSHOT_HEADLESS.ps1 -StartLauncher ...` for the known reliable runtime screenshot method.
+- `powershell -NoProfile -ExecutionPolicy Bypass -File .\PERLA1\VALIDA_RUNTIME_SCREENSHOT_HEADLESS.ps1 -StartLauncher ...` for the known reliable runtime screenshot method, including built-in fallback ports and bundled Node/Playwright resolution.
 - System Chrome/Edge headless through Playwright. The bundled Playwright browser may be missing, so use installed Chrome/Edge.
 - `tools/perla_runtime_analyzer.mjs` for recurring static structure analysis and dependency graph generation.
 - `tools/perla_local_ci.ps1` for local static CI, with `-RuntimeScreenshots` when screenshot smoke validation is needed.
@@ -326,6 +343,10 @@ Project-scoped Codex agents:
 | `renderer-block-auditor` | `read-only` | Audits `drawWorld` render order, depth buffers, and cross-block renderer risks. |
 | `visual-qa-auditor` | `read-only` | Defines and inspects screenshot-based validation, deterministic poses, build id, console health, and counters. |
 | `asset-integrity-auditor` | `read-only` | Checks asset manifest entries, file presence, relative paths, and stale cache risks. |
+| `scenario-rtp-map-auditor` | `read-only` | Audits sceneggiatura/gameplay/RTP identity mapping, source-vs-inference labels, future scenario manifests, placeholders, and no-paradox data readiness. |
+| `map-placement-auditor` | `read-only` | Audits placements, coordinates, zones, schedules, walkability, visibility, route reachability, collision, sprite density, and raycaster readability. |
+| `event-flow-auditor` | `read-only` | Audits event graph, prerequisites/effects, battle placeholders, success/failure branches, state loops, and no-softlock risks. |
+| `dialogue-continuity-auditor` | `read-only` | Audits speaker identity, portrait policy, character-only dialogue, dialogueRefs, tone, and continuity with events/placements. |
 | `launcher-sync-auditor` | `read-only` | Checks launcher/server/sync scripts for correct route, labels, and path-relative portability. |
 | `safe-fixer` | `workspace-write` | Performs narrow approved runtime patches after diagnosis is clear. Write scope must be explicit. |
 | `map-maintainer` | `workspace-write` | Updates `PERLA1_PROJECT_MAP.md`, `PERLA1_BLOCK_MAP.md`, `PERLA1_CONTEXT_BUDGET.md`, `PERLA1_SYMBOL_INDEX.md`, and `PERLA1_TASK_INTAKE_PROTOCOL.md` only when factual maintenance is needed. |
@@ -347,6 +368,8 @@ Multi-agent orchestration notes:
 - Use `hook_trust_check` before relying on hooks as enforcement evidence. If trust is unknown, hooks are configured but not proven active; use manual workflow checker output plus required guard/audit evidence.
 - Keep `checker_semantic_limit` explicit: deterministic checks catch mechanically inspectable drift, not rendered behavior, full plan semantics, user intent, or agent reasoning quality.
 - Use a full `workflow-consistency-auditor` audit after workflow-policy `.md`/TOML/agent changes and before sync when those policy files changed meaningfully.
+- For RTP/scenario work, `scenario-rtp-map-auditor`, `map-placement-auditor`, `event-flow-auditor`, and `dialogue-continuity-auditor` are mandatory domain auditors when their signals match. They are read-only and do not replace asset integrity, code mapping, renderer, visual QA, workflow guard, workflow consistency, or runtime validation.
+- If a task exposes a structural workflow gap, loop, authority conflict, missing schema/validator/agent, runtime boundary conflict, or source-of-truth ambiguity, use the Workflow Self-Expansion Circuit from `PERLA1_TASK_INTAKE_PROTOCOL.md`: stop the protected step, run the guard/auditor, patch the smallest owning workflow layer, add deterministic checker coverage when possible, and validate the workflow.
 - Extra temporary agents are read-only by default and must have a concrete bounded task.
 - A write agent cannot validate its own patch as complete; validation must be reviewed separately.
 - Use `workflow-guard` as a circuit breaker when the same method fails twice, when a known deterministic tool failure appears, or when the next step would not produce new evidence.
@@ -367,10 +390,10 @@ Multi-agent orchestration notes:
 
 Browser validation notes:
 
-- Browser validation requires the PERLA1 local server first. For Codex/agents, the normal startup entry point is `VALIDA_RUNTIME_SCREENSHOT_HEADLESS.ps1 -StartLauncher`, backed by `AVVIA_GIOCO_CODEX_HEADLESS.ps1`. For manual user play, use `AVVIA_GIOCO_WINDOWS_SENZA_PYTHON.bat`.
+- Browser validation requires the PERLA1 local server first. For Codex/agents, the normal startup entry point is `VALIDA_RUNTIME_SCREENSHOT_HEADLESS.ps1 -StartLauncher`, backed by `AVVIA_GIOCO_CODEX_HEADLESS.ps1` and automatic fallback ports. For manual user play, use `AVVIA_GIOCO_WINDOWS_SENZA_PYTHON.bat`.
 - On this Windows setup, the proven method is `VALIDA_RUNTIME_SCREENSHOT_HEADLESS.ps1`: Playwright packages from Codex runtime plus installed system Chrome/Edge.
 - Treat the in-app Browser as secondary unless the user specifically asks for it or the headless method stops working.
-- If Browser fails due sandbox/Windows permission issues, use the runbook method and keep the target URL identical.
+- If Browser fails due sandbox/Windows permission issues, use the runbook method and keep the target URL identical to the validator-printed URL, including fallback port and cache-busting query.
 - Known Browser tooling failure: `CreateProcessAsUserW failed: 5`. Treat it as a Codex Browser/Windows sandbox launch failure, not as evidence that the PERLA1 runtime failed.
 - Use `browser_failure_cache` for deterministic in-app Browser launch failures within a task/session. After the first cached failure, retrying the in-app Browser bootstrap is forbidden unless the user explicitly asks, browser/tooling state changed, a new Codex session has no current failure evidence, or the Playwright/headless route fails and comparison is needed.
 - If the runbook/headless validation fails, hand off manual validation with exact URL, expected build id, debug poses, screenshot targets, console checks, and counters/API calls.

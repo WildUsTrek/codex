@@ -17,6 +17,15 @@ Required references:
 - this file
 - `PERLA1/report/SCENEGGIATURA_GAMEPLAY_MAPPING_DRAFT_2026-06-14.md` when using the first supplied sceneggiatura/GDD/storyboard source set
 
+Required specialist gate:
+
+- `scenario-rtp-map-auditor` is `CALL` before and after scenario/RTP identity mapping, entity discovery, source priority, or future manifest planning.
+- `map-placement-auditor` is `CALL` before and after placement, coordinate, zone, walkability, visibility, route, density, or schedule-location decisions.
+- `event-flow-auditor` is `CALL` before and after event graph, quest, battle placeholder, prerequisite/effect, success/failure, or no-softlock decisions.
+- `dialogue-continuity-auditor` is `CALL` before and after dialogue, speaker, portrait policy, line continuity, or dialogue/event link decisions.
+
+These auditors are read-only domain checks. They do not replace `asset-integrity-auditor`, `code-mapper`, `renderer-block-auditor`, `visual-qa-auditor`, `workflow-guard`, or `workflow-consistency-auditor`, and they do not make dormant manifests active runtime data.
+
 ## Core Principle
 
 The scenario/gameplay input is the design source. The runtime map is the spatial constraint. The RTP manifest is the identity/asset source.
@@ -39,6 +48,23 @@ assets/rtp/manifest/
 ```
 
 These files must remain dormant until `index.html` or future runtime modules explicitly load them.
+
+Minimum schemas for those future manifests live in:
+
+```text
+assets/rtp/schema/rtp.placements.schema.json
+assets/rtp/schema/rtp.behaviors.schema.json
+assets/rtp/schema/rtp.dialogues.schema.json
+assets/rtp/schema/rtp.events.schema.json
+```
+
+Static validation lives in:
+
+```text
+PERLA1/tools/perla_rtp_scenario_validator.py
+```
+
+Run it after creating or changing any future `rtp.placements.json`, `rtp.behaviors.json`, `rtp.dialogues.json`, or `rtp.events.json` file. In static mode it verifies manifest parseability, ID references, role/entity-type compatibility, no animal dialogues, portrait policy, explicit/inferred labeling, schedule conflicts, battle placeholder branches, no physical left-facing duplicate assets, and mirror-derived left-facing policy. It does not prove runtime coordinates, walkability, visibility, collision, or final rendered behavior.
 
 ## Entity Classification
 
@@ -247,6 +273,21 @@ Before declaring a scenario/gameplay mapping ready, validate:
 - sprite density remains reasonable for raycaster performance;
 - left-facing behavior uses mirror logic and does not create duplicate left assets;
 - runtime integration changes still require the normal PERLA1 validation ladder.
+
+## Workflow Self-Expansion Circuit
+
+When a scenario/RTP/event/dialogue/placement task exposes a structural workflow limit, loop, missing checker rule, authority ambiguity, or cross-document conflict, do not continue by assumption. Classify and repair the workflow before the next protected step.
+
+Required circuit:
+
+1. Classify the anomaly: `missing_agent`, `missing_schema`, `missing_validator`, `doc_drift`, `authority_conflict`, `runtime_boundary_conflict`, `loop_or_softlock`, `validation_gap`, or `source_of_truth_gap`.
+2. Stop the unsafe protected step: no runtime integration, readiness claim, sync, or final event mapping approval until the anomaly is handled or explicitly reported as blocked.
+3. Call `workflow-guard` and `workflow-consistency-auditor` for workflow anomalies; call the relevant RTP domain auditor for the affected data domain.
+4. Apply the smallest durable fix: update the protocol, schema, validator, TOML agent, intake gate, orchestration file, or project map that actually owns the missing rule.
+5. Add deterministic checker coverage when the issue is mechanically inspectable.
+6. Preserve the dormant/runtime boundary: a workflow expansion may add rules, docs, schemas, or validators, but it must not silently activate runtime loading.
+7. Validate with `tools/perla_codex_workflow_check.ps1` and, when future scenario manifests exist, with `tools/perla_rtp_scenario_validator.py`.
+8. If a rule would grant new write authority, bypass user approval, or create a circular validator/approver relationship, stop for the user instead of self-approving.
 
 ## Acceptance Checklist
 

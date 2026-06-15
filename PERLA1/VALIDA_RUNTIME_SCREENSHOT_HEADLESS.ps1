@@ -6,47 +6,131 @@ param(
   [int]$Width = 1280,
   [int]$Height = 800,
   [string]$OutputPath = (Join-Path $env:TEMP "perla_runtime_screenshot.png"),
+  [int]$Port = 8000,
+  [int[]]$FallbackPorts = @(8787, 8081, 5179, 9001, 43210),
   [switch]$StartLauncher
 )
 
 $ErrorActionPreference = "Stop"
 $Root = Split-Path -Parent $MyInvocation.MyCommand.Path
 $HeadlessLauncher = Join-Path $Root "AVVIA_GIOCO_CODEX_HEADLESS.ps1"
-$Url = "http://127.0.0.1:8000/?v=headless_runtime_$([DateTimeOffset]::Now.ToUnixTimeMilliseconds())"
+$SelectedPort = $Port
+$Url = $null
 $StartedHeadlessServer = $false
 $HeadlessServerProcess = $null
 
+function Get-CandidatePorts {
+  $seen = @{}
+  $ports = @($Port) + @($FallbackPorts)
+  foreach ($candidate in $ports) {
+    if ($candidate -le 0 -or $candidate -gt 65535) { continue }
+    $key = [string]$candidate
+    if ($seen.ContainsKey($key)) { continue }
+    $seen[$key] = $true
+    $candidate
+  }
+}
+
+function New-PerlaRuntimeUrl {
+  param([int]$CheckPort)
+  return "http://127.0.0.1:$CheckPort/?v=headless_runtime_$([DateTimeOffset]::Now.ToUnixTimeMilliseconds())"
+}
+
 function Test-PerlaServer {
+  param([int]$CheckPort)
   try {
-    $r = Invoke-WebRequest -Uri "http://127.0.0.1:8000/?health_codex=1" -UseBasicParsing -TimeoutSec 2
+    $r = Invoke-WebRequest -Uri "http://127.0.0.1:$CheckPort/?health_codex=1" -UseBasicParsing -TimeoutSec 2
     return ($r.StatusCode -ge 200 -and $r.StatusCode -lt 500 -and $r.Content -match "PERLA_BUILD_ID|__PERLA_DEBUG__|PERLA1")
   } catch {
     return $false
   }
 }
 
-if (!(Test-PerlaServer)) {
-  if ($StartLauncher) {
-    if (!(Test-Path -LiteralPath $HeadlessLauncher)) { throw "Codex headless launcher not found: $HeadlessLauncher" }
-    Remove-Item -LiteralPath (Join-Path $Root "AVVIO_GIOCO_CODEX_HEADLESS_READY.txt") -Force -ErrorAction SilentlyContinue
-    $HeadlessServerProcess = Start-Process -FilePath "powershell.exe" -ArgumentList @(
-      "-NoProfile",
-      "-ExecutionPolicy", "Bypass",
-      "-File", "`"$HeadlessLauncher`"",
-      "-Serve",
-      "-Port", "8000"
-    ) -WorkingDirectory $Root -WindowStyle Hidden -PassThru
-    $StartedHeadlessServer = $true
-    $ready = $false
-    for ($i = 0; $i -lt 24; $i++) {
-      Start-Sleep -Milliseconds 500
-      if (Test-PerlaServer) { $ready = $true; break }
-    }
-    if (!$ready) { throw "PERLA1 server did not respond after launching $HeadlessLauncher -Serve" }
+function Stop-CreatedHeadlessServer {
+  if (!$StartedHeadlessServer -or !$HeadlessServerProcess) { return }
+
+  if (!$HeadlessServerProcess.HasExited) {
+    Stop-Process -Id $HeadlessServerProcess.Id -Force -ErrorAction SilentlyContinue
+    try {
+      [void]$HeadlessServerProcess.WaitForExit(3000)
+    } catch {}
+  }
+
+  $stillRunning = Get-Process -Id $HeadlessServerProcess.Id -ErrorAction SilentlyContinue
+  if ($stillRunning) {
+    Write-Warning "PERLA1 headless server PID $($HeadlessServerProcess.Id) is still running after cleanup attempt."
   } else {
-    throw "PERLA1 server is not responding. Start AVVIA_GIOCO_WINDOWS_SENZA_PYTHON.bat manually, or rerun with -StartLauncher to use AVVIA_GIOCO_CODEX_HEADLESS.ps1."
+    Write-Host "PERLA1 validation server stopped: PID $($HeadlessServerProcess.Id)"
   }
 }
+
+$candidatePorts = @(Get-CandidatePorts)
+$serverReady = $false
+if (Test-PerlaServer -CheckPort $Port) {
+  $SelectedPort = $Port
+  $serverReady = $true
+} elseif (!$StartLauncher) {
+  foreach ($candidatePort in $candidatePorts) {
+    if ($candidatePort -eq $Port) { continue }
+    if (Test-PerlaServer -CheckPort $candidatePort) {
+      $SelectedPort = $candidatePort
+      $serverReady = $true
+      break
+    }
+  }
+}
+
+if (!$serverReady) {
+  if ($StartLauncher) {
+    if (!(Test-Path -LiteralPath $HeadlessLauncher)) { throw "Codex headless launcher not found: $HeadlessLauncher" }
+    $ready = $false
+
+    foreach ($candidatePort in $candidatePorts) {
+      if ($candidatePort -ne $Port -and (Test-PerlaServer -CheckPort $candidatePort)) {
+        Write-Host "Skipping existing PERLA-like fallback server on port $candidatePort; -StartLauncher requires a fresh fallback server."
+        continue
+      }
+
+      Remove-Item -LiteralPath (Join-Path $Root "AVVIO_GIOCO_CODEX_HEADLESS_READY.txt") -Force -ErrorAction SilentlyContinue
+      $HeadlessServerProcess = Start-Process -FilePath "powershell.exe" -ArgumentList @(
+        "-NoProfile",
+        "-ExecutionPolicy", "Bypass",
+        "-File", "`"$HeadlessLauncher`"",
+        "-Serve",
+        "-Port", "$candidatePort"
+      ) -WorkingDirectory $Root -WindowStyle Hidden -PassThru
+      $StartedHeadlessServer = $true
+
+      for ($i = 0; $i -lt 24; $i++) {
+        Start-Sleep -Milliseconds 500
+        if (Test-PerlaServer -CheckPort $candidatePort) {
+          $SelectedPort = $candidatePort
+          $ready = $true
+          break
+        }
+        if ($HeadlessServerProcess.HasExited) { break }
+      }
+
+      if ($ready) { break }
+
+      if ($HeadlessServerProcess -and !$HeadlessServerProcess.HasExited) {
+        Stop-Process -Id $HeadlessServerProcess.Id -Force -ErrorAction SilentlyContinue
+      }
+      $HeadlessServerProcess = $null
+    }
+
+    if (!$ready) {
+      $triedPorts = ($candidatePorts -join ", ")
+      throw "PERLA1 server did not respond after launching $HeadlessLauncher -Serve. Tried ports: $triedPorts"
+    }
+  } else {
+    $triedPorts = ($candidatePorts -join ", ")
+    throw "PERLA1 server is not responding on ports $triedPorts. Start AVVIA_GIOCO_WINDOWS_SENZA_PYTHON.bat manually, or rerun with -StartLauncher to use AVVIA_GIOCO_CODEX_HEADLESS.ps1."
+  }
+}
+
+$Url = New-PerlaRuntimeUrl -CheckPort $SelectedPort
+Write-Host "PERLA1 validation URL: $Url"
 
 $Node = Join-Path $env:USERPROFILE ".cache\codex-runtimes\codex-primary-runtime\dependencies\node\bin\node.exe"
 $NodeRoot = Join-Path $env:USERPROFILE ".cache\codex-runtimes\codex-primary-runtime\dependencies\node"
@@ -151,8 +235,8 @@ try {
   & $Node $JsPath
   $nodeExit = $LASTEXITCODE
 } finally {
-  if ($StartedHeadlessServer -and $HeadlessServerProcess) {
-    Stop-Process -Id $HeadlessServerProcess.Id -Force -ErrorAction SilentlyContinue
+  if ($StartedHeadlessServer) {
+    Stop-CreatedHeadlessServer
     Remove-Item -LiteralPath (Join-Path $Root "AVVIO_GIOCO_CODEX_HEADLESS_READY.txt") -Force -ErrorAction SilentlyContinue
     Remove-Item -LiteralPath (Join-Path $Root "AVVIO_GIOCO_CODEX_HEADLESS_PID.txt") -Force -ErrorAction SilentlyContinue
   }

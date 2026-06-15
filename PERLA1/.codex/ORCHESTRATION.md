@@ -37,6 +37,7 @@ Use `PERLA1_TASK_INTAKE_PROTOCOL.md` before meaningful work.
 - `workflow-consistency-auditor` is `CALL` for every explicit gate; it can run a lightweight gate audit when policy files are not changing.
 - `workflow-guard`, `plan-integrity-auditor`, `task-watchdog`, `skeptic-auditor`, and `refactor-surgeon` are always at least `CONSIDER`.
 - Domain agents are `CALL` when their task signal matches the current work.
+- RTP/scenario domain agents are mandatory domain auditors when their signal matches: `scenario-rtp-map-auditor` for sceneggiatura/gameplay/RTP identity and manifest planning, `map-placement-auditor` for placements/coordinates/walkability/visibility/reachability, `event-flow-auditor` for event graph/prerequisites/effects/battle placeholders/no-softlock, and `dialogue-continuity-auditor` for speaker/portrait/dialogue continuity. They are read-only and do not replace `asset-integrity-auditor`, `code-mapper`, `renderer-block-auditor`, `visual-qa-auditor`, `workflow-guard`, or `workflow-consistency-auditor`.
 - `CALL` means the agent must actually be invoked or delegated before the protected step. It cannot be treated as a passive checklist item.
 - Before a protected patch, rendered/runtime validation, sync, refactor application, or readiness claim, every required `CALL` agent needs `call_agent_evidence` with exactly one satisfaction state: `direct_invocation`, `generic_adapter`, or `tooling_blocked`.
 - `call_agent_evidence` must include `user_delegation_state`, `agent_tool_mapping_ref` when a generic adapter is used, `tooling_discovery_attempted`, `adapter_attempted`, and the output or blocked reason.
@@ -100,6 +101,8 @@ Checkpoint evidence before retrying must include `task_id`, `task_started_at`, `
 When the 12-minute simple-step limit or 21-minute complex-step limit is reached, the checkpoint is mandatory before another wait, retry, subagent wait, browser attempt, runtime validation attempt, or patch. A status-only sentence is not enough; the checkpoint must carry the evidence fields above.
 
 Workflow anomalies must be classified before the next operational step. Repeated tool fallback, missing subagent tooling, stale validation route, skipped heartbeat checkpoint, silent downgrade from `CALL` to `CONSIDER`, or inconsistent agent authority must trigger `workflow-guard`; if the anomaly concerns `.md`/TOML/gate hierarchy or agent permissions, also trigger `workflow-consistency-auditor` full audit.
+
+Workflow self-expansion is allowed only as a bounded repair path. When a task exposes `missing_agent`, `missing_schema`, `missing_validator`, `doc_drift`, `authority_conflict`, `runtime_boundary_conflict`, `loop_or_softlock`, `validation_gap`, or `source_of_truth_gap`, the Team Leader must stop the protected step, run the relevant guard/auditor, patch the smallest owning workflow layer, add deterministic checker coverage when possible, and validate with `tools/perla_codex_workflow_check.ps1`. This does not authorize background agents, runtime activation of dormant RTP data, new write authority, approval bypass, or self-validation loops.
 
 Agent adapter anomalies are workflow anomalies. If a Team Leader cannot show direct named-agent invocation, valid generic-role mapping, or `TOOLING_BLOCKED`, the gate is not satisfied.
 
@@ -401,10 +404,10 @@ Rendered PERLA1 validation requires the local PowerShell server. Browser automat
 
 Required route:
 
-- For Codex/agent validation, use `VALIDA_RUNTIME_SCREENSHOT_HEADLESS.ps1 -StartLauncher`, which starts `AVVIA_GIOCO_CODEX_HEADLESS.ps1 -Serve` on port `8000` without opening a browser window and stops the created PID after validation.
+- For Codex/agent validation, use `VALIDA_RUNTIME_SCREENSHOT_HEADLESS.ps1 -StartLauncher`, which starts `AVVIA_GIOCO_CODEX_HEADLESS.ps1 -Serve` without opening a browser window, falls back from `8000` to the project-known Codex ports when needed, prints the selected validation URL, and stops the created PID after validation.
 - For manual user play, use `AVVIA_GIOCO_WINDOWS_SENZA_PYTHON.bat`, which calls `AVVIA_GIOCO_SERVER_POWERSHELL.ps1` on port `8000` and opens the browser.
-- Or explicitly confirm that an existing PERLA1 server is already responding at `http://127.0.0.1:8000/`.
-- Then load `http://127.0.0.1:8000/` with a cache-busting query string.
+- Or explicitly confirm that an existing PERLA1 server is already responding at the selected validation URL.
+- Then load the exact URL printed by the validator, including fallback port and cache-busting query string.
 
 Do not validate rendered runtime behavior with `file://`, by opening `index.html` directly, by launching the user `.bat` hidden as a Codex workaround, or by asking a browser agent to navigate before the server is running. If the headless launcher cannot start the server, the correct output is a server-start handoff, not a failed runtime diagnosis.
 
@@ -414,8 +417,9 @@ Rendered runtime validation should use the proven Windows path in `PERLA1_RUNTIM
 
 Known reliable automated method:
 
-- `powershell -NoProfile -ExecutionPolicy Bypass -File .\PERLA1\VALIDA_RUNTIME_SCREENSHOT_HEADLESS.ps1 -StartLauncher ...` starts the Codex headless server when needed and captures `#screen` with system Chrome/Edge through Playwright.
+- `powershell -NoProfile -ExecutionPolicy Bypass -File .\PERLA1\VALIDA_RUNTIME_SCREENSHOT_HEADLESS.ps1 -StartLauncher ...` starts the Codex headless server when needed, prints the selected validation URL, and captures `#screen` with system Chrome/Edge through Playwright.
 - `AVVIA_GIOCO_CODEX_HEADLESS.ps1` writes `AVVIO_GIOCO_CODEX_HEADLESS_LOG.txt`, PID, and ready files for deterministic startup checks.
+- The validator stops and verifies only the headless server PID it created. Do not kill pre-existing manual/user servers automatically; finalization may close only recognized PERLA/Codex server processes that are no longer useful.
 - Screenshots default to `%TEMP%`, not the Git repository.
 
 Other browser paths are secondary attempts. A Browser bootstrap failure is a tooling failure, not proof that the PERLA1 runtime is broken.
@@ -436,7 +440,7 @@ Session-level failure memory:
 When this happens:
 
 1. Confirm the PERLA1 server route is running, or use `VALIDA_RUNTIME_SCREENSHOT_HEADLESS.ps1 -StartLauncher`.
-2. Keep the validation target identical: `http://127.0.0.1:8000/` with a cache-busting query string.
+2. Keep the validation target identical by using the exact URL printed by the validator, including fallback port and cache-busting query string.
 3. Record the Browser failure class briefly.
 4. Use `powershell -NoProfile -ExecutionPolicy Bypass -File .\PERLA1\VALIDA_RUNTIME_SCREENSHOT_HEADLESS.ps1 ...` or equivalent Playwright/system Chrome headless flow.
 5. If headless browser validation also fails, provide a manual validation handoff with exact URL, launcher to run, expected `window.PERLA_BUILD_ID`, debug poses, screenshots to capture, and counters/API calls to read.
@@ -649,6 +653,10 @@ Validation rule:
 | `renderer-block-auditor` | `read-only` | Audit render ordering and cross-block renderer effects. | None. |
 | `visual-qa-auditor` | `read-only` | Define and inspect visual validation evidence. | None. |
 | `asset-integrity-auditor` | `read-only` | Check manifest, asset paths, missing files, and cache risks. | None. |
+| `scenario-rtp-map-auditor` | `read-only` | Audit sceneggiatura/gameplay/RTP identity mapping, source-vs-inference labels, manifest readiness, placeholders, and no-paradox data boundaries. | None. |
+| `map-placement-auditor` | `read-only` | Audit placements, coordinates, zones, schedules, walkability, visibility, reachability, collision, density, and raycaster readability. | None. |
+| `event-flow-auditor` | `read-only` | Audit event graph, prerequisites/effects, battle placeholders, success/failure branches, state loops, and no-softlock risks. | None. |
+| `dialogue-continuity-auditor` | `read-only` | Audit speaker identity, portrait policy, dialogueRefs, character-only dialogue, tone, and continuity with events/placements. | None. |
 | `launcher-sync-auditor` | `read-only` | Check launcher, server, sync scripts, and path-relative behavior. | None. |
 | `safe-fixer` | `workspace-write` | Make one narrow approved runtime or tooling patch. | Explicit assigned files only, normally active runtime; `tooling-ci` only when explicitly scoped. |
 | `map-maintainer` | `workspace-write` | Update technical maps/indexes/intake after meaningful structural changes. | `PERLA1_PROJECT_MAP.md`, `PERLA1_BLOCK_MAP.md`, `PERLA1_CONTEXT_BUDGET.md`, `PERLA1_SYMBOL_INDEX.md`, and `PERLA1_TASK_INTAKE_PROTOCOL.md` only. |
