@@ -1,7 +1,7 @@
 ﻿# PERLA1 Project Map
 
 Last updated: 2026-06-15
-Current runtime build observed in `index.html`: `PERLA1_V297_PERGOLA_DRAW_BUDGET_SAFE_LOCAL`
+Current runtime build observed in `index.html`: `PERLA1_V298_ROOF_STORM_BUDGET_SAFE_LOCAL`
 
 This file is the fast technical map for agents. Use it to orient before touching runtime code, and update it when structure, entrypoints, validation workflow, dependencies, or major renderer contracts change.
 
@@ -25,6 +25,7 @@ This file is the fast technical map for agents. Use it to orient before touching
 | Runtime test runbook | `PERLA1_RUNTIME_TEST_RUNBOOK.md`, `VALIDA_RUNTIME_SCREENSHOT_HEADLESS.ps1` | Practical Windows validation path: Codex headless startup with `-StartLauncher`, automatic fallback ports when `8000` is blocked, then screenshot through system Chrome/Edge. |
 | Static structure analyzer | `tools/perla_runtime_analyzer.mjs` | Extracts inline JS, parse-checks it, maps functions/globals, classifies blocks, and emits a conservative dependency graph without external npm installs. |
 | Local structural CI | `tools/perla_local_ci.ps1`, `tests/perla_regression_suite.json` | Runs parser/structure/regression-symbol checks and can optionally run runtime screenshot smoke poses. |
+| Runtime performance matrix | `tools/perla_runtime_perf_matrix.ps1` | Tooling-only Playwright matrix runner for gameplay-first performance/draw evidence across clear/storm and desktop/mobile touch contexts. It starts or reuses the PERLA1 server safely, verifies `PERLA_BUILD_ID`, uses public debug APIs, writes JSON/Markdown/screenshots outside Git by default, and does not change runtime behavior. |
 | Project backup tool | `tools/perla_project_backup.ps1` | Creates timestamped zip backups of the full synchronized repository folder `C:\Users\ASUS\Documents\GitHub\codex`, excluding only `PERLA1\01_GIOCO_PRONTO_LOCAL_TEST\assets\rtp`. User backups go to `C:\Users\ASUS\Documents\GitHub\backup\utente`; automatic task backups go to `C:\Users\ASUS\Documents\GitHub\backup\automatici`. Automatic retention deletes only files older than 2 days and only when `automatici` already contains more than 10 files. |
 | Modularization plan | `PERLA1_MODULARIZATION_PLAN.md`, `01_GIOCO_PRONTO_LOCAL_TEST/src/module-boundaries.json`, `01_GIOCO_PRONTO_LOCAL_TEST/src/README.md` | Controlled exit plan from the monolith. The runtime source of truth remains `index.html`; `src/` is scaffold-only until a scoped extraction is validated. |
 | Codex orchestration | `.codex/ORCHESTRATION.md` | Team Leader workflow, subagent usage policy, extra-agent rules, and anti-paradox constraints. |
@@ -151,13 +152,14 @@ PERLA1 is monolithic enough that agents must avoid copying broad file dumps into
 | V294 | preserved compatibility contract (V237 tombstone cleanup only) | Removes the dead V237 safe-emerging-wall draw integration and converts V237 implementation bodies to no-op/tombstone shims. It preserves V237/V238 constants, `getV238CleanStatus`, `getV237EmergingLayerStats`, V293 telemetry APIs, and all current visual authorities. It does not change roof, canopy, rain, wall/replay, map/collision, asset, sky/backdrop, or overlay behavior. |
 | V295 | preserved debug/cleanup contract | Adds the modern read-only debug hub `window.perlaDebugV295`, `collectPerlaModernDebugV295`, health/branch/deletion readiness aliases, and absorbs legacy high-wall diagnostics into a non-mutating status surface. It blocks V245 one-shot activation and tombstones public mode/toggle activation for failed roof branches V266/V267/V270/V271/V272 while preserving compatibility shims and counters. It does not change active V281 roof authority, V283 canopy foreground guard, V222/V292 rain/wall behavior, V185 horizon, maps, assets, or overlay defaults. |
 | V296 | active base contract (physical tombstone prune) | Physically removes proved-dead heavy implementation bodies for V239-V241C high-wall diagnostics and failed V266/V267/V270/V271/V272/V273/V274/V275 roof/eave attempts, while preserving public compatibility shims, status/toggle/download names, V293/V295 debug APIs, and `safeDeleteNow: []` for public APIs. It does not change active V281 roof authority, V283 canopy foreground guard, V222/V292 rain/wall behavior, V185 horizon, maps, assets, overlay defaults, or rain output. |
-| V297 | current performance contract (pergola draw budget) | Reduces `drawIvyPergolaLayerV79` cost with screen-row footprint culling, negative-only fast visibility rejection, cached/batched fog overlay rectangles, and a light adaptive step increase capped at +1/+1 only in clear large-area cases. It preserves exact `isInsideIvyPergolaV79` sampling, final `slopedRoofPixelVisible` authority, map/assets/rain output, and roof/canopy/wall contracts. Current build: `PERLA1_V297_PERGOLA_DRAW_BUDGET_SAFE_LOCAL`. |
+| V297 | pergola draw budget | Reduces `drawIvyPergolaLayerV79` cost with screen-row footprint culling, negative-only fast visibility rejection, cached/batched fog overlay rectangles, and a light adaptive step increase capped at +1/+1 only in clear large-area cases. It preserves exact `isInsideIvyPergolaV79` sampling, final `slopedRoofPixelVisible` authority, map/assets/rain output, and roof/canopy/wall contracts. |
+| V298 | current contract (roof storm budget) | Adds a storm/rain pressure-only full-surface roof step budget inside the active V281 primitive renderer. It applies only to `face.kind === 'roof'` for owner 1/2 full-surface modern roofs while preserving edge lines, gable outlines, portal underside, map/assets/rain output, and the V281/V283/V292 visual authority contracts. Current build: `PERLA1_V298_ROOF_STORM_BUDGET_SAFE_LOCAL`. |
 
 ## V281 Modern Roof Primitive Authority Contract
 
 Current expected behavior for modern reception/bath roof/eave work:
 
-- Current `PERLA_BUILD_ID` is `PERLA1_V297_PERGOLA_DRAW_BUDGET_SAFE_LOCAL`; the V281 roof authority contract below remains unchanged by V297.
+- Current `PERLA_BUILD_ID` is `PERLA1_V298_ROOF_STORM_BUDGET_SAFE_LOCAL`; the V281 roof authority contract below remains active, with V298 only adding a storm/rain pressure budget to full-surface roof fills.
 - V281 adds `drawStableModernOwnerRoofPrimitiveV281` as the single reception/bath roof authority when preflight accepts the roof.
 - Eligible owner 1/2 roofSegments are skipped in `drawSlopedRoofLayer2_5D`, `drawSlopedRoofGableCaps2_5D`, V272, V274, and the V278 integrated cap. During V281 QA, `PERLA_V281_QA_DISABLE_OWNER12_LEGACY_FALLBACK` also blocks owner 1/2 legacy fallback so visual proof cannot be masked by the old sampler.
 - The primitive renderer uses real `collectModernRoofFaces` world-space faces, `roofVisibleAt`, and `roofSelfDepthWriteBudgetBlockV200`; it is not a screen overlay or fake band.
@@ -333,6 +335,7 @@ Known useful local tools:
 - System Chrome/Edge headless through Playwright. The bundled Playwright browser may be missing, so use installed Chrome/Edge.
 - `tools/perla_runtime_analyzer.mjs` for recurring static structure analysis and dependency graph generation.
 - `tools/perla_local_ci.ps1` for local static CI, with `-RuntimeScreenshots` when screenshot smoke validation is needed.
+- `tools/perla_runtime_perf_matrix.ps1` for measured clear/storm desktop/mobile performance matrix evidence. Default output is `%TEMP%\PERLA1_perf_matrix_<timestamp>`; generated screenshots/reports remain disposable unless explicitly promoted.
 - `tools/perla_codex_workflow_check.ps1` for deterministic workflow-policy checks with JSON output, used by CI-style runs and root Codex hooks.
 - `tests/perla_regression_suite.json` for required build/symbol/function checks and standard smoke poses.
 - `PERLA1_MODULARIZATION_PLAN.md`, `01_GIOCO_PRONTO_LOCAL_TEST/src/module-boundaries.json`, and `01_GIOCO_PRONTO_LOCAL_TEST/src/README.md` for controlled modularization planning. `src/` is not active runtime code yet.

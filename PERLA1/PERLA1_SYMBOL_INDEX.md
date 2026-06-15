@@ -2,7 +2,7 @@
 
 Last updated: 2026-06-15
 
-Derived from the current `01_GIOCO_PRONTO_LOCAL_TEST/index.html` build observed as `PERLA1_V297_PERGOLA_DRAW_BUDGET_SAFE_LOCAL`.
+Derived from the current `01_GIOCO_PRONTO_LOCAL_TEST/index.html` build observed as `PERLA1_V298_ROOF_STORM_BUDGET_SAFE_LOCAL`.
 
 This index is for orientation only. It is not the source of truth. Before patching, verify symbols and line numbers with `rg` against the current runtime file.
 
@@ -11,7 +11,7 @@ This index is for orientation only. It is not the source of truth. Before patchi
 | Block ID | Symbol / Area | Current Hint | Notes |
 | --- | --- | --- | --- |
 | `boot-shell` | `PERLA_BUILD_ID` | around line `195` | Public build id used for cache/build validation. |
-| `boot-shell` | `PERLA1_V297_PERGOLA_DRAW_BUDGET_SAFE_LOCAL` | around line `195` | V297 current build id: pergola draw-budget optimization over the V296 physical-prune base. V281/V283/V292 remain the active roof/canopy/wall contracts. |
+| `boot-shell` | `PERLA1_V298_ROOF_STORM_BUDGET_SAFE_LOCAL` | around line `195` | V298 current build id: storm/rain pressure roof full-surface budget over the V297 pergola draw-budget base. V281/V283/V292 remain the active roof/canopy/wall contracts. |
 | `sprites` | `getSpriteRenderCandidates` | around line `663` | Sprite candidate selection entry point. |
 | `roof-system` | V278 constants | around lines `498-514` | Modern wall-anchored integrated roof cap tuning, unchanged 5000 pixel / 1400 fill-rect budget, and support-visible replacement flag. |
 | `roof-system` | V279 constants | around lines `515-533` | Modern cap profile/support-span tuning retained as the V280 base; local-bay profile is disabled in current runtime. |
@@ -50,6 +50,7 @@ This index is for orientation only. It is not the source of truth. Before patchi
 | `canopy-system` | `perlaV283WorldRainParticlesModeActive` | around line `8898` | V283 treats every `world_particles*` V222 mode as authoritative world rain, disabling legacy V216 replay. |
 | `canopy-system` | `drawIvyPergolaLayerV79` / `perlaPergolaBudgetSummaryV261` | near the pergola render block | Ivy pergola renderer and budget summary. V297 keeps exact footprint membership and final sloped-roof visibility authority, while adding row-span culling, negative-only visibility rejection, fog overlay batching, and light clear-weather sampling budget counters. |
 | `performance-observability` | `pergolaOptimizedV297`, `pergolaScanSamplesSavedV297`, `pergolaVisibilityFastRejectsV297`, `pergolaFogRunsV297`, `pergolaFogBatchedSamplesV297`, `pergolaLightBudgetV297` | inside pergola draw stats and `perlaPergolaBudgetSummaryV261` | V297 proof counters for reduced sampled work, preserved visibility authority, batched equivalent fog overlays, and capped non-aggressive adaptive step decisions. |
+| `performance-observability` | `modernStableRoofPrimitiveStormBudgetAppliedV298`, `modernStableRoofPrimitiveStormBudgetStepV298`, `modernStableRoofPrimitiveStormBudgetColumnsSavedEstimateV298` | inside V281 roof primitive draw stats | V298 proof counters for the storm/rain pressure full-surface roof step budget. They must appear only when the V281 full-surface roof path is active under storm/rain coverage pressure. |
 | `wallcasting` | `PERLA_V284_WALL_LAYER_SPRITE_OCCLUSION_DIAGNOSTIC` | around line `356` | V284 diagnostic flag; default runtime behavior remains unchanged because the overlay mode starts as `off`. |
 | `wallcasting` | `perlaWallLayerDebugModeV284Set`, `perlaWallLayerDebugSummaryV284` | around lines `3411-3430` | Public debug API for selecting `off`, `direct`, `extra`, `sprite`, `seal`, or `all` overlay modes and reading direct-vs-extra wall/sprite occlusion counters. |
 | `wallcasting` | `drawWallLayerDebugOverlayV284` | around line `3475` | Opt-in overlay: cyan for direct wall layer ranges, red/magenta/orange for extra wall layers, red/cyan for hidden sprite spans, yellow/orange for seal bands. |
@@ -97,6 +98,7 @@ This index is for orientation only. It is not the source of truth. Before patchi
 | Rotation matrix hygiene | `visual_pose_matrix_check`, `roof_visual_matrix_hard_gate` | Required for roof/eave/wall-occlusion/visibility work; use accepted runtime/internal base coordinates, HUD/display X recorded separately, `roof_matrix_declared_before_patch`, `same_coordinate_distance_rotation_grid`, same-coordinate rotations, contact sheet or indexed matrix, counters, visual pass/fail decisions, and `matrix_failed_replan_not_ready` when required roof groups fail or are missing. |
 | Static structure analyzer | `tools/perla_runtime_analyzer.mjs` | Produces parse check, function/global counts, block classification, top large functions, and focused dependency graphs. |
 | Local static CI | `tools/perla_local_ci.ps1` | Runs analyzer checks against `tests/perla_regression_suite.json`; optional `-RuntimeScreenshots` invokes smoke poses. |
+| Runtime performance matrix | `tools/perla_runtime_perf_matrix.ps1` | Tooling-only Playwright runner for clear/storm desktop/mobile performance evidence. Uses public debug APIs, true mobile touch emulation, canvas screenshots, `hud_contamination_check`, `coordinate_offset_check`, JSON/Markdown reports, and default output outside Git. |
 
 ## Use Rules
 
