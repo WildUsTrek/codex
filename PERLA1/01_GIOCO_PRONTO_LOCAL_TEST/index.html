@@ -192,7 +192,7 @@ const loading = document.getElementById('loading');
 const debugLine = document.getElementById('debugLine');
 const perlaClockHud = document.getElementById('perlaClockHud');
 
-const PERLA_BUILD_ID = 'PERLA1_V281X_BATH_FLUSH_JOIN_FOREGROUND_CLEANUP_LOCAL';
+const PERLA_BUILD_ID = 'PERLA1_V283_DEFERRED_CANOPY_FOREGROUND_DEPTH_SAFE_LOCAL';
 const PERLA_V258_PERFORMANCE_BASELINE_DEBUG_OVERHEAD_SAFE = true;
 const PERLA_V258A_PHASE1_REAL_QUICK_WINS_COMPLETE_SAFE = true;
 const PERLA_V258_BASE_BUILD = 'PERLA1_V257_RAIN_SKYBOX_DEPTH_ANCHOR_FIX_SAFE_LOCAL';
@@ -340,6 +340,15 @@ const PERLA_V265_EDGE_RAIL_MAX_LINES_PER_ROOF = 7;
 const PERLA_V265_EDGE_RAIL_ALPHA = .72;
 const PERLA_V265_EDGE_RAIL_WIDTH = 1;
 const PERLA_V265_PERGOLA_EDGE_RAIL_ALPHA = .58;
+
+// V283 - Deferred canopy foreground depth guard.
+// Local authority for legacy/open canopies only: foreground walls/sprites win when they are closer.
+// Does not re-enable V266/V267 and does not affect V281 owner 1/2 modern roofs.
+const PERLA_V283_DEFERRED_CANOPY_FOREGROUND_DEPTH_SAFE = true;
+const PERLA_V283_DEFERRED_CANOPY_REPLAY_FOREGROUND_SAFE = true;
+const PERLA_V283_DEFERRED_CANOPY_WALL_DEPTH_EPS = .040;
+const PERLA_V283_DEFERRED_CANOPY_WALL_Y_MARGIN_PX = 2;
+const PERLA_V283_CANOPY_SPRITE_FOREGROUND_EPS = .075;
 // V266 — Roof Silhouette Mask + hierarchy repair.
 // La silhouette/mask continua non aumenta la qualita' globale: rende continuo il profilo
 // e lascia l'interno sotto il budget V264/V265. Include guardie anti-overlay per tettoie/rail.
@@ -8846,6 +8855,54 @@ function shouldClipUnderRoofSpriteV121(sprite){
     const k=(sprite.kind||'').toLowerCase();
     return sprite.tex===18 || k.indexOf('canopy_column')>=0 || k.endsWith('_column');
 }
+function perlaDeferredCanopySpriteForegroundWinsV283(stripe, top, bottom, spriteDist, drawStats){
+    if(!PERLA_V283_DEFERRED_CANOPY_FOREGROUND_DEPTH_SAFE || !CeilingColumnHasDepth[stripe]) return false;
+    let nearest=0;
+    for(let yy=top; yy<=bottom; yy++){
+        const d=CeilingDepthBuffer[yy*screenW+stripe];
+        if(d>0 && (nearest===0 || d<nearest)) nearest=d;
+    }
+    if(nearest>0 && spriteDist<nearest-PERLA_V283_CANOPY_SPRITE_FOREGROUND_EPS){
+        if(drawStats) drawStats.deferredCanopySpriteForegroundPreservedV283=(drawStats.deferredCanopySpriteForegroundPreservedV283||0)+1;
+        return true;
+    }
+    return false;
+}
+function resetSpriteForegroundBufferV283(){
+    if(!SpriteForegroundDepthBufferV283) return;
+    SpriteForegroundDepthBufferV283.fill(0);
+    SpriteForegroundTopBufferV283.fill(screenH);
+    SpriteForegroundBottomBufferV283.fill(-1);
+}
+function perlaV283ReplayForegroundMayNeedFrame(){
+    if(!PERLA_V283_DEFERRED_CANOPY_REPLAY_FOREGROUND_SAFE) return false;
+    if(PERLA_V222_WORLD_RAIN_PARTICLES_PRIMARY) return false;
+    const weather=(perlaEnvironmentStateV188 && perlaEnvironmentStateV188.weather) || 'clear';
+    return weather==='rain' || weather==='storm';
+}
+function perlaV283WorldRainParticlesModeActive(drawStats){
+    return !!PERLA_V222_WORLD_RAIN_PARTICLES_PRIMARY && String((drawStats&&drawStats.rainRendererModeV222)||'').indexOf('world_particles')===0;
+}
+function recordSpriteForegroundSpanV283(stripe, drawW, y0, y1, spriteDist, drawStats){
+    if(!perlaV283ReplayForegroundMayNeedFrame() || !SpriteForegroundDepthBufferV283 || !(spriteDist>0) || y1<=y0) return;
+    const x0=clamp(stripe|0,0,screenW-1);
+    const x1=clamp((stripe+Math.max(1,drawW|0))|0,0,screenW);
+    const top=clamp(Math.floor(y0),0,screenH-1);
+    const bottom=clamp(Math.ceil(y1),0,screenH-1);
+    if(x1<=x0 || bottom<=top) return;
+    for(let px=x0; px<x1; px++){
+        const old=SpriteForegroundDepthBufferV283[px]||0;
+        if(old===0 || spriteDist<old-PERLA_V283_CANOPY_SPRITE_FOREGROUND_EPS){
+            SpriteForegroundDepthBufferV283[px]=spriteDist;
+            SpriteForegroundTopBufferV283[px]=top;
+            SpriteForegroundBottomBufferV283[px]=bottom;
+        } else if(Math.abs(spriteDist-old)<=PERLA_V283_CANOPY_SPRITE_FOREGROUND_EPS){
+            SpriteForegroundTopBufferV283[px]=Math.min(SpriteForegroundTopBufferV283[px],top);
+            SpriteForegroundBottomBufferV283[px]=Math.max(SpriteForegroundBottomBufferV283[px],bottom);
+        }
+    }
+    if(drawStats) drawStats.deferredCanopySpriteForegroundSpansRecordedV283=(drawStats.deferredCanopySpriteForegroundSpansRecordedV283||0)+1;
+}
 function collectDeferredCanopySegmentV121(list,x0,y,w,typeC,rowDist,bandH,owner){
     if(!list || w<=0 || typeC<=0 || isModernCoverOwner(owner)) return;
     const seg={x0:Math.max(0,x0|0), y:Math.max(0,y|0), w:Math.max(0,w|0), typeC:typeC|0, rowDist:rowDist||0, bandH:Math.max(1,bandH||2), owner:owner||0};
@@ -8864,6 +8921,48 @@ function canopyDepthAllowsV121(x,y,rowDist){
     }
     return true;
 }
+function perlaDeferredCanopyWallForegroundRejectSpanV283(x,y0,y1,rowDist,seg,drawStats){
+    if(!PERLA_V283_DEFERRED_CANOPY_FOREGROUND_DEPTH_SAFE || x<0 || x>=screenW || y1<0 || y0>=screenH || !(rowDist>0)) return false;
+    y0=clamp(y0|0,0,screenH-1);
+    y1=clamp(y1|0,0,screenH-1);
+    const margin=PERLA_V283_DEFERRED_CANOPY_WALL_Y_MARGIN_PX|0;
+    const eps=PERLA_V283_DEFERRED_CANOPY_WALL_DEPTH_EPS;
+    const owner=seg && seg.owner ? seg.owner : 0;
+    const ranges=(PERLA_V227_LAYERED_WALL_OCCLUSION_HEIGHT_FIX && WallOcclusionRangesV227 && WallOcclusionRangesV227[x]) ? WallOcclusionRangesV227[x] : null;
+    if(ranges && ranges.length){
+        for(const r of ranges){
+            if(!r || !(r.depth>0) || rowDist<=r.depth+eps) continue;
+            if(owner && r.owner===owner) continue;
+            if(y1>=Math.floor(r.yTop)-margin && y0<=Math.ceil(r.yBottom)+margin){
+                if(drawStats){
+                    drawStats.deferredCanopyForegroundWallRejectedV283=(drawStats.deferredCanopyForegroundWallRejectedV283||0)+1;
+                    drawStats.deferredCanopyForegroundWallLayerRejectedV283=(drawStats.deferredCanopyForegroundWallLayerRejectedV283||0)+1;
+                    if(seg && seg.owner===0) drawStats.deferredCanopyOwner0ForegroundRejectedV283=(drawStats.deferredCanopyOwner0ForegroundRejectedV283||0)+1;
+                }
+                return true;
+            }
+        }
+        return false;
+    }
+    const wallD=(ZBuffer && ZBuffer[x]>0) ? ZBuffer[x] : 1000;
+    if(!(wallD>0 && wallD<999) || rowDist<=wallD+eps) return false;
+    const wt=WallTopBuffer[x] == null ? screenH : WallTopBuffer[x];
+    const wb=WallBottomBuffer[x] == null ? -1 : WallBottomBuffer[x];
+    const wallOwner=WallOwnerBuffer[x] || 0;
+    if(owner && wallOwner===owner) return false;
+    if(y1>=Math.floor(wt)-margin && y0<=Math.ceil(wb)+margin){
+        if(drawStats){
+            drawStats.deferredCanopyForegroundWallRejectedV283=(drawStats.deferredCanopyForegroundWallRejectedV283||0)+1;
+            drawStats.deferredCanopyForegroundWallPrimaryRejectedV283=(drawStats.deferredCanopyForegroundWallPrimaryRejectedV283||0)+1;
+            if(seg && seg.owner===0) drawStats.deferredCanopyOwner0ForegroundRejectedV283=(drawStats.deferredCanopyOwner0ForegroundRejectedV283||0)+1;
+        }
+        return true;
+    }
+    return false;
+}
+function perlaDeferredCanopyWallForegroundRejectV283(x,y,rowDist,seg,drawStats){
+    return perlaDeferredCanopyWallForegroundRejectSpanV283(x,y,y,rowDist,seg,drawStats);
+}
 function drawCanopySpanV121(x,y,w,typeC,bandH,owner,rowDist){
     if(w<=0 || bandH<=0) return;
     const base=floorColors[typeC]||'#9b6b3c';
@@ -8880,6 +8979,40 @@ function drawCanopySpanV121(x,y,w,typeC,bandH,owner,rowDist){
         captureCeilingFillRectV216('drawCanopySpanV121',x,y,w,1,ctx.fillStyle,owner||0,typeC,rowDist||0,'highlight_line');
     }
 }
+function drawCanopySpanForegroundClippedV283(x,y,w,typeC,bandH,owner,rowDist,seg,drawStats){
+    if(!PERLA_V283_DEFERRED_CANOPY_FOREGROUND_DEPTH_SAFE){
+        drawCanopySpanV121(x,y,w,typeC,bandH,owner,rowDist);
+        return {drawn:Math.max(0,w||0),spans:w>0?1:0,rejected:0};
+    }
+    const x0=clamp(x|0,0,screenW);
+    const x1=clamp((x+w)|0,0,screenW);
+    const y0=clamp(y|0,0,screenH-1);
+    const h=Math.max(1,Math.min(bandH|0,screenH-y0));
+    const y1=clamp(y0+h-1,0,screenH-1);
+    const cy=clamp(y0+Math.floor(h*.5),0,screenH-1);
+    let run=-1, drawn=0, spans=0, rejected=0;
+    for(let px=x0; px<x1; px++){
+        const ok=canopyDepthAllowsV121(px,cy,rowDist) &&
+            !perlaDeferredCanopyWallForegroundRejectSpanV283(px,y0,y1,rowDist,seg,drawStats) &&
+            (typeof perlaCoverageHierarchyCanopyAllowsV266!=='function' || perlaCoverageHierarchyCanopyAllowsV266(px,cy,rowDist,owner,drawStats));
+        if(ok){
+            if(run<0) run=px;
+        } else {
+            rejected++;
+            if(run>=0){
+                drawCanopySpanV121(run,y0,px-run,typeC,h,owner,rowDist);
+                drawn+=px-run; spans++;
+                run=-1;
+            }
+        }
+    }
+    if(run>=0){
+        drawCanopySpanV121(run,y0,x1-run,typeC,h,owner,rowDist);
+        drawn+=x1-run; spans++;
+    }
+    if(drawStats && spans>1) drawStats.deferredCanopyForegroundSplitSpansV283=(drawStats.deferredCanopyForegroundSplitSpansV283||0)+(spans-1);
+    return {drawn,spans,rejected};
+}
 function drawDeferredCanopySegmentsV121(list,drawStats){
     if(!list || !list.length) { if(drawStats) drawStats.deferredCanopySegmentsV121=0; return; }
     let drawn=0, spans=0, rejected=0;
@@ -8894,22 +9027,24 @@ function drawDeferredCanopySegmentsV121(list,drawStats){
         for(let x=seg.x0;x<xEnd;x+=scanStep){
             const cx=Math.min(screenW-1,x+Math.max(1,Math.floor(scanStep*.5)));
             const cy=clamp(y0+Math.floor(h*.5),0,screenH-1);
-            const vis=canopyDepthAllowsV121(cx,cy,seg.rowDist) && (typeof perlaCoverageHierarchyCanopyAllowsV266!=='function' || perlaCoverageHierarchyCanopyAllowsV266(cx,cy,seg.rowDist,seg.owner,drawStats));
+            const vis=canopyDepthAllowsV121(cx,cy,seg.rowDist) &&
+                !perlaDeferredCanopyWallForegroundRejectV283(cx,cy,seg.rowDist,seg,drawStats) &&
+                (typeof perlaCoverageHierarchyCanopyAllowsV266!=='function' || perlaCoverageHierarchyCanopyAllowsV266(cx,cy,seg.rowDist,seg.owner,drawStats));
             if(vis){
                 if(runStart<0) runStart=x;
                 runEnd=Math.min(xEnd,x+scanStep);
             } else {
                 rejected+=scanStep;
                 if(runStart>=0){
-                    drawCanopySpanV121(runStart,y0,runEnd-runStart,seg.typeC,h,seg.owner,seg.rowDist);
-                    spans++; drawn+=runEnd-runStart;
+                    const clipped=drawCanopySpanForegroundClippedV283(runStart,y0,runEnd-runStart,seg.typeC,h,seg.owner,seg.rowDist,seg,drawStats);
+                    spans+=clipped.spans; drawn+=clipped.drawn; rejected+=clipped.rejected;
                     runStart=-1; runEnd=-1;
                 }
             }
         }
         if(runStart>=0){
-            drawCanopySpanV121(runStart,y0,runEnd-runStart,seg.typeC,h,seg.owner,seg.rowDist);
-            spans++; drawn+=runEnd-runStart;
+            const clipped=drawCanopySpanForegroundClippedV283(runStart,y0,runEnd-runStart,seg.typeC,h,seg.owner,seg.rowDist,seg,drawStats);
+            spans+=clipped.spans; drawn+=clipped.drawn; rejected+=clipped.rejected;
         }
     }
     deferredCanopySegmentsDrawnV121+=drawn;
@@ -8921,6 +9056,7 @@ function drawDeferredCanopySegmentsV121(list,drawStats){
         drawStats.deferredCanopyPixelsV121=drawn;
         drawStats.deferredCanopyRejectsV121=rejected;
         drawStats.canopyDepthFixV121=true;
+        drawStats.deferredCanopyForegroundDepthV283=!!PERLA_V283_DEFERRED_CANOPY_FOREGROUND_DEPTH_SAFE;
     }
 }
 
@@ -9457,6 +9593,56 @@ function rectAllowedForV221LocalV216Cover(rect,profile,gate,drawStats){
     }
     return true;
 }
+function perlaV283ReplaySpriteForegroundRejectsColumn(px,y0,y1,rowDist,drawStats){
+    if(!PERLA_V283_DEFERRED_CANOPY_REPLAY_FOREGROUND_SAFE || !SpriteForegroundDepthBufferV283 || px<0 || px>=screenW || !(rowDist>0)) return false;
+    const d=SpriteForegroundDepthBufferV283[px]||0;
+    if(!(d>0) || rowDist<=d+PERLA_V283_CANOPY_SPRITE_FOREGROUND_EPS) return false;
+    const top=SpriteForegroundTopBufferV283[px], bottom=SpriteForegroundBottomBufferV283[px];
+    if(bottom<0 || y1<top || y0>bottom) return false;
+    if(drawStats) drawStats.deferredCanopyReplaySpriteForegroundRejectedV283=(drawStats.deferredCanopyReplaySpriteForegroundRejectedV283||0)+1;
+    return true;
+}
+function perlaV283ReplayForegroundRejectsColumn(px,y0,y1,rowDist,rect,drawStats){
+    const seg={owner:(rect&&rect.owner)||0};
+    const wallReject=perlaDeferredCanopyWallForegroundRejectSpanV283(px,y0,y1,rowDist,seg,drawStats);
+    if(wallReject){
+        if(drawStats) drawStats.deferredCanopyReplayForegroundWallRejectedV283=(drawStats.deferredCanopyReplayForegroundWallRejectedV283||0)+1;
+        return true;
+    }
+    return perlaV283ReplaySpriteForegroundRejectsColumn(px,y0,y1,rowDist,drawStats);
+}
+function perlaV283ClipV221OpenCanopyReplayRect(rect,profile,drawStats){
+    if(!PERLA_V283_DEFERRED_CANOPY_REPLAY_FOREGROUND_SAFE || !rect || !profile || profile.kind!=='open_canopy') return [rect];
+    const src=String(rect.source||'');
+    if(src!=='drawCeilingSegment' && src!=='drawCanopySpanV121') return [rect];
+    const rowDist=Number(rect.rowDist||rect.dist||0);
+    if(!(rowDist>0)) return [rect];
+    const x0=clamp(rect.x|0,0,screenW);
+    const x1=clamp((rect.x+rect.w)|0,0,screenW);
+    const y0=clamp(rect.y|0,0,screenH-1);
+    const y1=clamp((rect.y+rect.h-1)|0,0,screenH-1);
+    if(x1<=x0 || y1<y0) return [];
+    const out=[];
+    let run=-1, rejected=0;
+    for(let px=x0; px<x1; px++){
+        const blocked=perlaV283ReplayForegroundRejectsColumn(px,y0,y1,rowDist,rect,drawStats);
+        if(!blocked){
+            if(run<0) run=px;
+        } else {
+            rejected++;
+            if(run>=0){
+                out.push(Object.assign({},rect,{x:run,y:y0,w:px-run,h:y1-y0+1}));
+                run=-1;
+            }
+        }
+    }
+    if(run>=0) out.push(Object.assign({},rect,{x:run,y:y0,w:x1-run,h:y1-y0+1}));
+    if(drawStats && rejected>0){
+        drawStats.deferredCanopyReplayForegroundRejectedPixelsV283=(drawStats.deferredCanopyReplayForegroundRejectedPixelsV283||0)+rejected*Math.max(1,y1-y0+1);
+        if(out.length>1) drawStats.deferredCanopyReplayForegroundSplitRectsV283=(drawStats.deferredCanopyReplayForegroundSplitRectsV283||0)+(out.length-1);
+    }
+    return out;
+}
 function v221LocalV216CeilingCoverRects(rects,drawStats){
     const all=rects||[];
     const resolved=(typeof resolveShelterProfileV218==='function') ? resolveShelterProfileV218(drawStats||{},{}) : null;
@@ -9481,9 +9667,14 @@ function v221LocalV216CeilingCoverRects(rects,drawStats){
     for(const r of all){
         if(r) srcCounts[r.source]=(srcCounts[r.source]||0)+1;
         if(rectAllowedForV221LocalV216Cover(r,profile,gate,drawStats)){
-            out.push(r);
-            replayCounts[r.source]=(replayCounts[r.source]||0)+1;
-            ownerCounts[r.owner||0]=(ownerCounts[r.owner||0]||0)+1;
+            const clipped=perlaV283ClipV221OpenCanopyReplayRect(r,profile,drawStats);
+            for(const cr of clipped){
+                if(!cr || cr.w<=0 || cr.h<=0) continue;
+                out.push(cr);
+                replayCounts[cr.source]=(replayCounts[cr.source]||0)+1;
+                ownerCounts[cr.owner||0]=(ownerCounts[cr.owner||0]||0)+1;
+                if(out.length>=PERLA_WEATHER_V221_MAX_COVER_RECTS) break;
+            }
             if(out.length>=PERLA_WEATHER_V221_MAX_COVER_RECTS) break;
         }
     }
@@ -19453,6 +19644,7 @@ let posX=40.5 + WEST_EXPAND_V74, posY=10.0;
 let dirX=0.0, dirY=1.0;
 let planeX=-dirY*planeScale, planeY=dirX*planeScale;
 let ZBuffer, WallTopBuffer, WallBottomBuffer, WallOwnerBuffer, CeilingDepthBuffer, CeilingOwnerBuffer, CeilingColumnHasDepth;
+let SpriteForegroundDepthBufferV283, SpriteForegroundTopBufferV283, SpriteForegroundBottomBufferV283;
 let ModernSupportOwnerBufferV236, ModernSupportTopBufferV236, ModernSupportBottomBufferV236, ModernSupportDepthBufferV236, ModernSupportWallTexBufferV236;
 let perlaCurrentDrawStatsV236 = null;
 function allocateRenderBuffers(){
@@ -19468,6 +19660,9 @@ function allocateRenderBuffers(){
     CeilingDepthBuffer=new Float32Array(screenW * Math.ceil(screenH/2 + 4));
     CeilingOwnerBuffer=new Uint8Array(screenW * Math.ceil(screenH/2 + 4)); // V44: owner del soffitto/copertura inferiore per non bucare il tetto esterno dello stesso edificio.
     CeilingColumnHasDepth=new Uint8Array(screenW);
+    SpriteForegroundDepthBufferV283=new Float32Array(screenW);
+    SpriteForegroundTopBufferV283=new Int16Array(screenW);
+    SpriteForegroundBottomBufferV283=new Int16Array(screenW);
 }
 function refreshCameraPlane(){
     const len=Math.hypot(dirX,dirY)||1;
@@ -27020,7 +27215,7 @@ function setCeilingDepthAt(px, py, dist, ownerId){
     if(old===0 || dist<old){ CeilingDepthBuffer[idx]=dist; CeilingOwnerBuffer[idx]=ownerId||0; }
     CeilingColumnHasDepth[px|0]=1;
 }
-function ceilingSpriteClipY(stripe, y0, y1, spriteDist, sprite){
+function ceilingSpriteClipY(stripe, y0, y1, spriteDist, sprite, drawStats){
     // V121: in generale gli arredi interni sotto cMap restano non clippati, ma le colonne/pali delle tettoie
     // devono essere tagliati dalla copertura: altrimenti, da lontano, spuntano davanti al tetto.
     const forceUnderRoofClip=shouldClipUnderRoofSpriteV121(sprite);
@@ -27029,6 +27224,7 @@ function ceilingSpriteClipY(stripe, y0, y1, spriteDist, sprite){
     const maxRows=Math.ceil(screenH/2 + 4);
     const top=clamp(Math.floor(y0),0,maxRows-1);
     const bottom=clamp(Math.ceil(Math.min(y1,screenH/2+3)),0,maxRows-1);
+    if(perlaDeferredCanopySpriteForegroundWinsV283(stripe,top,bottom,spriteDist,drawStats)) return y0;
     let clip=y0;
     for(let yy=top; yy<=bottom; yy++){
         const d=CeilingDepthBuffer[yy*screenW+stripe];
@@ -27055,7 +27251,7 @@ function drawWorld(time){
     doorRainExactCeilingCaptureActiveV216=!!PERLA_V216_DOOR_RAIN_EXACT_CEILING_RECT_REPLAY;
     doorRainExactCeilingReplayGuardV216=false;
     resetTowerRoofVisibilityV130();
-    ctx.clearRect(0,0,screenW,screenH); drawBackdrop(time, drawStats); resetCeilingDepthBuffer(); WallTopBuffer.fill(screenH); WallBottomBuffer.fill(-1); WallOwnerBuffer.fill(0); resetModernSupportBuffersV236(); resetWallLayersV227();
+    ctx.clearRect(0,0,screenW,screenH); drawBackdrop(time, drawStats); resetCeilingDepthBuffer(); resetSpriteForegroundBufferV283(); WallTopBuffer.fill(screenH); WallBottomBuffer.fill(-1); WallOwnerBuffer.fill(0); resetModernSupportBuffersV236(); resetWallLayersV227();
     const rayDirX0=dirX-planeX, rayDirY0=dirY-planeY, rayDirX1=dirX+planeX, rayDirY1=dirY+planeY;
     for(let y=Math.floor(screenH/2)+1;y<screenH;){
         drawStats.floorRows++;
@@ -27336,7 +27532,7 @@ function drawWorld(time){
                 let texX=Math.floor((stripe-(-spriteWidth/2+spScreenX))*texW/Math.max(1,spriteWidth)); texX=clamp(texX,0,texW-1);
                 let destY0=Math.max(startY,0);
                 let destY1=Math.min(endY,screenH);
-                destY0=ceilingSpriteClipY(stripe,destY0,destY1,transY,s);
+                destY0=ceilingSpriteClipY(stripe,destY0,destY1,transY,s,drawStats);
                 if(destY1<=destY0) continue;
                 const spansV227=spriteVisibleSpansV227(stripe,drawW,destY0,destY1,transY,drawStats);
                 const drawSpans=(PERLA_V227_LAYERED_WALL_OCCLUSION_HEIGHT_FIX && spansV227) ? spansV227 : [[destY0,destY1]];
@@ -27344,6 +27540,7 @@ function drawWorld(time){
                     const sy0=Math.max(destY0,Math.floor(spn[0]));
                     const sy1=Math.min(destY1,Math.ceil(spn[1]));
                     if(sy1<=sy0) continue;
+                    recordSpriteForegroundSpanV283(stripe,drawW,sy0,sy1,transY,drawStats);
                     const sy=clamp(Math.floor((sy0-startY)*texH/Math.max(1,spriteHeight)),0,texH-1);
                     const sh=clamp(Math.ceil((sy1-sy0)*texH/Math.max(1,spriteHeight)),1,texH-sy);
                     ctx.drawImage(img,texX,sy,1,sh,stripe,sy0,drawW,sy1-sy0); drawStats.spriteStripes++;
@@ -27611,7 +27808,7 @@ function drawWorld(time){
     drawStats.doorRainSolidCoverV215=false;
     drawStats.doorRainSelectiveReplayV217=false;
     drawStats.shelterReplayV218PathActiveV220=false;
-    if(PERLA_V222_WORLD_RAIN_PARTICLES_PRIMARY && (drawStats.rainRendererModeV222==='world_particles')){
+    if(perlaV283WorldRainParticlesModeActive(drawStats)){
         drawStats.doorRainCoverReplayReasonV214='disabled_by_v222_world_rain_particles';
         drawStats.doorRainSolidCoverReasonV215='disabled_by_v222_world_rain_particles_no_calculated_cover';
         drawStats.doorRainReplayReasonV217='disabled_by_v222_world_rain_particles';
@@ -27637,10 +27834,15 @@ function drawWorld(time){
         drawStats.v220FilteredV218CoverPathDisabled=true;
         drawStats.v220GlobalV216CoverPathDisabledByV221=true;
         drawStats.v220V216CoverReason='disabled_by_v221_local_active_shelter_input_gate';
-        const v221CoverRects=v221LocalV216CeilingCoverRects(doorRainExactCeilingRectsFrameV216, drawStats);
-        drawDoorRainExactCeilingReplayV216(v221CoverRects, drawStats, time);
+        const v221ReplayActive=perlaWeatherExactReplayRainActiveV216(drawStats);
+        const v221CoverRects=v221ReplayActive ? v221LocalV216CeilingCoverRects(doorRainExactCeilingRectsFrameV216, drawStats) : [];
+        if(!v221ReplayActive){
+            drawStats.v221CoverReason='no_active_rain_replay_before_local_cover_filter';
+            drawStats.v221CoverRects=0;
+        }
+        const v216Replayed=drawDoorRainExactCeilingReplayV216(v221CoverRects, drawStats, time);
         drawV220LocalWallsAfterV216Cover(doorRainExactCeilingRectsFrameV216, drawStats, time);
-        drawStats.legacyV216ReplayPrimaryUsedV222=true;
+        drawStats.legacyV216ReplayPrimaryUsedV222=v216Replayed>0;
     }
     drawStats.doorRainExactCeilingReplayNoWallTopBufferV216=true;
     drawStats.doorRainExactCeilingReplayNoZBufferV216=true;

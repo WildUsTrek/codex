@@ -2,7 +2,7 @@
 
 Last updated: 2026-06-15
 
-Derived from the current `01_GIOCO_PRONTO_LOCAL_TEST/index.html` build observed as `PERLA1_V281X_BATH_FLUSH_JOIN_FOREGROUND_CLEANUP_LOCAL`.
+Derived from the current `01_GIOCO_PRONTO_LOCAL_TEST/index.html` build observed as `PERLA1_V283_DEFERRED_CANOPY_FOREGROUND_DEPTH_SAFE_LOCAL`.
 
 This index is for orientation only. It is not the source of truth. Before patching, verify symbols and line numbers with `rg` against the current runtime file.
 
@@ -11,7 +11,7 @@ This index is for orientation only. It is not the source of truth. Before patchi
 | Block ID | Symbol / Area | Current Hint | Notes |
 | --- | --- | --- | --- |
 | `boot-shell` | `PERLA_BUILD_ID` | around line `195` | Public build id used for cache/build validation. |
-| `boot-shell` | `PERLA1_V281X_BATH_FLUSH_JOIN_FOREGROUND_CLEANUP_LOCAL` | around line `195` | V281X current contract build id for reception plus bath full-surface owner2 flush wall join and foreground-top cleanup validation. |
+| `boot-shell` | `PERLA1_V283_DEFERRED_CANOPY_FOREGROUND_DEPTH_SAFE_LOCAL` | around line `195` | V283 current build id: preserves V281X reception/bath roof authority and adds local foreground-depth guards for legacy/open canopy rendering. |
 | `sprites` | `getSpriteRenderCandidates` | around line `663` | Sprite candidate selection entry point. |
 | `roof-system` | V278 constants | around lines `498-514` | Modern wall-anchored integrated roof cap tuning, unchanged 5000 pixel / 1400 fill-rect budget, and support-visible replacement flag. |
 | `roof-system` | V279 constants | around lines `515-533` | Modern cap profile/support-span tuning retained as the V280 base; local-bay profile is disabled in current runtime. |
@@ -42,6 +42,12 @@ This index is for orientation only. It is not the source of truth. Before patchi
 | `roof-system` | `perlaStableModernRoofPrimitiveSuppressOwner2ExteriorDecorativeEdgesV281` | around line `12260` | V281V suppresses owner2 full-surface exterior decorative edge/ridge/eave lines so the bath roof reads as clean filled geometry, matching the reception cleanup principle. |
 | `roof-system` | `perlaStableModernRoofPrimitiveOwner2ExteriorFlushWallJoinV281` | around line `12280` | V281X extends the reception-style flush wall join to owner2 full-surface exterior roofs, removing residual discontinuous warm wall/top pixels without drawing a seam. |
 | `roof-system` | `perlaStableModernRoofPrimitiveForeignForegroundTopRejectV281` | around line `12425` | V281X rejects owner2 near-eave pixels only at unrelated foreground hedge/wall tops after fast-span fallback, avoiding legacy V232 fake clipping. |
+| `canopy-system` | `perlaDeferredCanopyWallForegroundRejectSpanV283` | around line `8890` | V283 rejects legacy/open canopy sub-runs when a closer V227 wall/hedge foreground range overlaps the canopy span. |
+| `canopy-system` | `drawCanopySpanForegroundClippedV283` | around line `8940` | V283 splits deferred canopy runs into foreground-safe sub-runs before calling the original `drawCanopySpanV121`. |
+| `canopy-system` | `perlaDeferredCanopySpriteForegroundWinsV283` | around line `8857` | V283 prevents `ceilingSpriteClipY` from cutting sprites that are clearly closer than the canopy ceiling depth. |
+| `canopy-system` | `recordSpriteForegroundSpanV283` | around line `8877` | V283 records visible sprite spans only when a legacy rain replay foreground buffer can be needed. |
+| `canopy-system` | `perlaV283ClipV221OpenCanopyReplayRect` | around line `9605` | V283 splits V221 open-canopy replay rects so legacy replay cannot overdraw closer foreground walls or sprites. |
+| `canopy-system` | `perlaV283WorldRainParticlesModeActive` | around line `8898` | V283 treats every `world_particles*` V222 mode as authoritative world rain, disabling legacy V216 replay. |
 | `roof-system` | V281 primitive counters | around lines `12140-12170` | `roofV281`, primitive authority, candidates, fallback, pixels, rects, budget/warn, skipped/suppressed/rejected faces, same-owner wall rejection, wall-top join, cap/fallback skip, and hybrid violation counters. Required in `visual_pose_matrix_check`. |
 | `roof-system` | `drawSlopedRoofGableCaps2_5D` | around line `12540` | Sloped roof gable cap renderer; V281 skips eligible modern owner 1/2 gables so they do not hybridize with the primitive authority. |
 | `roof-system` | `drawSlopedRoofLayer2_5D` | around line `12620` | Sloped roof plane renderer and V277 hook before V265 edge rail; V281 uses this as fallback/generic path outside primitive-owned owner 1/2 roofs. |

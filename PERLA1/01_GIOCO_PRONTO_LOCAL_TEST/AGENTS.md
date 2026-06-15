@@ -12,7 +12,7 @@ Scope: this file applies to `01_GIOCO_PRONTO_LOCAL_TEST/`.
 
 - Modern roof owner `1` is reception.
 - Modern roof owner `2` is bath.
-- V281 current visual contract is the modern owner `1`/`2` world-space primitive authority: `drawStableModernOwnerRoofPrimitiveV281` owns reception/bath roof visuals when preflight accepts the roof. V281S keeps the owner `1` `back_y0` gable only in the real posterior/far-closure or reception portal band so the colmo cannot disappear under same-coordinate rotation. V281T adds an owner `2` door-derived `back_x0` portal gable keep and opposite `front_x1` closure keep for the bath roof; it must use `roof.doors`, not hardcoded coordinates. V281U promotes owner2 to the same full-surface primitive authority class as reception; V281V suppresses owner2 full-surface exterior decorative edge/ridge/eave lines; V281W suppresses owner2 full-surface exterior fascia/gronda faces so the bath roof no longer shows a thick dark strip between wall and roof. V281X applies the same flush wall join used by reception to owner2 and adds a V281-local owner2 foreground-top rejection so bath roof/eave pixels do not draw over unrelated foreground hedge/wall tops. Sloped/gable/V272/V274/V278 are skipped for primitive-owned owner `1`/`2` roofs; V265/V276/V277 remain exclusive fallback only when primitive ownership is not active. Failed V266-V275 replacement/clone/strip/handoff paths remain runtime-off as visual authority, and V282 portal/slab experiments are retained only as diagnostics while runtime-off in the rollback base.
+- V283 current visual contract preserves the V281 modern owner `1`/`2` world-space primitive authority: `drawStableModernOwnerRoofPrimitiveV281` owns reception/bath roof visuals when preflight accepts the roof. V281S keeps the owner `1` `back_y0` gable only in the real posterior/far-closure or reception portal band so the colmo cannot disappear under same-coordinate rotation. V281T adds an owner `2` door-derived `back_x0` portal gable keep and opposite `front_x1` closure keep for the bath roof; it must use `roof.doors`, not hardcoded coordinates. V281U promotes owner2 to the same full-surface primitive authority class as reception; V281V suppresses owner2 full-surface exterior decorative edge/ridge/eave lines; V281W suppresses owner2 full-surface exterior fascia/gronda faces so the bath roof no longer shows a thick dark strip between wall and roof. V281X applies the same flush wall join used by reception to owner2 and adds a V281-local owner2 foreground-top rejection so bath roof/eave pixels do not draw over unrelated foreground hedge/wall tops. V283 is local to legacy/open canopy owner `0` rendering: `drawDeferredCanopySegmentsV121` is clipped by V227 wall foreground ranges, `ceilingSpriteClipY` preserves sprites clearly in front of the canopy, V221 open-canopy replay rects are foreground-clipped if a legacy replay path is active, and V222 world-particles modes disable that legacy replay by prefix. Sloped/gable/V272/V274/V278 are skipped for primitive-owned owner `1`/`2` roofs; V265/V276/V277 remain exclusive fallback only when primitive ownership is not active. Failed V266-V275 replacement/clone/strip/handoff paths remain runtime-off as visual authority, and V282 portal/slab experiments are retained only as diagnostics while runtime-off in the rollback base.
 - `roofSegments` remain the authoritative geometry data source, but V274/V275 are no longer the active primary renderer after the V275 visual failure.
 - Do not use floorcasting/ceiling-clone samples as the primary visible source for external roof borders. In grazing views those samples become sparse and create dotted or disappearing borders.
 - The V270/V271/V273 real ceiling clone path is runtime-off in V276 for external roof visuals.
@@ -23,7 +23,7 @@ Scope: this file applies to `01_GIOCO_PRONTO_LOCAL_TEST/`.
 
 ## Current Roof Patch Contract
 
-For V281 and successors:
+For V283 and successors:
 
 - Primary modern exterior roof profile comes from the V281 budgeted `drawStableModernOwnerRoofPrimitiveV281` world-space primitive, using `roofSegments` faces and real-door-aware near-plane handling.
 - V281 wall/eave integration allows only a narrow same-owner handoff at the wall top for fascia/gable and roof-plane pixels near `eaveZ`; it must not allow roof pixels to paint through the visible wall body.
@@ -35,8 +35,8 @@ For V281 and successors:
 - V277 `perlaRoofContinuityFillLocalV277` remains a support path only; it must not become the current roof authority again without a new explicit plan.
 - V267 must not skip the original/sloped roof fill in normal runtime.
 - V266/V267/V270/V271/V273/V274/V275 are retained for diagnostics but runtime-off as visual authority.
-- Expected V281 debug pattern in affected roof views:
-  - `window.PERLA_BUILD_ID` is `PERLA1_V281X_BATH_FLUSH_JOIN_FOREGROUND_CLEANUP_LOCAL`.
+- Expected V283/V281 debug pattern in affected roof and canopy views:
+  - `window.PERLA_BUILD_ID` is `PERLA1_V283_DEFERRED_CANOPY_FOREGROUND_DEPTH_SAFE_LOCAL`.
   - `roofV276` is `true`.
   - `roofV277` is `true`.
   - `roofV278` is `true`.
@@ -58,6 +58,10 @@ For V281 and successors:
   - `modernStableRoofPrimitiveSuppressedOwner2ExteriorFasciaV281 > 0` in accepted bath owner2 V281W exterior views.
   - `modernStableRoofPrimitiveOwner2FlushWallJoinChecksV281` or `modernStableRoofPrimitiveOwner2FlushWallJoinColumnsV281` is present in accepted bath owner2 V281X close/side views.
   - `modernStableRoofPrimitiveOwner2ForeignForegroundFastSpanFallbackV281` and/or `modernStableRoofPrimitiveOwner2ForeignForegroundTopRejectedV281` is allowed in V281X bath views with unrelated foreground hedge/wall tops.
+  - `deferredCanopyForegroundDepthV283` is `true` when legacy/open canopy segments are rendered.
+  - `deferredCanopyForegroundWallRejectedV283` may be positive when sala giochi/bar/yoga canopy is behind foreground wall/hedge ranges.
+  - `deferredCanopySpriteForegroundPreservedV283` may be positive when a sprite is closer than the canopy ceiling and must not be clipped.
+  - `v221LocalV216OcclusionPrimaryDisabledByV222` is `true` in V222 world-particles rain/storm poses; if a legacy V221 replay path is active, V283 replay foreground counters must prove walls/sprites can still win.
   - `v278ModernIntegratedRoofCapSafe` is `true`.
   - `v279ModernRoofCapProfileSafe` is `true`.
   - `v280CleanModernRoofCapSafe` is `true`.
