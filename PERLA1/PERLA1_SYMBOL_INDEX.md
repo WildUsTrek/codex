@@ -2,7 +2,7 @@
 
 Last updated: 2026-06-15
 
-Derived from the current `01_GIOCO_PRONTO_LOCAL_TEST/index.html` build observed as `PERLA1_V298_ROOF_STORM_BUDGET_SAFE_LOCAL`.
+Derived from the current `01_GIOCO_PRONTO_LOCAL_TEST/index.html` build observed as `PERLA1_V299_ROOF_ALWAYS_BUDGET_SAFE_LOCAL`.
 
 This index is for orientation only. It is not the source of truth. Before patching, verify symbols and line numbers with `rg` against the current runtime file.
 
@@ -11,7 +11,7 @@ This index is for orientation only. It is not the source of truth. Before patchi
 | Block ID | Symbol / Area | Current Hint | Notes |
 | --- | --- | --- | --- |
 | `boot-shell` | `PERLA_BUILD_ID` | around line `195` | Public build id used for cache/build validation. |
-| `boot-shell` | `PERLA1_V298_ROOF_STORM_BUDGET_SAFE_LOCAL` | around line `195` | V298 current build id: storm/rain pressure roof full-surface budget over the V297 pergola draw-budget base. V281/V283/V292 remain the active roof/canopy/wall contracts. |
+| `boot-shell` | `PERLA1_V299_ROOF_ALWAYS_BUDGET_SAFE_LOCAL` | around line `195` | V299 current build id: always-on light roof full-surface budget over the V298 storm/rain pressure layer and V297 pergola draw-budget base. V281/V283/V292 remain the active roof/canopy/wall contracts. |
 | `sprites` | `getSpriteRenderCandidates` | around line `663` | Sprite candidate selection entry point. |
 | `roof-system` | V278 constants | around lines `498-514` | Modern wall-anchored integrated roof cap tuning, unchanged 5000 pixel / 1400 fill-rect budget, and support-visible replacement flag. |
 | `roof-system` | V279 constants | around lines `515-533` | Modern cap profile/support-span tuning retained as the V280 base; local-bay profile is disabled in current runtime. |
@@ -51,6 +51,7 @@ This index is for orientation only. It is not the source of truth. Before patchi
 | `canopy-system` | `drawIvyPergolaLayerV79` / `perlaPergolaBudgetSummaryV261` | near the pergola render block | Ivy pergola renderer and budget summary. V297 keeps exact footprint membership and final sloped-roof visibility authority, while adding row-span culling, negative-only visibility rejection, fog overlay batching, and light clear-weather sampling budget counters. |
 | `performance-observability` | `pergolaOptimizedV297`, `pergolaScanSamplesSavedV297`, `pergolaVisibilityFastRejectsV297`, `pergolaFogRunsV297`, `pergolaFogBatchedSamplesV297`, `pergolaLightBudgetV297` | inside pergola draw stats and `perlaPergolaBudgetSummaryV261` | V297 proof counters for reduced sampled work, preserved visibility authority, batched equivalent fog overlays, and capped non-aggressive adaptive step decisions. |
 | `performance-observability` | `modernStableRoofPrimitiveStormBudgetAppliedV298`, `modernStableRoofPrimitiveStormBudgetStepV298`, `modernStableRoofPrimitiveStormBudgetColumnsSavedEstimateV298` | inside V281 roof primitive draw stats | V298 proof counters for the storm/rain pressure full-surface roof step budget. They must appear only when the V281 full-surface roof path is active under storm/rain coverage pressure. |
+| `performance-observability` | `modernStableRoofPrimitiveGeneralBudgetAppliedV299`, `modernStableRoofPrimitiveGeneralBudgetStepV299`, `modernStableRoofPrimitiveGeneralBudgetColumnsSavedEstimateV299` | inside V281 roof primitive draw stats | V299 proof counters for the non-storm full-surface roof fill step budget. They are expected in owner 1/2 full-surface roof views in clear/non-storm weather; storm/rain pressure remains V298-owned, and edge lines, gable outlines, portal underside, and fallback paths remain outside the budget. |
 | `wallcasting` | `PERLA_V284_WALL_LAYER_SPRITE_OCCLUSION_DIAGNOSTIC` | around line `356` | V284 diagnostic flag; default runtime behavior remains unchanged because the overlay mode starts as `off`. |
 | `wallcasting` | `perlaWallLayerDebugModeV284Set`, `perlaWallLayerDebugSummaryV284` | around lines `3411-3430` | Public debug API for selecting `off`, `direct`, `extra`, `sprite`, `seal`, or `all` overlay modes and reading direct-vs-extra wall/sprite occlusion counters. |
 | `wallcasting` | `drawWallLayerDebugOverlayV284` | around line `3475` | Opt-in overlay: cyan for direct wall layer ranges, red/magenta/orange for extra wall layers, red/cyan for hidden sprite spans, yellow/orange for seal bands. |

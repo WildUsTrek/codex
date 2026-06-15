@@ -1,7 +1,7 @@
 ﻿# PERLA1 Project Map
 
 Last updated: 2026-06-15
-Current runtime build observed in `index.html`: `PERLA1_V298_ROOF_STORM_BUDGET_SAFE_LOCAL`
+Current runtime build observed in `index.html`: `PERLA1_V299_ROOF_ALWAYS_BUDGET_SAFE_LOCAL`
 
 This file is the fast technical map for agents. Use it to orient before touching runtime code, and update it when structure, entrypoints, validation workflow, dependencies, or major renderer contracts change.
 
@@ -153,13 +153,14 @@ PERLA1 is monolithic enough that agents must avoid copying broad file dumps into
 | V295 | preserved debug/cleanup contract | Adds the modern read-only debug hub `window.perlaDebugV295`, `collectPerlaModernDebugV295`, health/branch/deletion readiness aliases, and absorbs legacy high-wall diagnostics into a non-mutating status surface. It blocks V245 one-shot activation and tombstones public mode/toggle activation for failed roof branches V266/V267/V270/V271/V272 while preserving compatibility shims and counters. It does not change active V281 roof authority, V283 canopy foreground guard, V222/V292 rain/wall behavior, V185 horizon, maps, assets, or overlay defaults. |
 | V296 | active base contract (physical tombstone prune) | Physically removes proved-dead heavy implementation bodies for V239-V241C high-wall diagnostics and failed V266/V267/V270/V271/V272/V273/V274/V275 roof/eave attempts, while preserving public compatibility shims, status/toggle/download names, V293/V295 debug APIs, and `safeDeleteNow: []` for public APIs. It does not change active V281 roof authority, V283 canopy foreground guard, V222/V292 rain/wall behavior, V185 horizon, maps, assets, overlay defaults, or rain output. |
 | V297 | pergola draw budget | Reduces `drawIvyPergolaLayerV79` cost with screen-row footprint culling, negative-only fast visibility rejection, cached/batched fog overlay rectangles, and a light adaptive step increase capped at +1/+1 only in clear large-area cases. It preserves exact `isInsideIvyPergolaV79` sampling, final `slopedRoofPixelVisible` authority, map/assets/rain output, and roof/canopy/wall contracts. |
-| V298 | current contract (roof storm budget) | Adds a storm/rain pressure-only full-surface roof step budget inside the active V281 primitive renderer. It applies only to `face.kind === 'roof'` for owner 1/2 full-surface modern roofs while preserving edge lines, gable outlines, portal underside, map/assets/rain output, and the V281/V283/V292 visual authority contracts. Current build: `PERLA1_V298_ROOF_STORM_BUDGET_SAFE_LOCAL`. |
+| V298 | roof storm budget | Adds a storm/rain pressure-only full-surface roof step budget inside the active V281 primitive renderer. It applies only to `face.kind === 'roof'` for owner 1/2 full-surface modern roofs while preserving edge lines, gable outlines, portal underside, map/assets/rain output, and the V281/V283/V292 visual authority contracts. |
+| V299 | current contract (roof always budget) | Extends the V298 roof step-budget mechanism with a light non-storm full-surface roof fill budget for owner 1/2 modern roofs, so clear weather is covered while storm/rain continues to use the V298 pressure layer. V299 still applies only to `face.kind === 'roof'` full-surface fills, preserves edge lines, gable outlines, portal underside, fallback exclusivity, map/assets/rain output, and keeps V298 as the storm/rain escalation. Current build: `PERLA1_V299_ROOF_ALWAYS_BUDGET_SAFE_LOCAL`. |
 
 ## V281 Modern Roof Primitive Authority Contract
 
 Current expected behavior for modern reception/bath roof/eave work:
 
-- Current `PERLA_BUILD_ID` is `PERLA1_V298_ROOF_STORM_BUDGET_SAFE_LOCAL`; the V281 roof authority contract below remains active, with V298 only adding a storm/rain pressure budget to full-surface roof fills.
+- Current `PERLA_BUILD_ID` is `PERLA1_V299_ROOF_ALWAYS_BUDGET_SAFE_LOCAL`; the V281 roof authority contract below remains active, with V299 adding a non-storm light budget to full-surface roof fills and V298 still adding extra storm/rain pressure budget where applicable.
 - V281 adds `drawStableModernOwnerRoofPrimitiveV281` as the single reception/bath roof authority when preflight accepts the roof.
 - Eligible owner 1/2 roofSegments are skipped in `drawSlopedRoofLayer2_5D`, `drawSlopedRoofGableCaps2_5D`, V272, V274, and the V278 integrated cap. During V281 QA, `PERLA_V281_QA_DISABLE_OWNER12_LEGACY_FALLBACK` also blocks owner 1/2 legacy fallback so visual proof cannot be masked by the old sampler.
 - The primitive renderer uses real `collectModernRoofFaces` world-space faces, `roofVisibleAt`, and `roofSelfDepthWriteBudgetBlockV200`; it is not a screen overlay or fake band.
@@ -183,7 +184,9 @@ Current expected behavior for modern reception/bath roof/eave work:
 - V294 is the first cleanup wave and is intentionally narrow: only the V237 safe-emerging-wall prototype implementation and wallcast call-site are tombstoned.
 - V295 is the preserved cleanup/debug wave: `window.perlaDebugV295` is the preferred read-only hub, V245 high-wall one-shot activation is blocked and reported as absorbed, and V266/V267/V270/V271/V272 failed roof mode/toggle activation remains forced off with tombstone shims.
 - V296 remains the physical cleanup base: the proved-dead heavy implementation bodies for V239-V241C and V266-V275 are pruned behind no-op/status shims. `safeDeleteNow` remains empty for public APIs: V282, V216/V220/V221, V233, V290/V291, and any still-referenced public debug symbols are deferred until a dedicated proof patch.
-- V297 is the current pergola draw-budget wave: `drawIvyPergolaLayerV79` now avoids rows outside the projected pergola footprint, rejects only impossible/offscreen/covered candidates before the existing visibility test, batches equivalent fog overlay rectangles, and adds at most one clear-weather sampling step on large covered views. Rain/storm coverage extras remain governed by V261/V265 and are not made more aggressive by V297.
+- V297 is the pergola draw-budget wave: `drawIvyPergolaLayerV79` now avoids rows outside the projected pergola footprint, rejects only impossible/offscreen/covered candidates before the existing visibility test, batches equivalent fog overlay rectangles, and adds at most one clear-weather sampling step on large covered views. Rain/storm coverage extras remain governed by V261/V265 and are not made more aggressive by V297.
+- V298 is the storm/rain roof pressure layer for full-surface V281 roof fills.
+- V299 is the current always-covered roof draw budget: clear/non-storm owner 1/2 full-surface roof fills use the V299 light step budget, while storm/rain pressure uses the V298 counters. V299 must not step edge lines, gable outlines, portal underside, non-roof faces, storm/rain pressure paths, or fallback paths.
 - Door openings are bridged from `roofSegments[].doors` projection only; generic same-owner screen gaps are not authority.
 - V278 cap pixels must be zero in normal V281 runtime; `modernStableRoofPrimitiveSkippedIntegratedCapV281` proves the cap was not drawn.
 - If primitive preflight rejects a roof, fallback is exclusive through the existing V265/V277 path; no cap overlay is added on top.
@@ -219,6 +222,8 @@ Expected counters in affected V281 roof views:
 - `modernStableRoofPrimitiveSuppressedOwner2ExteriorFasciaV281 > 0` in accepted exterior bath owner2 V281W poses
 - `modernStableRoofPrimitiveOwner2FlushWallJoinChecksV281` or `modernStableRoofPrimitiveOwner2FlushWallJoinColumnsV281` present in accepted bath owner2 V281X close/side poses
 - `modernStableRoofPrimitiveOwner2ForeignForegroundFastSpanFallbackV281` and/or `modernStableRoofPrimitiveOwner2ForeignForegroundTopRejectedV281` allowed in V281X bath views with unrelated foreground hedge/wall tops
+- `modernStableRoofPrimitiveV299 === true`; `modernStableRoofPrimitiveGeneralBudgetAppliedV299` and `modernStableRoofPrimitiveGeneralBudgetColumnsSavedEstimateV299` are expected in owner 1/2 full-surface roof views in clear/non-storm weather
+- `modernStableRoofPrimitiveStormBudgetAppliedV298` remains storm/rain pressure-only evidence; it must not be required for clear-weather V299 improvement
 - `deferredCanopyForegroundDepthV283 === true` in legacy/open canopy poses with visible canopy segments
 - `deferredCanopyForegroundWallRejectedV283` may be positive in sala giochi/bar/yoga poses where canopy is behind a foreground hedge/wall
 - `deferredCanopySpriteForegroundPreservedV283` may be positive when a sprite is closer than canopy ceiling depth

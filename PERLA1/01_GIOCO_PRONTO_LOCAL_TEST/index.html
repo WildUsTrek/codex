@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Camping Sole, Mare & Zanzare - PERLA1 V298 Roof Storm Budget Safe</title>
+    <title>Camping Sole, Mare & Zanzare - PERLA1 V299 Roof Always Budget Safe</title>
     <style>
         :root { --panel: rgba(20,16,12,.88); --gold:#f1c40f; --sand:#f5d99e; --perla-vv-left:0px; --perla-vv-top:0px; --perla-vv-width:100vw; --perla-vv-height:100dvh; }
         body { margin:0; min-height:100vh; background:radial-gradient(circle at 50% 0%,#183b4a 0%,#07090d 55%,#000 100%); color:white; font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; display:flex; flex-direction:column; align-items:center; overflow-x:hidden; }
@@ -99,12 +99,12 @@
     </style>
 </head>
 <body>
-            <h2>Camping Sole, Mare & Zanzare - PERLA1 V298</h2>
+            <h2>Camping Sole, Mare & Zanzare - PERLA1 V299</h2>
     <div id="game-container">
         <canvas id="screen" width="800" height="450"></canvas>
         <canvas id="mini-map" width="128" height="128"></canvas>
         <div id="perlaClockHud" data-weather="clear" aria-label="Orologio e meteo PERLA1"><span class="perla-clock-time">14:00</span><span class="perla-clock-meta">☀️ Giorno</span></div>
-        <div id="loading"><div><strong>Caricamento asset PERLA1 V298...</strong><br><span class="muted">Usa un server locale per evitare problemi da file://.</span></div></div>
+        <div id="loading"><div><strong>Caricamento asset PERLA1 V299...</strong><br><span class="muted">Usa un server locale per evitare problemi da file://.</span></div></div>
     </div>
     <div id="mobile-controls" aria-label="Controlli touch PERLA1">
         <div class="touch-cluster touch-cluster-left">
@@ -192,7 +192,7 @@ const loading = document.getElementById('loading');
 const debugLine = document.getElementById('debugLine');
 const perlaClockHud = document.getElementById('perlaClockHud');
 
-const PERLA_BUILD_ID = 'PERLA1_V298_ROOF_STORM_BUDGET_SAFE_LOCAL';
+const PERLA_BUILD_ID = 'PERLA1_V299_ROOF_ALWAYS_BUDGET_SAFE_LOCAL';
 const PERLA_V258_PERFORMANCE_BASELINE_DEBUG_OVERHEAD_SAFE = true;
 const PERLA_V258A_PHASE1_REAL_QUICK_WINS_COMPLETE_SAFE = true;
 const PERLA_V258_BASE_BUILD = 'PERLA1_V257_RAIN_SKYBOX_DEPTH_ANCHOR_FIX_SAFE_LOCAL';
@@ -454,6 +454,14 @@ const PERLA_V298_NO_RAIN_OUTPUT_CHANGE = true;
 const PERLA_V298_ROOF_VISUAL_SIMILARITY_TARGET = true;
 const PERLA_V298_STORM_PRESSURE_STEP = 2;
 const PERLA_V298_STORM_EMERGENCY_STEP = 3;
+const PERLA_V299_ROOF_ALWAYS_BUDGET_SAFE = true;
+const PERLA_V299_BASE_BUILD = 'PERLA1_V298_ROOF_STORM_BUDGET_SAFE_LOCAL';
+const PERLA_V299_PATCH_MODE = 'roof_full_surface_general_step_budget';
+const PERLA_V299_NO_WORLDGEN_CHANGE = true;
+const PERLA_V299_NO_ASSET_CHANGE = true;
+const PERLA_V299_NO_RAIN_OUTPUT_CHANGE = true;
+const PERLA_V299_ROOF_VISUAL_SIMILARITY_TARGET = true;
+const PERLA_V299_GENERAL_ROOF_STEP = 2;
 let perlaV291PreWallCanvas = null;
 let perlaV291PreWallCtx = null;
 const perlaV290TamariskHullCache = typeof WeakMap !== 'undefined' ? new WeakMap() : null;
@@ -9864,21 +9872,38 @@ function perlaStableModernRoofPrimitiveFastSpanV281(sx, y0, y1, top, bot, roof, 
 }
 function perlaStableModernRoofPrimitiveStepV298(roof, face, baseStep, drawStats){
     const step=Math.max(1,baseStep|0);
-    if(!PERLA_V298_ROOF_STORM_BUDGET_SAFE || !roof || !face || face.kind!=='roof') return step;
+    if((!PERLA_V298_ROOF_STORM_BUDGET_SAFE && !PERLA_V299_ROOF_ALWAYS_BUDGET_SAFE) || !roof || !face || face.kind!=='roof') return step;
     if(!perlaStableModernRoofPrimitiveFullSurfaceOwnerV281(roof)) return step;
     const ctx=(typeof perlaCoverageCurrentContextV261==='function') ? perlaCoverageCurrentContextV261() : null;
     const pressure=ctx ? (ctx.pressureLevel||0) : 0;
     const stormLike=!!(ctx && ctx.stormLike);
-    if(!stormLike || pressure<2) return step;
-    const target=pressure>=3 ? PERLA_V298_STORM_EMERGENCY_STEP : PERLA_V298_STORM_PRESSURE_STEP;
+    let target=step;
+    let reason='';
+    let v299GeneralApplied=false;
+    if(PERLA_V298_ROOF_STORM_BUDGET_SAFE && stormLike && pressure>=2){
+        target=Math.max(target,pressure>=3 ? PERLA_V298_STORM_EMERGENCY_STEP : PERLA_V298_STORM_PRESSURE_STEP);
+        reason='storm_pressure';
+    } else if(PERLA_V299_ROOF_ALWAYS_BUDGET_SAFE && !stormLike){
+        target=Math.max(target,PERLA_V299_GENERAL_ROOF_STEP);
+        reason='general_clear_full_surface_roof_budget';
+        v299GeneralApplied=true;
+    }
     const next=Math.max(step,target);
     if(drawStats && next>step){
-        drawStats.modernStableRoofPrimitiveV298=true;
-        drawStats.modernStableRoofPrimitiveStormBudgetAppliedV298=(drawStats.modernStableRoofPrimitiveStormBudgetAppliedV298||0)+1;
-        drawStats.modernStableRoofPrimitiveStormBudgetStepV298=next;
-        drawStats.modernStableRoofPrimitiveStormBudgetPressureV298=pressure;
-        drawStats.modernStableRoofPrimitiveStormBudgetWeatherV298=ctx.weather||'storm';
-        drawStats.modernStableRoofPrimitiveStormBudgetReasonV298=ctx.reason||'storm_pressure';
+        if(v299GeneralApplied){
+            drawStats.modernStableRoofPrimitiveV299=true;
+            drawStats.modernStableRoofPrimitiveGeneralBudgetAppliedV299=(drawStats.modernStableRoofPrimitiveGeneralBudgetAppliedV299||0)+1;
+            drawStats.modernStableRoofPrimitiveGeneralBudgetStepV299=next;
+            drawStats.modernStableRoofPrimitiveGeneralBudgetReasonV299=reason||'general_clear_full_surface_roof_budget';
+        }
+        if(stormLike && pressure>=2){
+            drawStats.modernStableRoofPrimitiveV298=true;
+            drawStats.modernStableRoofPrimitiveStormBudgetAppliedV298=(drawStats.modernStableRoofPrimitiveStormBudgetAppliedV298||0)+1;
+            drawStats.modernStableRoofPrimitiveStormBudgetStepV298=next;
+            drawStats.modernStableRoofPrimitiveStormBudgetPressureV298=pressure;
+            drawStats.modernStableRoofPrimitiveStormBudgetWeatherV298=ctx.weather||'storm';
+            drawStats.modernStableRoofPrimitiveStormBudgetReasonV298=ctx.reason||'storm_pressure';
+        }
     }
     return next;
 }
@@ -9918,7 +9943,13 @@ function perlaStableModernRoofPrimitiveDrawPolyV281(face, roof, budget, drawStat
     const maxPixels=(PERLA_V281_OWNER1_FULL_SURFACE_SAFE && roof && roof.ownerId===1) ? PERLA_V281_OWNER1_FULL_SURFACE_MAX_COVERAGE_PIXELS : ((PERLA_V281_OWNER2_FULL_SURFACE_SAFE && roof && roof.ownerId===2) ? PERLA_V281_OWNER2_FULL_SURFACE_MAX_COVERAGE_PIXELS : ((roof && roof.ownerId===2) ? PERLA_V281_OWNER2_MAX_PIXELS_PER_FRAME : PERLA_V281_MAX_PIXELS_PER_FRAME));
     const maxFillRects=(PERLA_V281_OWNER1_FULL_SURFACE_SAFE && roof && roof.ownerId===1) ? PERLA_V281_OWNER1_FULL_SURFACE_MAX_FILL_RECTS : ((PERLA_V281_OWNER2_FULL_SURFACE_SAFE && roof && roof.ownerId===2) ? PERLA_V281_OWNER2_FULL_SURFACE_MAX_FILL_RECTS : PERLA_V281_MAX_FILL_RECTS);
     if(drawStats && step>baseStep){
-        drawStats.modernStableRoofPrimitiveStormBudgetColumnsSavedEstimateV298=(drawStats.modernStableRoofPrimitiveStormBudgetColumnsSavedEstimateV298||0)+Math.max(0,Math.ceil((xB-xA+1)/Math.max(1,baseStep))-Math.ceil((xB-xA+1)/Math.max(1,step)));
+        const columnsSavedEstimate=Math.max(0,Math.ceil((xB-xA+1)/Math.max(1,baseStep))-Math.ceil((xB-xA+1)/Math.max(1,step)));
+        const ctxBudget=(typeof perlaCoverageCurrentContextV261==='function') ? perlaCoverageCurrentContextV261() : null;
+        if(PERLA_V298_ROOF_STORM_BUDGET_SAFE && ctxBudget && ctxBudget.stormLike && (ctxBudget.pressureLevel||0)>=2){
+            drawStats.modernStableRoofPrimitiveStormBudgetColumnsSavedEstimateV298=(drawStats.modernStableRoofPrimitiveStormBudgetColumnsSavedEstimateV298||0)+columnsSavedEstimate;
+        } else if(PERLA_V299_ROOF_ALWAYS_BUDGET_SAFE){
+            drawStats.modernStableRoofPrimitiveGeneralBudgetColumnsSavedEstimateV299=(drawStats.modernStableRoofPrimitiveGeneralBudgetColumnsSavedEstimateV299||0)+columnsSavedEstimate;
+        }
     }
     for(let sx=xA; sx<=xB; sx+=step){
         if(columns>=PERLA_V281_MAX_COLUMNS_PER_FACE || budget.pixels>=maxPixels || budget.fillRects>=maxFillRects){
@@ -10265,6 +10296,7 @@ function drawStableModernOwnerRoofPrimitiveV281(time, drawStats){
         drawStats.modernStableRoofPrimitiveFacesConsideredV281=facesConsidered;
         drawStats.modernStableRoofPrimitiveDrawnRoofsV281=drawnRoofs;
         drawStats.modernStableRoofPrimitiveV298=!!PERLA_V298_ROOF_STORM_BUDGET_SAFE;
+        drawStats.modernStableRoofPrimitiveV299=!!PERLA_V299_ROOF_ALWAYS_BUDGET_SAFE;
         drawStats.modernStableRoofPrimitiveSkippedTopFacesNearDoorV281=skippedTopFaces;
         drawStats.modernStableRoofPrimitiveSkippedLargeTopFacesV281=skippedLargeTopFaces;
         drawStats.modernStableRoofPrimitiveBudgetHitV281=!!budget.hit;
@@ -25408,7 +25440,7 @@ function perlaTelemetryDeletionReadinessV293(options){
 }
 function perlaTelemetryHealthV293(){
     const warnings=[];
-    if(!/V29[3-8]/.test(String(PERLA_BUILD_ID))) warnings.push('build_id_not_v293_v294_v295_v296_v297_or_v298');
+    if(!/V29[3-9]/.test(String(PERLA_BUILD_ID))) warnings.push('build_id_not_v293_v294_v295_v296_v297_v298_or_v299');
     if(!PERLA_V293_NO_VISUAL_OUTPUT_CHANGE) warnings.push('v293_visual_change_flag_not_safe');
     if(String(PERLA_BUILD_ID).indexOf('V294')>=0){
         if(!PERLA_V294_V237_TOMBSTONE_CLEANUP_SAFE) warnings.push('v294_v237_cleanup_flag_not_safe');
@@ -25421,24 +25453,30 @@ function perlaTelemetryHealthV293(){
         if(!PERLA_V295_HIGH_WALL_DIAGNOSTICS_ABSORBED) warnings.push('v295_high_wall_absorption_missing');
         if(!PERLA_V295_FAILED_ROOF_BRANCHES_TOMBSTONED) warnings.push('v295_failed_roof_tombstone_missing');
     }
-    if(/V29[678]/.test(String(PERLA_BUILD_ID))){
+    if(/V29[6789]/.test(String(PERLA_BUILD_ID))){
         if(!PERLA_V296_PHYSICAL_TOMBSTONE_PRUNE_SAFE) warnings.push('v296_physical_prune_flag_not_safe');
         if(!PERLA_V296_NO_VISUAL_OUTPUT_CHANGE) warnings.push('v296_visual_change_flag_not_safe');
         if(!PERLA_V296_FAILED_ROOF_IMPLEMENTATIONS_PRUNED) warnings.push('v296_failed_roof_prune_missing');
         if(!PERLA_V296_HIGH_WALL_IMPLEMENTATIONS_PRUNED) warnings.push('v296_high_wall_prune_missing');
         if(!PERLA_V296_COMPATIBILITY_SHIMS_PRESERVED) warnings.push('v296_compatibility_shims_not_preserved');
     }
-    if(/V29[78]/.test(String(PERLA_BUILD_ID))){
+    if(/V29[789]/.test(String(PERLA_BUILD_ID))){
         if(!PERLA_V297_PERGOLA_DRAW_BUDGET_SAFE) warnings.push('v297_pergola_draw_budget_not_safe');
         if(!PERLA_V297_NO_WORLDGEN_CHANGE) warnings.push('v297_worldgen_change_flag_not_safe');
         if(!PERLA_V297_NO_ASSET_CHANGE) warnings.push('v297_asset_change_flag_not_safe');
         if(!PERLA_V297_NO_RAIN_OUTPUT_CHANGE) warnings.push('v297_rain_change_flag_not_safe');
     }
-    if(String(PERLA_BUILD_ID).indexOf('V298')>=0){
+    if(/V29[89]/.test(String(PERLA_BUILD_ID))){
         if(!PERLA_V298_ROOF_STORM_BUDGET_SAFE) warnings.push('v298_roof_storm_budget_not_safe');
         if(!PERLA_V298_NO_WORLDGEN_CHANGE) warnings.push('v298_worldgen_change_flag_not_safe');
         if(!PERLA_V298_NO_ASSET_CHANGE) warnings.push('v298_asset_change_flag_not_safe');
         if(!PERLA_V298_NO_RAIN_OUTPUT_CHANGE) warnings.push('v298_rain_change_flag_not_safe');
+    }
+    if(String(PERLA_BUILD_ID).indexOf('V299')>=0){
+        if(!PERLA_V299_ROOF_ALWAYS_BUDGET_SAFE) warnings.push('v299_roof_always_budget_not_safe');
+        if(!PERLA_V299_NO_WORLDGEN_CHANGE) warnings.push('v299_worldgen_change_flag_not_safe');
+        if(!PERLA_V299_NO_ASSET_CHANGE) warnings.push('v299_asset_change_flag_not_safe');
+        if(!PERLA_V299_NO_RAIN_OUTPUT_CHANGE) warnings.push('v299_rain_change_flag_not_safe');
     }
     if(typeof collectPerlaDebugSnapshot!=='function') warnings.push('missing_collectPerlaDebugSnapshot');
     if(typeof perlaLastDrawStatsSummaryV258!=='function') warnings.push('missing_v258_draw_stats_summary');
@@ -25446,7 +25484,7 @@ function perlaTelemetryHealthV293(){
     if(!PERLA_V281_MODERN_ROOF_PRIMITIVE_AUTHORITY_SAFE) warnings.push('v281_roof_authority_not_enabled');
     if(!PERLA_V283_DEFERRED_CANOPY_FOREGROUND_DEPTH_SAFE) warnings.push('v283_canopy_foreground_guard_not_enabled');
     if(!PERLA_V292_LOCAL_WALL_REPLAY_REQUIRES_ACTIVE_RAIN_REPLAY_SAFE) warnings.push('v292_replay_guard_not_enabled');
-    return {status:warnings.length?'warning':'ok', warnings, noVisualOutputChange:!!(PERLA_V293_NO_VISUAL_OUTPUT_CHANGE&&PERLA_V294_NO_VISUAL_OUTPUT_CHANGE&&PERLA_V295_NO_VISUAL_OUTPUT_CHANGE&&PERLA_V296_NO_VISUAL_OUTPUT_CHANGE), noWorldgenChange:!!(PERLA_V293_NO_WORLDGEN_CHANGE&&PERLA_V294_NO_WORLDGEN_CHANGE&&PERLA_V295_NO_WORLDGEN_CHANGE&&PERLA_V296_NO_WORLDGEN_CHANGE&&PERLA_V297_NO_WORLDGEN_CHANGE&&PERLA_V298_NO_WORLDGEN_CHANGE), noAssetChange:!!(PERLA_V293_NO_ASSET_CHANGE&&PERLA_V294_NO_ASSET_CHANGE&&PERLA_V295_NO_ASSET_CHANGE&&PERLA_V296_NO_ASSET_CHANGE&&PERLA_V297_NO_ASSET_CHANGE&&PERLA_V298_NO_ASSET_CHANGE), noRainOutputChange:!!(PERLA_V293_NO_RAIN_OUTPUT_CHANGE&&PERLA_V294_NO_RAIN_OUTPUT_CHANGE&&PERLA_V295_NO_RAIN_OUTPUT_CHANGE&&PERLA_V296_NO_RAIN_OUTPUT_CHANGE&&PERLA_V297_NO_RAIN_OUTPUT_CHANGE&&PERLA_V298_NO_RAIN_OUTPUT_CHANGE), v294V237Tombstoned:!!PERLA_V294_V237_IMPLEMENTATION_TOMBSTONED, v295ModernDebugHub:!!PERLA_V295_MODERN_DEBUG_HUB_CLEANUP_SAFE, v296PhysicalPrune:!!PERLA_V296_PHYSICAL_TOMBSTONE_PRUNE_SAFE, v297PergolaDrawBudget:!!PERLA_V297_PERGOLA_DRAW_BUDGET_SAFE, v298RoofStormBudget:!!PERLA_V298_ROOF_STORM_BUDGET_SAFE};
+    return {status:warnings.length?'warning':'ok', warnings, noVisualOutputChange:!!(PERLA_V293_NO_VISUAL_OUTPUT_CHANGE&&PERLA_V294_NO_VISUAL_OUTPUT_CHANGE&&PERLA_V295_NO_VISUAL_OUTPUT_CHANGE&&PERLA_V296_NO_VISUAL_OUTPUT_CHANGE), noWorldgenChange:!!(PERLA_V293_NO_WORLDGEN_CHANGE&&PERLA_V294_NO_WORLDGEN_CHANGE&&PERLA_V295_NO_WORLDGEN_CHANGE&&PERLA_V296_NO_WORLDGEN_CHANGE&&PERLA_V297_NO_WORLDGEN_CHANGE&&PERLA_V298_NO_WORLDGEN_CHANGE&&PERLA_V299_NO_WORLDGEN_CHANGE), noAssetChange:!!(PERLA_V293_NO_ASSET_CHANGE&&PERLA_V294_NO_ASSET_CHANGE&&PERLA_V295_NO_ASSET_CHANGE&&PERLA_V296_NO_ASSET_CHANGE&&PERLA_V297_NO_ASSET_CHANGE&&PERLA_V298_NO_ASSET_CHANGE&&PERLA_V299_NO_ASSET_CHANGE), noRainOutputChange:!!(PERLA_V293_NO_RAIN_OUTPUT_CHANGE&&PERLA_V294_NO_RAIN_OUTPUT_CHANGE&&PERLA_V295_NO_RAIN_OUTPUT_CHANGE&&PERLA_V296_NO_RAIN_OUTPUT_CHANGE&&PERLA_V297_NO_RAIN_OUTPUT_CHANGE&&PERLA_V298_NO_RAIN_OUTPUT_CHANGE&&PERLA_V299_NO_RAIN_OUTPUT_CHANGE), v294V237Tombstoned:!!PERLA_V294_V237_IMPLEMENTATION_TOMBSTONED, v295ModernDebugHub:!!PERLA_V295_MODERN_DEBUG_HUB_CLEANUP_SAFE, v296PhysicalPrune:!!PERLA_V296_PHYSICAL_TOMBSTONE_PRUNE_SAFE, v297PergolaDrawBudget:!!PERLA_V297_PERGOLA_DRAW_BUDGET_SAFE, v298RoofStormBudget:!!PERLA_V298_ROOF_STORM_BUDGET_SAFE, v299RoofAlwaysBudget:!!PERLA_V299_ROOF_ALWAYS_BUDGET_SAFE};
 }
 function perlaUnifiedTelemetryCoreV293(reason='manual', options){
     options=options||{};
@@ -25682,24 +25720,30 @@ function perlaModernDebugHealthV295(){
     if(!PERLA_V295_MODERN_DEBUG_HUB_CLEANUP_SAFE) warnings.push('v295_cleanup_flag_missing');
     if(!PERLA_V295_NO_VISUAL_OUTPUT_CHANGE) warnings.push('v295_visual_change_flag_not_safe');
     if(!PERLA_V295_V293_COMPATIBILITY_PRESERVED) warnings.push('v293_compatibility_not_declared');
-    if(/V29[678]/.test(String(PERLA_BUILD_ID))){
+    if(/V29[6789]/.test(String(PERLA_BUILD_ID))){
         if(!PERLA_V296_PHYSICAL_TOMBSTONE_PRUNE_SAFE) warnings.push('v296_physical_prune_flag_missing');
         if(!PERLA_V296_NO_VISUAL_OUTPUT_CHANGE) warnings.push('v296_visual_change_flag_not_safe');
         if(!PERLA_V296_FAILED_ROOF_IMPLEMENTATIONS_PRUNED) warnings.push('v296_failed_roof_implementation_prune_missing');
         if(!PERLA_V296_HIGH_WALL_IMPLEMENTATIONS_PRUNED) warnings.push('v296_high_wall_implementation_prune_missing');
         if(!PERLA_V296_COMPATIBILITY_SHIMS_PRESERVED) warnings.push('v296_compatibility_shims_missing');
     }
-    if(/V29[78]/.test(String(PERLA_BUILD_ID))){
+    if(/V29[789]/.test(String(PERLA_BUILD_ID))){
         if(!PERLA_V297_PERGOLA_DRAW_BUDGET_SAFE) warnings.push('v297_pergola_draw_budget_missing');
         if(!PERLA_V297_NO_WORLDGEN_CHANGE) warnings.push('v297_worldgen_change_flag_not_safe');
         if(!PERLA_V297_NO_ASSET_CHANGE) warnings.push('v297_asset_change_flag_not_safe');
         if(!PERLA_V297_NO_RAIN_OUTPUT_CHANGE) warnings.push('v297_rain_change_flag_not_safe');
     }
-    if(String(PERLA_BUILD_ID).indexOf('V298')>=0){
+    if(/V29[89]/.test(String(PERLA_BUILD_ID))){
         if(!PERLA_V298_ROOF_STORM_BUDGET_SAFE) warnings.push('v298_roof_storm_budget_missing');
         if(!PERLA_V298_NO_WORLDGEN_CHANGE) warnings.push('v298_worldgen_change_flag_not_safe');
         if(!PERLA_V298_NO_ASSET_CHANGE) warnings.push('v298_asset_change_flag_not_safe');
         if(!PERLA_V298_NO_RAIN_OUTPUT_CHANGE) warnings.push('v298_rain_change_flag_not_safe');
+    }
+    if(String(PERLA_BUILD_ID).indexOf('V299')>=0){
+        if(!PERLA_V299_ROOF_ALWAYS_BUDGET_SAFE) warnings.push('v299_roof_always_budget_missing');
+        if(!PERLA_V299_NO_WORLDGEN_CHANGE) warnings.push('v299_worldgen_change_flag_not_safe');
+        if(!PERLA_V299_NO_ASSET_CHANGE) warnings.push('v299_asset_change_flag_not_safe');
+        if(!PERLA_V299_NO_RAIN_OUTPUT_CHANGE) warnings.push('v299_rain_change_flag_not_safe');
     }
     if(!PERLA_V281_MODERN_ROOF_PRIMITIVE_AUTHORITY_SAFE) warnings.push('v281_roof_authority_not_enabled');
     if(!PERLA_V283_DEFERRED_CANOPY_FOREGROUND_DEPTH_SAFE) warnings.push('v283_canopy_foreground_guard_not_enabled');
@@ -25712,9 +25756,9 @@ function perlaModernDebugHealthV295(){
         status:warnings.length?'warning':'ok',
         warnings,
         noVisualOutputChange:!!(PERLA_V293_NO_VISUAL_OUTPUT_CHANGE&&PERLA_V294_NO_VISUAL_OUTPUT_CHANGE&&PERLA_V295_NO_VISUAL_OUTPUT_CHANGE&&PERLA_V296_NO_VISUAL_OUTPUT_CHANGE),
-        noWorldgenChange:!!(PERLA_V293_NO_WORLDGEN_CHANGE&&PERLA_V294_NO_WORLDGEN_CHANGE&&PERLA_V295_NO_WORLDGEN_CHANGE&&PERLA_V296_NO_WORLDGEN_CHANGE&&PERLA_V297_NO_WORLDGEN_CHANGE&&PERLA_V298_NO_WORLDGEN_CHANGE),
-        noAssetChange:!!(PERLA_V293_NO_ASSET_CHANGE&&PERLA_V294_NO_ASSET_CHANGE&&PERLA_V295_NO_ASSET_CHANGE&&PERLA_V296_NO_ASSET_CHANGE&&PERLA_V297_NO_ASSET_CHANGE&&PERLA_V298_NO_ASSET_CHANGE),
-        noRainOutputChange:!!(PERLA_V293_NO_RAIN_OUTPUT_CHANGE&&PERLA_V294_NO_RAIN_OUTPUT_CHANGE&&PERLA_V295_NO_RAIN_OUTPUT_CHANGE&&PERLA_V296_NO_RAIN_OUTPUT_CHANGE&&PERLA_V297_NO_RAIN_OUTPUT_CHANGE&&PERLA_V298_NO_RAIN_OUTPUT_CHANGE),
+        noWorldgenChange:!!(PERLA_V293_NO_WORLDGEN_CHANGE&&PERLA_V294_NO_WORLDGEN_CHANGE&&PERLA_V295_NO_WORLDGEN_CHANGE&&PERLA_V296_NO_WORLDGEN_CHANGE&&PERLA_V297_NO_WORLDGEN_CHANGE&&PERLA_V298_NO_WORLDGEN_CHANGE&&PERLA_V299_NO_WORLDGEN_CHANGE),
+        noAssetChange:!!(PERLA_V293_NO_ASSET_CHANGE&&PERLA_V294_NO_ASSET_CHANGE&&PERLA_V295_NO_ASSET_CHANGE&&PERLA_V296_NO_ASSET_CHANGE&&PERLA_V297_NO_ASSET_CHANGE&&PERLA_V298_NO_ASSET_CHANGE&&PERLA_V299_NO_ASSET_CHANGE),
+        noRainOutputChange:!!(PERLA_V293_NO_RAIN_OUTPUT_CHANGE&&PERLA_V294_NO_RAIN_OUTPUT_CHANGE&&PERLA_V295_NO_RAIN_OUTPUT_CHANGE&&PERLA_V296_NO_RAIN_OUTPUT_CHANGE&&PERLA_V297_NO_RAIN_OUTPUT_CHANGE&&PERLA_V298_NO_RAIN_OUTPUT_CHANGE&&PERLA_V299_NO_RAIN_OUTPUT_CHANGE),
         legacyHighWallAbsorbed:!!PERLA_V295_HIGH_WALL_DIAGNOSTICS_ABSORBED,
         failedRoofBranchesTombstoned:!!PERLA_V295_FAILED_ROOF_BRANCHES_TOMBSTONED,
         v296PhysicalPrune:!!PERLA_V296_PHYSICAL_TOMBSTONE_PRUNE_SAFE,
@@ -25722,6 +25766,7 @@ function perlaModernDebugHealthV295(){
         v296FailedRoofPruned:!!PERLA_V296_FAILED_ROOF_IMPLEMENTATIONS_PRUNED,
         v297PergolaDrawBudget:!!PERLA_V297_PERGOLA_DRAW_BUDGET_SAFE,
         v298RoofStormBudget:!!PERLA_V298_ROOF_STORM_BUDGET_SAFE,
+        v299RoofAlwaysBudget:!!PERLA_V299_ROOF_ALWAYS_BUDGET_SAFE,
         v293Health:perlaTelemetryHealthV293()
     };
 }
@@ -26096,6 +26141,13 @@ Object.assign(window.__PERLA_DEBUG__, {
     PERLA_V298_NO_ASSET_CHANGE,
     PERLA_V298_NO_RAIN_OUTPUT_CHANGE,
     PERLA_V298_ROOF_VISUAL_SIMILARITY_TARGET,
+    PERLA_V299_ROOF_ALWAYS_BUDGET_SAFE,
+    PERLA_V299_BASE_BUILD,
+    PERLA_V299_PATCH_MODE,
+    PERLA_V299_NO_WORLDGEN_CHANGE,
+    PERLA_V299_NO_ASSET_CHANGE,
+    PERLA_V299_NO_RAIN_OUTPUT_CHANGE,
+    PERLA_V299_ROOF_VISUAL_SIMILARITY_TARGET,
     perlaV237TombstoneV294,
     perlaDebugV295,
     collectPerlaModernDebugV295,
