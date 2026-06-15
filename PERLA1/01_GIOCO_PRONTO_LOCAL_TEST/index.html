@@ -597,7 +597,7 @@ const PERLA_V281_RECEPTION_RIDGE_RISE_GEOMETRIC = .96;
 const PERLA_V281_BATH_RIDGE_RISE_GEOMETRIC = .88;
 const PERLA_V281_RECEPTION_FASCIA_THICKNESS = .26;
 const PERLA_V281_BATH_FASCIA_THICKNESS = .23;
-const PERLA_V281_RECEPTION_ENTRY_CEILING_BRIDGE_SAFE = true;
+const PERLA_V281_RECEPTION_ENTRY_CEILING_BRIDGE_SAFE = false; // V281: il bridge cMap esterno crea una lastra visuale alla porta; resta spento finche' non esiste una cover semantica non visuale.
 // V281R rollback: V282 slab/portal experiments stay in file for diagnostics, but must not affect runtime.
 const PERLA_V282_MODERN_INTERIOR_ROOF_SLAB_SAFE = false;
 const PERLA_V282_OWNER1_VIRTUAL_CEIL_TYPE = 7;
@@ -12323,9 +12323,7 @@ function perlaStableModernRoofPrimitiveOwner1WallJoinAllowV281(face, roof, roofP
     if(!perlaStableModernRoofPrimitiveOwner1ExteriorFlushWallJoinV281(roof)) return baseAllow;
     let allow=PERLA_V281_SAME_OWNER_WALL_TOP_ALLOW_PX;
     if(face && (face.kind==='roof' || face.kind==='gable' || roofPlaneAtEave)){
-        const nearFront=posY>=roof.y3-PERLA_V281_OWNER1_FRONT_GABLE_KEEP_FRONT_PAD;
-        const lateralView=Math.abs(dirX)>=PERLA_V281_OWNER1_LATERAL_ROOF_JOIN_DIRX_MIN && dirY<PERLA_V281_OWNER1_FRONT_GABLE_KEEP_DIRY_MAX;
-        if(nearFront && lateralView) allow=Math.max(allow,PERLA_V281_OWNER1_LATERAL_ROOF_JOIN_ALLOW_PX);
+        return 0;
     }
     return Math.max(allow, baseAllow||0);
 }
