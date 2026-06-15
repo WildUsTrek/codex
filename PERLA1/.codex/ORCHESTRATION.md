@@ -247,6 +247,9 @@ Operational rules:
 - Do not close a subagent at the end of one internal step if the Team Leader task and assigned packet are still active.
 - Close a subagent at Team Leader task completion, or earlier only when its packet is fully integrated, obsolete, stale, aborted, or explicitly unsafe to continue.
 - Before closing, classify the latest result with Sidecar Result Integration when it contains evidence that could affect the plan.
+- Before spawning more agents, and after any `wait_agent` result, run `subagent_slot_hygiene`: record active slot budget, classify returned/completed agents, integrate/defer/discard usable evidence, close no-longer-needed agents, and keep useful running or unintegrated agents open.
+- Treat a tool-level `completed` result as "output returned", not "packet fully closed". If the packet is not integrated/deferred/discarded yet, it remains a useful lifecycle item and must not be closed merely to free capacity.
+- If capacity is exhausted by useful agents, checkpoint and serialize follow-up agent work. Do not force-close useful agents, skip required `CALL` agents, or open optional agents while stale returned results are unclassified.
 - At final delivery after multi-agent work, record `subagent_task_lifecycle`, `result_integrated`, `final_sidecar_integration_ref`, `subagents_to_keep_open`, and `subagents_to_close`.
 - UI history entries may remain visible after closure. Treat UI history as residual display state, not as proof of active compute, unless the tool surface reports a running/pending status.
 - Closed agents are not reusable proof that a future gate ran. A new protected task still needs a fresh Agent Selection Gate or a recorded valid continuation checkpoint.
@@ -368,6 +371,12 @@ finalization_gate:
   validation_run:
   blocking_failures:
   subagent_task_lifecycle:
+  subagent_slot_hygiene:
+    checked_before: pre_spawn/pre_wait/finalization/not_applicable
+    completed_results: integrated/deferred/discarded/none
+    agents_closed:
+    agents_kept_open:
+    reason_kept_open:
   subagents_to_keep_open:
   subagents_to_close:
   staging_plan: none/selective
@@ -416,6 +425,13 @@ Known tooling failure class:
 - `CreateProcessAsUserW failed: 5`
 - Windows sandbox or permission errors while launching/attaching the in-app Browser
 - Browser plugin connection failure before page navigation
+
+Session-level failure memory:
+
+- Record `browser_failure_cache` after the first deterministic in-app Browser launch failure in the task/session.
+- While `browser_failure_cache` is active, another in-app Browser bootstrap is `forbidden_next_action`; use the PERLA1 runbook Playwright/system Chrome/Edge path directly.
+- Reset `browser_failure_cache` only when the user explicitly asks to retest the in-app Browser, the browser/tooling environment changed, a new Codex session has no current failure evidence, or the Playwright/headless route itself fails and route comparison becomes necessary.
+- Do not repeat the same Browser failure in every progress update. Record it once, then say that the cached fallback route is being used.
 
 When this happens:
 

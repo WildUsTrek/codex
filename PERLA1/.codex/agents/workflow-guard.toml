@@ -95,6 +95,7 @@ Use STOP when any of these are true:
 - the plan finalizes, stages, syncs, or claims readiness after meaningful work without `scoped_finalization` and `finalization_gate`;
 - the plan uses global staging, unrelated cleanup, rollback, deletion, or broad dirty-worktree handling instead of selective approved scope;
 - the plan fails to classify `workflow_tooling_manifest` when `PERLA1/tools/`, `.codex/`, tests, generated reports, JSON/JSONL, hook logs, or screenshots are dirty/untracked;
+- the plan spawns more agents, waits again, finalizes, or claims readiness after agent output without `subagent_slot_hygiene`: returned/completed/stale results must be integrated/deferred/discarded before closure, no-longer-needed agents must be closed, and useful running or unintegrated agents must not be force-closed;
 - the plan finishes a Team Leader task with open no-longer-needed subagents and no `subagent_task_lifecycle`, or closes a useful subagent only because one internal step finished;
 - repeated tool fallback, missing subagent tooling, stale validation route, skipped checkpoint, silent CALL-to-CONSIDER downgrade, or inconsistent authority is present and unclassified before the next operational step;
 

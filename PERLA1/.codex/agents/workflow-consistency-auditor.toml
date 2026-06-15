@@ -57,7 +57,7 @@ Audit scope:
 - checker wording that hides `checker_semantic_limit` or implies deterministic grep/PowerShell checks prove visual behavior, user intent, agent reasoning quality, or full semantic correctness;
 - scoped finalization drift across intake, orchestration, AGENTS, project/context/block maps, TOMLs, and checker; require `scoped_finalization`, `finalization_gate`, dirty worktree separation, selective staging, `no_global_stage`, and residual risk;
 - workflow tooling classification drift; require `workflow_tooling_manifest` to distinguish tracked workflow tooling from disposable generated reports/logs/screenshots without assuming all historical report-like artifacts are untracked;
-- subagent lifecycle drift; require `subagent_task_lifecycle` and make clear that subagents close at Team Leader task completion or packet integration/obsolescence/staleness, not merely at the end of an internal step;
+- subagent lifecycle drift; require `subagent_task_lifecycle` and `subagent_slot_hygiene`, and make clear that subagents close at Team Leader task completion or packet integration/obsolescence/staleness after returned evidence is integrated/deferred/discarded, not merely at the end of an internal step;
 - finalization wording that authorizes unrelated rollback, cleanup, deletion, global staging, write-agent self-validation, or sync despite out-of-scope dirty work;
 - stale Vxxx contracts or poses that contradict the current project map;
 - TOML syntax or structural risks.

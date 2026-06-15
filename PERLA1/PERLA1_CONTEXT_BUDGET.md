@@ -117,7 +117,7 @@ Include:
 - hook trust status and fallback if hooks are configured but not proven trusted;
 - checker result plus reminder of semantic limits;
 - `project_backup_gate` status: `backup_user_requested`, `automatic_task_backup`, backup path, excluded RTP path, retention result, and `backup_not_created_permission_blocked` if filesystem approval was unavailable;
-- subagents integrated, deferred/discarded, kept open, closed, stale, or visible only as UI history;
+- subagents integrated, deferred/discarded, kept open, closed, stale, or visible only as UI history, plus `subagent_slot_hygiene` status before new spawns/finalization;
 - staging/sync state, including `selective_staging_only`, `no_global_stage`, `sync_safe`, and residual risk.
 
 Do not paste full git status, full checker JSON, or long hook logs unless requested. Summarize decision-grade evidence and point to exact files or generated artifacts when they matter.

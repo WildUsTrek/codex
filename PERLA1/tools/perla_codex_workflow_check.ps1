@@ -636,6 +636,7 @@ if ($acceleratorText.Trim().Length -gt 0) {
     'finalization_gate',
     'workflow_tooling_manifest',
     'subagent_task_lifecycle',
+    'subagent_slot_hygiene',
     'project_backup_gate',
     'backup_user_requested',
     'automatic_task_backup',
@@ -648,12 +649,12 @@ if ($acceleratorText.Trim().Length -gt 0) {
   }
 
   $finalizationCoreDocTermRequirements = @{
-    'PERLA1_TASK_INTAKE_PROTOCOL.md' = @('hook_trust_check','checker_semantic_limit','scoped_finalization','finalization_gate','workflow_tooling_manifest','subagent_task_lifecycle','project_backup_gate','backup_user_requested','automatic_task_backup','selective_staging_only','no_global_stage')
-    'ORCHESTRATION.md' = @('hook_trust_check','checker_semantic_limit','scoped_finalization','finalization_gate','workflow_tooling_manifest','subagent_task_lifecycle','project_backup_gate','backup_user_requested','automatic_task_backup','selective_staging_only','no_global_stage')
-    'AGENTS.md' = @('hook_trust_check','checker_semantic_limit','scoped_finalization','finalization_gate','workflow_tooling_manifest','subagent_task_lifecycle','project_backup_gate','backup_user_requested','automatic_task_backup','selective_staging_only','no_global_stage')
-    'PERLA1_PROJECT_MAP.md' = @('hook_trust_check','checker_semantic_limit','scoped_finalization','finalization_gate','workflow_tooling_manifest','subagent_task_lifecycle','project_backup_gate','backup_user_requested','automatic_task_backup')
-    'PERLA1_CONTEXT_BUDGET.md' = @('hook_trust_check','checker_semantic_limit','scoped_finalization','finalization_gate','workflow_tooling_manifest','subagent_task_lifecycle','project_backup_gate','backup_user_requested','automatic_task_backup','selective_staging_only','no_global_stage')
-    'PERLA1_BLOCK_MAP.md' = @('hook_trust_check','checker_semantic_limit','scoped_finalization','finalization_gate','workflow_tooling_manifest','subagent_task_lifecycle','project_backup_gate','backup_user_requested','automatic_task_backup')
+    'PERLA1_TASK_INTAKE_PROTOCOL.md' = @('hook_trust_check','checker_semantic_limit','scoped_finalization','finalization_gate','workflow_tooling_manifest','subagent_task_lifecycle','subagent_slot_hygiene','project_backup_gate','backup_user_requested','automatic_task_backup','selective_staging_only','no_global_stage')
+    'ORCHESTRATION.md' = @('hook_trust_check','checker_semantic_limit','scoped_finalization','finalization_gate','workflow_tooling_manifest','subagent_task_lifecycle','subagent_slot_hygiene','project_backup_gate','backup_user_requested','automatic_task_backup','selective_staging_only','no_global_stage')
+    'AGENTS.md' = @('hook_trust_check','checker_semantic_limit','scoped_finalization','finalization_gate','workflow_tooling_manifest','subagent_task_lifecycle','subagent_slot_hygiene','project_backup_gate','backup_user_requested','automatic_task_backup','selective_staging_only','no_global_stage')
+    'PERLA1_PROJECT_MAP.md' = @('hook_trust_check','checker_semantic_limit','scoped_finalization','finalization_gate','workflow_tooling_manifest','subagent_task_lifecycle','subagent_slot_hygiene','project_backup_gate','backup_user_requested','automatic_task_backup')
+    'PERLA1_CONTEXT_BUDGET.md' = @('hook_trust_check','checker_semantic_limit','scoped_finalization','finalization_gate','workflow_tooling_manifest','subagent_task_lifecycle','subagent_slot_hygiene','project_backup_gate','backup_user_requested','automatic_task_backup','selective_staging_only','no_global_stage')
+    'PERLA1_BLOCK_MAP.md' = @('hook_trust_check','checker_semantic_limit','scoped_finalization','finalization_gate','workflow_tooling_manifest','subagent_task_lifecycle','subagent_slot_hygiene','project_backup_gate','backup_user_requested','automatic_task_backup')
   }
 
   foreach ($requirement in $finalizationCoreDocTermRequirements.GetEnumerator()) {
@@ -669,12 +670,12 @@ if ($acceleratorText.Trim().Length -gt 0) {
   }
 
   $finalizationTomlTermRequirements = @{
-    'plan-integrity-auditor.toml' = @('hook_trust_check','checker_semantic_limit','scoped_finalization','finalization_gate','workflow_tooling_manifest','subagent_task_lifecycle')
-    'workflow-guard.toml' = @('hook_trust_check','checker_semantic_limit','scoped_finalization','finalization_gate','workflow_tooling_manifest','subagent_task_lifecycle')
-    'workflow-consistency-auditor.toml' = @('hook_trust_check','checker_semantic_limit','scoped_finalization','finalization_gate','workflow_tooling_manifest','subagent_task_lifecycle')
-    'task-watchdog.toml' = @('hook_trust_check','checker_semantic_limit','scoped_finalization','finalization_gate','workflow_tooling_manifest','subagent_task_lifecycle')
-    'skeptic-auditor.toml' = @('hook_trust_check','checker_semantic_limit','scoped_finalization','finalization_gate','workflow_tooling_manifest','subagent_task_lifecycle')
-    'safe-fixer.toml' = @('hook_trust_check','checker_semantic_limit','workflow_tooling_manifest','subagent_task_lifecycle')
+    'plan-integrity-auditor.toml' = @('hook_trust_check','checker_semantic_limit','scoped_finalization','finalization_gate','workflow_tooling_manifest','subagent_task_lifecycle','subagent_slot_hygiene')
+    'workflow-guard.toml' = @('hook_trust_check','checker_semantic_limit','scoped_finalization','finalization_gate','workflow_tooling_manifest','subagent_task_lifecycle','subagent_slot_hygiene')
+    'workflow-consistency-auditor.toml' = @('hook_trust_check','checker_semantic_limit','scoped_finalization','finalization_gate','workflow_tooling_manifest','subagent_task_lifecycle','subagent_slot_hygiene')
+    'task-watchdog.toml' = @('hook_trust_check','checker_semantic_limit','scoped_finalization','finalization_gate','workflow_tooling_manifest','subagent_task_lifecycle','subagent_slot_hygiene')
+    'skeptic-auditor.toml' = @('hook_trust_check','checker_semantic_limit','scoped_finalization','finalization_gate','workflow_tooling_manifest','subagent_task_lifecycle','subagent_slot_hygiene')
+    'safe-fixer.toml' = @('hook_trust_check','checker_semantic_limit','workflow_tooling_manifest','subagent_task_lifecycle','subagent_slot_hygiene')
     'refactor-surgeon.toml' = @('hook_trust_check','checker_semantic_limit','scoped_finalization','finalization_gate','workflow_tooling_manifest','subagent_task_lifecycle')
     'map-maintainer.toml' = @('hook_trust_check','checker_semantic_limit','scoped_finalization','finalization_gate','workflow_tooling_manifest','subagent_task_lifecycle')
   }
@@ -694,7 +695,9 @@ if ($acceleratorText.Trim().Length -gt 0) {
   Add-Check -Id 'finalization.no_global_stage_or_cleanup' -Severity 'P1' -Ok ($acceleratorText -match 'no_global_stage' -and $acceleratorText -match 'selective staging' -and $acceleratorText -match 'does not authorize rollback|does not authorize.*cleanup|not authorize rollback') -Message 'Finalization wording requires selective staging and does not authorize unrelated cleanup or rollback.' -Files $acceleratorScanFiles
   Add-Check -Id 'hooks.trust_not_forced' -Severity 'P1' -Ok ($acceleratorText -match 'cannot be forced|cannot force Codex|not necessarily trusted|not proven active' -and $acceleratorText -match 'manual workflow checker|run the workflow checker manually') -Message 'Hook trust wording states configured hooks are not proof of active trusted enforcement and defines manual fallback.' -Files $acceleratorScanFiles
   Add-Check -Id 'checker.semantic_limit' -Severity 'P1' -Ok ($acceleratorText -match 'checker_semantic_limit' -and $acceleratorText -match 'cannot prove|does not prove' -and $acceleratorText -match 'visual|rendered|user intent|agent reasoning') -Message 'Checker semantic limit is explicit: deterministic checks do not prove runtime visuals, user intent, or agent reasoning quality.' -Files $acceleratorScanFiles
+  Add-Check -Id 'tooling.browser_failure_cache' -Severity 'P1' -Ok ($acceleratorText -match 'browser_failure_cache' -and $acceleratorText -match 'CreateProcessAsUserW failed: 5' -and $acceleratorText -match 'forbidden_next_action' -and $acceleratorText -match 'Playwright|headless') -Message 'Workflow records deterministic in-app Browser failures and forbids repeated bootstrap attempts while the cached fallback route is active.' -Files $acceleratorScanFiles
   Add-Check -Id 'subagent_lifecycle.close_at_task_completion' -Severity 'P1' -Ok ($acceleratorText -match 'Team Leader task completion' -and $acceleratorText -match 'not close|Do not close' -and $acceleratorText -match 'internal step') -Message 'Subagent lifecycle says to close at Team Leader task completion or packet completion/obsolescence, not merely after an internal step.' -Files $acceleratorScanFiles
+  Add-Check -Id 'subagent_lifecycle.slot_hygiene' -Severity 'P1' -Ok ($acceleratorText -match 'subagent_slot_hygiene' -and $acceleratorText -match 'pre_spawn|spawning new agents|spawning more agents|before spawning' -and $acceleratorText -match 'integrated/deferred/discarded|integrate/defer/discard' -and $acceleratorText -match 'useful.*open|useful.*agents') -Message 'Subagent lifecycle requires slot hygiene before new spawns/waits/finalization and preserves useful agents until evidence is integrated/deferred/discarded.' -Files $acceleratorScanFiles
 
   $agentInvocationFiles = @(
     $paths.PerlaAgents,

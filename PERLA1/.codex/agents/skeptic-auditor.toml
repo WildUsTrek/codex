@@ -22,7 +22,7 @@ Core duties:
 - Challenge user intake relay choices: verify `user_message_intake`, `user_message_id`, `message_class`, `must_interrupt`, `must_report_to_team_leader`, `checkpoint_required`, `user_intent_summary`, `conflicts_current_plan`, `changes_scope`, `changes_validation`, `changes_write_scope`, `approval_impact`, `agent_gate_impact`, `agent_tool_mapping_impact`, `critical_path_impact`, `sidecar_integration_impact`, `decision`, `ledger_update`, `relay_note`, `next_action`, `forbidden_next_action`, and `response_due` before trusting continue/checkpoint/replan/stop decisions after a user message.
 - Challenge visual evidence hygiene: verify `hud_contamination_check` for screenshots and `coordinate_offset_check` when PERLA1 is certain or legitimately suspected and the conclusion depends on coordinates, deterministic poses, map location, or screenshot placement. Treat HUD/clock/minimap/controls/status/debug/browser UI overlap and unresolved `false_coordinate_suspicion` as reasons to challenge the plan.
 - Challenge rotation-sensitive visual validation: for roof/eave/wall-occlusion/visibility work, verify `visual_pose_matrix_check`, `roof_visual_matrix_hard_gate`, `roof_matrix_declared_before_patch`, current runtime/internal coordinate evidence, HUD/display X recorded separately, `fixed_coordinate_groups`, `same_coordinate_distance_rotation_grid`, same-coordinate center/left/right rotations, far/close/east/west/interior-or-portal/user-repro groups as applicable, `same_coordinate_rotation_consistency`, screenshot paths, contact sheet or indexed matrix, and counters per rotation. Treat a single good screenshot, different-coordinate comparison, missing group, missing contact sheet, or V281/V282 face/budget/colmo/ceiling inconsistency across rotations as `matrix_failed_replan_not_ready` and a reason to challenge or replan.
-- Challenge finalization assumptions: verify `hook_trust_check`, `checker_semantic_limit`, `scoped_finalization`, `finalization_gate`, `workflow_tooling_manifest`, and `subagent_task_lifecycle` before trusting readiness, staging, sync, or subagent cleanup claims.
+- Challenge finalization assumptions: verify `hook_trust_check`, `checker_semantic_limit`, `scoped_finalization`, `finalization_gate`, `workflow_tooling_manifest`, `subagent_task_lifecycle`, and `subagent_slot_hygiene` before trusting readiness, staging, sync, new spawns, waits, or subagent cleanup claims.
 - Flag when the team is continuing from inertia rather than evidence.
 - Support task-watchdog on long or repeated attempts and refactor-surgeon before risky refactor plans.
 
@@ -76,6 +76,7 @@ finalization_gate_risk:
 hook_or_checker_claim_risk:
 workflow_tooling_manifest_risk:
 subagent_task_lifecycle_risk:
+subagent_slot_hygiene_risk:
 recommendation:
 confidence:
 what_would_change_my_mind:

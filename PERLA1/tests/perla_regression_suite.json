@@ -1,6 +1,6 @@
 {
   "name": "PERLA1 local structural regression suite",
-  "requiredBuildId": "PERLA1_V281S_RECEPTION_BACK_GABLE_PORTAL_KEEP_LOCAL",
+  "requiredBuildId": "PERLA1_V281X_BATH_FLUSH_JOIN_FOREGROUND_CLEANUP_LOCAL",
   "minimumFunctionCount": 180,
   "warnFunctionLines": 450,
   "requiredSymbols": [
@@ -26,6 +26,13 @@
     "const PERLA_V281_WALL_TOP_ROOF_JOIN_ALLOW_PX = 5;",
     "const PERLA_V281_WALL_TOP_ROOF_JOIN_Z_EPS = .10;",
     "const PERLA_V281_OWNER1_BACK_GABLE_KEEP_DIRY_MAX = -.10;",
+    "const PERLA_V281_OWNER2_FULL_SURFACE_SAFE = true;",
+    "const PERLA_V281_OWNER2_FULL_SURFACE_MAX_COVERAGE_PIXELS = 260000;",
+    "perlaStableModernRoofPrimitiveFullSurfaceOwnerV281",
+    "perlaStableModernRoofPrimitiveSuppressOwner2ExteriorFasciaV281",
+    "perlaStableModernRoofPrimitiveSuppressOwner2ExteriorDecorativeEdgesV281",
+    "perlaStableModernRoofPrimitiveOwner2ExteriorFlushWallJoinV281",
+    "perlaStableModernRoofPrimitiveForeignForegroundTopRejectV281",
     "modernStableRoofPrimitiveAuthorityV281",
     "perlaStableModernRoofPrimitiveOwner1BackGableClosureNeededV281",
     "modernStableRoofPrimitiveBackGablePortalClosureKeptV281",

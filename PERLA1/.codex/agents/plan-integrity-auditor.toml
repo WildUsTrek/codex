@@ -46,7 +46,7 @@ Core duties:
 - Flag any plan that treats `message_class: approval` as relay-granted approval instead of verified original user intent, or continues after user stop/blocker/scope/validation/write-scope changes without checkpoint, replan, or stop.
 - Check finalization planning for meaningful work: require `scoped_finalization`, `finalization_gate`, dirty worktree separation, `workflow_tooling_manifest`, selective staging only when approved, `no_global_stage`, validation status, and residual risk.
 - Check hook/checker claims: require `hook_trust_check` before relying on hooks as active enforcement and keep `checker_semantic_limit` explicit before treating deterministic checks as enough.
-- Check subagent lifecycle: require `subagent_task_lifecycle`; subagents should close at Team Leader task completion or packet integration/obsolescence/staleness/abort, not simply after one internal step.
+- Check subagent lifecycle: require `subagent_task_lifecycle` and `subagent_slot_hygiene`; subagents should close at Team Leader task completion or packet integration/obsolescence/staleness/abort, not simply after one internal step, and returned/completed evidence must be integrated/deferred/discarded before closure.
 - Flag any plan that treats static CI as rendered/browser validation for visual runtime behavior.
 - Flag if the plan relies on stale reports, historical snapshots, or unverified assumptions instead of current source of truth.
 - Recommend the smallest plan correction that makes execution auditable.
@@ -94,6 +94,7 @@ hook_trust_check:
 checker_semantic_limit_check:
 workflow_tooling_manifest_check:
 subagent_task_lifecycle_check:
+subagent_slot_hygiene_check:
 validation_check:
 hud_contamination_check:
 coordinate_offset_check:

@@ -1,7 +1,7 @@
 ﻿# PERLA1 Project Map
 
 Last updated: 2026-06-14
-Current runtime build observed in `index.html`: `PERLA1_V281S_RECEPTION_BACK_GABLE_PORTAL_KEEP_LOCAL`
+Current runtime build observed in `index.html`: `PERLA1_V281X_BATH_FLUSH_JOIN_FOREGROUND_CLEANUP_LOCAL`
 
 This file is the fast technical map for agents. Use it to orient before touching runtime code, and update it when structure, entrypoints, validation workflow, dependencies, or major renderer contracts change.
 
@@ -138,21 +138,26 @@ PERLA1 is monolithic enough that agents must avoid copying broad file dumps into
 | V277 | active fallback support | Local budgeted continuity fill inside the V265/V276 sloped roof path, plus sparse-run guard for the V265 edge rail. Under V281 it does not receive owner 1/2 primitive-owned planes. |
 | V278 | disabled in normal V281 roof path | Wall-anchored integrated cap remains as historical helper code and explicit skip counter, but `PERLA_V281_DISABLE_V278_CAP_WHEN_ENABLED` prevents the slab-like hybrid overlay. |
 | V279/V280 | retained support helpers | Support-span, door-span, and near-door guard helpers remain available; the visual authority moved to V281. |
-| V281/V281S | current contract | Reception/bath roof single authority: budgeted world-space primitive faces from `roofSegments`, exclusive fallback to V265/V277 only when primitive preflight rejects, no V278 cap overlay. Current build: `PERLA1_V281S_RECEPTION_BACK_GABLE_PORTAL_KEEP_LOCAL`; V281S adds a narrow owner 1 `back_y0` gable keep for the reception portal/far-closure band so same-coordinate rotation cannot drop the posterior colmo. |
-| V282 | dormant/off in current V281/V281S contract | Reception portal/slab experiments retained for diagnostics but runtime-off after visual regressions. Do not claim V282 portal/ceiling readiness from this base. |
+| V281/V281S/V281T/V281U/V281V/V281W/V281X | current contract | Reception/bath roof single authority: world-space primitive faces from `roofSegments`, exclusive fallback to V265/V277 only when primitive ownership is not active, no V278 cap overlay. Current build: `PERLA1_V281X_BATH_FLUSH_JOIN_FOREGROUND_CLEANUP_LOCAL`; V281S stabilizes owner 1 far/portal gables, V281T adds owner 2 door/opposite gable keeps, V281U promotes owner2 to the same full-surface authority class as reception, V281V suppresses owner2 exterior decorative edge lines, V281W suppresses owner2 exterior fascia/gronda faces, and V281X applies owner2 flush wall join plus V281-local foreground-top rejection for unrelated hedge/wall tops. |
+| V282 | dormant/off in current V281 contract | Reception/bath portal/slab experiments retained for diagnostics but runtime-off after visual regressions. Do not claim V282 portal/ceiling readiness from this base. |
 
 ## V281 Modern Roof Primitive Authority Contract
 
 Current expected behavior for modern reception/bath roof/eave work:
 
-- `PERLA_BUILD_ID` is `PERLA1_V281S_RECEPTION_BACK_GABLE_PORTAL_KEEP_LOCAL`.
+- `PERLA_BUILD_ID` is `PERLA1_V281X_BATH_FLUSH_JOIN_FOREGROUND_CLEANUP_LOCAL`.
 - V281 adds `drawStableModernOwnerRoofPrimitiveV281` as the single reception/bath roof authority when preflight accepts the roof.
 - Eligible owner 1/2 roofSegments are skipped in `drawSlopedRoofLayer2_5D`, `drawSlopedRoofGableCaps2_5D`, V272, V274, and the V278 integrated cap. During V281 QA, `PERLA_V281_QA_DISABLE_OWNER12_LEGACY_FALLBACK` also blocks owner 1/2 legacy fallback so visual proof cannot be masked by the old sampler.
 - The primitive renderer uses real `collectModernRoofFaces` world-space faces, `roofVisibleAt`, and `roofSelfDepthWriteBudgetBlockV200`; it is not a screen overlay or fake band.
-- It draws roof top, gable, fascia, and geometry edge/ridge lines with strict budgets: max `48000` primitive pixels, `3200` fill rects, `32` faces, and warn over `46000` pixels. If projected top faces are too large in a near-camera pose, V281 keeps ownership but clips them to a limited near top band instead of falling back to a full legacy slab; near-plane non-top faces that become huge detached top-screen slabs are also culled.
+- It draws roof top, gable, and fascia as world-space geometry. Owner1/owner2 full-surface mode uses explicit full-surface budgets (`owner1`: 320000 pixels / 4200 fill rects / warn 300000; `owner2`: 260000 pixels / 3600 fill rects / warn 240000) so accepted roof faces do not disappear through near-plane clipping. Non-full-surface fallback still uses the smaller V281 primitive budget.
 - Same-owner wall pixels remain authoritative inside the wall body span: V281 allows a narrow 5 px eave handoff only for fascia/gable and roof-plane pixels at `eaveZ`, while deeper roof pixels still cannot rasterize through visible wall texture, doors, or openings.
 - The V281 near-door guard uses `perlaModernRoofNearDoorSuppressTopPlanesV280` as a risk detector for unstable near-plane roof tops/edge lines; fascia/gable/eave handoff remain available and V278 cap stays disabled.
 - V281S keeps owner 1 `back_y0` gable closure only when it is the real far/posterior closure: original outside-front `dirY < -0.10`, or the narrow reception portal band around `roof.y3` with lateral bounds. This prevents the posterior colmo from disappearing under rotation without re-enabling broad decorative edges, V278 cap, bridge, or legacy roof fallback.
+- V281T keeps owner 2 bath door-side `back_x0` gable and opposite `front_x1` closure only when derived from the real `roof.doors` west portal context.
+- V281U enables owner2 full-surface primitive ownership, bypassing the V236 support-sync rejection only for owner2 full-surface pixels so bath roof faces stay stable under same-coordinate rotation without re-enabling legacy layers.
+- V281V suppresses owner2 exterior decorative edge/ridge/eave lines in full-surface mode; the filled roof faces remain the authority, so thin line artifacts are not used as visual proof.
+- V281W suppresses owner2 exterior fascia/gronda faces in full-surface mode, matching the reception behavior and removing the thick dark strip between wall and roof; roof top and gable faces remain active.
+- V281X extends the reception flush wall join to owner2 full-surface roofs, removing the residual discontinuous warm wall/top pixels at the bath wall/roof junction without drawing a replacement seam. It also makes owner2 columns with unrelated foreground hedge/wall tops fall back from fast-span to per-pixel visibility and rejects only the near-eave/top foreground overlap, avoiding the old V232 fake roof support clip.
 - Door openings are bridged from `roofSegments[].doors` projection only; generic same-owner screen gaps are not authority.
 - V278 cap pixels must be zero in normal V281 runtime; `modernStableRoofPrimitiveSkippedIntegratedCapV281` proves the cap was not drawn.
 - If primitive preflight rejects a roof, fallback is exclusive through the existing V265/V277 path; no cap overlay is added on top.
@@ -184,6 +189,10 @@ Expected counters in affected V281 roof views:
 - `modernStableRoofPrimitiveSkippedSlopedSegmentsV281 > 0` when owner 1/2 is primitive-owned
 - `modernStableRoofPrimitiveSkippedGableCapsV281 > 0` when owner 1/2 is primitive-owned
 - `modernStableRoofPrimitiveSkippedIntegratedCapV281 > 0`
+- `modernStableRoofPrimitiveSuppressedOwner2ExteriorDecorativeEdgesV281 > 0` in accepted exterior bath owner2 V281V poses
+- `modernStableRoofPrimitiveSuppressedOwner2ExteriorFasciaV281 > 0` in accepted exterior bath owner2 V281W poses
+- `modernStableRoofPrimitiveOwner2FlushWallJoinChecksV281` or `modernStableRoofPrimitiveOwner2FlushWallJoinColumnsV281` present in accepted bath owner2 V281X close/side poses
+- `modernStableRoofPrimitiveOwner2ForeignForegroundFastSpanFallbackV281` and/or `modernStableRoofPrimitiveOwner2ForeignForegroundTopRejectedV281` allowed in V281X bath views with unrelated foreground hedge/wall tops
 - `v277RoofContinuityFillLocalSafe === true`
 - `v278ModernIntegratedRoofCapSafe === true`
 - `v279ModernRoofCapProfileSafe === true`
@@ -206,6 +215,7 @@ Expected counters in affected V281 roof views:
 - `realRoofGeometricEavePixelsV274` absent/zero
 - `realEaveHandoffPixelsV275` absent/zero
 - `realRoofUndersideEaveEnabledV272 === false`
+- `roofContinuityFillOwner2PixelsV277 === 0` in accepted owner2 V281V poses
 
 ## Known Critical Failure Modes
 
@@ -340,7 +350,7 @@ Multi-agent orchestration notes:
 - Use the Complex Task Accelerator Protocol for complex, high-risk, delicate, multi-agent, runtime, workflow, refactor, failed-patch recovery, or long work. Required planning fields are `accelerator_brief`, `cheapest_discriminating_test`, `critical_path`, `sidecar_tasks`, `serial_constraints`, `validation_ladder`, `checkpoint_ledger`, and `subagent_task_packet`. This protocol reduces wasted waits and searches; it does not weaken required `CALL` agents, validation, heartbeat, write-scope, or approval rules.
 - Use the Sidecar Result Integration Protocol when parallel agent/tool evidence returns: record `sidecar_result_integration`, `result_status`, `affects_critical_path`, `dependency_on_critical_path`, `accepted_into_plan`, `integration_decision`, `validation_impact`, `write_scope_impact`, `approval_impact`, `heartbeat_checkpoint`, `stop_condition_triggered`, `discard_or_defer_reason`, and `ledger_update`. Sidecar results are evidence inputs, not approvals, and cannot block `critical_path` without an explicit dependency.
 - Use the User Intake Relay Protocol when user messages arrive during active/long/delicate work: record `user_message_intake`, `message_class`, `must_interrupt`, `must_report_to_team_leader`, `checkpoint_required`, `user_intent_summary`, `conflicts_current_plan`, `changes_scope`, `changes_validation`, `changes_write_scope`, `approval_impact`, `agent_gate_impact`, `agent_tool_mapping_impact`, `critical_path_impact`, `sidecar_integration_impact`, `decision`, `ledger_update`, `relay_note`, `next_action`, `forbidden_next_action`, and `response_due`. User-intake relay is not persistent background monitoring and cannot grant approval or bypass the Team Leader.
-- Track `subagent_task_lifecycle` for delegated work. Close subagents at Team Leader task completion, or earlier only when the assigned packet is fully integrated, obsolete, stale, aborted, or unsafe; do not close a useful subagent just because one internal step ended.
+- Track `subagent_task_lifecycle` for delegated work. Run `subagent_slot_hygiene` before spawning more agents, after returned `wait_agent` results, and at finalization; close subagents at Team Leader task completion, or earlier only when the assigned packet is fully integrated, obsolete, stale, aborted, or unsafe; do not close a useful subagent just because one internal step ended.
 - Before final delivery, staging, sync, or readiness claims, use `scoped_finalization` and `finalization_gate` to separate approved scope, dirty out-of-scope files, generated/disposable outputs, untracked workflow tooling, validation evidence, subagent lifecycle, selective staging, and residual risk.
 - `workflow_tooling_manifest` classifies source tooling such as `tools/perla_codex_workflow_check.ps1`, `tools/perla_local_ci.ps1`, `tools/perla_runtime_analyzer.mjs`, `.codex/`, `tests/perla_regression_suite.json`, and modularization scaffold files separately from disposable reports/logs/screenshots.
 - `max_threads` is a concurrency cap only. The Agent Selection Gate decides which agents are necessary; if 7 or more agents are required, use the required agents and batch only when the active tool surface imposes a hard limit. Optional `CONSIDER` work is serialized before required `CALL` work is downgraded.
@@ -355,6 +365,7 @@ Browser validation notes:
 - Treat the in-app Browser as secondary unless the user specifically asks for it or the headless method stops working.
 - If Browser fails due sandbox/Windows permission issues, use the runbook method and keep the target URL identical.
 - Known Browser tooling failure: `CreateProcessAsUserW failed: 5`. Treat it as a Codex Browser/Windows sandbox launch failure, not as evidence that the PERLA1 runtime failed.
+- Use `browser_failure_cache` for deterministic in-app Browser launch failures within a task/session. After the first cached failure, retrying the in-app Browser bootstrap is forbidden unless the user explicitly asks, browser/tooling state changed, a new Codex session has no current failure evidence, or the Playwright/headless route fails and comparison is needed.
 - If the runbook/headless validation fails, hand off manual validation with exact URL, expected build id, debug poses, screenshot targets, console checks, and counters/API calls.
 - Do not claim full rendered validation unless screenshots and relevant counters were actually inspected.
 - Do not claim world/render visual proof from a screenshot whose target area is obscured by HUD/clock/minimap/overlay, or from PERLA1 coordinate-dependent evidence with unresolved `false_coordinate_suspicion`.

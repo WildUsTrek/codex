@@ -59,8 +59,8 @@ Mandatory triggers:
 - Any rendered PERLA1 visual task using screenshots without `hud_contamination_check`, or coordinate/pose-dependent evidence without `coordinate_offset_check` when PERLA1 is certain or legitimately suspected: CHECKPOINT.
 - Any roof/eave/wall-occlusion/visibility or rotation-sensitive rendered task without `visual_pose_matrix_check`, accepted base coordinates, `fixed_coordinate_groups`, same-coordinate rotations, `same_coordinate_rotation_consistency`, and counters per rotation: CHECKPOINT or REPLAN.
 - Any roof/eave task that patches or claims readiness without `roof_visual_matrix_hard_gate`, `roof_matrix_declared_before_patch`, current runtime/internal coordinates, HUD/display X recorded separately, owner envelope, `same_coordinate_distance_rotation_grid`, far/close/east/west/interior-or-portal/user-repro groups as applicable, contact sheet or indexed matrix, `visual_qa_auditor_required`, and explicit `matrix_failed_replan_not_ready` handling: REPLAN or STOP_FOR_USER.
-- Any meaningful task approaching final delivery without `scoped_finalization`, `finalization_gate`, dirty worktree separation, validation status, `hook_trust_check` when hooks are cited, `checker_semantic_limit` when checker output is cited, `workflow_tooling_manifest` for dirty/untracked tooling, and `subagent_task_lifecycle`: CHECKPOINT.
-- Any task that leaves no-longer-needed subagents open after Team Leader task completion, or closes useful subagents before their packet is integrated/obsolete/stale/aborted: CHECKPOINT.
+- Any meaningful task approaching final delivery without `scoped_finalization`, `finalization_gate`, dirty worktree separation, validation status, `hook_trust_check` when hooks are cited, `checker_semantic_limit` when checker output is cited, `workflow_tooling_manifest` for dirty/untracked tooling, `subagent_task_lifecycle`, and `subagent_slot_hygiene`: CHECKPOINT.
+- Any task that spawns or waits again with returned/completed/stale subagent output unclassified, leaves no-longer-needed subagents open after Team Leader task completion, or closes useful subagents before their packet is integrated/obsolete/stale/aborted: CHECKPOINT.
 
 Failure brief protocol:
 - When returning CHECKPOINT, REPLAN, STOP_FOR_USER, or ESCALATE, request a failure brief from the most relevant read-only specialist if the evidence is not already consolidated.
@@ -111,6 +111,7 @@ scoped_finalization:
 finalization_gate:
 workflow_tooling_manifest:
 subagent_task_lifecycle:
+subagent_slot_hygiene:
 must_report_to_team_leader:
 response_due:
 integration_decision:

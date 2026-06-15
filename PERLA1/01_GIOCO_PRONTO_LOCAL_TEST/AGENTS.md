@@ -12,7 +12,7 @@ Scope: this file applies to `01_GIOCO_PRONTO_LOCAL_TEST/`.
 
 - Modern roof owner `1` is reception.
 - Modern roof owner `2` is bath.
-- V281 current visual contract is the modern owner `1`/`2` world-space primitive authority: `drawStableModernOwnerRoofPrimitiveV281` owns reception/bath roof visuals when preflight accepts the roof. V281S keeps the owner `1` `back_y0` gable only in the real posterior/far-closure or reception portal band so the colmo cannot disappear under same-coordinate rotation. Sloped/gable/V272/V274/V278 are skipped for primitive-owned owner `1`/`2` roofs; V265/V276/V277 remain exclusive fallback only when preflight rejects. Failed V266-V275 replacement/clone/strip/handoff paths remain runtime-off as visual authority, and V282 portal/slab experiments are retained only as diagnostics while runtime-off in the rollback base.
+- V281 current visual contract is the modern owner `1`/`2` world-space primitive authority: `drawStableModernOwnerRoofPrimitiveV281` owns reception/bath roof visuals when preflight accepts the roof. V281S keeps the owner `1` `back_y0` gable only in the real posterior/far-closure or reception portal band so the colmo cannot disappear under same-coordinate rotation. V281T adds an owner `2` door-derived `back_x0` portal gable keep and opposite `front_x1` closure keep for the bath roof; it must use `roof.doors`, not hardcoded coordinates. V281U promotes owner2 to the same full-surface primitive authority class as reception; V281V suppresses owner2 full-surface exterior decorative edge/ridge/eave lines; V281W suppresses owner2 full-surface exterior fascia/gronda faces so the bath roof no longer shows a thick dark strip between wall and roof. V281X applies the same flush wall join used by reception to owner2 and adds a V281-local owner2 foreground-top rejection so bath roof/eave pixels do not draw over unrelated foreground hedge/wall tops. Sloped/gable/V272/V274/V278 are skipped for primitive-owned owner `1`/`2` roofs; V265/V276/V277 remain exclusive fallback only when primitive ownership is not active. Failed V266-V275 replacement/clone/strip/handoff paths remain runtime-off as visual authority, and V282 portal/slab experiments are retained only as diagnostics while runtime-off in the rollback base.
 - `roofSegments` remain the authoritative geometry data source, but V274/V275 are no longer the active primary renderer after the V275 visual failure.
 - Do not use floorcasting/ceiling-clone samples as the primary visible source for external roof borders. In grazing views those samples become sparse and create dotted or disappearing borders.
 - The V270/V271/V273 real ceiling clone path is runtime-off in V276 for external roof visuals.
@@ -36,7 +36,7 @@ For V281 and successors:
 - V267 must not skip the original/sloped roof fill in normal runtime.
 - V266/V267/V270/V271/V273/V274/V275 are retained for diagnostics but runtime-off as visual authority.
 - Expected V281 debug pattern in affected roof views:
-  - `window.PERLA_BUILD_ID` is `PERLA1_V281S_RECEPTION_BACK_GABLE_PORTAL_KEEP_LOCAL`.
+  - `window.PERLA_BUILD_ID` is `PERLA1_V281X_BATH_FLUSH_JOIN_FOREGROUND_CLEANUP_LOCAL`.
   - `roofV276` is `true`.
   - `roofV277` is `true`.
   - `roofV278` is `true`.
@@ -54,6 +54,10 @@ For V281 and successors:
   - `modernStableRoofPrimitiveBudgetHitV281` and `modernStableRoofPrimitiveWarnPixelsV281` must be consistent and false across accepted same-coordinate rotations.
   - `modernStableRoofPrimitiveSkippedSlopedSegmentsV281 > 0` and `modernStableRoofPrimitiveSkippedGableCapsV281 > 0` when V281 owns supported modern owner `1`/`2` roof views.
   - `modernStableRoofPrimitiveSkippedIntegratedCapV281 > 0`.
+  - `modernStableRoofPrimitiveSuppressedOwner2ExteriorDecorativeEdgesV281 > 0` in accepted bath owner2 V281V exterior views.
+  - `modernStableRoofPrimitiveSuppressedOwner2ExteriorFasciaV281 > 0` in accepted bath owner2 V281W exterior views.
+  - `modernStableRoofPrimitiveOwner2FlushWallJoinChecksV281` or `modernStableRoofPrimitiveOwner2FlushWallJoinColumnsV281` is present in accepted bath owner2 V281X close/side views.
+  - `modernStableRoofPrimitiveOwner2ForeignForegroundFastSpanFallbackV281` and/or `modernStableRoofPrimitiveOwner2ForeignForegroundTopRejectedV281` is allowed in V281X bath views with unrelated foreground hedge/wall tops.
   - `v278ModernIntegratedRoofCapSafe` is `true`.
   - `v279ModernRoofCapProfileSafe` is `true`.
   - `v280CleanModernRoofCapSafe` is `true`.
@@ -67,6 +71,7 @@ For V281 and successors:
   - `roofSilhouetteMainOriginalRoofFillSkippedV267` is absent or `0`.
   - `realRoofGeometricEavePixelsV274` and `realEaveHandoffPixelsV275` are absent or `0`.
   - `realRoofUndersideEaveEnabledV272` is `false`.
+  - `roofContinuityFillOwner2PixelsV277` is absent or `0` in accepted owner2 V281V views.
 
 ## Visual QA Poses
 

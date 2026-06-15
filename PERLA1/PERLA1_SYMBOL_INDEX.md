@@ -1,8 +1,8 @@
 # PERLA1 Symbol Index
 
-Last updated: 2026-06-14
+Last updated: 2026-06-15
 
-Derived from the current `01_GIOCO_PRONTO_LOCAL_TEST/index.html` build observed as `PERLA1_V281S_RECEPTION_BACK_GABLE_PORTAL_KEEP_LOCAL`.
+Derived from the current `01_GIOCO_PRONTO_LOCAL_TEST/index.html` build observed as `PERLA1_V281X_BATH_FLUSH_JOIN_FOREGROUND_CLEANUP_LOCAL`.
 
 This index is for orientation only. It is not the source of truth. Before patching, verify symbols and line numbers with `rg` against the current runtime file.
 
@@ -11,12 +11,12 @@ This index is for orientation only. It is not the source of truth. Before patchi
 | Block ID | Symbol / Area | Current Hint | Notes |
 | --- | --- | --- | --- |
 | `boot-shell` | `PERLA_BUILD_ID` | around line `195` | Public build id used for cache/build validation. |
-| `boot-shell` | `PERLA1_V281S_RECEPTION_BACK_GABLE_PORTAL_KEEP_LOCAL` | around line `195` | V281S current contract build id for reception back-gable portal keep validation. |
+| `boot-shell` | `PERLA1_V281X_BATH_FLUSH_JOIN_FOREGROUND_CLEANUP_LOCAL` | around line `195` | V281X current contract build id for reception plus bath full-surface owner2 flush wall join and foreground-top cleanup validation. |
 | `sprites` | `getSpriteRenderCandidates` | around line `663` | Sprite candidate selection entry point. |
 | `roof-system` | V278 constants | around lines `498-514` | Modern wall-anchored integrated roof cap tuning, unchanged 5000 pixel / 1400 fill-rect budget, and support-visible replacement flag. |
 | `roof-system` | V279 constants | around lines `515-533` | Modern cap profile/support-span tuning retained as the V280 base; local-bay profile is disabled in current runtime. |
 | `roof-system` | V280 constants | around lines `534-553` | Geometry-primary modern roof contract, real-door bridge limits, and small support-cap seam profile for reception/baths. |
-| `roof-system` | V281 constants | around lines `554-570` | Single-authority modern owner 1/2 primitive flags, pixel/fill-rect/face budgets, and V278 cap-disable switch. |
+| `roof-system` | V281 constants | around lines `554-575` | Single-authority modern owner 1/2 primitive flags, owner1/owner2 full-surface budgets, and V278 cap-disable switch. |
 | `world-data` | `mapW`, `mapH` | around line `5861` | World dimensions. |
 | `world-data` | `SEA_Y` | around line `5864` | Sea/beach boundary reference. |
 | `asset-loading` | `ASSET_BASE`, `ASSET_MANIFEST` | around lines `5865-5910` | Runtime asset path and manifest definitions. |
@@ -34,7 +34,14 @@ This index is for orientation only. It is not the source of truth. Before patchi
 | `roof-system` | `drawModernIntegratedRoofCapV278` | around line `11330` | V278/V279/V280 wall-anchored integrated cap renderer. Under V281 it is explicitly skipped in normal owner 1/2 runtime to avoid a hybrid slab overlay. |
 | `roof-system` | `perlaStableModernRoofPrimitiveReplacesSegmentV281` | around line `11920` | Central predicate for owner 1/2 primitive eligibility and exclusive legacy skip/fallback. |
 | `roof-system` | `drawStableModernOwnerRoofPrimitiveV281` | around line `12030` | Budgeted world-space roof primitive authority for reception/baths; draws `collectModernRoofFaces` with depth and counters. |
+| `roof-system` | `perlaStableModernRoofPrimitiveFullSurfaceOwnerV281` | around line `12275` | V281U/V281V owner1/owner2 full-surface gate used to keep reception/bath roof faces whole instead of near-plane clipping or legacy fallback. |
 | `roof-system` | `perlaStableModernRoofPrimitiveOwner1BackGableClosureNeededV281` | around line `12178` | V281S narrow owner 1 `back_y0` keep predicate for posterior/far closure and reception portal band; prevents rotation-dependent back colmo disappearance without enabling V278 cap or legacy fallback. |
+| `roof-system` | `perlaStableModernRoofPrimitiveOwner2DoorGableFacesCameraV281` | around line `12190` | V281T owner 2 door-derived `back_x0` keep predicate for bath portal gable stability; uses `roof.doors`, not hardcoded coordinates. |
+| `roof-system` | `perlaStableModernRoofPrimitiveOwner2OppositeGableClosureNeededV281` | around line `12200` | V281T owner 2 opposite `front_x1` keep predicate for far closure from the bath west door context. |
+| `roof-system` | `perlaStableModernRoofPrimitiveSuppressOwner2ExteriorFasciaV281` | around line `12256` | V281W suppresses owner2 full-surface exterior fascia/gronda faces, matching reception behavior so the bath roof does not show a thick dark strip between wall and roof. |
+| `roof-system` | `perlaStableModernRoofPrimitiveSuppressOwner2ExteriorDecorativeEdgesV281` | around line `12260` | V281V suppresses owner2 full-surface exterior decorative edge/ridge/eave lines so the bath roof reads as clean filled geometry, matching the reception cleanup principle. |
+| `roof-system` | `perlaStableModernRoofPrimitiveOwner2ExteriorFlushWallJoinV281` | around line `12280` | V281X extends the reception-style flush wall join to owner2 full-surface exterior roofs, removing residual discontinuous warm wall/top pixels without drawing a seam. |
+| `roof-system` | `perlaStableModernRoofPrimitiveForeignForegroundTopRejectV281` | around line `12425` | V281X rejects owner2 near-eave pixels only at unrelated foreground hedge/wall tops after fast-span fallback, avoiding legacy V232 fake clipping. |
 | `roof-system` | V281 primitive counters | around lines `12140-12170` | `roofV281`, primitive authority, candidates, fallback, pixels, rects, budget/warn, skipped/suppressed/rejected faces, same-owner wall rejection, wall-top join, cap/fallback skip, and hybrid violation counters. Required in `visual_pose_matrix_check`. |
 | `roof-system` | `drawSlopedRoofGableCaps2_5D` | around line `12540` | Sloped roof gable cap renderer; V281 skips eligible modern owner 1/2 gables so they do not hybridize with the primitive authority. |
 | `roof-system` | `drawSlopedRoofLayer2_5D` | around line `12620` | Sloped roof plane renderer and V277 hook before V265 edge rail; V281 uses this as fallback/generic path outside primitive-owned owner 1/2 roofs. |

@@ -108,6 +108,29 @@ Checkpoint evidence before retrying must include:
 
 At the 12-minute simple-step limit or 21-minute complex-step limit, this checkpoint is mandatory before another wait, retry, subagent wait, browser attempt, runtime validation attempt, or patch. A generic progress sentence is not enough.
 
+### Tool Failure Memory
+
+Repeated deterministic tooling failures must be cached for the current task/session instead of retried as if they were unknown.
+
+```text
+browser_failure_cache:
+  failed_tool:
+  failure_class:
+  first_seen_at:
+  evidence:
+  session_scope:
+  allowed_next_validation_path:
+  forbidden_next_action:
+  reset_condition:
+```
+
+Rules:
+
+- If the Codex in-app Browser fails before navigation with a known launch/sandbox class such as `CreateProcessAsUserW failed: 5`, record `browser_failure_cache` and treat another in-app Browser bootstrap in the same task/session as `forbidden_next_action`.
+- The reset condition is explicit user request to retest the in-app Browser, changed browser/tooling environment, new Codex session with no current failure evidence, or the proven Playwright/headless path itself failing in a way that makes browser route comparison necessary.
+- A cached Browser failure does not lower rendered validation standards. It only selects the validated fallback path: local PERLA1 server plus Playwright/system Chrome/Edge or `VALIDA_RUNTIME_SCREENSHOT_HEADLESS.ps1`.
+- When `browser_failure_cache` is active, progress updates should not repeat the same Browser failure unless it affects a decision; state once that the cached fallback route is in use.
+
 ## Complex Task Accelerator Protocol
 
 Use this protocol for complex, high-risk, delicate, multi-agent, runtime, workflow, refactor, failed-patch recovery, or long tasks, and for any task likely to cross one heartbeat checkpoint.
@@ -495,6 +518,8 @@ subagent_task_lifecycle:
   logical_step_id:
   packet_ref:
   status: planned/running/returned/integrated/closed/stale/aborted
+  subagent_slot_hygiene: pre_spawn/post_wait/finalization/not_applicable
+  active_slot_budget:
   result_integrated: yes/no
   final_sidecar_integration_ref:
   close_condition:
@@ -509,6 +534,10 @@ Rules:
 - Do not close a useful subagent merely because one internal step finished. Keep it open while its assigned task can still contribute to the Team Leader's current task.
 - Close a subagent when the Team Leader task is complete, when its assigned packet is fully integrated and no follow-up is needed, when the plan changes so the packet is obsolete, or when it is stale/aborted and recorded as such.
 - Before closing, integrate or explicitly defer/discard its latest result through `sidecar_result_integration` when it produced evidence that could affect the plan.
+- Run `subagent_slot_hygiene` before spawning new agents and after any `wait_agent` result that returns one or more agents. Record current active slots, returned/completed agents, useful running agents, and which agents are safe to close.
+- A tool-level `completed` or `returned` status means output was received, not that the packet lifecycle is complete. Do not close it until its result is integrated, deferred, or discarded through `sidecar_result_integration`, or until the packet is obsolete, stale, aborted, or unsafe.
+- If a returned/completed/stale agent is no longer useful and has been integrated/deferred/discarded, close it before opening additional optional agents. If such an agent is unclassified, classify it first; do not consume more slots while stale results remain unprocessed.
+- If all slots are occupied by useful running agents or returned agents awaiting required integration, checkpoint and serialize the remaining agent work instead of force-closing useful agents or downgrading required `CALL` agents.
 - After final delivery for a task that used subagents, the Team Leader must close no-longer-needed subagents that are still open in the active tool surface. UI history may remain visible; that is not evidence that the agent is still running.
 - A closed or stale UI record must not be counted as active work unless the tool surface reports it as running or pending work that can still produce output.
 
@@ -627,6 +656,12 @@ finalization_gate:
   validation_run:
   blocking_failures:
   subagent_task_lifecycle:
+  subagent_slot_hygiene:
+    checked_before: pre_spawn/pre_wait/finalization/not_applicable
+    completed_results: integrated/deferred/discarded/none
+    agents_closed:
+    agents_kept_open:
+    reason_kept_open:
   subagents_to_keep_open:
   subagents_to_close:
   staging_plan: none/selective
