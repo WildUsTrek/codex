@@ -22,7 +22,9 @@ For tasks that map sceneggiatura/gameplay into world placement, time bands, beha
 
 For the first supplied scenario/gameplay source set, also consult `PERLA1/report/SCENEGGIATURA_GAMEPLAY_MAPPING_DRAFT_2026-06-14.md`.
 
-When scenario/gameplay mapping is in scope, the intake gate must call the matching read-only domain auditors: `scenario-rtp-map-auditor`, `map-placement-auditor`, `event-flow-auditor`, and `dialogue-continuity-auditor` as their signals apply. These agents do not activate the RTP layer and do not replace runtime validation.
+When scenario/gameplay mapping is in scope, the intake gate must call `rtp-scenario-workflow-planner` at task start and end for non-trivial work, and must call the matching read-only domain auditors: `scenario-rtp-map-auditor`, `map-placement-auditor`, `event-flow-auditor`, and `dialogue-continuity-auditor` as their signals apply. These agents do not activate the RTP layer and do not replace runtime validation.
+
+The permanent roadmap is `PERLA1/RTP_SCENARIO_WORKFLOW_ROADMAP.md`. It records current phase, active milestone, active task packet, blockers, validation evidence, completed delta, and next step.
 
 Exception: legacy environmental/object assets already present in `assets/raycast/` remain governed by `ASSET_MANIFEST` and the existing raycaster asset pipeline.
 

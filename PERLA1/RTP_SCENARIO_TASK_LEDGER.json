@@ -1,0 +1,103 @@
+{
+  "schema": "perla.rtp.scenario.task_ledger.v1",
+  "status": "ready",
+  "updatedAt": "2026-06-16",
+  "activeTask": null,
+  "rules": {
+    "plannerAgent": "rtp-scenario-workflow-planner",
+    "roadmapPath": "PERLA1/RTP_SCENARIO_WORKFLOW_ROADMAP.md",
+    "ledgerPath": "PERLA1/RTP_SCENARIO_TASK_LEDGER.json",
+    "startRequiredForSignals": [
+      "RTP",
+      "sprite",
+      "sprites",
+      "characters",
+      "personaggi",
+      "NPC",
+      "animals",
+      "eventi",
+      "events",
+      "dialoghi",
+      "dialogues",
+      "scenario",
+      "sceneggiatura",
+      "gameplay",
+      "placements",
+      "behaviors",
+      "battle_placeholders",
+      "resources",
+      "player_base_upgrades"
+    ],
+    "endRequired": true,
+    "activeTaskMustBeNullAtStop": true,
+    "runtimeActivation": "not_allowed_by_ledger"
+  },
+  "tasks": [
+    {
+      "taskId": "dynamic_ledger_integration_2026-06-16",
+      "branch": "rtp_scenario_workflow",
+      "status": "closed",
+      "requestSignals": [
+        "RTP",
+        "workflow",
+        "planner",
+        "ledger"
+      ],
+      "plannerStart": {
+        "called": true,
+        "timestamp": "2026-06-16",
+        "evidence": "Team Leader opened the ledger integration task under the RTP/scenario workflow branch.",
+        "roadmapPositionBefore": "phase_1_foundation_ready / milestone_1_rtp_assets_and_workflow_gate"
+      },
+      "plannerEnd": {
+        "called": true,
+        "timestamp": "2026-06-16",
+        "evidence": "Task closed after adding the ledger contract, updating planner/protocol/checker references, and validating workflow checks.",
+        "roadmapPositionAfter": "phase_1_foundation_ready / milestone_1_rtp_assets_and_workflow_gate"
+      },
+      "requiredAgents": {
+        "rtp-scenario-workflow-planner": "CALL_START_END",
+        "workflow-consistency-auditor": "CALL_FOR_WORKFLOW_POLICY_DELTA",
+        "workflow-guard": "CONSIDER_FOR_AUTHORITY_LOOP_RISK",
+        "plan-integrity-auditor": "CONSIDER_FOR_EXECUTION_PLAN",
+        "task-watchdog": "CONSIDER_FOR_LONG_TASK",
+        "scenario-rtp-map-auditor": "CONSIDER_NO_SCENARIO_DATA_CHANGED",
+        "map-placement-auditor": "SKIP_NO_PLACEMENT_DATA_CHANGED",
+        "event-flow-auditor": "SKIP_NO_EVENT_DATA_CHANGED",
+        "dialogue-continuity-auditor": "SKIP_NO_DIALOGUE_DATA_CHANGED"
+      },
+      "filesChanged": [
+        "PERLA1/RTP_SCENARIO_TASK_LEDGER.json",
+        "PERLA1/RTP_SCENARIO_WORKFLOW_ROADMAP.md",
+        "PERLA1/.codex/agents/rtp-scenario-workflow-planner.toml",
+        "PERLA1/PERLA1_TASK_INTAKE_PROTOCOL.md",
+        "PERLA1/.codex/ORCHESTRATION.md",
+        "PERLA1/PERLA1_PROJECT_MAP.md",
+        "PERLA1/AGENTS.md",
+        "PERLA1/01_GIOCO_PRONTO_LOCAL_TEST/assets/rtp/README_RTP_ASSETS.md",
+        "PERLA1/01_GIOCO_PRONTO_LOCAL_TEST/assets/rtp/SCENARIO_EVENT_MAPPING_PROTOCOL.md",
+        "PERLA1/01_GIOCO_PRONTO_LOCAL_TEST/assets/rtp/manifest/rtp.characters.json",
+        "PERLA1/tools/perla_codex_workflow_check.ps1"
+      ],
+      "validations": [
+        {
+          "name": "workflow_checker",
+          "status": "pending_final_run"
+        },
+        {
+          "name": "rtp_scenario_validator",
+          "status": "pending_final_run"
+        },
+        {
+          "name": "toml_json_parse",
+          "status": "pending_final_run"
+        }
+      ],
+      "residualRisk": [
+        "Future RTP scenario manifests are still not authored.",
+        "Runtime/map validation remains not applicable until RTP data is connected to runtime.",
+        "This ledger records workflow compliance; it does not activate runtime loading."
+      ]
+    }
+  ]
+}

@@ -19,12 +19,13 @@ Required references:
 
 Required specialist gate:
 
+- `rtp-scenario-workflow-planner` is `CALL` at task start and end for non-trivial RTP/scenario branch work. It reads and updates `PERLA1/RTP_SCENARIO_WORKFLOW_ROADMAP.md` with current phase, active milestone, task packet, blockers, validation evidence, completed delta, and next step.
 - `scenario-rtp-map-auditor` is `CALL` before and after scenario/RTP identity mapping, entity discovery, source priority, or future manifest planning.
 - `map-placement-auditor` is `CALL` before and after placement, coordinate, zone, walkability, visibility, route, density, or schedule-location decisions.
 - `event-flow-auditor` is `CALL` before and after event graph, quest, battle placeholder, prerequisite/effect, success/failure, or no-softlock decisions.
 - `dialogue-continuity-auditor` is `CALL` before and after dialogue, speaker, portrait policy, line continuity, or dialogue/event link decisions.
 
-These auditors are read-only domain checks. They do not replace `asset-integrity-auditor`, `code-mapper`, `renderer-block-auditor`, `visual-qa-auditor`, `workflow-guard`, or `workflow-consistency-auditor`, and they do not make dormant manifests active runtime data.
+The planner may update only the roadmap file. The auditors are read-only domain checks. They do not replace `asset-integrity-auditor`, `code-mapper`, `renderer-block-auditor`, `visual-qa-auditor`, `workflow-guard`, `workflow-consistency-auditor`, `plan-integrity-auditor`, or `task-watchdog`, and they do not make dormant manifests active runtime data.
 
 ## Core Principle
 

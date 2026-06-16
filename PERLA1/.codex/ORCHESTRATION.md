@@ -37,6 +37,7 @@ Use `PERLA1_TASK_INTAKE_PROTOCOL.md` before meaningful work.
 - `workflow-consistency-auditor` is `CALL` for every explicit gate; it can run a lightweight gate audit when policy files are not changing.
 - `workflow-guard`, `plan-integrity-auditor`, `task-watchdog`, `skeptic-auditor`, and `refactor-surgeon` are always at least `CONSIDER`.
 - Domain agents are `CALL` when their task signal matches the current work.
+- When the request mentions RTP, sprite/sprites, events/eventi, dialogues/dialoghi, characters/personaggi, NPC, animals, scenario/sceneggiatura/gameplay mapping, placements, behaviors, battle placeholders, resources, or player-base upgrades, activate the RTP/scenario workflow branch. For non-trivial branch work, `rtp-scenario-workflow-planner` is `CALL` at task start to report the roadmap position and selected step, and `CALL` at task end to update `RTP_SCENARIO_WORKFLOW_ROADMAP.md`.
 - RTP/scenario domain agents are mandatory domain auditors when their signal matches: `scenario-rtp-map-auditor` for sceneggiatura/gameplay/RTP identity and manifest planning, `map-placement-auditor` for placements/coordinates/walkability/visibility/reachability, `event-flow-auditor` for event graph/prerequisites/effects/battle placeholders/no-softlock, and `dialogue-continuity-auditor` for speaker/portrait/dialogue continuity. They are read-only and do not replace `asset-integrity-auditor`, `code-mapper`, `renderer-block-auditor`, `visual-qa-auditor`, `workflow-guard`, or `workflow-consistency-auditor`.
 - `CALL` means the agent must actually be invoked or delegated before the protected step. It cannot be treated as a passive checklist item.
 - Before a protected patch, rendered/runtime validation, sync, refactor application, or readiness claim, every required `CALL` agent needs `call_agent_evidence` with exactly one satisfaction state: `direct_invocation`, `generic_adapter`, or `tooling_blocked`.
@@ -653,6 +654,7 @@ Validation rule:
 | `renderer-block-auditor` | `read-only` | Audit render ordering and cross-block renderer effects. | None. |
 | `visual-qa-auditor` | `read-only` | Define and inspect visual validation evidence. | None. |
 | `asset-integrity-auditor` | `read-only` | Check manifest, asset paths, missing files, and cache risks. | None. |
+| `rtp-scenario-workflow-planner` | `workspace-write` | Maintains the permanent RTP/scenario roadmap, current phase, active milestone, start/end task checkpoints, blockers, validation state, and next step. | `RTP_SCENARIO_WORKFLOW_ROADMAP.md` only. |
 | `scenario-rtp-map-auditor` | `read-only` | Audit sceneggiatura/gameplay/RTP identity mapping, source-vs-inference labels, manifest readiness, placeholders, and no-paradox data boundaries. | None. |
 | `map-placement-auditor` | `read-only` | Audit placements, coordinates, zones, schedules, walkability, visibility, reachability, collision, density, and raycaster readability. | None. |
 | `event-flow-auditor` | `read-only` | Audit event graph, prerequisites/effects, battle placeholders, success/failure branches, state loops, and no-softlock risks. | None. |
@@ -696,6 +698,7 @@ Examples:
 - `workflow-consistency-auditor` does not patch files or supersede `workflow-guard`; P0/P1 findings must be resolved before the next operational step.
 - `plan-integrity-auditor` does not patch files or choose strategy alone; it blocks execution only through `PLAN_REVISION_REQUIRED` or `STOP_FOR_USER` on the selected plan.
 - `task-watchdog` does not override `workflow-guard`; if a plan is unsafe, `workflow-guard` wins. If a plan is safe but stale or too long, `task-watchdog` decides checkpoint/replan/stop.
+- `rtp-scenario-workflow-planner` does not validate its own roadmap as safe to execute, does not replace `plan-integrity-auditor`, does not replace `task-watchdog`, does not grant runtime/manifest write authority, and cannot mark a step complete without validation or Team Leader evidence.
 - `skeptic-auditor` does not override `workflow-guard` or `task-watchdog`; it gives the Team Leader alternative plans and evidence tests.
 - `scoped_finalization` does not authorize rollback, cleanup, deletion, or staging of unrelated dirty work. It classifies worktree state and protects out-of-scope changes.
 - `finalization_gate` does not let a write agent validate its own work. Final readiness still requires Team Leader review and the required separate validation/audit evidence.

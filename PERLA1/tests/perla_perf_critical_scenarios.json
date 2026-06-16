@@ -1,0 +1,90 @@
+{
+  "name": "PERLA1 V302 performance and steady-quality critical scenario probes",
+  "source": "User smart performance tours from 2026-06-15; report samples do not store camera direction, so dx/dy are stress probes at report-derived positions.",
+  "scenarios": [
+    {
+      "name": "critical_clear_game_room_stripes_east",
+      "x": 85.001,
+      "y": 7.525,
+      "dx": 1,
+      "dy": 0,
+      "expectedZone": "game_room",
+      "transitionSequence": [
+        { "name": "erba_entry_from_game_room", "x": 69.207, "y": 11.098, "dx": 1, "dy": 0, "expectedZone": "erba" },
+        { "name": "game_room_return_stripes", "x": 85.001, "y": 7.525, "dx": 1, "dy": 0, "expectedZone": "game_room" }
+      ]
+    },
+    {
+      "name": "critical_clear_game_room_candidates_north",
+      "x": 88.482,
+      "y": 12.203,
+      "dx": 0,
+      "dy": -1,
+      "expectedZone": "game_room",
+      "transitionSequence": [
+        { "name": "bath_garden_coverage_probe", "x": 90.937, "y": 64.765, "dx": 0, "dy": -1, "expectedZone": "bath_garden" },
+        { "name": "game_room_return_candidates", "x": 88.482, "y": 12.203, "dx": 0, "dy": -1, "expectedZone": "game_room" }
+      ]
+    },
+    {
+      "name": "critical_clear_erba_sprite_stripes_east",
+      "x": 69.207,
+      "y": 11.098,
+      "dx": 1,
+      "dy": 0,
+      "expectedZone": "erba",
+      "transitionSequence": [
+        { "name": "game_room_stripe_pressure", "x": 85.001, "y": 7.525, "dx": 1, "dy": 0, "expectedZone": "game_room" },
+        { "name": "erba_return_sprite_stripes", "x": 69.207, "y": 11.098, "dx": 1, "dy": 0, "expectedZone": "erba" }
+      ]
+    },
+    {
+      "name": "critical_clear_erba_floor_midfield_west",
+      "x": 81.066,
+      "y": 45.648,
+      "dx": -0.7071,
+      "dy": 0.7071,
+      "expectedZone": "erba",
+      "transitionSequence": [
+        { "name": "bath_garden_coverage_probe", "x": 90.937, "y": 64.765, "dx": 0, "dy": -1, "expectedZone": "bath_garden" },
+        { "name": "erba_return_floor_midfield", "x": 81.066, "y": 45.648, "dx": -0.7071, "dy": 0.7071, "expectedZone": "erba" }
+      ]
+    },
+    {
+      "name": "critical_clear_bath_garden_coverage_north",
+      "x": 90.937,
+      "y": 64.765,
+      "dx": 0,
+      "dy": -1,
+      "expectedZone": "bath_garden",
+      "transitionSequence": [
+        { "name": "erba_floor_midfield", "x": 81.066, "y": 45.648, "dx": -0.7071, "dy": 0.7071, "expectedZone": "erba" },
+        { "name": "bath_garden_return_coverage", "x": 90.937, "y": 64.765, "dx": 0, "dy": -1, "expectedZone": "bath_garden" }
+      ]
+    },
+    {
+      "name": "critical_storm_pineta2_long_view_east",
+      "x": 24.146,
+      "y": 32.085,
+      "dx": 1,
+      "dy": 0,
+      "expectedZone": "pineta2_s_path",
+      "transitionSequence": [
+        { "name": "erba_sprite_stripes", "x": 69.207, "y": 11.098, "dx": 1, "dy": 0, "expectedZone": "erba" },
+        { "name": "pineta2_return_long_view", "x": 24.146, "y": 32.085, "dx": 1, "dy": 0, "expectedZone": "pineta2_s_path" }
+      ]
+    },
+    {
+      "name": "critical_storm_bath_garden_coverage_north",
+      "x": 93.571,
+      "y": 63.203,
+      "dx": 0,
+      "dy": -1,
+      "expectedZone": "bath_garden",
+      "transitionSequence": [
+        { "name": "game_room_stripe_pressure", "x": 85.001, "y": 7.525, "dx": 1, "dy": 0, "expectedZone": "game_room" },
+        { "name": "bath_garden_return_storm_coverage", "x": 93.571, "y": 63.203, "dx": 0, "dy": -1, "expectedZone": "bath_garden" }
+      ]
+    }
+  ]
+}

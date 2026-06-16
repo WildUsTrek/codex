@@ -3,13 +3,17 @@ param(
   [int]$Port = 8000,
   [int[]]$FallbackPorts = @(8787, 8081, 5179, 9001, 43210),
   [string]$ExpectedBuild = "",
+  [string[]]$Weathers = @(),
+  [string]$ScenarioPath = "",
   [int]$StartupTimeoutSec = 14,
   [int]$PageTimeoutMs = 20000,
   [int]$WarmupMs = 700,
   [int]$SampleMs = 1400,
+  [int]$TransitionMs = 700,
   [switch]$Deep,
   [switch]$DryRun,
-  [switch]$Smoke
+  [switch]$Smoke,
+  [switch]$TransitionSweeps
 )
 
 $ErrorActionPreference = "Stop"
@@ -135,6 +139,73 @@ function Get-DefaultScenarios {
   )
 }
 
+function ConvertTo-ScenarioList {
+  param($RawScenarios, [string]$Source)
+  $items = @($RawScenarios)
+  if ($items.Count -eq 0) { throw "No scenarios found in $Source." }
+  return @($items | ForEach-Object {
+    if ($null -eq $_.name -or $null -eq $_.x -or $null -eq $_.y -or $null -eq $_.dx -or $null -eq $_.dy) {
+      throw "Invalid scenario in $Source. Required fields: name, x, y, dx, dy."
+    }
+    [pscustomobject]@{
+      name = [string]$_.name
+      x = [double]$_.x
+      y = [double]$_.y
+      dx = [double]$_.dx
+      dy = [double]$_.dy
+      expectedZone = $(if ($null -ne $_.expectedZone) { [string]$_.expectedZone } else { $null })
+      expectedOwner = $(if ($null -ne $_.expectedOwner) { $_.expectedOwner } else { $null })
+      transitionSequence = $(if ($null -ne $_.transitionSequence) { @($_.transitionSequence) } else { @() })
+      source = $Source
+    }
+  })
+}
+
+function Get-ScenarioMatrix {
+  if ([string]::IsNullOrWhiteSpace($ScenarioPath)) {
+    return @(Get-DefaultScenarios | ForEach-Object {
+      if ($null -eq $_.source) { $_ | Add-Member -NotePropertyName source -NotePropertyValue "default_suite" -Force }
+      $_
+    })
+  }
+  $scenarioFull = Get-FullPathSafe $ScenarioPath
+  if (!(Test-Path -LiteralPath $scenarioFull -PathType Leaf)) {
+    throw "ScenarioPath not found: $scenarioFull"
+  }
+  $json = Get-Content -LiteralPath $scenarioFull -Raw | ConvertFrom-Json
+  if ($json -is [System.Array]) {
+    return @(ConvertTo-ScenarioList -RawScenarios $json -Source $scenarioFull)
+  }
+  if ($json.scenarios) {
+    return @(ConvertTo-ScenarioList -RawScenarios $json.scenarios -Source $scenarioFull)
+  }
+  if ($json.runtimeSmokePoses) {
+    return @(ConvertTo-ScenarioList -RawScenarios $json.runtimeSmokePoses -Source $scenarioFull)
+  }
+  throw "ScenarioPath JSON must be an array or contain scenarios/runtimeSmokePoses: $scenarioFull"
+}
+
+function Get-WeatherMatrix {
+  $allowed = @("clear", "cloudy", "rain", "storm")
+  $raw = @()
+  foreach ($entry in @($Weathers)) {
+    if ([string]::IsNullOrWhiteSpace($entry)) { continue }
+    $raw += @(([string]$entry).Split(",") | ForEach-Object { $_.Trim().ToLowerInvariant() } | Where-Object { $_ })
+  }
+  if ($raw.Count -eq 0) { $raw = @("clear", "storm") }
+  $seen = @{}
+  $out = @()
+  foreach ($weather in $raw) {
+    if ($weather -notin $allowed) {
+      throw "Unsupported weather '$weather'. Allowed: $($allowed -join ', ')."
+    }
+    if ($seen.ContainsKey($weather)) { continue }
+    $seen[$weather] = $true
+    $out += $weather
+  }
+  return $out
+}
+
 function Get-ViewportMatrix {
   $all = @(
     [pscustomobject]@{ name = "desktop"; width = 1280; height = 800; isMobile = $false; hasTouch = $false; deviceScaleFactor = 1 },
@@ -216,10 +287,10 @@ if (Test-PathInside -ChildPath $OutputFull -ParentPath $RepoRoot) {
 $expected = Resolve-ExpectedBuild
 $nodeRuntime = Resolve-NodeRuntime -Required:(!$DryRun)
 $chrome = Resolve-SystemChrome -Required:(!$DryRun)
-$scenarios = @(Get-DefaultScenarios)
+$scenarios = @(Get-ScenarioMatrix)
 if ($Smoke) { $scenarios = @($scenarios | Select-Object -First 1) }
 $viewports = @(Get-ViewportMatrix)
-$weathers = @("clear", "storm")
+$weathers = @(Get-WeatherMatrix)
 $cellCount = $scenarios.Count * $viewports.Count * $weathers.Count
 
 if ($DryRun) {
@@ -233,6 +304,8 @@ if ($DryRun) {
   Write-Host "chrome=$chrome"
   Write-Host "deep=$([bool]$Deep)"
   Write-Host "smoke=$([bool]$Smoke)"
+  Write-Host "transitionSweeps=$([bool]$TransitionSweeps)"
+  Write-Host "scenarioPath=$ScenarioPath"
   Write-Host "cells=$cellCount"
   Write-Host "viewports=$((@($viewports | ForEach-Object { $_.name })) -join ',')"
   Write-Host "weather=$($weathers -join ',')"
@@ -264,9 +337,12 @@ try {
     url = $url
     expectedBuild = $expected
     smoke = [bool]$Smoke
+    scenarioPath = $ScenarioPath
     pageTimeoutMs = $PageTimeoutMs
     warmupMs = $WarmupMs
     sampleMs = $SampleMs
+    transitionMs = $TransitionMs
+    transitionSweeps = [bool]$TransitionSweeps
     deep = [bool]$Deep
     chrome = $chrome
     node = $nodeRuntime.Node
@@ -300,12 +376,55 @@ function finite(value) {
 function pickDrawMs(cell) {
   const stats = cell.lastDrawStats || {};
   const perf = cell.perfReport || {};
-  return finite(stats.drawWorldMs) ?? finite(perf.overall && perf.overall.drawWorldMs && perf.overall.drawWorldMs.avg);
+  return finite(perf.overall && perf.overall.drawWorldMs && perf.overall.drawWorldMs.avg) ?? finite(stats.drawWorldMs);
 }
 
 function pickFps(cell) {
   const perf = cell.perfReport || {};
   return finite(perf.overall && perf.overall.fps && (perf.overall.fps.p50 ?? perf.overall.fps.avg));
+}
+
+function pickOverall(cell, group, field) {
+  const perf = cell.perfReport || {};
+  const summary = perf.overall && perf.overall[group];
+  return finite(summary && summary[field]);
+}
+
+function pickSampleClass(cell, sampleClass, group, field) {
+  const perf = cell.perfReport || {};
+  const classes = perf.sampleClassesV301 || {};
+  const cls = classes[sampleClass] || perf[`${sampleClass}V301`] || {};
+  const summary = cls[group];
+  return finite(summary && summary[field]);
+}
+
+function pickTransitionMax(cell) {
+  const values = [];
+  const primary = pickSampleClass(cell, "transition", "drawWorldMs", "max");
+  if (primary != null) values.push(primary);
+  const reports = cell.transitionReports || {};
+  for (const key of Object.keys(reports)) {
+    const p = reports[key] || {};
+    const v = p.sampleClassesV301 && p.sampleClassesV301.transition && p.sampleClassesV301.transition.drawWorldMs && p.sampleClassesV301.transition.drawWorldMs.max;
+    if (Number.isFinite(v)) values.push(v);
+  }
+  return values.length ? Math.max(...values) : null;
+}
+
+function pickHotspot(cell, group, field) {
+  const stats = cell.lastDrawStats || {};
+  const worst = cell.perfReport && cell.perfReport.worstFrames && cell.perfReport.worstFrames[0];
+  const hs = worst && worst.hotspotsV300 && worst.hotspotsV300[group];
+  if (hs && Number.isFinite(hs[field])) return hs[field];
+  if (group === "sprites") {
+    if (field === "candidates") return finite(stats.spriteCandidates);
+    if (field === "stripes") return finite(stats.spriteStripes);
+    if (field === "visible") return finite(stats.spriteVisible);
+  }
+  if (group === "renderer" && field === "floorSegments") return finite(stats.floorSegments);
+  if (group === "coverage" && field === "totalMs") return finite(stats.coverageTotalMsV261);
+  if (group === "adaptive" && field === "level") return finite(stats.smartAdaptiveLevelV300);
+  return null;
 }
 
 function markdown(report) {
@@ -319,14 +438,25 @@ function markdown(report) {
   lines.push(`- Smoke: ${report.smoke}`);
   lines.push(`- Server: port ${report.server.port}, started=${report.server.started}`);
   lines.push("");
-  lines.push("| Scenario | Weather | Viewport | Touch | drawWorld ms | FPS | Screenshot |");
-  lines.push("|---|---|---|---:|---:|---:|---|");
+  lines.push("| Scenario | Weather | Viewport | Touch | draw avg | draw p95 | steady p95 | warmup p95 | transition max | FPS | CPU p95 | cand | stripes | floor | cov ms | AQ | Screenshot |");
+  lines.push("|---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---|");
   for (const cell of report.cells) {
     const draw = pickDrawMs(cell);
+    const drawP95 = pickOverall(cell, "drawWorldMs", "p95");
+    const drawMax = pickOverall(cell, "drawWorldMs", "max");
+    const steadyP95 = pickSampleClass(cell, "steady", "drawWorldMs", "p95");
+    const warmupP95 = pickSampleClass(cell, "warmup", "drawWorldMs", "p95");
+    const transitionMax = pickTransitionMax(cell);
+    const cpuP95 = pickOverall(cell, "cpuMs", "p95");
     const fps = pickFps(cell);
     const shot = cell.screenshot ? relForMarkdown(cell.screenshot) : "";
     const touch = cell.viewport.isMobile ? (cell.touch && cell.touch.ok ? "yes" : "no") : "n/a";
-    lines.push(`| ${cell.scenario.name} | ${cell.weather} | ${cell.viewport.name} | ${touch} | ${draw == null ? "" : draw.toFixed(3)} | ${fps == null ? "" : fps.toFixed(1)} | ${shot} |`);
+    const cand = pickHotspot(cell, "sprites", "candidates");
+    const stripes = pickHotspot(cell, "sprites", "stripes");
+    const floor = pickHotspot(cell, "renderer", "floorSegments");
+    const cov = pickHotspot(cell, "coverage", "totalMs");
+    const aq = pickHotspot(cell, "adaptive", "level");
+    lines.push(`| ${cell.scenario.name} | ${cell.weather} | ${cell.viewport.name} | ${touch} | ${draw == null ? "" : draw.toFixed(3)} | ${drawP95 == null ? "" : drawP95.toFixed(3)} | ${steadyP95 == null ? "" : steadyP95.toFixed(3)} | ${warmupP95 == null ? "" : warmupP95.toFixed(3)} | ${transitionMax == null ? "" : transitionMax.toFixed(3)} | ${fps == null ? "" : fps.toFixed(1)} | ${cpuP95 == null ? "" : cpuP95.toFixed(3)} | ${cand == null ? "" : cand} | ${stripes == null ? "" : stripes} | ${floor == null ? "" : floor} | ${cov == null ? "" : cov.toFixed(3)} | ${aq == null ? "" : aq} | ${shot} |`);
   }
   if (report.error) {
     lines.push("");
@@ -339,6 +469,62 @@ async function waitFrames(page, count) {
   for (let i = 0; i < count; i++) {
     await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => resolve())));
   }
+}
+
+async function markedWait(page, durationMs, prefix) {
+  await page.evaluate(label => window.perlaPerfMark(label), `${prefix}_start`);
+  const deadline = Date.now() + Math.max(0, durationMs || 0);
+  let marker = 0;
+  while (Date.now() < deadline) {
+    marker += 1;
+    await page.evaluate(label => window.perlaPerfMark(label), `${prefix}_${marker}`);
+    await page.waitForTimeout(120);
+  }
+  await page.evaluate(label => window.perlaPerfMark(label), `${prefix}_end`);
+}
+
+async function runTransitionSweeps(page, scenario, weather, cellName) {
+  const result = { enabled: !!config.transitionSweeps, weather: [], zone: [] };
+  if (!config.transitionSweeps) return result;
+
+  let currentWeather = weather;
+  for (const target of config.weathers || []) {
+    if (!target || target === currentWeather) continue;
+    await page.evaluate(({ target, label }) => {
+      window.perlaPerfMark(`${label}_before_set_weather`);
+      window.perlaSetWeather(target);
+      window.perlaPerfMark(`${label}_after_set_weather`);
+    }, { target, label: `transition_weather_${currentWeather}_to_${target}` });
+    await markedWait(page, config.transitionMs, `transition_weather_${currentWeather}_to_${target}`);
+    result.weather.push({ from: currentWeather, to: target, durationMs: config.transitionMs });
+    currentWeather = target;
+  }
+
+  if (currentWeather !== weather) {
+    await page.evaluate(({ weather }) => window.perlaSetWeather(weather), { weather });
+    await markedWait(page, Math.min(config.transitionMs, 360), `transition_weather_return_${weather}`);
+  }
+
+  const steps = Array.isArray(scenario.transitionSequence) ? scenario.transitionSequence : [];
+  let prevName = scenario.name;
+  for (const rawStep of steps) {
+    const step = rawStep || {};
+    if (!Number.isFinite(Number(step.x)) || !Number.isFinite(Number(step.y)) || !Number.isFinite(Number(step.dx)) || !Number.isFinite(Number(step.dy))) continue;
+    const name = safeName(step.name || `${prevName}_to_step`);
+    await page.evaluate(({ step, label }) => {
+      window.perlaPerfMark(`${label}_before_set_pose`);
+      window.__PERLA_DEBUG__.setPlayerForDebug(Number(step.x), Number(step.y), Number(step.dx), Number(step.dy));
+      window.perlaPerfMark(`${label}_after_set_pose`);
+    }, { step, label: `transition_zone_${name}` });
+    await markedWait(page, Number(step.transitionMs) || config.transitionMs, `transition_zone_${name}`);
+    result.zone.push({ from: prevName, to: step.name || name, durationMs: Number(step.transitionMs) || config.transitionMs, expectedZone: step.expectedZone || null });
+    prevName = step.name || name;
+  }
+
+  await page.evaluate(({ scenario }) => {
+    window.__PERLA_DEBUG__.setPlayerForDebug(scenario.x, scenario.y, scenario.dx, scenario.dy);
+  }, { scenario });
+  return result;
 }
 
 async function checkRequiredApi(page) {
@@ -499,16 +685,11 @@ async function runCell(browser, report, scenario, weather, viewport, index) {
       window.perlaPerfMark("after_pose_weather");
     }, { scenario, weather, cellName });
 
-    await page.waitForTimeout(config.warmupMs);
+    await markedWait(page, config.warmupMs, "phase_warmup");
     await waitFrames(page, 2);
 
-    const sampleDeadline = Date.now() + config.sampleMs;
-    let marker = 0;
-    while (Date.now() < sampleDeadline) {
-      marker += 1;
-      await page.evaluate(label => window.perlaPerfMark(label), `sample_${marker}`);
-      await page.waitForTimeout(120);
-    }
+    await markedWait(page, config.sampleMs, "phase_steady");
+    const transitionSweeps = await runTransitionSweeps(page, scenario, weather, cellName);
 
     await page.evaluate(() => window.perlaPerfMark("before_canvas_screenshot"));
     await page.locator("#screen").screenshot({ path: screenshot });
@@ -532,6 +713,7 @@ async function runCell(browser, report, scenario, weather, viewport, index) {
         perfReport
       };
     }, { scenario, weather, viewport, cellName });
+    payload.transitionSweeps = transitionSweeps;
 
     const runtimeMode = payload.viewportMode;
     const expectedMode = expectedRuntimeMode(viewport);

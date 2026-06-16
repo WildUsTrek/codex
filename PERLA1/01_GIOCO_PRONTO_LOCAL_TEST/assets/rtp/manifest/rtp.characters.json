@@ -8965,5 +8965,10 @@
     "path": "PERLA1/tools/perla_rtp_scenario_validator.py",
     "mode": "static_no_runtime_coordinates",
     "runtimeSnapshotMode": "reserved_for_future_map_export"
+  },
+  "workflowRoadmap": {
+    "path": "PERLA1/RTP_SCENARIO_WORKFLOW_ROADMAP.md",
+    "plannerAgent": "rtp-scenario-workflow-planner",
+    "policy": "call_at_start_and_end_for_non_trivial_rtp_scenario_branch_work"
   }
 }

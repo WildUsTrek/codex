@@ -12,6 +12,8 @@ The Team Leader must decide which agents are `CALL`, `CONSIDER`, or `SKIP` for t
 
 This gate is meant to force the right agents for the task, not to call every agent blindly.
 
+If the user request mentions RTP, sprite/sprites, characters/personaggi, NPC, animals, eventi/events, dialoghi/dialogues, RPG Maker-style conversation UI, scenario/sceneggiatura/gameplay mapping, placements, behaviors, battle placeholders, resources, or player-base upgrades, the Team Leader must activate the RTP/scenario workflow branch. For non-trivial work in that branch, `rtp-scenario-workflow-planner` is `CALL` at task start to report the roadmap position and planned step, open/update `RTP_SCENARIO_TASK_LEDGER.json`, and `CALL` again at task end to update `RTP_SCENARIO_WORKFLOW_ROADMAP.md`, close the ledger task, and clear top-level `activeTask`.
+
 ## Standing Guard Set
 
 For delicate PERLA1 work, the guard agents are not optional monitoring decoration. They are the startup safety layer.
@@ -760,7 +762,9 @@ Exception: historical environment/object assets already present in `01_GIOCO_PRO
 
 Until runtime code explicitly loads the RTP manifest, these files are dormant asset/data references. They do not change gameplay behavior, renderer behavior, or validation requirements by themselves. Once a task connects them to `index.html`, loader code, event code, dialogue UI, service-worker caching, or rendered behavior, normal runtime validation and project map/block map updates apply.
 
-For these task signals, `asset-integrity-auditor` is `CALL`; `code-mapper` is `CALL` if runtime integration points are unclear; `renderer-block-auditor` is `CALL` only when world sprite rendering, occlusion, or draw order may change.
+For these task signals, `rtp-scenario-workflow-planner` is `CALL` at start and end; `asset-integrity-auditor` is `CALL`; `code-mapper` is `CALL` if runtime integration points are unclear; `renderer-block-auditor` is `CALL` only when world sprite rendering, occlusion, or draw order may change.
+
+The planner writes only `RTP_SCENARIO_WORKFLOW_ROADMAP.md` and `RTP_SCENARIO_TASK_LEDGER.json`. It tracks current phase, active milestone, active task packet, task ledger start/end evidence, blockers, validation state, completed deltas, and next step. It does not validate its own plan as safe to execute, does not replace `plan-integrity-auditor`, does not replace `task-watchdog`, and does not grant runtime or manifest write authority.
 
 The RTP/scenario domain gate is mandatory when its signal appears. These agents are read-only domain auditors and do not replace asset, code, renderer, visual, workflow, or runtime validation:
 
@@ -781,6 +785,7 @@ If future scenario manifests are created or changed, run `tools/perla_rtp_scenar
 | Performance, counters, draw cost, cache/hotspot risk | `performance-auditor` | `CALL` |
 | Screenshot, rendered QA, browser/runtime validation | `visual-qa-auditor` | `CALL` |
 | Assets, manifest, paths, missing textures | `asset-integrity-auditor` | `CALL` |
+| RTP/sprite/event/dialogue/personaggi workflow roadmap, dynamic task ledger, current phase, active milestone, task start/end state | `rtp-scenario-workflow-planner` | `CALL` at start and end for non-trivial RTP/scenario branch tasks |
 | Sceneggiatura, gameplay, storyboard, RTP identity, source-vs-inference mapping, future scenario manifests | `scenario-rtp-map-auditor` | `CALL` |
 | Placements, coordinates, zones, schedules tied to location, walkability, visibility, route/reachability, sprite density | `map-placement-auditor` | `CALL` |
 | Events, quest flow, intro chain, recruitment, battle placeholders, prerequisites/effects, success/failure, no-softlock checks | `event-flow-auditor` | `CALL` |
@@ -823,6 +828,7 @@ agents:
 - performance-auditor: CONSIDER/CALL/SKIP - reason
 - visual-qa-auditor: CONSIDER/CALL/SKIP - reason
 - asset-integrity-auditor: CONSIDER/CALL/SKIP - reason
+- rtp-scenario-workflow-planner: CONSIDER/CALL/SKIP - reason; start/end roadmap evidence; `RTP_SCENARIO_TASK_LEDGER.json` task id and active/closed state
 - scenario-rtp-map-auditor: CONSIDER/CALL/SKIP - reason
 - map-placement-auditor: CONSIDER/CALL/SKIP - reason
 - event-flow-auditor: CONSIDER/CALL/SKIP - reason

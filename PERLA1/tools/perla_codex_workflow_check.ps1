@@ -83,6 +83,7 @@ $paths = @{
   RtpScenarioProtocol = Join-Path $perlaRoot '01_GIOCO_PRONTO_LOCAL_TEST/assets/rtp/SCENARIO_EVENT_MAPPING_PROTOCOL.md'
   RtpCharactersManifest = Join-Path $perlaRoot '01_GIOCO_PRONTO_LOCAL_TEST/assets/rtp/manifest/rtp.characters.json'
   RtpScenarioValidator = Join-Path $perlaRoot 'tools/perla_rtp_scenario_validator.py'
+  RtpScenarioRoadmap = Join-Path $perlaRoot 'RTP_SCENARIO_WORKFLOW_ROADMAP.md'
 }
 
 Require-File -Id 'required.root_hooks' -Path $paths.RootHooks -Purpose 'Root Codex hook file exists so sessions started from the synchronized repository can run workflow enforcement.'
@@ -106,7 +107,9 @@ Require-File -Id 'required.rtp_readme' -Path $paths.RtpReadme -Purpose 'PERLA1 R
 Require-File -Id 'required.rtp_scenario_protocol' -Path $paths.RtpScenarioProtocol -Purpose 'PERLA1 RTP scenario/event mapping protocol exists.'
 Require-File -Id 'required.rtp_characters_manifest' -Path $paths.RtpCharactersManifest -Purpose 'PERLA1 RTP characters manifest exists.'
 Require-File -Id 'required.rtp_scenario_validator' -Path $paths.RtpScenarioValidator -Purpose 'PERLA1 RTP scenario validator exists.'
+Require-File -Id 'required.rtp_scenario_roadmap' -Path $paths.RtpScenarioRoadmap -Purpose 'PERLA1 permanent RTP/scenario workflow roadmap exists.'
 
+$rtpRequiredPlanner = 'rtp-scenario-workflow-planner'
 $rtpRequiredAgents = @(
   'scenario-rtp-map-auditor',
   'map-placement-auditor',
@@ -120,6 +123,8 @@ foreach ($agentName in $rtpRequiredAgents) {
   $rtpRequiredAgentTomls[$agentName] = $agentPath
   Require-File -Id ('required.rtp_agent.' + $agentName) -Path $agentPath -Purpose ('Required RTP/scenario project agent TOML exists: ' + $agentName)
 }
+$rtpPlannerToml = Join-Path $paths.AgentDir ($rtpRequiredPlanner + '.toml')
+Require-File -Id ('required.rtp_agent.' + $rtpRequiredPlanner) -Path $rtpPlannerToml -Purpose ('Required RTP/scenario planner agent TOML exists: ' + $rtpRequiredPlanner)
 
 $rtpScenarioSchemaFiles = @(
   (Join-Path -Path $paths.RtpRoot -ChildPath 'schema/rtp.placements.schema.json'),
@@ -142,8 +147,10 @@ $rtpDocText = @(
   Read-Text -Path $paths.PerlaIntake
   Read-Text -Path $paths.PerlaOrchestration
   Read-Text -Path $paths.PerlaProjectMap
+  Read-Text -Path $paths.PerlaAgents
   Read-Text -Path $paths.RtpReadme
   Read-Text -Path $paths.RtpScenarioProtocol
+  Read-Text -Path $paths.RtpScenarioRoadmap
 ) -join "`n"
 
 foreach ($agentName in $rtpRequiredAgents) {
@@ -155,8 +162,17 @@ foreach ($agentName in $rtpRequiredAgents) {
   Add-Check -Id ('rtp_gate.registry_mentions.' + $agentName) -Severity 'P1' -Ok ($rtpDocText -match [regex]::Escape($agentName)) -Message ('RTP/scenario auditor is mentioned in workflow docs and RTP references: ' + $agentName) -Files @($paths.PerlaIntake, $paths.PerlaOrchestration, $paths.PerlaProjectMap, $paths.RtpReadme, $paths.RtpScenarioProtocol)
 }
 
+$rtpPlannerText = Read-Text -Path $rtpPlannerToml
+Add-Check -Id 'rtp_planner.workspace_write_scope' -Severity 'P1' -Ok ($null -ne $rtpPlannerText -and $rtpPlannerText -match '(?m)^\s*sandbox_mode\s*=\s*"workspace-write"\s*$' -and $rtpPlannerText -match 'write scope is limited to PERLA1/RTP_SCENARIO_WORKFLOW_ROADMAP.md') -Message 'RTP/scenario planner is workspace-write only for the permanent roadmap.' -Files @($rtpPlannerToml)
+Add-Check -Id 'rtp_planner.no_runtime_or_manifest_write' -Severity 'P1' -Ok ($null -ne $rtpPlannerText -and $rtpPlannerText -match 'Do not edit runtime code' -and $rtpPlannerText -match 'manifests' -and $rtpPlannerText -match '\.codex/agents/\*\.toml') -Message 'RTP/scenario planner is forbidden from editing runtime, manifests, and TOML agents.' -Files @($rtpPlannerToml)
+Add-Check -Id 'rtp_planner.no_self_validation' -Severity 'P1' -Ok ($null -ne $rtpPlannerText -and $rtpPlannerText -match 'does not validate its own plan' -and $rtpPlannerText -match 'plan-integrity-auditor' -and $rtpPlannerText -match 'task-watchdog' -and $rtpPlannerText -match 'workflow-guard') -Message 'RTP/scenario planner cannot replace plan integrity, watchdog, or workflow guard.' -Files @($rtpPlannerToml)
+Add-Check -Id 'rtp_planner.call_trigger' -Severity 'P1' -Ok ($null -ne $rtpPlannerText -and $rtpPlannerText -match 'CALL trigger' -and $rtpPlannerText -match 'sprite/sprites' -and $rtpPlannerText -match 'eventi/events' -and $rtpPlannerText -match 'dialoghi/dialogues') -Message 'RTP/scenario planner has the required RTP/sprite/event/dialogue CALL trigger.' -Files @($rtpPlannerToml)
+Add-Check -Id 'rtp_gate.registry_mentions.rtp-scenario-workflow-planner' -Severity 'P1' -Ok ($rtpDocText -match [regex]::Escape($rtpRequiredPlanner)) -Message 'RTP/scenario planner is mentioned in workflow docs and RTP references.' -Files @($paths.PerlaIntake, $paths.PerlaOrchestration, $paths.PerlaProjectMap, $paths.PerlaAgents, $paths.RtpReadme, $paths.RtpScenarioProtocol, $paths.RtpScenarioRoadmap)
+
 $rtpIntakeText = Read-Text -Path $paths.PerlaIntake
 if ($null -ne $rtpIntakeText) {
+  Add-Check -Id 'rtp_gate.required_intake_output.rtp-scenario-workflow-planner' -Severity 'P1' -Ok ($rtpIntakeText -match '- rtp-scenario-workflow-planner: CONSIDER/CALL/SKIP') -Message 'Required Intake Output includes RTP/scenario workflow planner.' -Files @($paths.PerlaIntake)
+  Add-Check -Id 'rtp_gate.start_end_planner_rule' -Severity 'P1' -Ok ($rtpIntakeText -match 'CALL` at task start' -and $rtpIntakeText -match 'CALL` again at task end' -and $rtpIntakeText -match 'RTP_SCENARIO_WORKFLOW_ROADMAP.md') -Message 'RTP/scenario intake gate requires planner at task start and task end with roadmap update.' -Files @($paths.PerlaIntake)
   foreach ($agentName in $rtpRequiredAgents) {
     Add-Check -Id ('rtp_gate.required_intake_output.' + $agentName) -Severity 'P1' -Ok ($rtpIntakeText -match ('- ' + [regex]::Escape($agentName) + ': CONSIDER/CALL/SKIP')) -Message ('Required Intake Output includes RTP/scenario auditor: ' + $agentName) -Files @($paths.PerlaIntake)
   }
@@ -164,6 +180,40 @@ if ($null -ne $rtpIntakeText) {
   foreach ($term in $rtpDomainTerms) {
     Add-Check -Id ('rtp_gate.domain_matrix_term.' + ($term -replace '[^a-zA-Z0-9]+','_').Trim('_')) -Severity 'P1' -Ok ($rtpIntakeText -match [regex]::Escape($term)) -Message ('RTP/scenario intake gate carries domain term: ' + $term) -Files @($paths.PerlaIntake)
   }
+}
+
+$rtpRoadmapText = Read-Text -Path $paths.RtpScenarioRoadmap
+if ($null -ne $rtpRoadmapText) {
+  $roadmapTerms = @('Current Position','Phase Roadmap','Active Task Packet','Milestones','Validation Ledger','Residual Risks','Next Step','phase_1_foundation_ready','runtime_not_loaded|dormant_not_loaded')
+  foreach ($term in $roadmapTerms) {
+    Add-Check -Id ('rtp_roadmap.term.' + ($term -replace '[^a-zA-Z0-9]+','_').Trim('_')) -Severity 'P1' -Ok ($rtpRoadmapText -match $term) -Message ('RTP scenario roadmap carries required term/pattern: ' + $term) -Files @($paths.RtpScenarioRoadmap)
+  }
+
+  $milestoneStates = @{}
+  $currentMilestone = $null
+  foreach ($line in ($rtpRoadmapText -split "`r?`n")) {
+    $headingMatch = [regex]::Match($line, '^### `([^`]+)`')
+    if ($headingMatch.Success) {
+      $currentMilestone = $headingMatch.Groups[1].Value
+      if (-not $milestoneStates.ContainsKey($currentMilestone)) {
+        $milestoneStates[$currentMilestone] = New-Object System.Collections.Generic.HashSet[string]
+      }
+      continue
+    }
+    if ($currentMilestone) {
+      $statusMatch = [regex]::Match($line, '^Status:\s*`([^`]+)`')
+      if ($statusMatch.Success) {
+        $milestoneStates[$currentMilestone].Add($statusMatch.Groups[1].Value) | Out-Null
+      }
+    }
+  }
+  $milestoneStateConflicts = @()
+  foreach ($milestone in $milestoneStates.Keys) {
+    if ($milestoneStates[$milestone].Count -gt 1) {
+      $milestoneStateConflicts += ($milestone + ':' + (($milestoneStates[$milestone] | Sort-Object) -join '|'))
+    }
+  }
+  Add-Check -Id 'rtp_roadmap.milestone_state_unique' -Severity 'P1' -Ok ($milestoneStateConflicts.Count -eq 0) -Message ('RTP scenario roadmap has one status per milestone. Conflicts: ' + (($milestoneStateConflicts | Sort-Object) -join ', ')) -Files @($paths.RtpScenarioRoadmap)
 }
 
 $rtpProtocolText = Read-Text -Path $paths.RtpScenarioProtocol
